@@ -36,9 +36,32 @@
 <span id="36">36</span>
 <span id="37">37</span>
 <span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Value</span>;
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>,
@@ -61,15 +84,36 @@
 <span class="doccomment">///  #org.freedeskop.portal.Notification::ActionInvoked signal to the application.</span>
 <span class="doccomment">///</span>
 <span class="kw">trait</span> <span class="ident">Notification</span> {
-    <span class="doccomment">/// AddNotification method</span>
-    <span class="kw">fn</span> <span class="ident">add_notification</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">notification</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant</span>::<span class="ident">Value</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="doccomment">/// Sends a notification.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The ID can be used to later withdraw the notification.</span>
+    <span class="doccomment">/// If the application reuses the same ID without withdrawing, the notification is replaced by the new one.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `id` - Application-provided ID for this notification</span>
+    <span class="doccomment">/// * `notification` - HashMap</span>
+    <span class="doccomment">///     * `title` - User-visible string to display as the title.</span>
+    <span class="doccomment">///     * `body` - User-visible string to display as the body.</span>
+    <span class="doccomment">///     * `icon` -</span>
+    <span class="doccomment">///     * `priority` - The priority for the notification. Supported values: low, normal, high, urgent.</span>
+    <span class="doccomment">///     * `default-action` - Name of an action that is exported by the application. This action will be activated when the user clicks on the notification.</span>
+    <span class="doccomment">///     * `default-action-target` - Target parameter to send along when activating the default action.</span>
+    <span class="doccomment">///     * `buttons` - Array of serialized buttons to add to the notification.</span>
+    <span class="doccomment">///         * `label` - User-visible label for the button. Mandatory.</span>
+    <span class="doccomment">///         * `action` - Name of an action that is exported by the application. The action will be activated when the user clicks on the button. Mandatory.</span>
+    <span class="doccomment">///         * `target` - Target parameter to send along when activating the action.</span>
+    <span class="kw">fn</span> <span class="ident">add_notification</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">notification</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
-    <span class="doccomment">/// RemoveNotification method</span>
+    <span class="doccomment">/// Withdraws a notification.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `id` - Application-provided ID for this notification</span>
     <span class="kw">fn</span> <span class="ident">remove_notification</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+
+    <span class="comment">// FIXME: enable once signals are in</span>
+    <span class="comment">// fn action_invoked(&amp;self, id: &amp;str, action: &amp;str, params: &amp;[Value]);</span>
 
     <span class="doccomment">/// version property</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>

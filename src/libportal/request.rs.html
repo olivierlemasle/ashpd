@@ -15,9 +15,30 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ResponseType</span> {
     <span class="comment">// Success, the request is carried out</span>
     <span class="ident">Success</span> <span class="op">=</span> <span class="number">0</span>,
@@ -28,8 +49,29 @@
 }
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Request&quot;</span>)]</span>
+<span class="doccomment">/// The Request interface is shared by all portal interfaces.</span>
+<span class="doccomment">/// When a portal method is called, the reply includes a handle (i.e. object path) for a Request object,</span>
+<span class="doccomment">/// which will stay alive for the duration of the user interaction related to the method call.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The portal indicates that a portal request interaction is over by emitting the &quot;Response&quot; signal on the Request object.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The application can abort the interaction calling Close() on the Request object.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Since version 0.9 of xdg-desktop-portal, the handle will be of the form</span>
+<span class="doccomment">/// `/org/freedesktop/portal/desktop/request/SENDER/TOKEN`, where SENDER is the callers unique name,</span>
+<span class="doccomment">///  with the initial &#39;:&#39; removed and all &#39;.&#39; replaced by &#39;_&#39;,</span>
+<span class="doccomment">/// and TOKEN is a unique token that the caller provided with the handle_token key in the options vardict.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This change was made to let applications subscribe to the Response signal before</span>
+<span class="doccomment">/// making the initial portal call, thereby avoiding a race condition.</span>
+<span class="doccomment">/// It is recommended that the caller should verify that the returned handle is what</span>
+<span class="doccomment">/// it expected, and update its signal subscription if it isn&#39;t.</span>
+<span class="doccomment">/// This ensures that applications will work with both old and new versions of xdg-desktop-portal.</span>
 <span class="kw">trait</span> <span class="ident">Request</span> {
+    <span class="doccomment">/// Closes the portal request to which this object refers and ends all related user interaction (dialogs, etc).</span>
+    <span class="doccomment">/// A Response signal will not be emitted in this case.</span>
     <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+
     <span class="comment">// signal</span>
     <span class="comment">//fn response(&amp;self) -&gt; Result&lt;(ResponseType, HashMap&lt;&amp;str, Value&gt;)&gt;;</span>
 }

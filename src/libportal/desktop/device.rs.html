@@ -21,9 +21,18 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Value</span>;
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Device&quot;</span>,
@@ -33,12 +42,19 @@
 <span class="doccomment">/// The interface lets services ask if an application should get access to devices such as microphones, speakers or cameras.</span>
 <span class="doccomment">/// Not a portal in the strict sense, since the API is not directly accessible to applications inside the sandbox.</span>
 <span class="kw">trait</span> <span class="ident">Device</span> {
-    <span class="doccomment">/// AccessDevice method</span>
+    <span class="doccomment">/// Asks for access to a device.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `pid` - The pid of the application on whose behalf the request is made</span>
+    <span class="doccomment">/// * `devices` - A list of devices to request access to. Supported values are &#39;microphone&#39;, &#39;speakers&#39;, &#39;camera&#39;. Asking for multiple devices at the same time may or may not be supported</span>
+    <span class="doccomment">/// * `options` - A HashMap</span>
+    <span class="doccomment">///     * `handle_token` - A string that will be used as the last element of the handle.</span>
     <span class="kw">fn</span> <span class="ident">access_device</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">pid</span>: <span class="ident">u32</span>,
         <span class="ident">devices</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant</span>::<span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// version property</span>

@@ -10,13 +10,49 @@
 <span id="10">10</span>
 <span id="11">11</span>
 <span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Session&quot;</span>)]</span>
+<span class="doccomment">/// The Session interface is shared by all portal interfaces that involve long lived sessions.</span>
+<span class="doccomment">/// When a method that creates a session is called, if successful, the reply will include a session handle (i.e. object path) for a Session object, which will stay alive for the duration of the session.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The duration of the session is defined by the interface that creates it.</span>
+<span class="doccomment">/// For convenience, the interface contains a method Close(), and a signal `org.freedesktop.portal.Session::Closed`.</span>
+<span class="doccomment">/// Whether it is allowed to directly call Close() depends on the interface.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The handle of a session will be of the form `/org/freedesktop/portal/desktop/session/SENDER/TOKEN`,</span>
+<span class="doccomment">/// where SENDER is the callers unique name, with the initial &#39;:&#39; removed and all &#39;.&#39; replaced by &#39;_&#39;,</span>
+<span class="doccomment">/// and TOKEN is a unique token that the caller provided with the session_handle_token key in the options vardict of the method creating the session.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The token that the caller provides should be unique and not guessable.</span>
+<span class="doccomment">/// To avoid clashes with calls made from unrelated libraries, it is a good idea to use a per-library prefix combined with a random number.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A client who started a session vanishing from the D-Bus is equivalent to closing all active sessions made by said client.</span>
 <span class="kw">trait</span> <span class="ident">Session</span> {
+    <span class="doccomment">/// Closes the portal session to which this object refers and ends all related user interaction (dialogs, etc).</span>
     <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+
     <span class="comment">// signal</span>
+    <span class="doccomment">/// Emitted when a session is closed.</span>
     <span class="comment">//fn closed(&amp;self) -&gt; Result&lt;HashMap&lt;&amp;str, Value&gt;&gt;;</span>
 
     <span class="doccomment">/// version property</span>

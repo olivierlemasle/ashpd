@@ -9,16 +9,26 @@
 <span id="9"> 9</span>
 <span id="10">10</span>
 <span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="comment">// FIXME: We should simplify the types later</span>
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">type_complexity</span>)]</span>
+<span class="doccomment">///! # libportal</span>
+<span class="doccomment">///!</span>
+<span class="doccomment">///! libportal is a Rust wrapper around the XDG Portals DBus interfaces</span>
+<span class="doccomment">///! Specifications: [https://flatpak.github.io/xdg-desktop-portal/portal-docs.html](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html)</span>
+<span class="doccomment">///! C alternative: [https://github.com/flatpak/libportal](https://github.com/flatpak/libportal)</span>
+<span class="doccomment">///!</span>
+<span class="kw">mod</span> <span class="ident">request</span>;
+<span class="kw">mod</span> <span class="ident">session</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">desktop</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">documents</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">flatpak</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">request</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">session</span>;
-
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">request</span>::{<span class="ident">RequestProxy</span>, <span class="ident">ResponseType</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">session</span>::<span class="ident">SessionProxy</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zbus</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zvariant</span>;
 </pre></div>

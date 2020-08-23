@@ -20,9 +20,21 @@
 <span id="20">20</span>
 <span id="21">21</span>
 <span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Value</span>;
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Background&quot;</span>,
@@ -32,11 +44,21 @@
 <span class="doccomment">/// The interface lets sandboxed applications request that the application</span>
 <span class="doccomment">/// is allowed to run in the background or started automatically when the user logs in.</span>
 <span class="kw">trait</span> <span class="ident">Background</span> {
-    <span class="doccomment">/// RequestBackground method</span>
+    <span class="doccomment">/// Requests that the application is allowed to run in the background.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `parent_window` - Identifier for the application window</span>
+    <span class="doccomment">/// * `options` - A HashMap</span>
+    <span class="doccomment">///     * `handle_token` - A string that will be used as the last element of the handle.</span>
+    <span class="doccomment">///     * `reason` - User-visible reason for the request.</span>
+    <span class="doccomment">///     * `autostart` - `true` if the app also wants to be started automatically at login.</span>
+    <span class="doccomment">///     * `commandline` - `[&amp;str]` Commandline to use when autostarting at login. If this is not specified, the Exec line from the desktop file will be used.</span>
+    <span class="doccomment">///     * `dbus-activatable` - if `true`, use D-Bus activation for autostart.</span>
     <span class="kw">fn</span> <span class="ident">request_background</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant</span>::<span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// version property</span>
