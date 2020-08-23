@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["libportal"] = [{"text":"impl&lt;'de&gt; <a class=\"trait\" href=\"https://docs.rs/serde/1.0.115/serde/de/trait.Deserialize.html\" title=\"trait serde::de::Deserialize\">Deserialize</a>&lt;'de&gt; for <a class=\"enum\" href=\"libportal/desktop/enum.Connectivity.html\" title=\"enum libportal::desktop::Connectivity\">Connectivity</a>","synthetic":false,"types":["libportal::desktop::network_monitor::Connectivity"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
