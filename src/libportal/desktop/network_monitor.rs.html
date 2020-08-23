@@ -89,6 +89,9 @@
 <span id="89">89</span>
 <span id="90">90</span>
 <span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
@@ -149,6 +152,9 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
 )]</span>
+<span class="doccomment">/// The interface provides network status information to sandboxed applications.</span>
+<span class="doccomment">/// It is not a portal in the strict sense, since it does not involve user interaction.</span>
+<span class="doccomment">/// Applications are expected to use this interface indirectly, via a library API such as the GLib GNetworkMonitor interface.</span>
 <span class="kw">trait</span> <span class="ident">NetworkMonitor</span> {
     <span class="doccomment">/// Returns whether the given hostname is believed to be reachable</span>
     <span class="doccomment">///</span>

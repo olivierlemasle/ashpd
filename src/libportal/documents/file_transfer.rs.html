@@ -32,6 +32,16 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
@@ -41,6 +51,16 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>
 )]</span>
+<span class="doccomment">/// The interface operates as a middle-man between apps when transferring files</span>
+<span class="doccomment">/// via drag-and-drop or copy-paste, taking care of the necessary exporting of files</span>
+<span class="doccomment">/// in the document portal.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Toolkits are expected to use the application/vnd.portal.filetransfer mimetype when</span>
+<span class="doccomment">/// using this mechanism for file exchange via copy-paste or drag-and-drop.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The data that is transmitted with this mimetype should be the key returned by the StartTransfer method.</span>
+<span class="doccomment">/// Upon receiving this mimetype, the target should call RetrieveFiles with the key, to obtain the list of files.</span>
+<span class="doccomment">/// The portal will take care of exporting files in the document store as necessary to make them accessible to the target.</span>
 <span class="kw">trait</span> <span class="ident">FileTransfer</span> {
     <span class="doccomment">/// AddFiles method</span>
     <span class="kw">fn</span> <span class="ident">add_files</span>(

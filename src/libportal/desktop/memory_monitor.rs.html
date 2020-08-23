@@ -10,6 +10,9 @@
 <span id="10">10</span>
 <span id="11">11</span>
 <span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 
@@ -18,6 +21,9 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
 )]</span>
+<span class="doccomment">/// The interface provides information about low system memory to sandboxed applications.</span>
+<span class="doccomment">/// It is not a portal in the strict sense, since it does not involve user interaction.</span>
+<span class="doccomment">/// Applications are expected to use this interface indirectly, via a library API such as the GLib GMemoryMonitor interface.</span>
 <span class="kw">trait</span> <span class="ident">MemoryMonitor</span> {
     <span class="doccomment">/// version property</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>

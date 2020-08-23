@@ -35,6 +35,8 @@
 <span id="35">35</span>
 <span id="36">36</span>
 <span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
@@ -44,6 +46,8 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
 )]</span>
+<span class="doccomment">/// The interface lets sandboxed applications open URIs</span>
+<span class="doccomment">/// (e.g. a http: link to the applications homepage) under the control of the user.</span>
 <span class="kw">trait</span> <span class="ident">OpenURI</span> {
     <span class="doccomment">/// OpenDirectory method</span>
     <span class="kw">fn</span> <span class="ident">open_directory</span>(

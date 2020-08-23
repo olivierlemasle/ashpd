@@ -21,6 +21,21 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
@@ -30,6 +45,21 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
 )]</span>
+<span class="doccomment">/// The interface lets sandboxed applications send and withdraw notifications.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It is not possible for the application to learn if the notification was actually</span>
+<span class="doccomment">/// presented to the user. Not a portal in the strict sense, since there is no user interaction.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note that in contrast to most other portal requests, notifications are expected</span>
+<span class="doccomment">/// to outlast the running application. If a user clicks on a notification after</span>
+<span class="doccomment">/// the application has exited, it will get activated again.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Notifications can specify actions that can be activated by the user.</span>
+<span class="doccomment">/// Actions whose name starts with &#39;app.&#39; are assumed to be exported and will be activated</span>
+<span class="doccomment">/// via the ActivateAction() method in the org.freedesktop.Application interface.</span>
+<span class="doccomment">/// Other actions are activated by sending the</span>
+<span class="doccomment">///  #org.freedeskop.portal.Notification::ActionInvoked signal to the application.</span>
+<span class="doccomment">///</span>
 <span class="kw">trait</span> <span class="ident">Notification</span> {
     <span class="doccomment">/// AddNotification method</span>
     <span class="kw">fn</span> <span class="ident">add_notification</span>(

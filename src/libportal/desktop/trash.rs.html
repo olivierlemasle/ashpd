@@ -21,6 +21,7 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
+<span id="24">24</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 
@@ -29,6 +30,7 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
 )]</span>
+<span class="doccomment">/// The interface lets sandboxed applications send files to the trashcan.</span>
 <span class="kw">trait</span> <span class="ident">Trash</span> {
     <span class="doccomment">/// Sends a file to the trashcan.</span>
     <span class="doccomment">/// Applications are allowed to trash a file if they can open it in r/w mode.</span>

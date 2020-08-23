@@ -32,6 +32,8 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
@@ -41,6 +43,8 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/Flatpak&quot;</span>
 )]</span>
+<span class="doccomment">/// The interface exposes some interactions with Flatpak on the host to the sandbox.</span>
+<span class="doccomment">/// For example, it allows you to restart the applications or start a more sandboxed instance.</span>
 <span class="kw">trait</span> <span class="ident">Flatpak</span> {
     <span class="doccomment">/// CreateUpdateMonitor method</span>
     <span class="kw">fn</span> <span class="ident">create_update_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant</span>::<span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
