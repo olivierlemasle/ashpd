@@ -31,12 +31,14 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
+<span id="34">34</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.FileTransfer&quot;</span>,
+    <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>
 )]</span>
 <span class="kw">trait</span> <span class="ident">FileTransfer</span> {

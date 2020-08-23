@@ -19,23 +19,67 @@
 <span id="19">19</span>
 <span id="20">20</span>
 <span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Settings&quot;</span>,
+    <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
 )]</span>
 <span class="kw">trait</span> <span class="ident">Settings</span> {
-    <span class="doccomment">/// Read method</span>
+    <span class="doccomment">/// Reads a single value. Returns an error on any unknown namespace or key.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the value `key` is to to as a `zvariant::OwnedValue`</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `namespace` - Namespace to look up key in</span>
+    <span class="doccomment">/// * `key` - The key to get</span>
+    <span class="doccomment">///</span>
     <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// ReadAll method</span>
+    <span class="doccomment">/// Reads a single value. Returns an error on any unknown namespace or key.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns a `HashMap` of namespaces to its keys and values.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `namespaces` - List of namespaces to filter results by.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     If `namespaces` is an empty array or contains an empty string it matches all.</span>
+    <span class="doccomment">///     Globbing is supported but only for trailing sections, e.g. &quot;org.example.*&quot;.</span>
+    <span class="doccomment">///</span>
     <span class="kw">fn</span> <span class="ident">read_all</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+
+    <span class="comment">// TODO: re-enable once signals are available</span>
+    <span class="comment">// fn setting_changed(&amp;self, namespace: &amp;str, key: &amp;str, value: zvariant::OwnedValue);</span>
 
     <span class="doccomment">/// version property</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>

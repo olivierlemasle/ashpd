@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["desktop",""],["documents",""],["flatpak",""]]});
+initSidebarItems({"mod":[["desktop",""],["documents",""],["flatpak",""],["request",""],["session",""]]});
