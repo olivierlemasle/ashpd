@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FileChooserProxy","The interface lets sandboxed applications ask the user for access to files outside the sandbox. The portal backend will present the user with a file chooser dialog."],["OpenFileOptions",""],["SaveFileOptions",""],["SaveFilesOptions",""]]});

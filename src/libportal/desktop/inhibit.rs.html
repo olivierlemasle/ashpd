@@ -30,9 +30,63 @@
 <span id="30">30</span>
 <span id="31">31</span>
 <span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateMonitorOptions</span> {
+    <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
+    <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitOptions</span> {
+    <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// User-visible reason for the inhibition.</span>
+    <span class="kw">pub</span> <span class="ident">reason</span>: <span class="ident">String</span>,
+}
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Inhibit&quot;</span>,
@@ -41,26 +95,48 @@
 )]</span>
 <span class="doccomment">/// The interface lets sandboxed applications inhibit the user session from ending, suspending, idling or getting switched away.</span>
 <span class="kw">trait</span> <span class="ident">Inhibit</span> {
-    <span class="doccomment">/// CreateMonitor method</span>
-    <span class="kw">fn</span> <span class="ident">create_monitor</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant</span>::<span class="ident">Value</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Creates a monitoring session.</span>
+    <span class="doccomment">/// While this session is active, the caller will receive `state_changed` signals</span>
+    <span class="doccomment">/// with updates on the session state.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `parent_window` - The application window identifier</span>
+    <span class="doccomment">/// * `options` - [`CreateMonitorOptions`]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`CreateMonitorOptions`]: ./struct.CreateMonitorOptions.html</span>
+    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="kw">fn</span> <span class="ident">create_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">options</span>: <span class="ident">CreateMonitorOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Inhibit method</span>
-    <span class="kw">fn</span> <span class="ident">inhibit</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">flags</span>: <span class="ident">u32</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant</span>::<span class="ident">Value</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Inhibits a session status changes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `parent_window` - The application window identifier</span>
+    <span class="doccomment">/// * `flags` - The flags determine what changes are inhibited</span>
+    <span class="doccomment">///     1 - Logout</span>
+    <span class="doccomment">///     2 - User switch</span>
+    <span class="doccomment">///     3 - Suspend</span>
+    <span class="doccomment">///     4 - Idle</span>
+    <span class="doccomment">///     FIXME: switch to an enum</span>
+    <span class="doccomment">/// * `options` - [`InhibitOptions`]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`InhibitOptions`]: ./struct.InhibitOptions.html</span>
+    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="kw">fn</span> <span class="ident">inhibit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">flags</span>: <span class="ident">u32</span>, <span class="ident">options</span>: <span class="ident">InhibitOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// QueryEndResponse method</span>
     <span class="kw">fn</span> <span class="ident">query_end_response</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
+    <span class="comment">// signal</span>
+    <span class="comment">// fn state_changed(&amp;self, session_handle: &amp;str, )</span>
+
     <span class="doccomment">/// version property</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>

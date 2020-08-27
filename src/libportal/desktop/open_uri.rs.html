@@ -66,11 +66,35 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Value</span>;
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">deny_unknown_fields</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenDirOptions</span> {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">deny_unknown_fields</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Whether to allow the chosen application to write to the file.</span>
+    <span class="doccomment">/// This key only takes effect the uri points to a local file that is exported in the document portal, and the chosen application is sandboxed itself.</span>
+    <span class="kw">pub</span> <span class="ident">writeable</span>: <span class="ident">bool</span>,
+    <span class="doccomment">///Whether to ask the user to choose an app. If this is not passed, or false, the portal may use a default or pick the last choice.</span>
+    <span class="kw">pub</span> <span class="ident">ask</span>: <span class="ident">bool</span>,
+}
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.OpenURI&quot;</span>,
@@ -86,13 +110,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `parent_window` - Identifier for the application window</span>
     <span class="doccomment">/// * `fd` - File descriptor for a file</span>
-    <span class="doccomment">/// * `options` - A HashMap</span>
-    <span class="doccomment">///     * `handle_token` - A string that will be used as the last element of the handle. Must be a valid object path element.</span>
+    <span class="doccomment">/// * `options` - [`OpenDirOptions`]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`OpenDirOptions`]: ./struct.OpenDirOptions.html</span>
     <span class="kw">fn</span> <span class="ident">open_directory</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">fd</span>: <span class="ident">RawFd</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">options</span>: <span class="ident">OpenDirOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Asks to open a local file.</span>
@@ -101,17 +126,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `parent_window` - Identifier for the application window</span>
     <span class="doccomment">/// * `fd` - File descriptor for the file to open</span>
-    <span class="doccomment">/// * `options` - A HashMap</span>
-    <span class="doccomment">///     * `handle_token` - A string that will be used as the last element of the handle. Must be a valid object path element.</span>
-    <span class="doccomment">///     * `writable` - Whether to allow the chosen application to write to the file.</span>
-    <span class="doccomment">///                    This key only takes effect the uri points to a local file that is exported in the document portal, and the chosen application is sandboxed itself.</span>
-    <span class="doccomment">///     * `ask` - Whether to ask the user to choose an app. If this is not passed, or false, the portal may use a default or pick the last choice.</span>
-    <span class="kw">fn</span> <span class="ident">open_file</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">fd</span>: <span class="ident">RawFd</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// * `options` - [`OpenFileOptions`]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`OpenFileOptions`]: ./struct.OpenFileOptions.html</span>
+    <span class="kw">fn</span> <span class="ident">open_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">fd</span>: <span class="ident">RawFd</span>, <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>)
+        <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Asks to open a local file.</span>
     <span class="doccomment">///</span>
@@ -119,20 +138,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `parent_window` - Identifier for the application window</span>
     <span class="doccomment">/// * `uri` - The uri to open</span>
-    <span class="doccomment">/// * `options` - A HashMap</span>
-    <span class="doccomment">///     * `handle_token` - A string that will be used as the last element of the handle. Must be a valid object path element.</span>
-    <span class="doccomment">///     * `writable` - Whether to allow the chosen application to write to the file.</span>
-    <span class="doccomment">///                    This key only takes effect the uri points to a local file that is exported in the document portal, and the chosen application is sandboxed itself.</span>
-    <span class="doccomment">///     * `ask` - Whether to ask the user to choose an app. If this is not passed, or false, the portal may use a default or pick the last choice.</span>
-    <span class="kw">fn</span> <span class="ident">open_uri</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">uri</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// * `options` - [`OpenFileOptions`]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`OpenFileOptions`]: ./struct.OpenFileOptions.html</span>
+    <span class="kw">fn</span> <span class="ident">open_uri</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">uri</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// version property</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>

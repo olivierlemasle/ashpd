@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["libportal"] = [{"text":"impl&lt;'_&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html\" title=\"trait core::convert::TryFrom\">TryFrom</a>&lt;Value&lt;'_&gt;&gt; for <a class=\"enum\" href=\"libportal/desktop/wallpaper/enum.WallpaperSetOn.html\" title=\"enum libportal::desktop::wallpaper::WallpaperSetOn\">WallpaperSetOn</a>","synthetic":false,"types":["libportal::desktop::wallpaper::WallpaperSetOn"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

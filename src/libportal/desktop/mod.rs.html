@@ -40,50 +40,48 @@
 <span id="40">40</span>
 <span id="41">41</span>
 <span id="42">42</span>
-<span id="43">43</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">mod</span> <span class="ident">account</span>;
-<span class="kw">mod</span> <span class="ident">background</span>;
-<span class="kw">mod</span> <span class="ident">camera</span>;
-<span class="kw">mod</span> <span class="ident">device</span>;
-<span class="kw">mod</span> <span class="ident">email</span>;
-<span class="kw">mod</span> <span class="ident">file_chooser</span>;
-<span class="kw">mod</span> <span class="ident">game_mod</span>;
-<span class="kw">mod</span> <span class="ident">inhibit</span>;
-<span class="kw">mod</span> <span class="ident">location</span>;
-<span class="kw">mod</span> <span class="ident">memory_monitor</span>;
-<span class="kw">mod</span> <span class="ident">network_monitor</span>;
-<span class="kw">mod</span> <span class="ident">notification</span>;
-<span class="kw">mod</span> <span class="ident">open_uri</span>;
-<span class="kw">mod</span> <span class="ident">print</span>;
-<span class="kw">mod</span> <span class="ident">remote_desktop</span>;
-<span class="kw">mod</span> <span class="ident">screencast</span>;
-<span class="kw">mod</span> <span class="ident">screenshot</span>;
-<span class="kw">mod</span> <span class="ident">secret</span>;
-<span class="kw">mod</span> <span class="ident">settings</span>;
-<span class="kw">mod</span> <span class="ident">trash</span>;
-<span class="kw">mod</span> <span class="ident">wallpaper</span>;
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">account</span>::<span class="ident">AccountProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">background</span>::<span class="ident">BackgroundProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">camera</span>::<span class="ident">CameraProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">device</span>::<span class="ident">DeviceProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">email</span>::<span class="ident">EmailProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">file_chooser</span>::<span class="ident">FileChooserProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">game_mod</span>::<span class="ident">GameModeProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">inhibit</span>::<span class="ident">InhibitProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">location</span>::<span class="ident">LocationProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">memory_monitor</span>::<span class="ident">MemoryMonitorProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">network_monitor</span>::{<span class="ident">Connectivity</span>, <span class="ident">NetworkMonitorProxy</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">notification</span>::<span class="ident">NotificationProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">open_uri</span>::<span class="ident">OpenURIProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">print</span>::<span class="ident">PrintProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">remote_desktop</span>::<span class="ident">RemoteDesktopProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">screencast</span>::<span class="ident">ScreenCastProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">screenshot</span>::<span class="ident">ScreenshotProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">secret</span>::<span class="ident">SecretProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">settings</span>::<span class="ident">SettingsProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">trash</span>::<span class="ident">TrashProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">wallpaper</span>::<span class="ident">WallpaperProxy</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Account` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">account</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Background` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">background</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Camera` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">camera</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Device` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">device</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Email` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">email</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.FileChooser` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">file_chooser</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.GameMode` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">game_mode</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Inhibit` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">inhibit</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Location` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">location</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.MemoryMonitor` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">memory_monitor</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.NetworkMonitor` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">network_monitor</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Notification` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">notification</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.OpenURI` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">open_uri</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Print` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">print</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.RemoteDesktop` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">remote_desktop</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.ScreenCast` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">screencast</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Screenshot` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">screenshot</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Secret` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">secret</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Settings` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">settings</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Trash` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">trash</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.Wallpaper` interface.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">wallpaper</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "libportal";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

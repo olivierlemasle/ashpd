@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LocationAccessOptions",""],["LocationProxy","The interface lets sandboxed applications query basic information about the location."],["LocationStartOptions",""]]});

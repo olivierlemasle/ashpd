@@ -29,12 +29,12 @@
 <span class="doccomment">/// It is not a portal in the strict sense, since it does not involve user interaction.</span>
 <span class="doccomment">/// Applications are expected to use this interface indirectly, via a library API such as the GLib GMemoryMonitor interface.</span>
 <span class="kw">trait</span> <span class="ident">MemoryMonitor</span> {
-    <span class="comment">//FIXME: enable once signals are supported</span>
+    <span class="comment">// FIXME: enable once signals are supported</span>
     <span class="comment">// Signal emitted when a particular low memory situation happens with 0 being the lowest level of memory availability warning, and 255 being the highest</span>
     <span class="comment">// fn low_memory_warning(&amp;self, level: u32);</span>
 
     <span class="doccomment">/// version property</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>

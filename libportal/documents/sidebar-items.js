@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["DocumentsProxy","The interface lets sandboxed applications make files from the outside world available to sandboxed applications in a controlled way."],["FileTransferProxy","The interface operates as a middle-man between apps when transferring files via drag-and-drop or copy-paste, taking care of the necessary exporting of files in the document portal."]]});
+initSidebarItems({"mod":[["document","Interact with `org.freedesktop.portal.Documents` interface."],["file_transfer","Interact with `org.freedesktop.portal.FileTransfer` interface."]]});

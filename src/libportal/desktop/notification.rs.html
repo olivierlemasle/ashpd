@@ -58,10 +58,52 @@
 <span id="58">58</span>
 <span id="59">59</span>
 <span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Value</span>;
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Notification</span> {
+    <span class="doccomment">/// User-visible string to display as the title.</span>
+    <span class="kw">pub</span> <span class="ident">title</span>: <span class="ident">String</span>,
+    <span class="doccomment">/// User-visible string to display as the body.</span>
+    <span class="kw">pub</span> <span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="comment">// Serialized icon (e.g using gio::Icon::serialize)</span>
+    <span class="comment">// icon: Option&lt;String&gt;,</span>
+    <span class="doccomment">/// The priority for the notification. Supported values: low, normal, high, urgent.</span>
+    <span class="kw">pub</span> <span class="ident">priority</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Name of an action that is exported by the application. This action will be activated when the user clicks on the notification.</span>
+    <span class="kw">pub</span> <span class="ident">default_action</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="comment">// Target parameter to send along when activating the default action.</span>
+    <span class="comment">//pub default_action_target: Option&lt;OwnedValue&gt;,</span>
+    <span class="comment">// Array of buttons to add to the notification.</span>
+    <span class="comment">// pub buttons: Vec&lt;Button&gt;,</span>
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Button</span> {
+    <span class="doccomment">/// User-visible label for the button. Mandatory.</span>
+    <span class="kw">pub</span> <span class="ident">label</span>: <span class="ident">String</span>,
+    <span class="doccomment">/// Name of an action that is exported by the application. The action will be activated when the user clicks on the button.</span>
+    <span class="kw">pub</span> <span class="ident">action</span>: <span class="ident">String</span>,
+    <span class="comment">// Target parameter to send along when activating the action.</span>
+    <span class="comment">//pub target: Option&lt;OwnedValue&gt;,</span>
+}
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>,
@@ -93,17 +135,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `id` - Application-provided ID for this notification</span>
     <span class="doccomment">/// * `notification` - HashMap</span>
-    <span class="doccomment">///     * `title` - User-visible string to display as the title.</span>
-    <span class="doccomment">///     * `body` - User-visible string to display as the body.</span>
-    <span class="doccomment">///     * `icon` -</span>
-    <span class="doccomment">///     * `priority` - The priority for the notification. Supported values: low, normal, high, urgent.</span>
-    <span class="doccomment">///     * `default-action` - Name of an action that is exported by the application. This action will be activated when the user clicks on the notification.</span>
-    <span class="doccomment">///     * `default-action-target` - Target parameter to send along when activating the default action.</span>
-    <span class="doccomment">///     * `buttons` - Array of serialized buttons to add to the notification.</span>
-    <span class="doccomment">///         * `label` - User-visible label for the button. Mandatory.</span>
-    <span class="doccomment">///         * `action` - Name of an action that is exported by the application. The action will be activated when the user clicks on the button. Mandatory.</span>
-    <span class="doccomment">///         * `target` - Target parameter to send along when activating the action.</span>
-    <span class="kw">fn</span> <span class="ident">add_notification</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">notification</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">add_notification</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">notification</span>: <span class="ident">Notification</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Withdraws a notification.</span>
     <span class="doccomment">///</span>
@@ -116,7 +148,7 @@
     <span class="comment">// fn action_invoked(&amp;self, id: &amp;str, action: &amp;str, params: &amp;[Value]);</span>
 
     <span class="doccomment">/// version property</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>

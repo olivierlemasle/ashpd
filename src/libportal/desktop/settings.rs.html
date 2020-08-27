@@ -41,11 +41,12 @@
 <span id="41">41</span>
 <span id="42">42</span>
 <span id="43">43</span>
-<span id="44">44</span>
-<span id="45">45</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+
+<span class="doccomment">/// A HashMap of the key: value found on a specific namespace</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Namespace</span> <span class="op">=</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span>;
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Settings&quot;</span>,
@@ -63,7 +64,6 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `namespace` - Namespace to look up key in</span>
     <span class="doccomment">/// * `key` - The key to get</span>
-    <span class="doccomment">///</span>
     <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">namespace</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Reads a single value. Returns an error on any unknown namespace or key.</span>
@@ -76,17 +76,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">///     If `namespaces` is an empty array or contains an empty string it matches all.</span>
     <span class="doccomment">///     Globbing is supported but only for trailing sections, e.g. &quot;org.example.*&quot;.</span>
-    <span class="doccomment">///</span>
-    <span class="kw">fn</span> <span class="ident">read_all</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">read_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Namespace</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="comment">// TODO: re-enable once signals are available</span>
     <span class="comment">// fn setting_changed(&amp;self, namespace: &amp;str, key: &amp;str, value: zvariant::OwnedValue);</span>
 
     <span class="doccomment">/// version property</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>

@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["WallpaperSetOn",""]],"struct":[["WallpaperOptions",""],["WallpaperProxy","The interface lets sandboxed applications set the user's desktop background picture."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SettingsProxy","The interface provides read-only access to a small number of host settings required for toolkits similar to XSettings. It is not for general purpose settings."]],"type":[["Namespace","A HashMap of the key: value found on a specific namespace"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PickColorOptions",""],["ScreenshotOptions",""],["ScreenshotProxy","The interface lets sandboxed applications request a screenshot."]]});

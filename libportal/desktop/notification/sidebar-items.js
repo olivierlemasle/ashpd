@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Button",""],["Notification",""],["NotificationProxy","The interface lets sandboxed applications send and withdraw notifications."]]});

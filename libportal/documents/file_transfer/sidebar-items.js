@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FileTransferProxy","The interface operates as a middle-man between apps when transferring files via drag-and-drop or copy-paste, taking care of the necessary exporting of files in the document portal."],["TransferOptions",""]]});

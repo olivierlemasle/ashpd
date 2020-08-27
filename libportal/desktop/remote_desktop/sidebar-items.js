@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["CreateRemoteOptions",""],["RemoteDesktopProxy","The interface lets sandboxed applications create remote desktop sessions."],["SelectDevicesOptions",""],["StartRemoteOptions",""]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["GameModeProxy","The interface lets sandboxed applications access GameMode from within the sandbox."]]});
