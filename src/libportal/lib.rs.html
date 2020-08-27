@@ -17,7 +17,21 @@
 <span id="17">17</span>
 <span id="18">18</span>
 <span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="doccomment">//! libportal, the portal gun getting oxedized, the Rust wrapper for the XDG portals DBus interfaces.</span>
+<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! let connection = zbus::Connection::new_session()?;</span>
+<span class="doccomment">//! let proxy = ScreenshotProxy::new(&amp;connection)?;</span>
+<span class="doccomment">//! let request = proxy.pick_color(&quot;handle&quot;, PickColorOptions::default())?;</span>
+<span class="doccomment">//! ```</span>
+
 <span class="doccomment">/// Implementation of the various portals under `/org/freedesktop/portal/desktop`</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">desktop</span>;
 <span class="doccomment">/// Implementation of the various portals under `/org/freedesktop/portal/documents`</span>

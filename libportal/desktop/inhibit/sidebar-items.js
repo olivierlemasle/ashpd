@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["CreateMonitorOptions",""],["InhibitOptions",""],["InhibitProxy","The interface lets sandboxed applications inhibit the user session from ending, suspending, idling or getting switched away."]]});
+initSidebarItems({"struct":[["CreateMonitorOptions","Specified options for a create inhibit monitor request."],["InhibitOptions","Specified options of an inhibit request."],["InhibitProxy","The interface lets sandboxed applications inhibit the user session from ending, suspending, idling or getting switched away."]]});

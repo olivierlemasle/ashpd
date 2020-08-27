@@ -74,11 +74,15 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A notification</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Notification</span> {
     <span class="doccomment">/// User-visible string to display as the title.</span>
     <span class="kw">pub</span> <span class="ident">title</span>: <span class="ident">String</span>,
@@ -95,7 +99,9 @@
     <span class="comment">// Array of buttons to add to the notification.</span>
     <span class="comment">// pub buttons: Vec&lt;Button&gt;,</span>
 }
+
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A notification button</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Button</span> {
     <span class="doccomment">/// User-visible label for the button. Mandatory.</span>
     <span class="kw">pub</span> <span class="ident">label</span>: <span class="ident">String</span>,

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["CameraAccessOptions",""],["CameraProxy","The interface lets sandboxed applications access camera devices, such as web cams."]]});
+initSidebarItems({"struct":[["CameraAccessOptions","Specified options for a camera access request."],["CameraProxy","The interface lets sandboxed applications access camera devices, such as web cams."]]});

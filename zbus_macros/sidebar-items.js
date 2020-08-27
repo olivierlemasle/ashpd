@@ -1,0 +1,1 @@
+initSidebarItems({"attr":[["dbus_interface","Attribute macro for implementing a D-Bus interface."],["dbus_proxy","Attribute macro for defining a D-Bus proxy (using zbus [`Proxy`])."]],"derive":[["DBusError","Derive macro for defining a D-Bus error."]]});

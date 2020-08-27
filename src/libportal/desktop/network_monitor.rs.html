@@ -85,6 +85,9 @@
 <span id="85">85</span>
 <span id="86">86</span>
 <span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
@@ -92,10 +95,13 @@
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">deny_unknown_fields</span>)]</span>
+<span class="doccomment">/// The network status, composed of the avaiability, metered &amp; connectivity</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NetworkStatus</span> {
+    <span class="doccomment">/// Whether the network is considered available.</span>
     <span class="kw">pub</span> <span class="ident">available</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// Whether the network is considered metered.</span>
     <span class="kw">pub</span> <span class="ident">metered</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// More detailed information about the host&#39;s network connectivity</span>
     <span class="kw">pub</span> <span class="ident">connectivity</span>: <span class="ident">u32</span>,
 }
 
@@ -111,7 +117,7 @@
     <span class="ident">CaptivePortal</span>,
     <span class="doccomment">/// The host connected to a network, and can reach the full internet.</span>
     <span class="ident">FullNetwork</span>,
-    <span class="comment">// Invalid value</span>
+    <span class="doccomment">/// Invalid value</span>
     <span class="ident">Unknown</span>,
 }
 

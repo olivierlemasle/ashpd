@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["CreateRemoteOptions",""],["RemoteDesktopProxy","The interface lets sandboxed applications create remote desktop sessions."],["SelectDevicesOptions",""],["StartRemoteOptions",""]]});
+initSidebarItems({"struct":[["CreateRemoteOptions","Specified options on a create a remote session request."],["RemoteDesktopProxy","The interface lets sandboxed applications create remote desktop sessions."],["SelectDevicesOptions","Specified options on a select devices request."],["StartRemoteOptions","Specified options on a start remote desktop request."]]});

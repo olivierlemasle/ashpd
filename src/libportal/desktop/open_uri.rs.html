@@ -78,14 +78,14 @@
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">deny_unknown_fields</span>)]</span>
+<span class="doccomment">/// Specified options for an open directory request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenDirOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">deny_unknown_fields</span>)]</span>
+<span class="doccomment">/// Specified options for an open file request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,

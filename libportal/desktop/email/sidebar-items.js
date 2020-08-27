@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["EmailOptions",""],["EmailProxy","The interface lets sandboxed applications request sending an email."]]});
+initSidebarItems({"struct":[["EmailOptions","Specified options for a compose email request."],["EmailProxy","The interface lets sandboxed applications request sending an email."]]});

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["PreparePrintOptions",""],["PrintOptions",""],["PrintPageSetup",""],["PrintProxy","The interface lets sandboxed applications print."],["PrintSettings",""]]});
+initSidebarItems({"struct":[["PreparePrintOptions","Specified options on a prepare print request."],["PrintOptions","Specified options on a print request."],["PrintPageSetup","Setup the printed pages."],["PrintProxy","The interface lets sandboxed applications print."],["PrintSettings","Print settings to set in the print dialog."]]});

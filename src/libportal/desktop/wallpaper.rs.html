@@ -101,6 +101,10 @@
 <span id="101">101</span>
 <span id="102">102</span>
 <span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="self">self</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
@@ -110,9 +114,13 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="doccomment">/// Where to set the wallpaper on.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">WallpaperSetOn</span> {
+    <span class="doccomment">/// Set the wallpaper only on the lockscreen.</span>
     <span class="ident">Lockscreen</span>,
+    <span class="doccomment">/// Set the wallpaper only on the background.</span>
     <span class="ident">Background</span>,
+    <span class="doccomment">/// Set the wallpaper on both lockscreen and background.</span>
     <span class="ident">Both</span>,
 }
 
@@ -138,7 +146,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">deny_unknown_fields</span>)]</span>
+<span class="doccomment">/// Specified options for a set wallpaper request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WallpaperOptions</span> {
     <span class="doccomment">/// Whether to show a preview of the picture</span>
     <span class="doccomment">/// Note that the portal may decide to show a preview even if this option is not set</span>
