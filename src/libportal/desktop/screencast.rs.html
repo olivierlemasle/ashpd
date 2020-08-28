@@ -124,13 +124,27 @@
 <span id="124">124</span>
 <span id="125">125</span>
 <span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
+<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Value</span>;
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Specified options on a create a screencast session request.</span>
@@ -140,6 +154,7 @@
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
     <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
+
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Specified options on a select sources request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectSourcesOptions</span> {
@@ -151,6 +166,24 @@
     <span class="kw">pub</span> <span class="ident">multiple</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// Determines how the cursor will be drawn in the screen cast stream.</span>
     <span class="kw">pub</span> <span class="ident">cursor_mode</span>: <span class="ident">u32</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SourceType</span> {
+    <span class="ident">Monitor</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="ident">Window</span> <span class="op">=</span> <span class="number">2</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">CursorMode</span> {
+    <span class="doccomment">/// The cursor is not part of the screen cast stream.</span>
+    <span class="ident">Hidden</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="doccomment">/// The cursor is embedded as part of the stream buffers.</span>
+    <span class="ident">Embedded</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="doccomment">/// The cursor is not part of the screen cast stream, but sent as PipeWire stream metadata.</span>
+    <span class="ident">Metadata</span> <span class="op">=</span> <span class="number">4</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
@@ -232,18 +265,11 @@
         <span class="ident">options</span>: <span class="ident">StartCastOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Available cursor mode. Currently defined modes are:</span>
-    <span class="doccomment">/// 1: Hidden. The cursor is not part of the screen cast stream.</span>
-    <span class="doccomment">/// 2: Embedded: The cursor is embedded as part of the stream buffers.</span>
-    <span class="doccomment">/// 4: Metadata: The cursor is not part of the screen cast stream, but sent as PipeWire stream metadata.</span>
-    <span class="doccomment">/// FIXME: switch to an enum</span>
+    <span class="doccomment">/// Available cursor mode.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
     <span class="kw">fn</span> <span class="ident">available_cursor_modes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Available source types. Currently defined types are:</span>
-    <span class="doccomment">/// 1: Monitor</span>
-    <span class="doccomment">/// 2: Window</span>
-    <span class="doccomment">/// FIXME: switch to an enum</span>
+    <span class="doccomment">/// Available source types.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
     <span class="kw">fn</span> <span class="ident">available_source_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 

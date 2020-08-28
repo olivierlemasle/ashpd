@@ -80,10 +80,16 @@
 <span id="80">80</span>
 <span id="81">81</span>
 <span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
+<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Specified options for a create inhibit monitor request.</span>
@@ -101,6 +107,15 @@
     <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// User-visible reason for the inhibition.</span>
     <span class="kw">pub</span> <span class="ident">reason</span>: <span class="ident">String</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InhibitFlags</span> {
+    <span class="ident">Logout</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="ident">UserSwitch</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="ident">Suspend</span> <span class="op">=</span> <span class="number">3</span>,
+    <span class="ident">Idle</span> <span class="op">=</span> <span class="number">4</span>,
 }
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
@@ -137,11 +152,6 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `parent_window` - The application window identifier</span>
     <span class="doccomment">/// * `flags` - The flags determine what changes are inhibited</span>
-    <span class="doccomment">///     1 - Logout</span>
-    <span class="doccomment">///     2 - User switch</span>
-    <span class="doccomment">///     3 - Suspend</span>
-    <span class="doccomment">///     4 - Idle</span>
-    <span class="doccomment">///     FIXME: switch to an enum</span>
     <span class="doccomment">/// * `options` - [`InhibitOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`InhibitOptions`]: ./struct.InhibitOptions.html</span>
@@ -149,7 +159,7 @@
     <span class="kw">fn</span> <span class="ident">inhibit</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
-        <span class="ident">flags</span>: <span class="ident">u32</span>,
+        <span class="ident">flags</span>: <span class="ident">InhibitFlags</span>,
         <span class="ident">options</span>: <span class="ident">InhibitOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
