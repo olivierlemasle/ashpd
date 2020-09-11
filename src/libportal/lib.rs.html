@@ -26,12 +26,24 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! libportal, the portal gun getting oxedized, the Rust wrapper for the XDG portals DBus interfaces.</span>
-<span class="doccomment">//! ```ignore</span>
-<span class="doccomment">//! let connection = zbus::Connection::new_session()?;</span>
-<span class="doccomment">//! let proxy = ScreenshotProxy::new(&amp;connection)?;</span>
-<span class="doccomment">//! let request = proxy.pick_color(&quot;handle&quot;, PickColorOptions::default())?;</span>
+<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! use libportal::desktop::screenshot::{ScreenshotProxy, PickColorOptions};</span>
+<span class="doccomment">//! use libportal::WindowIdentifier;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() -&gt; zbus::fdo::Result&lt;()&gt; {</span>
+<span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
+<span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection)?;</span>
+<span class="doccomment">//!     let request = proxy.pick_color(WindowIdentifier::default(), PickColorOptions::default())?;</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
 <span class="doccomment">/// Implementation of the various portals under `/org/freedesktop/portal/desktop`</span>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus_macros-1.1.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zbus_macros/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/zbus-d64361667fdae375/6c4269a/zbus_macros/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zbus_macros/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -177,7 +177,6 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
-<span id="180">180</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">doc</span>(
     <span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png&quot;</span>
@@ -259,7 +258,7 @@
 <span class="doccomment">/// properties or signal depending on the item attributes. It will implement the [`Interface`] trait</span>
 <span class="doccomment">/// `for T` on your behalf, to handle the message dispatching and introspection support.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The methods accept the `dbus_interface` attributes:</span>
+<span class="doccomment">/// The methods accepts the `dbus_interface` attributes:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// * `name` - override the D-Bus name (pascal case form of the method by default)</span>
 <span class="doccomment">///</span>
@@ -270,16 +269,14 @@
 <span class="doccomment">///   block will be expanded to emit the signal from the object path associated with the interface</span>
 <span class="doccomment">///   instance.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///   (TODO: there is no facility yet to emit a signal outside of a dispatched handler - use</span>
-<span class="doccomment">///   the [`Connection::emit_signal()`] manually as a lower-level solution).</span>
+<span class="doccomment">///   You can call a signal method from a an interface method, or from an [`ObjectServer::with`]</span>
+<span class="doccomment">///   function.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///# use std::error::Error;</span>
 <span class="doccomment">/// use zbus_macros::dbus_interface;</span>
-<span class="doccomment">/// use std::rc::Rc;</span>
-<span class="doccomment">/// use std::cell::RefCell;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// struct Example {</span>
 <span class="doccomment">///     some_data: String,</span>
@@ -309,6 +306,7 @@
 <span class="doccomment">/// See also [`ObjectServer`] documentation to learn how to export an interface over a `Connection`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`ObjectServer`]: https://docs.rs/zbus/1.0.0/zbus/struct.ObjectServer.html</span>
+<span class="doccomment">/// [`ObjectServer::with`]: https://docs.rs/zbus/1.2.0/zbus/struct.ObjectServer.html#method.with</span>
 <span class="doccomment">/// [`Connection::emit_signal()`]: https://docs.rs/zbus/1.0.0/zbus/struct.Connection.html#method.emit_signal</span>
 <span class="doccomment">/// [`Interface`]: https://docs.rs/zbus/1.0.0/zbus/trait.Interface.html</span>
 <span class="attribute">#[<span class="ident">proc_macro_attribute</span>]</span>

@@ -157,13 +157,73 @@
 <span id="157">157</span>
 <span id="158">158</span>
 <span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
+<span class="kw">use</span> <span class="ident">strum_macros</span>::<span class="ident">EnumString</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::<span class="ident">Type</span>;
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Flags</span> {
+    <span class="ident">ReuseExisting</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="ident">Persistent</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="ident">AsNeededByApp</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="ident">ExportDirectory</span> <span class="op">=</span> <span class="number">8</span>,
+}
+
+<span class="doccomment">/// * `flags` - 1 == reuse_existing, 2 == persistent, 4 == as-needed-by-app, 8 = export directory</span>
 <span class="doccomment">/// A `HashMap` mapping application IDs to the permissions for that application</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Permissions</span> <span class="op">=</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Permission</span> {
+    <span class="ident">Read</span>,
+    <span class="ident">Write</span>,
+    <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;grant-permissions&quot;</span>)]</span>
+    <span class="ident">GrantPermissions</span>,
+    <span class="ident">Delte</span>,
+}
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>,
@@ -206,15 +266,15 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `o_path_fds` - open file descriptors for the files to export</span>
-    <span class="doccomment">/// * `flags` - 1 == reuse_existing, 2 == persistent, 4 == as-needed-by-app, 8 = export directory</span>
+    <span class="doccomment">/// * `flags` - a `Flags` enum.</span>
     <span class="doccomment">/// * `app_id` - an application ID, or empty string</span>
     <span class="doccomment">/// * `permissions` - the permissions to grant, possible values are &#39;read&#39;, &#39;write&#39;, &#39;grant-permissions&#39; and &#39;delete&#39;</span>
     <span class="kw">fn</span> <span class="ident">add_full</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_fds</span>: <span class="kw-2">&amp;</span>[<span class="ident">RawFd</span>],
-        <span class="ident">flags</span>: <span class="ident">u32</span>,
+        <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
         <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
+        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">Permission</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span>)<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Creates an entry in the document store for writing a new file.</span>
@@ -245,16 +305,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `o_path_fd` - open file descriptor for the parent directory</span>
     <span class="doccomment">/// * `filename` - the basename for the file</span>
-    <span class="doccomment">/// * `flags` - 1 == reuse_existing, 2 == persistent, 4 == as-needed-by-app, 8 = export directory</span>
+    <span class="doccomment">/// * `flags` - a `Flags`</span>
     <span class="doccomment">/// * `app_id` - an application ID, or empty string</span>
-    <span class="doccomment">/// * `permissions` - the permissions to grant, possible values are &#39;read&#39;, &#39;write&#39;, &#39;grant-permissions&#39; and &#39;delete&#39;</span>
+    <span class="doccomment">/// * `permissions` - the permissions to grant.</span>
     <span class="kw">fn</span> <span class="ident">add_named_full</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_fd</span>: <span class="ident">RawFd</span>,
         <span class="ident">filename</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-        <span class="ident">flags</span>: <span class="ident">u32</span>,
+        <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
         <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
+        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">Permission</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span>)<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Removes an entry from the document store. The file itself is not deleted.</span>
@@ -271,7 +331,12 @@
     <span class="kw">fn</span> <span class="ident">get_mount_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// GrantPermissions method</span>
-    <span class="kw">fn</span> <span class="ident">grant_permissions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">grant_permissions</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">Permission</span>],
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Gets the filesystem path and application permissions for a document store entry.</span>
     <span class="doccomment">///</span>
@@ -310,8 +375,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `doc_id` - The ID of the file in the document store</span>
     <span class="doccomment">/// * `app_id` - The ID of the application from which permissions are revoked</span>
-    <span class="doccomment">/// * `permissions` - The permissions to revoke, possible values are &#39;read&#39;, &#39;write&#39;, &#39;grant-permissions&#39; and &#39;delete&#39;</span>
-    <span class="kw">fn</span> <span class="ident">revoke_permissions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="doccomment">/// * `permissions` - The permissions to revoke.</span>
+    <span class="kw">fn</span> <span class="ident">revoke_permissions</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">Permission</span>],
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// version property</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>

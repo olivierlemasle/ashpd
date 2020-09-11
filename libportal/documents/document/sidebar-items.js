@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["DocumentsProxy","The interface lets sandboxed applications make files from the outside world available to sandboxed applications in a controlled way."]],"type":[["Permissions","A `HashMap` mapping application IDs to the permissions for that application"]]});
+initSidebarItems({"enum":[["Flags",""],["Permission",""]],"struct":[["DocumentsProxy","The interface lets sandboxed applications make files from the outside world available to sandboxed applications in a controlled way."]],"type":[["Permissions","`flags``HashMap`"]]});

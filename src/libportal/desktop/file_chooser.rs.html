@@ -137,10 +137,23 @@
 <span id="137">137</span>
 <span id="138">138</span>
 <span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ResponseType</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">OwnedObjectPath</span>;
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Specified options for a open file request.</span>
@@ -150,11 +163,11 @@
     <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="kw">pub</span> <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether the dialog should be modal.</span>
-    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether multiple files can be selected or not.</span>
-    <span class="kw">pub</span> <span class="ident">multiple</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">multiple</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether to select for folders instead of files.</span>
-    <span class="kw">pub</span> <span class="ident">directory</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">directory</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="comment">// List of serialized file filters.</span>
     <span class="comment">// pub filters:</span>
     <span class="comment">// Request that this filter be set by default at dialog creation.</span>
@@ -171,13 +184,13 @@
     <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="kw">pub</span> <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether the dialog should be modal.</span>
-    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Suggested filename.</span>
     <span class="kw">pub</span> <span class="ident">current_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Suggested folder to save the file in.</span>
-    <span class="kw">pub</span> <span class="ident">current_folder</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The current file (when saving an existing file).</span>
-    <span class="kw">pub</span> <span class="ident">current_file</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">current_file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="comment">// List of serialized file filters.</span>
     <span class="comment">// pub filters:</span>
     <span class="comment">// Request that this filter be set by default at dialog creation.</span>
@@ -194,13 +207,22 @@
     <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="kw">pub</span> <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether the dialog should be modal.</span>
-    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="comment">// List of serialized combo boxes to add to the file chooser</span>
     <span class="comment">// pub choices:</span>
     <span class="doccomment">/// Suggested folder to save the file in.</span>
-    <span class="kw">pub</span> <span class="ident">current_folder</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// An array of file names to be saved.</span>
-    <span class="kw">pub</span> <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">files</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserResponse</span>(<span class="kw">pub</span> <span class="ident">ResponseType</span>, <span class="kw">pub</span> <span class="ident">FileChooserResult</span>);
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">TypeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserResult</span> {
+    <span class="kw">pub</span> <span class="ident">uris</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span>,
 }
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
@@ -228,7 +250,7 @@
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
         <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Asks for a location to save a file.</span>
     <span class="doccomment">///</span>
@@ -247,7 +269,7 @@
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
         <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">options</span>: <span class="ident">SaveFileOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Asks for a folder as a location to save one or more files.</span>
     <span class="doccomment">/// The names of the files will be used as-is and appended to the</span>
@@ -271,7 +293,7 @@
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
         <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">options</span>: <span class="ident">SaveFilesOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// version property</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>

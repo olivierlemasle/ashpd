@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["TrashProxy","The interface lets sandboxed applications send files to the trashcan."]]});
+initSidebarItems({"enum":[["TrashStatus",""]],"struct":[["TrashProxy","The interface lets sandboxed applications send files to the trashcan."]]});

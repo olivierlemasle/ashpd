@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus_macros-1.1.0/src/iface.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iface.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zbus_macros/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/zbus-d64361667fdae375/6c4269a/zbus_macros/src/iface.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iface.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zbus_macros/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -507,14 +507,47 @@
 <span id="507">507</span>
 <span id="508">508</span>
 <span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">proc_macro</span>::<span class="ident">TokenStream</span>;
 <span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">quote</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">syn</span>::{
-    <span class="self">self</span>, <span class="ident">parse_quote</span>, <span class="ident">AngleBracketedGenericArguments</span>, <span class="ident">AttributeArgs</span>, <span class="ident">FnArg</span>, <span class="ident">ImplItem</span>, <span class="ident">ItemImpl</span>,
-    <span class="ident">Lit</span>::<span class="ident">Str</span>, <span class="ident">Meta</span>::<span class="ident">NameValue</span>, <span class="ident">MetaNameValue</span>, <span class="ident">NestedMeta</span>, <span class="ident">PatType</span>, <span class="ident">PathArguments</span>, <span class="ident">ReturnType</span>,
-    <span class="ident">Signature</span>, <span class="ident">Type</span>, <span class="ident">TypePath</span>,
+    <span class="self">self</span>, <span class="ident">parse_quote</span>, <span class="ident">AngleBracketedGenericArguments</span>, <span class="ident">AttributeArgs</span>, <span class="ident">FnArg</span>, <span class="ident">Ident</span>, <span class="ident">ImplItem</span>,
+    <span class="ident">ItemImpl</span>, <span class="ident">Lit</span>::<span class="ident">Str</span>, <span class="ident">Meta</span>::<span class="ident">NameValue</span>, <span class="ident">MetaNameValue</span>, <span class="ident">NestedMeta</span>, <span class="ident">PatType</span>, <span class="ident">PathArguments</span>,
+    <span class="ident">ReturnType</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>, <span class="ident">TypePath</span>,
 };
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utils</span>::<span class="kw-2">*</span>;
@@ -539,8 +572,7 @@
 }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand</span>(<span class="ident">args</span>: <span class="ident">AttributeArgs</span>, <span class="kw-2">mut</span> <span class="ident">input</span>: <span class="ident">ItemImpl</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
-    <span class="kw">let</span> <span class="ident">zbus</span> <span class="op">=</span> <span class="ident">get_crate_ident</span>(<span class="string">&quot;zbus&quot;</span>);
-    <span class="kw">let</span> <span class="ident">zvariant</span> <span class="op">=</span> <span class="ident">get_crate_ident</span>(<span class="string">&quot;zvariant&quot;</span>);
+    <span class="kw">let</span> <span class="ident">zbus</span> <span class="op">=</span> <span class="ident">get_zbus_crate_ident</span>();
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">properties</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">set_dispatch</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>();
@@ -642,7 +674,7 @@
         <span class="ident">introspect_add_input_args</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">intro_args</span>, <span class="kw-2">&amp;</span><span class="ident">inputs</span>, <span class="ident">is_signal</span>);
         <span class="kw">let</span> <span class="ident">is_result_output</span> <span class="op">=</span> <span class="ident">introspect_add_output_args</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">intro_args</span>, <span class="kw-2">&amp;</span><span class="ident">output</span>);
 
-        <span class="kw">let</span> (<span class="ident">args_from_msg</span>, <span class="ident">args</span>) <span class="op">=</span> <span class="ident">get_args_from_inputs</span>(<span class="kw-2">&amp;</span><span class="ident">inputs</span>);
+        <span class="kw">let</span> (<span class="ident">args_from_msg</span>, <span class="ident">args</span>) <span class="op">=</span> <span class="ident">get_args_from_inputs</span>(<span class="kw-2">&amp;</span><span class="ident">inputs</span>, <span class="kw-2">&amp;</span><span class="ident">zbus</span>);
 
         <span class="kw">let</span> <span class="ident">reply</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">is_result_output</span> {
             <span class="macro">quote</span><span class="macro">!</span>(<span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">reply</span> {
@@ -673,7 +705,12 @@
             <span class="ident">introspect_add_signal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">introspect</span>, <span class="kw-2">&amp;</span><span class="ident">member_name</span>, <span class="kw-2">&amp;</span><span class="ident">intro_args</span>);
 
             <span class="ident">method</span>.<span class="ident">block</span> <span class="op">=</span> <span class="macro">parse_quote</span><span class="macro">!</span>({
-                #<span class="ident">zbus</span>::<span class="ident">ObjectServer</span>::<span class="ident">local_node_emit_signal</span>(<span class="prelude-val">None</span>, #<span class="ident">iface_name</span>, #<span class="ident">member_name</span>, <span class="kw-2">&amp;</span>(#<span class="ident">args</span>))
+                ::#<span class="ident">zbus</span>::<span class="ident">ObjectServer</span>::<span class="ident">local_node_emit_signal</span>(
+                    <span class="prelude-val">None</span>,
+                    #<span class="ident">iface_name</span>,
+                    #<span class="ident">member_name</span>,
+                    <span class="kw-2">&amp;</span>(#<span class="ident">args</span>),
+                )
             });
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">is_property</span> {
             <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">properties</span>
@@ -693,7 +730,7 @@
                     #<span class="ident">member_name</span> <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span>.<span class="ident">try_into</span>() {
                             <span class="prelude-val">Ok</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">val</span>,
-                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(#<span class="ident">zbus</span>::<span class="ident">MessageError</span>::<span class="ident">Variant</span>(<span class="ident">e</span>).<span class="ident">into</span>())),
+                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(::#<span class="ident">zbus</span>::<span class="ident">MessageError</span>::<span class="ident">Variant</span>(<span class="ident">e</span>).<span class="ident">into</span>())),
                         };
                         <span class="prelude-val">Some</span>(#<span class="ident">set_call</span>)
                     }
@@ -705,13 +742,16 @@
 
                 <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(
                     #<span class="ident">member_name</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(#<span class="ident">zvariant</span>::<span class="ident">Value</span>::<span class="ident">from</span>(<span class="self">self</span>.#<span class="ident">ident</span>()).<span class="ident">into</span>()))
+                        <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(::#<span class="ident">zbus</span>::<span class="ident">export</span>::<span class="ident">zvariant</span>::<span class="ident">Value</span>::<span class="ident">from</span>(<span class="self">self</span>.#<span class="ident">ident</span>()).<span class="ident">into</span>()))
                     },
                 );
                 <span class="ident">get_dispatch</span>.<span class="ident">extend</span>(<span class="ident">q</span>);
 
                 <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(
-                    <span class="ident">props</span>.<span class="ident">insert</span>(#<span class="ident">member_name</span>.<span class="ident">to_string</span>(), #<span class="ident">zvariant</span>::<span class="ident">Value</span>::<span class="ident">from</span>(<span class="self">self</span>.#<span class="ident">ident</span>()).<span class="ident">into</span>());
+                    <span class="ident">props</span>.<span class="ident">insert</span>(
+                        #<span class="ident">member_name</span>.<span class="ident">to_string</span>(),
+                        ::#<span class="ident">zbus</span>::<span class="ident">export</span>::<span class="ident">zvariant</span>::<span class="ident">Value</span>::<span class="ident">from</span>(<span class="self">self</span>.#<span class="ident">ident</span>()).<span class="ident">into</span>(),
+                    );
                 );
                 <span class="ident">get_all</span>.<span class="ident">extend</span>(<span class="ident">q</span>)
             }
@@ -743,27 +783,39 @@
     <span class="kw">let</span> <span class="ident">iface_impl</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span> {
         #<span class="ident">input</span>
 
-        <span class="kw">impl</span> #<span class="ident">generics</span> #<span class="ident">zbus</span>::<span class="ident">Interface</span> <span class="kw">for</span> #<span class="ident">self_ty</span>
+        <span class="kw">impl</span> #<span class="ident">generics</span> ::#<span class="ident">zbus</span>::<span class="ident">Interface</span> <span class="kw">for</span> #<span class="ident">self_ty</span>
         #<span class="ident">where_clause</span>
         {
             <span class="kw">fn</span> <span class="ident">name</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
                 #<span class="ident">iface_name</span>
             }
 
-            <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">property_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>#<span class="ident">zbus</span>::<span class="ident">fdo</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>#<span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">get</span>(
+                <span class="kw-2">&amp;</span><span class="self">self</span>,
+                <span class="ident">property_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>::#<span class="ident">zbus</span>::<span class="ident">fdo</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>::#<span class="ident">zbus</span>::<span class="ident">export</span>::<span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span><span class="op">&gt;</span> {
                 <span class="kw">match</span> <span class="ident">property_name</span> {
                     #<span class="ident">get_dispatch</span>
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">get_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, #<span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">props</span>: <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, #<span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>::<span class="ident">new</span>();
+            <span class="kw">fn</span> <span class="ident">get_all</span>(
+                <span class="kw-2">&amp;</span><span class="self">self</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, ::#<span class="ident">zbus</span>::<span class="ident">export</span>::<span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">props</span>: <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span><span class="op">&lt;</span>
+                    <span class="ident">String</span>,
+                    ::#<span class="ident">zbus</span>::<span class="ident">export</span>::<span class="ident">zvariant</span>::<span class="ident">OwnedValue</span>,
+                <span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>::<span class="ident">new</span>();
                 #<span class="ident">get_all</span>
                 <span class="ident">props</span>
             }
 
-            <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">property_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>#<span class="ident">zvariant</span>::<span class="ident">Value</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>#<span class="ident">zbus</span>::<span class="ident">fdo</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">set</span>(
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+                <span class="ident">property_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                <span class="ident">value</span>: <span class="kw-2">&amp;</span>::#<span class="ident">zbus</span>::<span class="ident">export</span>::<span class="ident">zvariant</span>::<span class="ident">Value</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>::#<span class="ident">zbus</span>::<span class="ident">fdo</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span> {
                 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryInto</span>;
 
                 <span class="kw">match</span> <span class="ident">property_name</span> {
@@ -772,14 +824,24 @@
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">call</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">c</span>: <span class="kw-2">&amp;</span>#<span class="ident">zbus</span>::<span class="ident">Connection</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span>#<span class="ident">zbus</span>::<span class="ident">Message</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>#<span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">call</span>(
+                <span class="kw-2">&amp;</span><span class="self">self</span>,
+                <span class="ident">c</span>: <span class="kw-2">&amp;</span>::#<span class="ident">zbus</span>::<span class="ident">Connection</span>,
+                <span class="ident">m</span>: <span class="kw-2">&amp;</span>::#<span class="ident">zbus</span>::<span class="ident">Message</span>,
+                <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>::#<span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span> {
                 <span class="kw">match</span> <span class="ident">name</span> {
                     #<span class="ident">call_dispatch</span>
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">call_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="kw-2">&amp;</span>#<span class="ident">zbus</span>::<span class="ident">Connection</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span>#<span class="ident">zbus</span>::<span class="ident">Message</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>#<span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">call_mut</span>(
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+                <span class="ident">c</span>: <span class="kw-2">&amp;</span>::#<span class="ident">zbus</span>::<span class="ident">Connection</span>,
+                <span class="ident">m</span>: <span class="kw-2">&amp;</span>::#<span class="ident">zbus</span>::<span class="ident">Message</span>,
+                <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+            ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span>::#<span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span> {
                 <span class="kw">match</span> <span class="ident">name</span> {
                     #<span class="ident">call_mut_dispatch</span>
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
@@ -795,7 +857,7 @@
                     <span class="ident">indent</span> <span class="op">=</span> <span class="ident">level</span>
                 ).<span class="ident">unwrap</span>();
                 {
-                    <span class="kw">use</span> #<span class="ident">zvariant</span>::<span class="ident">Type</span>;
+                    <span class="kw">use</span> ::#<span class="ident">zbus</span>::<span class="ident">export</span>::<span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
                     <span class="kw">let</span> <span class="ident">level</span> <span class="op">=</span> <span class="ident">level</span> <span class="op">+</span> <span class="number">2</span>;
                     #<span class="ident">introspect</span>
@@ -810,18 +872,18 @@
 
 <span class="kw">fn</span> <span class="ident">get_args_from_inputs</span>(
     <span class="ident">inputs</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">PatType</span>],
+    <span class="ident">zbus</span>: <span class="kw-2">&amp;</span><span class="ident">Ident</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span>, <span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span>) {
     <span class="kw">if</span> <span class="ident">inputs</span>.<span class="ident">is_empty</span>() {
         (<span class="macro">quote</span><span class="macro">!</span>(), <span class="macro">quote</span><span class="macro">!</span>())
     } <span class="kw">else</span> {
-        <span class="kw">let</span> <span class="ident">zbus</span> <span class="op">=</span> <span class="ident">get_crate_ident</span>(<span class="string">&quot;zbus&quot;</span>);
         <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">inputs</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="ident">t</span>.<span class="ident">pat</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="kw">let</span> <span class="ident">tys</span> <span class="op">=</span> <span class="ident">inputs</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="ident">t</span>.<span class="ident">ty</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
 
         <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(#(#<span class="ident">args</span>),<span class="kw-2">*</span>);
         <span class="kw">let</span> <span class="ident">args_from_msg</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(
             <span class="kw">let</span> (#<span class="ident">args</span>): (#(#<span class="ident">tys</span>),<span class="kw-2">*</span>) <span class="op">=</span>
-                <span class="kw">match</span> <span class="ident">m</span>.<span class="ident">body</span>().<span class="ident">map_err</span>(#<span class="ident">zbus</span>::<span class="ident">fdo</span>::<span class="ident">Error</span>::<span class="ident">from</span>) {
+                <span class="kw">match</span> <span class="ident">m</span>.<span class="ident">body</span>().<span class="ident">map_err</span>(::#<span class="ident">zbus</span>::<span class="ident">fdo</span>::<span class="ident">Error</span>::<span class="ident">from</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">r</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">r</span>,
                     <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>.<span class="ident">reply</span>(<span class="ident">c</span>, <span class="ident">m</span>)),
                 };
@@ -980,7 +1042,11 @@
 
         <span class="ident">introspect</span>.<span class="ident">extend</span>(<span class="ident">prop</span>.<span class="ident">doc_comments</span>);
         <span class="kw">let</span> <span class="ident">intro</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(
-            <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">writer</span>, <span class="string">&quot;{:indent$}&lt;property name=\&quot;{}\&quot; type=\&quot;{}\&quot; access=\&quot;{}\&quot;/&gt;&quot;</span>, <span class="string">&quot;&quot;</span>, #<span class="ident">name</span>, <span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>::<span class="ident">signature</span>(), #<span class="ident">access</span>, <span class="ident">indent</span> <span class="op">=</span> <span class="ident">level</span>).<span class="ident">unwrap</span>();
+            <span class="macro">writeln</span><span class="macro">!</span>(
+                <span class="ident">writer</span>,
+                <span class="string">&quot;{:indent$}&lt;property name=\&quot;{}\&quot; type=\&quot;{}\&quot; access=\&quot;{}\&quot;/&gt;&quot;</span>,
+                <span class="string">&quot;&quot;</span>, #<span class="ident">name</span>, <span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>::<span class="ident">signature</span>(), #<span class="ident">access</span>, <span class="ident">indent</span> <span class="op">=</span> <span class="ident">level</span>,
+            ).<span class="ident">unwrap</span>();
         );
         <span class="ident">introspect</span>.<span class="ident">extend</span>(<span class="ident">intro</span>);
     }

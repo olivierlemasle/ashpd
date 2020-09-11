@@ -75,7 +75,7 @@
     <span class="doccomment">/// Whether the network is considered metered.</span>
     <span class="kw">pub</span> <span class="ident">metered</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// More detailed information about the host&#39;s network connectivity</span>
-    <span class="kw">pub</span> <span class="ident">connectivity</span>: <span class="ident">u32</span>,
+    <span class="kw">pub</span> <span class="ident">connectivity</span>: <span class="ident">Connectivity</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>

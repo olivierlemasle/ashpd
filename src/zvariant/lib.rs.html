@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zvariant-2.1.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zvariant/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/zbus-d64361667fdae375/6c4269a/zvariant/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zvariant/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -935,6 +935,31 @@
 <span id="935">935</span>
 <span id="936">936</span>
 <span id="937">937</span>
+<span id="938">938</span>
+<span id="939">939</span>
+<span id="940">940</span>
+<span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">doc</span>(
     <span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png&quot;</span>
@@ -1046,6 +1071,7 @@
 <span class="doccomment">//! [slice]: https://doc.rust-lang.org/std/primitive.slice.html</span>
 <span class="doccomment">//! [`Vec`]: https://doc.rust-lang.org/std/vec/struct.Vec.html</span>
 <span class="doccomment">//! [`arrayvec::ArrayVec`]: https://docs.rs/arrayvec/0.5.1/arrayvec/struct.ArrayVec.html</span>
+<span class="doccomment">//! [`arrayvec::ArrayString`]: https://docs.rs/arrayvec/0.5.1/arrayvec/struct.ArrayString.html</span>
 <span class="doccomment">//! [`Value` module documentation]: enum.Value.html</span>
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
@@ -1091,6 +1117,7 @@
 <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::<span class="kw-2">*</span>;
 
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">mod</span> <span class="ident">r#type</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">r#type</span>::<span class="kw-2">*</span>;
 
@@ -1105,6 +1132,15 @@
 
 <span class="kw">mod</span> <span class="ident">signature_parser</span>;
 
+<span class="comment">// Required for the macros to function within this crate.</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="self">self</span> <span class="kw">as</span> <span class="ident">zvariant</span>;
+
+<span class="comment">// Macro support module, not part of the public API.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">export</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">serde</span>;
+}
+
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
@@ -1116,16 +1152,15 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arrayvec&quot;</span>)]</span>
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 
+    <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
     <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_slice</span>, <span class="ident">from_slice_fds</span>, <span class="ident">from_slice_for_signature</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">to_bytes</span>, <span class="ident">to_bytes_fds</span>, <span class="ident">to_bytes_for_signature</span>};
 
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Array</span>, <span class="ident">Dict</span>, <span class="ident">EncodingContext</span> <span class="kw">as</span> <span class="ident">Context</span>};
-    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Basic</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Basic</span>, <span class="ident">DeserializeValue</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>, <span class="ident">SerializeValue</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Fd</span>, <span class="ident">ObjectPath</span>, <span class="ident">Signature</span>, <span class="ident">Str</span>, <span class="ident">Structure</span>};
-
-    <span class="kw">use</span> <span class="kw">crate</span> <span class="kw">as</span> <span class="ident">zvariant</span>;
 
     <span class="comment">// Test through both generic and specific API (wrt byte order)</span>
     <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">basic_type_test</span> {
@@ -1543,6 +1578,17 @@
         <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>::<span class="ident">try_from</span>(<span class="ident">outer</span>.<span class="number">2</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">inner</span>.<span class="number">0</span>, <span class="number">1</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">inner</span>.<span class="number">1</span>, <span class="number">2</span>);
+
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">Foo</span> {
+            <span class="ident">val</span>: <span class="ident">u32</span>,
+        }
+
+        <span class="kw">let</span> <span class="ident">foo</span> <span class="op">=</span> <span class="ident">Foo</span> { <span class="ident">val</span>: <span class="number">99</span> };
+        <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">SerializeValue</span>(<span class="kw-2">&amp;</span><span class="ident">foo</span>);
+        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">to_bytes</span>(<span class="ident">ctxt</span>, <span class="kw-2">&amp;</span><span class="ident">v</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">decoded</span>: <span class="ident">DeserializeValue</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>, <span class="ident">ctxt</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">decoded</span>.<span class="number">0</span>, <span class="ident">foo</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1600,6 +1646,13 @@
             <span class="ident">decoded</span>.<span class="ident">unwrap_err</span>(),
             <span class="ident">Error</span>::<span class="ident">Message</span>(<span class="string">&quot;missing field `quota`&quot;</span>.<span class="ident">to_string</span>())
         );
+
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+        <span class="kw">struct</span> <span class="ident">TestSkipUnknown</span> {
+            <span class="ident">process_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
+            <span class="ident">group_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
+        };
+        <span class="kw">let</span> <span class="kw">_</span>: <span class="ident">TestSkipUnknown</span> <span class="op">=</span> <span class="ident">from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>, <span class="ident">ctxt</span>).<span class="ident">unwrap</span>();
 
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
         <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">deny_unknown_fields</span>)]</span>
@@ -1750,8 +1803,6 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">derive</span>() {
-        <span class="kw">use</span> <span class="kw">crate</span> <span class="kw">as</span> <span class="ident">zvariant</span>;
-
         <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
         <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 
@@ -1844,7 +1895,6 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">struct_with_hashmap</span>() {
-        <span class="kw">use</span> <span class="kw">crate</span> <span class="kw">as</span> <span class="ident">zvariant</span>;
         <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hmap</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();

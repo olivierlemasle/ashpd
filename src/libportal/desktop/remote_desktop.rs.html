@@ -322,12 +322,46 @@
 <span id="322">322</span>
 <span id="323">323</span>
 <span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Value</span>;
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">ObjectPath</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
@@ -352,7 +386,7 @@
     <span class="ident">Horizontal</span> <span class="op">=</span> <span class="number">1</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options on a create a remote session request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
@@ -361,20 +395,51 @@
     <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
+<span class="kw">impl</span> <span class="ident">CreateRemoteOptions</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>.<span class="ident">to_string</span>());
+        <span class="self">self</span>
+    }
+}
+
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Specified options on a select devices request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectDevicesOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The device types to request remote controlling of. Default is all.</span>
-    <span class="kw">pub</span> <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">impl</span> <span class="ident">SelectDevicesOptions</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">types</span>: <span class="ident">DeviceType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">types</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">types</span>);
+        <span class="self">self</span>
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options on a start remote desktop request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StartRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
     <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">StartRemoteOptions</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+        <span class="self">self</span>
+    }
 }
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
@@ -396,7 +461,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`CreateRemoteOptions`]: ./struct.CreateRemoteOptions.html</span>
     <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateRemoteOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateRemoteOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Notify keyboard code</span>
     <span class="doccomment">/// May only be called if KEYBOARD access was provided after starting the session.</span>
@@ -411,7 +476,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_keyboard_keycode</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">keycode</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
@@ -430,7 +495,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_keyboard_keysym</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">keysym</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
@@ -453,7 +518,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_axis</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">dx</span>: <span class="ident">f64</span>,
         <span class="ident">dy</span>: <span class="ident">f64</span>,
@@ -471,7 +536,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_axis_discrete</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">axis</span>: <span class="ident">Axis</span>,
         <span class="ident">steps</span>: <span class="ident">i32</span>,
@@ -492,7 +557,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_button</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">button</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
@@ -511,7 +576,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">dx</span>: <span class="ident">f64</span>,
         <span class="ident">dy</span>: <span class="ident">f64</span>,
@@ -531,7 +596,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_motion_absolute</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">x</span>: <span class="ident">f64</span>,
@@ -555,7 +620,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_touch_down</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
@@ -580,7 +645,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_touch_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
@@ -601,7 +666,7 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">notify_touch_up</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
@@ -615,8 +680,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SelectDevicesOptions`]: ../struct.SelectDevicesOptions.html</span>
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">select_devices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">options</span>: <span class="ident">SelectDevicesOptions</span>)
-        <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">select_devices</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
+        <span class="ident">options</span>: <span class="ident">SelectDevicesOptions</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">///  Start the remote desktop session.</span>
     <span class="doccomment">///</span>
@@ -634,10 +702,10 @@
     <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">start</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
         <span class="ident">options</span>: <span class="ident">StartRemoteOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Available source types.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
