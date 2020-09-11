@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["MemoryMonitorProxy","The interface provides information about low system memory to sandboxed applications. It is not a portal in the strict sense, since it does not involve user interaction. Applications are expected to use this interface indirectly, via a library API such as the GLib GMemoryMonitor interface."]]});
+initSidebarItems({"struct":[["MemoryMonitorProxy","The interface provides information about low system memory to sandboxed applications. It is not a portal in the strict sense, since it does not involve user interaction."]]});
