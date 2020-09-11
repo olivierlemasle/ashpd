@@ -208,6 +208,10 @@
 <span id="208">208</span>
 <span id="209">209</span>
 <span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -216,6 +220,7 @@
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::screenshot::{ScreenshotResponse, ScreenshotOptions, ScreenshotProxy};</span>
 <span class="doccomment">//! use libportal::{RequestProxy, WindowIdentifier};</span>
+<span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; zbus::fdo::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
@@ -227,10 +232,11 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: ScreenshotResponse| {</span>
+<span class="doccomment">//!     request.on_response(|response: ScreenshotResponse| -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!         if response.is_success() {</span>
 <span class="doccomment">//!             println!(&quot;{}&quot;, response.uri());</span>
 <span class="doccomment">//!         }</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
@@ -240,8 +246,9 @@
 <span class="doccomment">//!```no_run</span>
 <span class="doccomment">//! use libportal::desktop::screenshot::{ColorResponse, PickColorOptions, ScreenshotProxy};</span>
 <span class="doccomment">//! use libportal::{RequestProxy, WindowIdentifier};</span>
+<span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! fn main() -&gt; zbus::fdo::Result&lt;()&gt; {</span>
+<span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!    let connection = zbus::Connection::new_session()?;</span>
 <span class="doccomment">//!    let proxy = ScreenshotProxy::new(&amp;connection)?;</span>
 <span class="doccomment">//!</span>
@@ -252,10 +259,11 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!    let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!    request.on_response(|response: ColorResponse| {</span>
-<span class="doccomment">//!        if response.is_success() {</span>
-<span class="doccomment">//!            println!(&quot;{:#?}&quot;, response.color());</span>
-<span class="doccomment">//!        }</span>
+<span class="doccomment">//!     request.on_response(|response: ColorResponse| -&gt; Result&lt;()&gt;{</span>
+<span class="doccomment">//!         if response.is_success() {</span>
+<span class="doccomment">//!             println!(&quot;{:#?}&quot;, response.color());</span>
+<span class="doccomment">//!         }</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!    })?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!    Ok(())</span>

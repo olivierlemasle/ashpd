@@ -62,7 +62,51 @@
 <span id="62">62</span>
 <span id="63">63</span>
 <span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="doccomment">//! # Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! use libportal::desktop::network_monitor::NetworkMonitorProxy;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() -&gt; zbus::fdo::Result&lt;()&gt; {</span>
+<span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
+<span class="doccomment">//!     let proxy = NetworkMonitorProxy::new(&amp;connection)?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;{}&quot;, proxy.can_reach(&quot;www.google.com&quot;, 80)?);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;{}&quot;, proxy.get_available()?);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.get_connectivity()?);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;{}&quot;, proxy.get_metered()?);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.get_status()?);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};

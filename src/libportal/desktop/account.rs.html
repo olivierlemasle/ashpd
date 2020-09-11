@@ -101,13 +101,18 @@
 <span id="101">101</span>
 <span id="102">102</span>
 <span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::account::{AccountProxy, UserInfoOptions, UserInfoResponse};</span>
 <span class="doccomment">//! use libportal::{RequestProxy, WindowIdentifier};</span>
-<span class="doccomment">//! fn main() -&gt; zbus::fdo::Result&lt;()&gt; {</span>
+<span class="doccomment">//! use zbus::fdo::Result;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
 <span class="doccomment">//!     let proxy = AccountProxy::new(&amp;connection)?;</span>
 <span class="doccomment">//!     let request_handle = proxy.get_user_information(</span>
@@ -116,10 +121,11 @@
 <span class="doccomment">//!             .reason(&quot;Fractal would like access to your information&quot;),</span>
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!     let req = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     req.on_response(|response: UserInfoResponse| {</span>
+<span class="doccomment">//!     req.on_response(|response: UserInfoResponse| -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!         if response.is_success() {</span>
 <span class="doccomment">//!             println!(&quot;{:#?}&quot;, response.user_information());</span>
 <span class="doccomment">//!         }</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>

@@ -110,6 +110,8 @@
 <span id="110">110</span>
 <span id="111">111</span>
 <span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -118,8 +120,9 @@
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::device::{DeviceProxy, AccessDeviceOptions, Device, AccessDeviceResponse};</span>
 <span class="doccomment">//! use libportal::RequestProxy;</span>
+<span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! fn main() -&gt; zbus::fdo::Result&lt;()&gt; {</span>
+<span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
 <span class="doccomment">//!     let proxy = DeviceProxy::new(&amp;connection)?;</span>
 <span class="doccomment">//!     let request_handle = proxy.access_device(</span>
@@ -129,8 +132,9 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: AccessDeviceResponse| {</span>
+<span class="doccomment">//!     request.on_response(|response: AccessDeviceResponse| -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!         println!(&quot;{}&quot;, response.is_success());</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
