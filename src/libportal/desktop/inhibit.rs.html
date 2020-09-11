@@ -119,6 +119,12 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ResponseType</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
@@ -179,10 +185,16 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitMonitorResponse</span>(<span class="kw">pub</span> <span class="ident">ResponseType</span>, <span class="kw">pub</span> <span class="ident">InhibitMonitorResult</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitMonitorResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">InhibitMonitorResult</span>);
+
+<span class="kw">impl</span> <span class="ident">InhibitMonitorResponse</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OwnedObjectPath</span> {
+        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">session_handle</span>
+    }
+}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitMonitorResult</span> {
+<span class="kw">struct</span> <span class="ident">InhibitMonitorResult</span> {
     <span class="kw">pub</span> <span class="ident">session_handle</span>: <span class="ident">OwnedObjectPath</span>,
 }
 

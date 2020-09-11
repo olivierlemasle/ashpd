@@ -148,6 +148,16 @@
 <span id="148">148</span>
 <span id="149">149</span>
 <span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ResponseType</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
@@ -217,10 +227,20 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserResponse</span>(<span class="kw">pub</span> <span class="ident">ResponseType</span>, <span class="kw">pub</span> <span class="ident">FileChooserResult</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">FileChooserResult</span>);
+
+<span class="kw">impl</span> <span class="ident">FileChooserResponse</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uris</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">uris</span>.<span class="ident">clone</span>()
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">choices</span>.<span class="ident">clone</span>()
+    }
+}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">TypeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserResult</span> {
+<span class="kw">struct</span> <span class="ident">FileChooserResult</span> {
     <span class="kw">pub</span> <span class="ident">uris</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span>,
 }

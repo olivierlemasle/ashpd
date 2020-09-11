@@ -282,7 +282,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ScreenshotResponse</span>(<span class="kw">pub</span> <span class="ident">ResponseType</span>, <span class="kw">pub</span> <span class="ident">ScreenshotResult</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ScreenshotResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">ScreenshotResult</span>);
 
 <span class="kw">impl</span> <span class="ident">ScreenshotResponse</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
@@ -295,7 +295,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ScreenshotResult</span> {
+<span class="kw">struct</span> <span class="ident">ScreenshotResult</span> {
     <span class="kw">pub</span> <span class="ident">uri</span>: <span class="ident">String</span>,
 }
 
@@ -314,7 +314,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColorResponse</span>(<span class="kw">pub</span> <span class="ident">ResponseType</span>, <span class="kw">pub</span> <span class="ident">ColorResult</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColorResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">ColorResult</span>);
 
 <span class="kw">impl</span> <span class="ident">ColorResponse</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
@@ -327,7 +327,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColorResult</span> {
+<span class="kw">struct</span> <span class="ident">ColorResult</span> {
     <span class="kw">pub</span> <span class="ident">color</span>: <span class="ident">Color</span>,
 }
 

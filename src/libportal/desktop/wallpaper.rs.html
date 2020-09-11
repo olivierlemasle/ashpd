@@ -176,7 +176,7 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! //! Set a wallpaper from a file:</span>
+<span class="doccomment">//! Sets a wallpaper from a file:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::wallpaper::{WallpaperOptions, WallpaperProxy, SetOn, WallpaperResponse};</span>
@@ -205,7 +205,7 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Set a wallpaper from a URI:</span>
+<span class="doccomment">//! Sets a wallpaper from a URI:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::wallpaper::{WallpaperOptions, WallpaperProxy, SetOn, WallpaperResponse};</span>
@@ -291,7 +291,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WallpaperResponse</span>(<span class="kw">pub</span> <span class="ident">ResponseType</span>, <span class="kw">pub</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WallpaperResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span> <span class="ident">WallpaperResponse</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
