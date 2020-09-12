@@ -56,9 +56,11 @@
 <span id="56">56</span>
 <span id="57">57</span>
 <span id="58">58</span>
+<span id="59">59</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Fd</span>;
+
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
     <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.GameMode&quot;</span>,
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
@@ -88,7 +90,7 @@
     <span class="kw">fn</span> <span class="ident">query_status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// QueryStatusByPIDFd method</span>
-    <span class="kw">fn</span> <span class="ident">query_status_by_pidfd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">RawFd</span>, <span class="ident">requester</span>: <span class="ident">RawFd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">query_status_by_pidfd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">Fd</span>, <span class="ident">requester</span>: <span class="ident">Fd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// QueryStatusByPid method</span>
     <span class="kw">fn</span> <span class="ident">query_status_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">i32</span>, <span class="ident">requester</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
@@ -97,7 +99,7 @@
     <span class="kw">fn</span> <span class="ident">register_game</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// RegisterGameByPIDFd method</span>
-    <span class="kw">fn</span> <span class="ident">register_game_by_pidfd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">RawFd</span>, <span class="ident">requester</span>: <span class="ident">RawFd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">register_game_by_pidfd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">Fd</span>, <span class="ident">requester</span>: <span class="ident">Fd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// RegisterGameByPid method</span>
     <span class="kw">fn</span> <span class="ident">register_game_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">i32</span>, <span class="ident">requester</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
@@ -106,7 +108,7 @@
     <span class="kw">fn</span> <span class="ident">unregister_game</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// UnregisterGameByPIDFd method</span>
-    <span class="kw">fn</span> <span class="ident">unregister_game_by_pidfd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">RawFd</span>, <span class="ident">requester</span>: <span class="ident">RawFd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">unregister_game_by_pidfd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">Fd</span>, <span class="ident">requester</span>: <span class="ident">Fd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// UnregisterGameByPid method</span>
     <span class="kw">fn</span> <span class="ident">unregister_game_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">i32</span>, <span class="ident">requester</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>;

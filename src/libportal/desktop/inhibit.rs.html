@@ -125,11 +125,77 @@
 <span id="125">125</span>
 <span id="126">126</span>
 <span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ResponseType</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">fdo</span>::<span class="prelude-ty">Result</span>, <span class="ident">Connection</span>, <span class="ident">Proxy</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">ObjectPath</span>, <span class="ident">OwnedObjectPath</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
@@ -154,7 +220,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options of an inhibit request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
@@ -175,13 +241,13 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">BitFlags</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InhibitFlags</span> {
     <span class="ident">Logout</span> <span class="op">=</span> <span class="number">1</span>,
     <span class="ident">UserSwitch</span> <span class="op">=</span> <span class="number">2</span>,
-    <span class="ident">Suspend</span> <span class="op">=</span> <span class="number">3</span>,
-    <span class="ident">Idle</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="ident">Suspend</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="ident">Idle</span> <span class="op">=</span> <span class="number">8</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
@@ -198,13 +264,73 @@
     <span class="kw">pub</span> <span class="ident">session_handle</span>: <span class="ident">OwnedObjectPath</span>,
 }
 
-<span class="attribute">#[<span class="ident">dbus_proxy</span>(
-    <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Inhibit&quot;</span>,
-    <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
-    <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
-)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitState</span>(<span class="ident">OwnedObjectPath</span>, <span class="ident">State</span>);
+
+<span class="kw">impl</span> <span class="ident">InhibitState</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OwnedObjectPath</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>()
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">screensaver_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">screensaver_active</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SessionState</span> {
+        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">session_state</span>
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>)]</span>
+<span class="kw">struct</span> <span class="ident">State</span> {
+    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;screensaver-active&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">screensaver_active</span>: <span class="ident">bool</span>,
+    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;session-state&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">session_state</span>: <span class="ident">SessionState</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SessionState</span> {
+    <span class="ident">Running</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="ident">QueryEnd</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="ident">Ending</span> <span class="op">=</span> <span class="number">3</span>,
+}
+
 <span class="doccomment">/// The interface lets sandboxed applications inhibit the user session from ending, suspending, idling or getting switched away.</span>
-<span class="kw">trait</span> <span class="ident">Inhibit</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">proxy</span>: <span class="ident">Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+    <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">InhibitProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">Proxy</span>::<span class="ident">new</span>(
+            <span class="ident">connection</span>,
+            <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
+            <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>,
+            <span class="string">&quot;org.freedesktop.portal.Inhibit&quot;</span>,
+        )<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span> { <span class="ident">proxy</span>, <span class="ident">connection</span> })
+    }
+
+    <span class="comment">// Signal emitted when a particular low memory situation happens with 0 being the lowest level of memory availability warning, and 255 being the highest</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_state_changed</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">InhibitProxy</span>, <span class="ident">InhibitState</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
+    {
+        <span class="kw">loop</span> {
+            <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">connection</span>.<span class="ident">receive_message</span>()<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">msg_header</span> <span class="op">=</span> <span class="ident">msg</span>.<span class="ident">header</span>()<span class="question-mark">?</span>;
+            <span class="kw">if</span> <span class="ident">msg_header</span>.<span class="ident">message_type</span>()<span class="question-mark">?</span> <span class="op">=</span><span class="op">=</span> <span class="ident">zbus</span>::<span class="ident">MessageType</span>::<span class="ident">Signal</span>
+                <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">msg_header</span>.<span class="ident">member</span>()<span class="question-mark">?</span> <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;StateChanged&quot;</span>)
+            {
+                <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">msg</span>.<span class="ident">body</span>::<span class="op">&lt;</span><span class="ident">InhibitState</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+                <span class="ident">callback</span>(<span class="self">self</span>, <span class="ident">response</span>)<span class="question-mark">?</span>;
+            }
+        }
+    }
+
     <span class="doccomment">/// Creates a monitoring session.</span>
     <span class="doccomment">/// While this session is active, the caller will receive `state_changed` signals</span>
     <span class="doccomment">/// with updates on the session state.</span>
@@ -218,11 +344,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`CreateMonitorOptions`]: ./struct.CreateMonitorOptions.html</span>
     <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">create_monitor</span>(
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_monitor</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">window</span>: <span class="ident">WindowIdentifier</span>,
         <span class="ident">options</span>: <span class="ident">CreateMonitorOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">proxy</span>.<span class="ident">call</span>(<span class="string">&quot;CreateMonitor&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">window</span>, <span class="ident">options</span>))
+    }
 
     <span class="doccomment">/// Inhibits a session status changes.</span>
     <span class="doccomment">///</span>
@@ -236,22 +364,24 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`InhibitOptions`]: ./struct.InhibitOptions.html</span>
     <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">inhibit</span>(
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inhibit</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">window</span>: <span class="ident">WindowIdentifier</span>,
-        <span class="ident">flags</span>: <span class="ident">InhibitFlags</span>,
+        <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">InhibitFlags</span><span class="op">&gt;</span>,
         <span class="ident">options</span>: <span class="ident">InhibitOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">proxy</span>.<span class="ident">call</span>(<span class="string">&quot;Inhibit&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">window</span>, <span class="ident">flags</span>, <span class="ident">options</span>))
+    }
 
     <span class="doccomment">/// QueryEndResponse method</span>
-    <span class="kw">fn</span> <span class="ident">query_end_response</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
-
-    <span class="comment">// signal</span>
-    <span class="comment">// fn state_changed(&amp;self, session_handle: ObjectPath, )</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">query_end_response</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">proxy</span>.<span class="ident">call</span>(<span class="string">&quot;QueryEndResponse&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session_handle</span>))
+    }
 
     <span class="doccomment">/// version property</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">proxy</span>.<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>(<span class="string">&quot;version&quot;</span>)
+    }
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "libportal";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

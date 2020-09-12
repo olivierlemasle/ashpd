@@ -197,9 +197,9 @@
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="kw">use</span> <span class="ident">strum_macros</span>::<span class="ident">EnumString</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Fd</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::<span class="ident">Type</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
@@ -255,7 +255,7 @@
     <span class="doccomment">/// * `o_path_fd` - open file descriptor for the file to add</span>
     <span class="doccomment">/// * `reuse_existing` - whether to reuse an existing document store entry for the file</span>
     <span class="doccomment">/// * `persistent` - whether to add the file only for this session or permanently</span>
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">o_path_fd</span>: <span class="ident">RawFd</span>, <span class="ident">reuse_existing</span>: <span class="ident">bool</span>, <span class="ident">persistent</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">o_path_fd</span>: <span class="ident">Fd</span>, <span class="ident">reuse_existing</span>: <span class="ident">bool</span>, <span class="ident">persistent</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Adds multiple files to the document store.</span>
     <span class="doccomment">/// The files are passed in the form of an open file descriptor</span>
@@ -271,7 +271,7 @@
     <span class="doccomment">/// * `permissions` - the permissions to grant, possible values are &#39;read&#39;, &#39;write&#39;, &#39;grant-permissions&#39; and &#39;delete&#39;</span>
     <span class="kw">fn</span> <span class="ident">add_full</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">o_path_fds</span>: <span class="kw-2">&amp;</span>[<span class="ident">RawFd</span>],
+        <span class="ident">o_path_fds</span>: <span class="kw-2">&amp;</span>[<span class="ident">Fd</span>],
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
         <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">Permission</span>],
@@ -289,7 +289,7 @@
     <span class="doccomment">/// * `persistent` - whether to add the file only for this session or permanently</span>
     <span class="kw">fn</span> <span class="ident">add_named</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">o_path_parent_fd</span>: <span class="ident">RawFd</span>,
+        <span class="ident">o_path_parent_fd</span>: <span class="ident">Fd</span>,
         <span class="ident">filename</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">reuse_existing</span>: <span class="ident">bool</span>,
         <span class="ident">persistent</span>: <span class="ident">bool</span>,
@@ -310,7 +310,7 @@
     <span class="doccomment">/// * `permissions` - the permissions to grant.</span>
     <span class="kw">fn</span> <span class="ident">add_named_full</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">o_path_fd</span>: <span class="ident">RawFd</span>,
+        <span class="ident">o_path_fd</span>: <span class="ident">Fd</span>,
         <span class="ident">filename</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
         <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,

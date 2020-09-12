@@ -144,8 +144,75 @@
 <span id="144">144</span>
 <span id="145">145</span>
 <span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Open a file</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! use libportal::desktop::open_uri::{OpenFileOptions, OpenURIProxy};</span>
+<span class="doccomment">//! use libportal::{RequestProxy, Response, WindowIdentifier};</span>
+<span class="doccomment">//! use zbus::{self, fdo::Result};</span>
+<span class="doccomment">//! use zvariant::Fd;</span>
+<span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//! use std::os::unix::io::AsRawFd;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
+<span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
+<span class="doccomment">//!     let proxy = OpenURIProxy::new(&amp;connection)?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let request_handle = proxy.open_file(</span>
+<span class="doccomment">//!         WindowIdentifier::default(),</span>
+<span class="doccomment">//!         Fd::from(file.as_raw_fd()),</span>
+<span class="doccomment">//!         OpenFileOptions::default(),</span>
+<span class="doccomment">//!     )?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
+<span class="doccomment">//!     request.on_response(|response: Response| -&gt; Result&lt;()&gt; {</span>
+<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_success());</span>
+<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     })?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Open a file from a URI</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::open_uri::{OpenFileOptions, OpenURIProxy};</span>
@@ -173,9 +240,8 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">OwnedObjectPath</span>;
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
@@ -244,7 +310,7 @@
     <span class="kw">fn</span> <span class="ident">open_directory</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
-        <span class="ident">fd</span>: <span class="ident">RawFd</span>,
+        <span class="ident">fd</span>: <span class="ident">Fd</span>,
         <span class="ident">options</span>: <span class="ident">OpenDirOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
@@ -263,7 +329,7 @@
     <span class="kw">fn</span> <span class="ident">open_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
-        <span class="ident">fd</span>: <span class="ident">RawFd</span>,
+        <span class="ident">fd</span>: <span class="ident">Fd</span>,
         <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
