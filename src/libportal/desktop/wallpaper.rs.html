@@ -165,26 +165,14 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Sets a wallpaper from a file:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use libportal::desktop::wallpaper::{WallpaperOptions, WallpaperProxy, SetOn, WallpaperResponse};</span>
-<span class="doccomment">//! use libportal::{RequestProxy, WindowIdentifier};</span>
+<span class="doccomment">//! use libportal::desktop::wallpaper::{WallpaperOptions, WallpaperProxy, SetOn};</span>
+<span class="doccomment">//! use libportal::{RequestProxy, Response, BasicResponse as Basic, WindowIdentifier};</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//! use std::os::unix::io::AsRawFd;</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
@@ -204,9 +192,8 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: WallpaperResponse| -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_success() );</span>
-<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     request.on_response(|response: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_ok() );</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
@@ -215,8 +202,8 @@
 <span class="doccomment">//! Sets a wallpaper from a URI:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use libportal::desktop::wallpaper::{WallpaperOptions, WallpaperProxy, SetOn, WallpaperResponse};</span>
-<span class="doccomment">//! use libportal::{RequestProxy, WindowIdentifier};</span>
+<span class="doccomment">//! use libportal::desktop::wallpaper::{WallpaperOptions, WallpaperProxy, SetOn};</span>
+<span class="doccomment">//! use libportal::{RequestProxy, Response, BasicResponse as Basic, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; zbus::fdo::Result&lt;()&gt; {</span>
@@ -232,20 +219,18 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: WallpaperResponse| -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_success() );</span>
-<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     request.on_response(|response: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_ok() );</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ResponseType</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="self">self</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>};
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">Signature</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
@@ -295,15 +280,6 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_on</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">set_on</span>: <span class="ident">SetOn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">set_on</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">set_on</span>);
         <span class="self">self</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WallpaperResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>);
-
-<span class="kw">impl</span> <span class="ident">WallpaperResponse</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ResponseType</span>::<span class="ident">Success</span>
     }
 }
 

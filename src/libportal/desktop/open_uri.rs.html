@@ -175,8 +175,6 @@
 <span id="175">175</span>
 <span id="176">176</span>
 <span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -184,7 +182,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::open_uri::{OpenFileOptions, OpenURIProxy};</span>
-<span class="doccomment">//! use libportal::{RequestProxy, Response, WindowIdentifier};</span>
+<span class="doccomment">//! use libportal::{RequestProxy, Response, BasicResponse as Basic, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::{self, fdo::Result};</span>
 <span class="doccomment">//! use zvariant::Fd;</span>
 <span class="doccomment">//! use std::fs::File;</span>
@@ -203,9 +201,8 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: Response| -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_success());</span>
-<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     request.on_response(|response: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_ok());</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -217,7 +214,7 @@
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::open_uri::{OpenFileOptions, OpenURIProxy};</span>
 <span class="doccomment">//! use libportal::zbus;</span>
-<span class="doccomment">//! use libportal::{RequestProxy, Response, WindowIdentifier};</span>
+<span class="doccomment">//! use libportal::{RequestProxy, Response, BasicResponse as Basic, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
@@ -231,9 +228,8 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: Response| -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_success());</span>
-<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     request.on_response(|response: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_ok());</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>

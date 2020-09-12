@@ -116,33 +116,14 @@
 <span id="116">116</span>
 <span id="117">117</span>
 <span id="118">118</span>
-<span id="119">119</span>
-<span id="120">120</span>
-<span id="121">121</span>
-<span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
-<span id="125">125</span>
-<span id="126">126</span>
-<span id="127">127</span>
-<span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
-<span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use libportal::desktop::background::{</span>
-<span class="doccomment">//!     BackgroundOptions, BackgroundProxy, BackgroundResponse,</span>
+<span class="doccomment">//!     BackgroundOptions, BackgroundProxy, Background,</span>
 <span class="doccomment">//! };</span>
-<span class="doccomment">//! use libportal::{RequestProxy, WindowIdentifier};</span>
+<span class="doccomment">//! use libportal::{RequestProxy, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
@@ -158,21 +139,19 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: BackgroundResponse| -&gt; Result&lt;()&gt;{</span>
-<span class="doccomment">//!         if response.is_success() {</span>
-<span class="doccomment">//!             println!(&quot;{}&quot;, response.autostart());</span>
-<span class="doccomment">//!             println!(&quot;{}&quot;, response.background());</span>
+<span class="doccomment">//!     request.on_response(|response: Response&lt;Background&gt;| {</span>
+<span class="doccomment">//!         if let Ok(bg) = response {</span>
+<span class="doccomment">//!             println!(&quot;{}&quot;, bg.autostart);</span>
+<span class="doccomment">//!             println!(&quot;{}&quot;, bg.background);</span>
 <span class="doccomment">//!         }</span>
-<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ResponseType</span>, <span class="ident">WindowIdentifier</span>};
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">OwnedObjectPath</span>;
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a background request.</span>
@@ -218,26 +197,9 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Type</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BackgroundResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">BackgroundResult</span>);
-
-<span class="kw">impl</span> <span class="ident">BackgroundResponse</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ResponseType</span>::<span class="ident">Success</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">autostart</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">autostart</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">background</span>
-    }
-}
-
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Result returned by the response signal after a background request.</span>
-<span class="kw">struct</span> <span class="ident">BackgroundResult</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Background</span> {
     <span class="doccomment">/// if the application is allowed to run in the background</span>
     <span class="kw">pub</span> <span class="ident">background</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// if the application is will be autostarted.</span>

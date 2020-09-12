@@ -100,26 +100,14 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
-<span id="103">103</span>
-<span id="104">104</span>
-<span id="105">105</span>
-<span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
-<span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Access a [`Device`]</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use libportal::desktop::device::{DeviceProxy, AccessDeviceOptions, Device, AccessDeviceResponse};</span>
-<span class="doccomment">//! use libportal::RequestProxy;</span>
+<span class="doccomment">//! use libportal::desktop::device::{DeviceProxy, AccessDeviceOptions, Device};</span>
+<span class="doccomment">//! use libportal::{RequestProxy, BasicResponse as Basic, Response};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
@@ -132,21 +120,18 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|response: AccessDeviceResponse| -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_success());</span>
-<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     request.on_response(|response: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!         println!(&quot;{}&quot;, response.is_ok());</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! [`Device`]: ./enum.Device.html</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ResponseType</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">OwnedObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>};
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">OwnedObjectPath</span>, <span class="ident">Signature</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a device access request.</span>
@@ -184,15 +169,6 @@
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
         <span class="ident">String</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>(), <span class="ident">serializer</span>)
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AccessDeviceResponse</span>(<span class="ident">ResponseType</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>);
-
-<span class="kw">impl</span> <span class="ident">AccessDeviceResponse</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ResponseType</span>::<span class="ident">Success</span>
     }
 }
 
