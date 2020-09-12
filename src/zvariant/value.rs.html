@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/zbus-a1cd63feb92f1ca5/fb17532/zvariant/src/value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>value.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zvariant/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/zbus-d64361667fdae375/7cb26a4/zvariant/src/value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>value.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zvariant/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -736,6 +736,45 @@
 <span id="736">736</span>
 <span id="737">737</span>
 <span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">str</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
@@ -747,7 +786,9 @@
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">ser</span>::{<span class="ident">Serialize</span>, <span class="ident">SerializeSeq</span>, <span class="ident">SerializeStruct</span>, <span class="ident">SerializeTupleStruct</span>, <span class="ident">Serializer</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utils</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Array</span>, <span class="ident">Basic</span>, <span class="ident">Dict</span>, <span class="ident">Fd</span>, <span class="ident">ObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>, <span class="ident">Str</span>, <span class="ident">Structure</span>, <span class="ident">Type</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">Array</span>, <span class="ident">Basic</span>, <span class="ident">Dict</span>, <span class="ident">Fd</span>, <span class="ident">Maybe</span>, <span class="ident">ObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>, <span class="ident">Str</span>, <span class="ident">Structure</span>, <span class="ident">Type</span>,
+};
 
 <span class="doccomment">/// A generic container, in the form of an enum that holds exactly one value of any of the other</span>
 <span class="doccomment">/// types.</span>
@@ -820,6 +861,7 @@
     <span class="ident">Array</span>(<span class="ident">Array</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
     <span class="ident">Dict</span>(<span class="ident">Dict</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
     <span class="ident">Structure</span>(<span class="ident">Structure</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
+    <span class="ident">Maybe</span>(<span class="ident">Maybe</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
 
     <span class="ident">Fd</span>(<span class="ident">Fd</span>),
 }
@@ -845,6 +887,7 @@
             <span class="ident">Value</span>::<span class="ident">Array</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">serializer</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_arg</span>,)<span class="op">*</span> <span class="ident">value</span>),
             <span class="ident">Value</span>::<span class="ident">Dict</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">serializer</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_arg</span>,)<span class="op">*</span> <span class="ident">value</span>),
             <span class="ident">Value</span>::<span class="ident">Structure</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">serializer</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_arg</span>,)<span class="op">*</span> <span class="ident">value</span>),
+            <span class="ident">Value</span>::<span class="ident">Maybe</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">serializer</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_arg</span>,)<span class="op">*</span> <span class="ident">value</span>),
 
             <span class="ident">Value</span>::<span class="ident">Fd</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">serializer</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_arg</span>,)<span class="op">*</span> <span class="ident">value</span>),
         }
@@ -904,6 +947,7 @@
             <span class="ident">Value</span>::<span class="ident">Array</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Value</span>::<span class="ident">Array</span>(<span class="ident">v</span>.<span class="ident">to_owned</span>()),
             <span class="ident">Value</span>::<span class="ident">Dict</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Value</span>::<span class="ident">Dict</span>(<span class="ident">v</span>.<span class="ident">to_owned</span>()),
             <span class="ident">Value</span>::<span class="ident">Structure</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Value</span>::<span class="ident">Structure</span>(<span class="ident">v</span>.<span class="ident">to_owned</span>()),
+            <span class="ident">Value</span>::<span class="ident">Maybe</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Value</span>::<span class="ident">Maybe</span>(<span class="ident">v</span>.<span class="ident">to_owned</span>()),
             <span class="ident">Value</span>::<span class="ident">Fd</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Value</span>::<span class="ident">Fd</span>(<span class="kw-2">*</span><span class="ident">v</span>),
         }
     }
@@ -929,6 +973,7 @@
             <span class="ident">Value</span>::<span class="ident">Array</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">value</span>.<span class="ident">signature</span>(),
             <span class="ident">Value</span>::<span class="ident">Dict</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">value</span>.<span class="ident">signature</span>(),
             <span class="ident">Value</span>::<span class="ident">Structure</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">value</span>.<span class="ident">signature</span>(),
+            <span class="ident">Value</span>::<span class="ident">Maybe</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">value</span>.<span class="ident">signature</span>(),
 
             <span class="ident">Value</span>::<span class="ident">Fd</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Fd</span>::<span class="ident">signature</span>(),
         }
@@ -964,6 +1009,13 @@
         <span class="ident">S</span>: <span class="ident">SerializeSeq</span>,
     {
         <span class="macro">serialize_value</span><span class="macro">!</span>(<span class="self">self</span> <span class="ident">serializer</span>.<span class="ident">serialize_element</span>)
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">serialize_value_as_some</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Serializer</span>,
+    {
+        <span class="macro">serialize_value</span><span class="macro">!</span>(<span class="self">self</span> <span class="ident">serializer</span>.<span class="ident">serialize_some</span>)
     }
 
     <span class="doccomment">/// Try to get the underlying type `T`.</span>
@@ -1343,6 +1395,32 @@
         }
 
         <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">Dict</span>(<span class="ident">dict</span>))
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">visit_some</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">let</span> <span class="ident">visitor</span> <span class="op">=</span> <span class="ident">ValueSeed</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+            <span class="comment">// TODO: Why do we need String here?</span>
+            <span class="ident">signature</span>: <span class="macro">signature_string</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">signature</span>[<span class="number">1</span>..]),
+            <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
+        };
+
+        <span class="ident">deserializer</span>
+            .<span class="ident">deserialize_any</span>(<span class="ident">visitor</span>)
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">Value</span>::<span class="ident">Maybe</span>(<span class="ident">Maybe</span>::<span class="ident">just</span>(<span class="ident">v</span>)))
+    }
+
+    <span class="kw">fn</span> <span class="ident">visit_none</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">E</span>: <span class="ident">Error</span>,
+    {
+        <span class="kw">let</span> <span class="ident">value_signature</span> <span class="op">=</span> <span class="macro">signature_string</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">signature</span>[<span class="number">1</span>..]);
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Maybe</span>::<span class="ident">nothing</span>(<span class="ident">value_signature</span>);
+
+        <span class="prelude-val">Ok</span>(<span class="ident">Value</span>::<span class="ident">Maybe</span>(<span class="ident">value</span>))
     }
 }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/zbus-a1cd63feb92f1ca5/fb17532/zvariant/src/from_value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>from_value.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zvariant/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/zbus-d64361667fdae375/7cb26a4/zvariant/src/from_value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>from_value.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../zvariant/index.html'><div class='logo-container'><img src='https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -100,9 +100,15 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Value</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Array</span>, <span class="ident">Dict</span>, <span class="ident">Error</span>, <span class="ident">Fd</span>, <span class="ident">ObjectPath</span>, <span class="ident">Signature</span>, <span class="ident">Str</span>, <span class="ident">Structure</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Array</span>, <span class="ident">Dict</span>, <span class="ident">Error</span>, <span class="ident">Fd</span>, <span class="ident">Maybe</span>, <span class="ident">ObjectPath</span>, <span class="ident">Signature</span>, <span class="ident">Str</span>, <span class="ident">Structure</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">value_try_from</span> {
@@ -178,6 +184,7 @@
 <span class="macro">value_try_from_all</span><span class="macro">!</span>(<span class="ident">Structure</span>, <span class="ident">Structure</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 <span class="macro">value_try_from_all</span><span class="macro">!</span>(<span class="ident">Dict</span>, <span class="ident">Dict</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 <span class="macro">value_try_from_all</span><span class="macro">!</span>(<span class="ident">Array</span>, <span class="ident">Array</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="macro">value_try_from_all</span><span class="macro">!</span>(<span class="ident">Maybe</span>, <span class="ident">Maybe</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
 <span class="macro">value_try_from</span><span class="macro">!</span>(<span class="ident">Str</span>, <span class="ident">String</span>);
 <span class="macro">value_try_from_ref</span><span class="macro">!</span>(<span class="ident">Str</span>, <span class="ident">str</span>);
@@ -198,6 +205,11 @@
     }
 }
 
+<span class="comment">// This would be great but somehow it conflicts with some blanket generic implementations from</span>
+<span class="comment">// core:</span>
+<span class="comment">//</span>
+<span class="comment">// impl&lt;&#39;a, T&gt; TryFrom&lt;Value&lt;&#39;a&gt;&gt; for Option&lt;T&gt;</span>
+<span class="comment">//</span>
 <span class="comment">// TODO: this could be useful</span>
 <span class="comment">// impl&lt;&#39;a, &#39;b, T&gt; TryFrom&lt;&amp;&#39;a Value&lt;&#39;b&gt;&gt; for Vec&lt;T&gt;</span>
 <span class="comment">// impl&lt;&#39;a, K, V, H&gt; TryFrom&lt;Value&lt;&#39;a&gt; for HashMap&lt;K, V, H&gt;</span>

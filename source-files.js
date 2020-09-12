@@ -64,6 +64,6 @@ sourcesIndex["unicode_xid"] = {"name":"","files":["lib.rs","tables.rs"]};
 sourcesIndex["void"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["zbus"] = {"name":"","files":["address.rs","connection.rs","error.rs","fdo.rs","guid.rs","lib.rs","message.rs","message_field.rs","message_fields.rs","message_header.rs","object_server.rs","owned_fd.rs","proxy.rs","utils.rs"]};
 sourcesIndex["zbus_macros"] = {"name":"","files":["error.rs","iface.rs","lib.rs","proxy.rs","utils.rs"]};
-sourcesIndex["zvariant"] = {"name":"","files":["array.rs","basic.rs","de.rs","dict.rs","encoding_context.rs","error.rs","fd.rs","from_value.rs","into_value.rs","lib.rs","object_path.rs","owned_value.rs","ser.rs","signature.rs","signature_parser.rs","str.rs","structure.rs","type.rs","utils.rs","value.rs"]};
+sourcesIndex["zvariant"] = {"name":"","files":["array.rs","basic.rs","de.rs","dict.rs","encoding_context.rs","error.rs","fd.rs","framing_offset_size.rs","framing_offsets.rs","from_value.rs","into_value.rs","lib.rs","maybe.rs","object_path.rs","owned_value.rs","ser.rs","signature.rs","signature_parser.rs","str.rs","structure.rs","type.rs","utils.rs","value.rs"]};
 sourcesIndex["zvariant_derive"] = {"name":"","files":["dict.rs","lib.rs","type.rs","utils.rs"]};
 createSourceSidebar();
