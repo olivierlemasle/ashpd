@@ -46,26 +46,49 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! ASHPD, accronym of Aperture Science Handheld Portal Device is a Rust &amp; zbus wrapper of</span>
+<span class="doccomment">//! ASHPD, accronym of Aperture Science Handheld Portal Device is a Rust &amp; [zbus](https://gitlab.freedesktop.org/zeenix/zbus) wrapper of</span>
 <span class="doccomment">//! the XDG portals DBus interfaces. The library aims to provide an easy way to</span>
-<span class="doccomment">//! interact with the various portals per the [specifications](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html)</span>
+<span class="doccomment">//! interact with the various portals per the [specifications](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html).</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! It provides an alternative to the C library [https://github.com/flatpak/libportal](https://github.com/flatpak/libportal)</span>
+<span class="doccomment">//! It provides an alternative to the C library [https://github.com/flatpak/libportal](https://github.com/flatpak/libportal).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use ashpd::desktop::screenshot::{ScreenshotProxy, PickColorOptions};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::desktop::screenshot::{Color, PickColorOptions, ScreenshotProxy};</span>
+<span class="doccomment">//! use ashpd::{RequestProxy, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
-<span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection)?;</span>
-<span class="doccomment">//!     let request = proxy.pick_color(WindowIdentifier::default(), PickColorOptions::default())?;</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+<span class="doccomment">//!    let connection = zbus::Connection::new_session()?;</span>
+<span class="doccomment">//!    let proxy = ScreenshotProxy::new(&amp;connection)?;</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//!    let request_handle = proxy.pick_color(</span>
+<span class="doccomment">//!             WindowIdentifier::default(),</span>
+<span class="doccomment">//!             PickColorOptions::default()</span>
+<span class="doccomment">//!    )?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!    let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     request.on_response(|response: Response&lt;Color&gt;| {</span>
+<span class="doccomment">//!         if let Ok(color) = response {</span>
+<span class="doccomment">//!             println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
+<span class="doccomment">//!         }</span>
+<span class="doccomment">//!    })?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!    Ok(())</span>
+<span class="doccomment">//!}</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Optional features</span>
 <span class="doccomment">//!</span>
@@ -75,7 +98,6 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`Color`]: ./desktop/screenshot/struct.Color.html</span>
-<span class="doccomment">//!</span>
 
 <span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a background or quering the user&#39;s location.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">desktop</span>;
