@@ -58,6 +58,7 @@
 <span id="58">58</span>
 <span id="59">59</span>
 <span id="60">60</span>
+<span id="61">61</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -96,6 +97,7 @@
     }
 
     <span class="doccomment">/// Signal emitted when a particular low memory situation happens with 0 being the lowest level of memory availability warning, and 255 being the highest</span>
+    <span class="comment">// FIXME: refactor once zbus supports signals</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_low_memory_warning</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">u32</span>),

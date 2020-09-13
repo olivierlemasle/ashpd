@@ -306,6 +306,7 @@
 <span id="306">306</span>
 <span id="307">307</span>
 <span id="308">308</span>
+<span id="309">309</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -537,9 +538,9 @@
 <span class="kw">trait</span> <span class="ident">ScreenCast</span> {
     <span class="doccomment">/// Create a screen cast session.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
     <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateSessionOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the screen cast streams are available.</span>
@@ -548,10 +549,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - Object path for the [`Session`] object</span>
+    <span class="doccomment">/// * `session_handle` - Object path for the [`SessionProxy`] object</span>
     <span class="doccomment">/// * `options` - ?</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">open_pipe_wire_remote</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -564,15 +566,15 @@
     <span class="doccomment">/// Passing invalid input to this method will cause the session to be closed.</span>
     <span class="doccomment">/// An application may only attempt to select sources once per session.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - Object path of the [`Session`] object</span>
+    <span class="doccomment">/// * `session_handle` - Object path of the [`SessionProxy`] object</span>
     <span class="doccomment">/// * `options` - A `SelectSourcesOptions`</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">select_sources</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -586,16 +588,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// An application can only attempt start a session once.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - Object path of the [`Session`] object</span>
+    <span class="doccomment">/// * `session_handle` - Object path of the [`SessionProxy`] object</span>
     <span class="doccomment">/// * `parent_window` - Identifier for the application window</span>
     <span class="doccomment">/// * `options` - A `StartScreenCastOptions`</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">start</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,

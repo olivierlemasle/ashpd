@@ -7,7 +7,7 @@
 </div><h4 id='method.create_session' class="method"><code>pub fn <a href='#method.create_session' class='fnname'>create_session</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="../../../libportal/desktop/remote_desktop/struct.CreateRemoteOptions.html" title="struct libportal::desktop::remote_desktop::CreateRemoteOptions">CreateRemoteOptions</a><br>) -&gt; Result&lt;OwnedObjectPath&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Create a remote desktop session.
 A remote desktop session is used to allow remote controlling a desktop session.
 It can also be used together with a screen cast session</p>
-<p>Returns a <a href="../request/struct.RequestProxy.html"><code>Request</code></a> handle</p>
+<p>Returns a <a href="../../request/struct.RequestProxy.html"><code>RequestProxy</code></a> object path.</p>
 <h1 id="arguments" class="section-header"><a href="#arguments">Arguments</a></h1>
 <ul>
 <li><code>options</code> - A <a href="./struct.CreateRemoteOptions.html"><code>CreateRemoteOptions</code></a></li>
@@ -16,20 +16,22 @@ It can also be used together with a screen cast session</p>
 May only be called if KEYBOARD access was provided after starting the session.</p>
 <h1 id="arguments-1" class="section-header"><a href="#arguments-1">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>keycode</code> - Keyboard code that was pressed or released</li>
 <li><code>state</code> - The new state of the keyboard code</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_keyboard_keysym' class="method"><code>pub fn <a href='#method.notify_keyboard_keysym' class='fnname'>notify_keyboard_keysym</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;keysym: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;state: <a class="enum" href="../../../libportal/desktop/remote_desktop/enum.KeyState.html" title="enum libportal::desktop::remote_desktop::KeyState">KeyState</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify keyboard symbol
 May only be called if KEYBOARD access was provided after starting the session.</p>
 <h1 id="arguments-2" class="section-header"><a href="#arguments-2">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>keysym</code> - Keyboard symbol that was pressed or released</li>
 <li><code>state</code> - The new state of the keyboard code</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_pointer_axis' class="method"><code>pub fn <a href='#method.notify_pointer_axis' class='fnname'>notify_pointer_axis</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;dx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;dy: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify pointer axis
 The axis movement from a 'smooth scroll' device, such as a touchpad.
 When applicable, the size of the motion delta should be equivalent to
@@ -37,84 +39,92 @@ the motion vector of a pointer motion done using the same advice.</p>
 <p>May only be called if POINTER access was provided after starting the session.</p>
 <h1 id="arguments-3" class="section-header"><a href="#arguments-3">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>dx</code> - Relative axis movement on the x axis</li>
 <li><code>dy</code> - Relative axis movement on the y axis</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_pointer_axis_discrete' class="method"><code>pub fn <a href='#method.notify_pointer_axis_discrete' class='fnname'>notify_pointer_axis_discrete</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;axis: <a class="enum" href="../../../libportal/desktop/remote_desktop/enum.Axis.html" title="enum libportal::desktop::remote_desktop::Axis">Axis</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;steps: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify pointer axis discrete
 May only be called if POINTER access was provided after starting the session.</p>
 <h1 id="arguments-4" class="section-header"><a href="#arguments-4">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>axis</code> - The axis that was scrolled</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_pointer_button' class="method"><code>pub fn <a href='#method.notify_pointer_button' class='fnname'>notify_pointer_button</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;button: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;state: <a class="enum" href="../../../libportal/desktop/remote_desktop/enum.KeyState.html" title="enum libportal::desktop::remote_desktop::KeyState">KeyState</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify pointer button
 The pointer button is encoded according to Linux Evdev button codes.</p>
 <p>May only be called if POINTER access was provided after starting the session.</p>
 <h1 id="arguments-5" class="section-header"><a href="#arguments-5">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>button</code> - The pointer button was pressed or released</li>
 <li><code>state</code> - The new state of the keyboard code</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_pointer_motion' class="method"><code>pub fn <a href='#method.notify_pointer_motion' class='fnname'>notify_pointer_motion</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;dx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;dy: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify about a new relative pointer motion event.
 The (dx, dy) vector represents the new pointer position in the streams logical coordinate space.</p>
 <h1 id="arguments-6" class="section-header"><a href="#arguments-6">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>dx</code> - Relative movement on the x axis</li>
 <li><code>dy</code> - Relative movement on the y axis</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_pointer_motion_absolute' class="method"><code>pub fn <a href='#method.notify_pointer_motion_absolute' class='fnname'>notify_pointer_motion_absolute</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;stream: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;x: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;y: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify about a new absolute pointer motion event.
 The (x, y) position represents the new pointer position in the streams logical coordinate sspace</p>
 <h1 id="arguments-7" class="section-header"><a href="#arguments-7">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>stream</code> - The PipeWire stream node the coordinate is relative to</li>
 <li><code>x</code> - Pointer motion x coordinate</li>
 <li><code>y</code> - Pointer motion y coordinate</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_touch_down' class="method"><code>pub fn <a href='#method.notify_touch_down' class='fnname'>notify_touch_down</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;stream: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;slot: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;x: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;y: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify about a new touch down event.
 The (x, y) position represents the new touch point position in the streams logical coordinate space</p>
 <p>May only be called if TOUCHSCREEN access was provided after starting the session.</p>
 <h1 id="arguments-8" class="section-header"><a href="#arguments-8">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>stream</code> - The PipeWire stream node the coordinate is relative to</li>
 <li><code>slot</code> - Touch slot where touch point appeared</li>
 <li><code>x</code> - Touch down x coordinate</li>
 <li><code>y</code> - Touch down y coordinate</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_touch_motion' class="method"><code>pub fn <a href='#method.notify_touch_motion' class='fnname'>notify_touch_motion</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;stream: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;slot: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;x: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;y: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify about a new touch motion event.
 The (x, y) position represents where the touch point position in the streams logical coordinate space moved</p>
 <p>May only be called if TOUCHSCREEN access was provided after starting the session.</p>
 <h1 id="arguments-9" class="section-header"><a href="#arguments-9">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>stream</code> - The PipeWire stream node the coordinate is relative to</li>
 <li><code>slot</code> - Touch slot where touch point appeared</li>
 <li><code>x</code> - Touch motion x coordinate</li>
 <li><code>y</code> - Touch motion y coordinate</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.notify_touch_up' class="method"><code>pub fn <a href='#method.notify_touch_up' class='fnname'>notify_touch_up</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;slot: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a><br>) -&gt; Result&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Notify about a new touch up event.</p>
 <p>May only be called if TOUCHSCREEN access was provided after starting the session.</p>
 <h1 id="arguments-10" class="section-header"><a href="#arguments-10">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - ?</li>
 <li><code>slot</code> - Touch slot where touch point appeared</li>
 </ul>
+<p>FIXME: figure out the options we can take here</p>
 </div><h4 id='method.select_devices' class="method"><code>pub fn <a href='#method.select_devices' class='fnname'>select_devices</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="../../../libportal/desktop/remote_desktop/struct.SelectDevicesOptions.html" title="struct libportal::desktop::remote_desktop::SelectDevicesOptions">SelectDevicesOptions</a><br>) -&gt; Result&lt;OwnedObjectPath&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Select input devices to remote control.</p>
 <h1 id="arguments-11" class="section-header"><a href="#arguments-11">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>options</code> - <a href="../struct.SelectDevicesOptions.html"><code>SelectDevicesOptions</code></a></li>
 </ul>
 </div><h4 id='method.start' class="method"><code>pub fn <a href='#method.start' class='fnname'>start</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;parent_window: <a class="struct" href="../../../libportal/struct.WindowIdentifier.html" title="struct libportal::WindowIdentifier">WindowIdentifier</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="../../../libportal/desktop/remote_desktop/struct.StartRemoteOptions.html" title="struct libportal::desktop::remote_desktop::StartRemoteOptions">StartRemoteOptions</a><br>) -&gt; Result&lt;OwnedObjectPath&gt;</code><a class='srclink' href='../../../src/libportal/desktop/remote_desktop.rs.html#87-91' title='goto source code'>[src]</a></h4><div class='docblock'><p>Start the remote desktop session.</p>
@@ -123,7 +133,7 @@ the user select what to share, including devices and optionally screen content
 if screen cast sources was selected.</p>
 <h1 id="arguments-12" class="section-header"><a href="#arguments-12">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../session/struct.SessionProxy.html"><code>Session</code></a> object handle</li>
+<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
 <li><code>parent_window</code> - The application window identifier</li>
 <li><code>options</code> - <a href="../struct.StartRemoteOptions.html"><code>StartRemoteOptions</code></a></li>
 </ul>

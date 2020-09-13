@@ -317,7 +317,7 @@
     <span class="doccomment">/// While this session is active, the caller will receive `state_changed` signals</span>
     <span class="doccomment">/// with updates on the session state.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
@@ -325,7 +325,7 @@
     <span class="doccomment">/// * `options` - [`CreateMonitorOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`CreateMonitorOptions`]: ./struct.CreateMonitorOptions.html</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_monitor</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">window</span>: <span class="ident">WindowIdentifier</span>,
@@ -336,7 +336,7 @@
 
     <span class="doccomment">/// Inhibits a session status changes.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
@@ -345,7 +345,7 @@
     <span class="doccomment">/// * `options` - [`InhibitOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`InhibitOptions`]: ./struct.InhibitOptions.html</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inhibit</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">window</span>: <span class="ident">WindowIdentifier</span>,

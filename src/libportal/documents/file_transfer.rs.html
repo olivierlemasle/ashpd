@@ -114,6 +114,8 @@
 <span id="114">114</span>
 <span id="115">115</span>
 <span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -196,6 +198,7 @@
     <span class="doccomment">/// * `key` - a key returned by `start_transfer`</span>
     <span class="doccomment">/// * `fds` - a list of file descriptors of the files to register</span>
     <span class="doccomment">/// * `options` - ?</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">add_files</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">fds</span>: <span class="kw-2">&amp;</span>[<span class="ident">Fd</span>], <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Retrieves files that were previously added to the session with `add_files`.</span>
@@ -208,6 +211,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `key` - a key returned by `start_transfer`</span>
     <span class="doccomment">/// * `options` - ?</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">retrieve_files</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Starts a session for a file transfer.</span>

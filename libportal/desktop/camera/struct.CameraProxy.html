@@ -5,7 +5,7 @@
 </div><h4 id='method.into_inner' class="method"><code>pub fn <a href='#method.into_inner' class='fnname'>into_inner</a>(self) -&gt; Proxy&lt;'c&gt;</code><a class='srclink' href='../../../src/libportal/desktop/camera.rs.html#47-51' title='goto source code'>[src]</a></h4><div class='docblock'><p>Consumes <code>self</code>, returning the underlying <code>zbus::Proxy</code>.</p>
 </div><h4 id='method.inner' class="method"><code>pub fn <a href='#method.inner' class='fnname'>inner</a>(&amp;self) -&gt; &amp;Proxy</code><a class='srclink' href='../../../src/libportal/desktop/camera.rs.html#47-51' title='goto source code'>[src]</a></h4><div class='docblock'><p>The reference to the underlying <code>zbus::Proxy</code>.</p>
 </div><h4 id='method.access_camera' class="method"><code>pub fn <a href='#method.access_camera' class='fnname'>access_camera</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="../../../libportal/desktop/camera/struct.CameraAccessOptions.html" title="struct libportal::desktop::camera::CameraAccessOptions">CameraAccessOptions</a><br>) -&gt; Result&lt;OwnedObjectPath&gt;</code><a class='srclink' href='../../../src/libportal/desktop/camera.rs.html#47-51' title='goto source code'>[src]</a></h4><div class='docblock'><p>Requests an access to the camera.</p>
-<p>Returns a <a href="../../request/struct.RequestProxy.html"><code>RequestProxy</code></a> handle.</p>
+<p>Returns a <a href="../../request/struct.RequestProxy.html"><code>RequestProxy</code></a> object path..</p>
 <h1 id="arguments" class="section-header"><a href="#arguments">Arguments</a></h1>
 <ul>
 <li><code>options</code> - A <a href="./struct.CameraAccessOptions.html"><code>CameraAccessOptions</code></a></li>

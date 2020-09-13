@@ -357,6 +357,26 @@
 <span id="357">357</span>
 <span id="358">358</span>
 <span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
 <span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
@@ -455,14 +475,14 @@
     <span class="doccomment">/// A remote desktop session is used to allow remote controlling a desktop session.</span>
     <span class="doccomment">/// It can also be used together with a screen cast session</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `options` - A [`CreateRemoteOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`CreateRemoteOptions`]: ./struct.CreateRemoteOptions.html</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../../request/struct.RequestProxy.html</span>
     <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateRemoteOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Notify keyboard code</span>
@@ -470,12 +490,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `keycode` - Keyboard code that was pressed or released</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_keyboard_keycode</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -489,12 +511,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `keysym` - Keyboard symbol that was pressed or released</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_keyboard_keysym</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -512,12 +536,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `dx` - Relative axis movement on the x axis</span>
     <span class="doccomment">/// * `dy` - Relative axis movement on the y axis</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_axis</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -531,11 +557,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `axis` - The axis that was scrolled</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_axis_discrete</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -551,12 +579,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `button` - The pointer button was pressed or released</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_button</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -570,12 +600,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `dx` - Relative movement on the x axis</span>
     <span class="doccomment">/// * `dy` - Relative movement on the y axis</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -589,13 +621,15 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to</span>
     <span class="doccomment">/// * `x` - Pointer motion x coordinate</span>
     <span class="doccomment">/// * `y` - Pointer motion y coordinate</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_pointer_motion_absolute</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -612,14 +646,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared</span>
     <span class="doccomment">/// * `x` - Touch down x coordinate</span>
     <span class="doccomment">/// * `y` - Touch down y coordinate</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_touch_down</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -637,14 +673,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared</span>
     <span class="doccomment">/// * `x` - Touch motion x coordinate</span>
     <span class="doccomment">/// * `y` - Touch motion y coordinate</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_touch_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -661,11 +699,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="kw">fn</span> <span class="ident">notify_touch_up</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -677,11 +717,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `options` - [`SelectDevicesOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SelectDevicesOptions`]: ../struct.SelectDevicesOptions.html</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">select_devices</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
@@ -696,12 +736,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - The [`Session`] object handle</span>
+    <span class="doccomment">/// * `session_handle` - The [`SessionProxy`] object handle</span>
     <span class="doccomment">/// * `parent_window` - The application window identifier</span>
     <span class="doccomment">/// * `options` - [`StartRemoteOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`StartRemoteOptions`]: ../struct.StartRemoteOptions.html</span>
-    <span class="doccomment">/// [`Session`]: ../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
     <span class="kw">fn</span> <span class="ident">start</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,

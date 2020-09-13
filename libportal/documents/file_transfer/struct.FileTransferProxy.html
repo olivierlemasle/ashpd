@@ -18,7 +18,8 @@ Note that only regular files (not directories) can be added.</p>
 <ul>
 <li><code>key</code> - a key returned by <code>start_transfer</code></li>
 <li><code>fds</code> - a list of file descriptors of the files to register</li>
-<li><code>options</code> - ?</li>
+<li><code>options</code> - ?
+FIXME: figure out the options we can take here</li>
 </ul>
 </div><h4 id='method.retrieve_files' class="method"><code>pub fn <a href='#method.retrieve_files' class='fnname'>retrieve_files</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;key: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, Value&gt;<br>) -&gt; Result&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;</code><a class='srclink' href='../../../src/libportal/documents/file_transfer.rs.html#57-61' title='goto source code'>[src]</a></h4><div class='docblock'><p>Retrieves files that were previously added to the session with <code>add_files</code>.
 The files will be exported in the document portal as-needed for the caller,
@@ -27,7 +28,8 @@ and they will be writable if the owner of the session allowed it.</p>
 <h1 id="arguments-1" class="section-header"><a href="#arguments-1">Arguments</a></h1>
 <ul>
 <li><code>key</code> - a key returned by <code>start_transfer</code></li>
-<li><code>options</code> - ?</li>
+<li><code>options</code> - ?
+FIXME: figure out the options we can take here</li>
 </ul>
 </div><h4 id='method.start_transfer' class="method"><code>pub fn <a href='#method.start_transfer' class='fnname'>start_transfer</a>(&amp;self, options: <a class="struct" href="../../../libportal/documents/file_transfer/struct.TransferOptions.html" title="struct libportal::documents::file_transfer::TransferOptions">TransferOptions</a>) -&gt; Result&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code><a class='srclink' href='../../../src/libportal/documents/file_transfer.rs.html#57-61' title='goto source code'>[src]</a></h4><div class='docblock'><p>Starts a session for a file transfer.
 The caller should call <code>add_files</code> at least once, to add files to this session.</p>

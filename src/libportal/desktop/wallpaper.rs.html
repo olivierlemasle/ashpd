@@ -292,7 +292,7 @@
 <span class="kw">trait</span> <span class="ident">Wallpaper</span> {
     <span class="doccomment">/// Sets the lockscreen, background or both wallapers from a file descriptor</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
@@ -301,7 +301,7 @@
     <span class="doccomment">/// * `options` - A [`WallpaperOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`WallpaperOptions`]: ./struct.WallpaperOptions.html</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
     <span class="kw">fn</span> <span class="ident">set_wallpaper_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
@@ -311,7 +311,7 @@
 
     <span class="doccomment">/// Sets the lockscreen, background or both wallapers from an URI</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`Request`] handle</span>
+    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
@@ -320,7 +320,7 @@
     <span class="doccomment">/// * `options` - A [`WallpaperOptions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`WallpaperOptions`]: ./struct.WallpaperOptions.html</span>
-    <span class="doccomment">/// [`Request`]: ../request/struct.RequestProxy.html</span>
+    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;SetWallpaperURI&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">set_wallpaper_uri</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,

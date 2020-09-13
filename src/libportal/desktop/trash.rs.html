@@ -72,11 +72,11 @@
 <span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
 <span class="doccomment">//!     let proxy = TrashProxy::new(&amp;connection)?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night(1).jpg&quot;).unwrap();</span>
+<span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     match proxy.trash_file(Fd::from(file.as_raw_fd()))? {</span>
-<span class="doccomment">//!         TrashStatus::Succeeded =&gt; println!(&quot;hey world&quot;),</span>
-<span class="doccomment">//!         TrashStatus::Failed =&gt; println!(&quot;tfo&quot;),</span>
+<span class="doccomment">//!         TrashStatus::Succeeded =&gt; println!(&quot;the file was removed!&quot;),</span>
+<span class="doccomment">//!         TrashStatus::Failed =&gt; println!(&quot;oof, couldn&#39;t remove the file&quot;),</span>
 <span class="doccomment">//!         _ =&gt; println!(&quot;something else happenned&quot;),</span>
 <span class="doccomment">//!     };</span>
 <span class="doccomment">//!</span>
