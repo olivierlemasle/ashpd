@@ -33,6 +33,8 @@
 <span id="33">33</span>
 <span id="34">34</span>
 <span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! libportal, the portal gun getting oxedized, the Rust wrapper for the XDG portals DBus interfaces.</span>
 <span class="doccomment">//! ```no_run</span>
@@ -59,10 +61,12 @@
 <span class="doccomment">///! Specifications: [https://flatpak.github.io/xdg-desktop-portal/portal-docs.html](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html)</span>
 <span class="doccomment">///! C alternative: [https://github.com/flatpak/libportal](https://github.com/flatpak/libportal)</span>
 <span class="doccomment">///!</span>
+<span class="kw">mod</span> <span class="ident">handle_token</span>;
 <span class="kw">mod</span> <span class="ident">helper</span>;
 <span class="kw">mod</span> <span class="ident">request</span>;
 <span class="kw">mod</span> <span class="ident">session</span>;
 <span class="kw">mod</span> <span class="ident">window_identifier</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handle_token</span>::<span class="ident">HandleToken</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">helper</span>::<span class="ident">NString</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">request</span>::{<span class="ident">BasicResponse</span>, <span class="ident">RequestProxy</span>, <span class="ident">Response</span>, <span class="ident">ResponseError</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">session</span>::<span class="ident">SessionProxy</span>;

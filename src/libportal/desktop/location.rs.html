@@ -249,6 +249,8 @@
 <span id="249">249</span>
 <span id="250">250</span>
 <span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -257,16 +259,18 @@
 <span class="doccomment">//!     LocationAccessOptions, LocationProxy, LocationStartOptions,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//! use libportal::{</span>
-<span class="doccomment">//!     zbus::{self, fdo::Result},</span>
-<span class="doccomment">//!     RequestProxy, Response, BasicResponse as Basic, WindowIdentifier,</span>
+<span class="doccomment">//!     HandleToken, RequestProxy, Response,</span>
+<span class="doccomment">//!     BasicResponse as Basic, WindowIdentifier,</span>
 <span class="doccomment">//! };</span>
+<span class="doccomment">//! use std::convert::TryFrom;</span>
+<span class="doccomment">//! use zbus::{self, fdo::Result};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::new_session()?;</span>
 <span class="doccomment">//!     let proxy = LocationProxy::new(&amp;connection)?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let options = LocationAccessOptions::default()</span>
-<span class="doccomment">//!                     .session_handle_token(&quot;token&quot;);</span>
+<span class="doccomment">//!                     .session_handle_token(HandleToken::try_from(&quot;token&quot;).unwrap());</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let session_handle = proxy.create_session(options)?;</span>
 <span class="doccomment">//!</span>
@@ -290,7 +294,7 @@
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">HandleToken</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">fdo</span>::<span class="prelude-ty">Result</span>, <span class="ident">Connection</span>, <span class="ident">Proxy</span>};
@@ -312,7 +316,7 @@
 <span class="doccomment">/// Specified options for a location access request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LocationAccessOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Distance threshold in meters. Default is 0.</span>
     <span class="kw">pub</span> <span class="ident">distance_threshold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Time threshold in seconds. Default is 0.</span>
@@ -322,8 +326,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">LocationAccessOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>);
         <span class="self">self</span>
     }
 
@@ -347,12 +351,12 @@
 <span class="doccomment">/// Specified options for a location session start request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LocationStartOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">LocationStartOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 }

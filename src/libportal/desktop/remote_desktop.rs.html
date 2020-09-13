@@ -378,7 +378,7 @@
 <span id="378">378</span>
 <span id="379">379</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">HandleToken</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
@@ -412,19 +412,19 @@
 <span class="doccomment">/// Specified options on a create a remote session request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CreateRemoteOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>);
         <span class="self">self</span>
     }
 }
@@ -433,14 +433,14 @@
 <span class="doccomment">/// Specified options on a select devices request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectDevicesOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The device types to request remote controlling of. Default is all.</span>
     <span class="kw">pub</span> <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SelectDevicesOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
@@ -454,12 +454,12 @@
 <span class="doccomment">/// Specified options on a start remote desktop request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StartRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">StartRemoteOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 }

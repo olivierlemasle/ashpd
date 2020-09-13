@@ -424,7 +424,6 @@
 <span id="424">424</span>
 <span id="425">425</span>
 <span id="426">426</span>
-<span id="427">427</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -526,8 +525,7 @@
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">NString</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">HandleToken</span>, <span class="ident">NString</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
@@ -590,7 +588,7 @@
 <span class="doccomment">/// Specified options for a open file request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="kw">pub</span> <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether the dialog should be modal.</span>
@@ -608,8 +606,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">OpenFileOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
@@ -653,7 +651,7 @@
 <span class="doccomment">/// Specified options for a save file request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFileOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="kw">pub</span> <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether the dialog should be modal.</span>
@@ -673,8 +671,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SaveFileOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
@@ -723,7 +721,7 @@
 <span class="doccomment">/// Specified options for a save files request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFilesOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle. Must be a valid object path element.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="kw">pub</span> <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether the dialog should be modal.</span>
@@ -737,8 +735,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SaveFilesOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>.<span class="ident">to_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
