@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Flags",""],["Permission",""]],"struct":[["DocumentsProxy","The interface lets sandboxed applications make files from the outside world available to sandboxed applications in a controlled way."]],"type":[["Permissions","`flags``HashMap`"]]});
