@@ -424,13 +424,18 @@
 <span id="424">424</span>
 <span id="425">425</span>
 <span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Opening a file</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{</span>
-<span class="doccomment">//!     Choice, FileChooserProxy, FileFilter, FilterType, SelectedFiles, OpenFileOptions,</span>
+<span class="doccomment">//!     Choice, FileChooserProxy, FileFilter, SelectedFiles, OpenFileOptions,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//! use ashpd::{RequestProxy, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
@@ -448,12 +453,12 @@
 <span class="doccomment">//!             .multiple(true)</span>
 <span class="doccomment">//!             .choice(</span>
 <span class="doccomment">//!                 Choice::new(&quot;encoding&quot;, &quot;Encoding&quot;, &quot;latin15&quot;)</span>
-<span class="doccomment">//!                     .add(&quot;utf8&quot;, &quot;Unicode (UTF-8)&quot;)</span>
-<span class="doccomment">//!                     .add(&quot;latin15&quot;, &quot;Western&quot;),</span>
+<span class="doccomment">//!                     .insert(&quot;utf8&quot;, &quot;Unicode (UTF-8)&quot;)</span>
+<span class="doccomment">//!                     .insert(&quot;latin15&quot;, &quot;Western&quot;),</span>
 <span class="doccomment">//!             )</span>
 <span class="doccomment">//!             // A trick to have a checkbox</span>
 <span class="doccomment">//!             .choice(Choice::new(&quot;re-encode&quot;, &quot;Re-encode&quot;, &quot;false&quot;))</span>
-<span class="doccomment">//!             .filter(FileFilter::new(&quot;SVG Image&quot;).add(FilterType::MimeType, &quot;image/svg+xml&quot;)),</span>
+<span class="doccomment">//!             .filter(FileFilter::new(&quot;SVG Image&quot;).mimetype(&quot;image/svg+xml&quot;)),</span>
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
@@ -469,7 +474,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{</span>
-<span class="doccomment">//!     FileChooserProxy, FileFilter, FilterType, SelectedFiles, SaveFileOptions,</span>
+<span class="doccomment">//!     FileChooserProxy, FileFilter, SelectedFiles, SaveFileOptions,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//! use ashpd::{RequestProxy, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
@@ -485,7 +490,7 @@
 <span class="doccomment">//!             .accept_label(&quot;write&quot;)</span>
 <span class="doccomment">//!             .current_name(&quot;image.jpg&quot;)</span>
 <span class="doccomment">//!             .modal(true)</span>
-<span class="doccomment">//!             .filter(FileFilter::new(&quot;JPEG Image&quot;).add(FilterType::GlobPattern, &quot;*.jpg&quot;)),</span>
+<span class="doccomment">//!             .filter(FileFilter::new(&quot;JPEG Image&quot;).glob(&quot;*.jpg&quot;)),</span>
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
@@ -537,7 +542,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FilterType</span> {
+<span class="kw">enum</span> <span class="ident">FilterType</span> {
     <span class="ident">GlobPattern</span> <span class="op">=</span> <span class="number">0</span>,
     <span class="ident">MimeType</span> <span class="op">=</span> <span class="number">1</span>,
 }
@@ -547,8 +552,13 @@
         <span class="self">Self</span>(<span class="ident">label</span>.<span class="ident">to_string</span>(), <span class="macro">vec</span><span class="macro">!</span>[])
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter_type</span>: <span class="ident">FilterType</span>, <span class="ident">filter</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">push</span>((<span class="ident">filter_type</span>, <span class="ident">filter</span>.<span class="ident">to_string</span>()));
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mimetype</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mimetype</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">push</span>((<span class="ident">FilterType</span>::<span class="ident">MimeType</span>, <span class="ident">mimetype</span>.<span class="ident">to_string</span>()));
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">glob</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pattern</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">push</span>((<span class="ident">FilterType</span>::<span class="ident">GlobPattern</span>, <span class="ident">pattern</span>.<span class="ident">to_string</span>()));
         <span class="self">self</span>
     }
 }
@@ -566,7 +576,7 @@
         )
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="number">2</span>.<span class="ident">push</span>((<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>.<span class="ident">to_string</span>()));
         <span class="self">self</span>
     }
