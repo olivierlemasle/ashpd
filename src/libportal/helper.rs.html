@@ -45,7 +45,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::<span class="ident">Type</span>;
 
-<span class="doccomment">/// Null terminated string, we can&#39;t use CString because it doesn&#39;t implement Type.</span>
+<span class="doccomment">/// Null terminated string</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NString</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>);
 
