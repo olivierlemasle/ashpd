@@ -41,13 +41,16 @@
 <span id="41">41</span>
 <span id="42">42</span>
 <span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::<span class="ident">Type</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
 <span class="doccomment">/// A handle token is a DBus Object Path element, specified in the [`RequestProxy`] or [`SessionProxy`]</span>
-<span class="doccomment">/// object path following this format ` /org/freedesktop/portal/desktop/request/SENDER/TOKEN`</span>
+<span class="doccomment">/// object path following this format `/org/freedesktop/portal/desktop/request/SENDER/TOKEN`</span>
 <span class="doccomment">/// where sender is the caller&#39;s unique name and token is the HandleToken.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// A valid object path element must only contain the ASCII characters &quot;[A-Z][a-z][0-9]_&quot;</span>
@@ -62,6 +65,9 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(HandleToken::try_from(&quot;تجربة&quot;).is_ok(), false);</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
+<span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HandleToken</span>(<span class="ident">String</span>);
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
