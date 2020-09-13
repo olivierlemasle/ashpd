@@ -283,7 +283,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `target` - Proccess file descriptor of the game to register.</span>
+    <span class="doccomment">/// * `target` - Process file descriptor of the game to register.</span>
     <span class="doccomment">/// * `requester` - Process file descriptor of the process requesting the registration.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;RegisterGameByPIDFd&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">register_game_by_pidfd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">Fd</span>, <span class="ident">requester</span>: <span class="ident">Fd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RegisterStatus</span><span class="op">&gt;</span>;

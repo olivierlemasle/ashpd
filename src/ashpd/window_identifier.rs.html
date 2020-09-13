@@ -37,6 +37,8 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::<span class="ident">Type</span>;
@@ -47,10 +49,12 @@
 <span class="doccomment">/// To arrange this, the compositor needs to know about the application window.</span>
 <span class="doccomment">/// Many portal requests expect a [`WindowIdentifier`] for this reason.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Under X11, the &quot;parent_window&quot; argument should have the form &quot;x11:XID&quot;, where XID is the XID of the application window.</span>
+<span class="doccomment">/// Under X11, the [`WindowIdentifier`] argument should have the form &quot;x11:XID&quot;, where XID is the XID of the application window.</span>
 <span class="doccomment">/// Under Wayland, it should have the form &quot;wayland:HANDLE&quot;, where HANDLE is a surface handle obtained with the xdg_foreign protocol.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// For other windowing systems, or if you don&#39;t have a suitable handle, just use the `Default` implementation.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`WindowIdentifier`]: ./struct.WindowIdentifier.html</span>
 <span class="comment">// FIXME: add a GTK feature and</span>
 <span class="comment">// implement From&lt;gtk::Window&gt; for WindowIdentifier</span>
 <span class="comment">// it&#39;s going to ugly. As of today, there&#39;s no nice way to get the window</span>

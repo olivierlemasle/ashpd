@@ -111,19 +111,19 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EmailOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The email address to send to</span>
+    <span class="doccomment">/// The email address to send to.</span>
     <span class="kw">pub</span> <span class="ident">address</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="comment">// The email adresses to send to</span>
+    <span class="comment">// The email addresses to send to.</span>
     <span class="kw">pub</span> <span class="ident">addresses</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="comment">// The email adresses to CC</span>
+    <span class="comment">// The email addresses to CC.</span>
     <span class="kw">pub</span> <span class="ident">cc</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="comment">// The email adresses to BCC</span>
+    <span class="comment">// The email addresses to BCC.</span>
     <span class="kw">pub</span> <span class="ident">bcc</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The subject of the email</span>
+    <span class="doccomment">/// The subject of the email.</span>
     <span class="kw">pub</span> <span class="ident">subject</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The body of the email</span>
+    <span class="doccomment">/// The body of the email.</span>
     <span class="kw">pub</span> <span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of file descriptors of files to attach</span>
+    <span class="doccomment">/// A list of file descriptors of files to attach.</span>
     <span class="kw">pub</span> <span class="ident">attachment_fds</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
@@ -163,11 +163,11 @@
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attach</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attachement</span>: <span class="ident">Fd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attach</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attachment</span>: <span class="ident">Fd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">attachment_fds</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">attachements</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">attachements</span>.<span class="ident">push</span>(<span class="ident">attachement</span>),
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">attachments</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">attachments</span>.<span class="ident">push</span>(<span class="ident">attachment</span>),
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="self">self</span>.<span class="ident">attachment_fds</span>.<span class="ident">replace</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">attachement</span>]);
+                <span class="self">self</span>.<span class="ident">attachment_fds</span>.<span class="ident">replace</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">attachment</span>]);
             }
         };
         <span class="self">self</span>
