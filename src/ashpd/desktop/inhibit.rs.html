@@ -238,6 +238,24 @@
 <span id="238">238</span>
 <span id="239">239</span>
 <span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -307,11 +325,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">CreateMonitorOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the session handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>);
         <span class="self">self</span>
@@ -328,11 +348,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">InhibitOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets a user visible reason for the inhibit request.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reason</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">reason</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reason</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
@@ -341,10 +363,15 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">BitFlags</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// The actions to inhibit that can end the user&#39;s session</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InhibitFlags</span> {
+    <span class="doccomment">/// Logout.</span>
     <span class="ident">Logout</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="doccomment">/// User switch.</span>
     <span class="ident">UserSwitch</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="doccomment">/// Suspend.</span>
     <span class="ident">Suspend</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="doccomment">/// Idle.</span>
     <span class="ident">Idle</span> <span class="op">=</span> <span class="number">8</span>,
 }
 
@@ -354,17 +381,21 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
+<span class="doccomment">/// A response received when the session state signal is received.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InhibitState</span>(<span class="ident">OwnedObjectPath</span>, <span class="ident">State</span>);
 
 <span class="kw">impl</span> <span class="ident">InhibitState</span> {
+    <span class="doccomment">/// The session handle.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OwnedObjectPath</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>()
     }
 
+    <span class="doccomment">/// Whether screensaver is active or not.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">screensaver_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">screensaver_active</span>
     }
 
+    <span class="doccomment">/// The session state.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SessionState</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">session_state</span>
     }
@@ -380,9 +411,13 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// The current state of the user&#39;s session.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SessionState</span> {
+    <span class="doccomment">/// Running.</span>
     <span class="ident">Running</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="doccomment">/// The user asked to end the session e.g logout.</span>
     <span class="ident">QueryEnd</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="doccomment">/// The session is ending.</span>
     <span class="ident">Ending</span> <span class="op">=</span> <span class="number">3</span>,
 }
 
@@ -393,6 +428,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">InhibitProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new inhibit proxy.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">Proxy</span>::<span class="ident">new</span>(
             <span class="ident">connection</span>,
@@ -403,7 +439,7 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self</span> { <span class="ident">proxy</span>, <span class="ident">connection</span> })
     }
 
-    <span class="comment">// Signal emitted when a particular low memory situation happens with 0 being the lowest level of memory availability warning, and 255 being the highest</span>
+    <span class="doccomment">/// Signal emitted when the session state changes.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_state_changed</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">InhibitProxy</span>, <span class="ident">InhibitState</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
@@ -463,7 +499,7 @@
     }
 
     <span class="doccomment">/// Acknowledges that the caller received the &quot;state_changed&quot; signal</span>
-    <span class="doccomment">/// his method should be called within one second after receiving a `state_changed` signal with the `SessionState::QueryEnd` state.</span>
+    <span class="doccomment">/// This method should be called within one second after receiving a `state_changed` signal with the `SessionState::QueryEnd` state.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>

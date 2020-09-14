@@ -101,6 +101,11 @@
 <span id="101">101</span>
 <span id="102">102</span>
 <span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -136,13 +141,14 @@
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a device access request.</span>
+<span class="doccomment">/// Specified options for a `access_device` request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AccessDeviceOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">AccessDeviceOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
@@ -153,9 +159,13 @@
     <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">AsRefStr</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
 )]</span>
 <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="doccomment">/// The possible device to request access to.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Device</span> {
+    <span class="doccomment">/// A microphone.</span>
     <span class="ident">Microphone</span>,
+    <span class="doccomment">/// Speakers.</span>
     <span class="ident">Speakers</span>,
+    <span class="doccomment">/// A Camera.</span>
     <span class="ident">Camera</span>,
 }
 

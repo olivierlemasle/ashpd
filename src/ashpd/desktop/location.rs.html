@@ -252,6 +252,23 @@
 <span id="252">252</span>
 <span id="253">253</span>
 <span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -304,12 +321,19 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// The accuracy of the location.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Accuracy</span> {
+    <span class="doccomment">/// None.</span>
     <span class="prelude-val">None</span> <span class="op">=</span> <span class="number">0</span>,
+    <span class="doccomment">/// Country.</span>
     <span class="ident">Country</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="doccomment">/// City.</span>
     <span class="ident">City</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="doccomment">/// Neighborhod.</span>
     <span class="ident">Neighborhood</span> <span class="op">=</span> <span class="number">3</span>,
+    <span class="doccomment">/// Street.</span>
     <span class="ident">Street</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="doccomment">/// The exact location.</span>
     <span class="ident">Exact</span> <span class="op">=</span> <span class="number">5</span>,
 }
 
@@ -327,21 +351,25 @@
 }
 
 <span class="kw">impl</span> <span class="ident">LocationAccessOptions</span> {
+    <span class="doccomment">/// Sets the session handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the distance treshold in meters.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">distance_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">distance_threshold</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">distance_threshold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">distance_threshold</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the time treshold in seconds.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">time_threshold</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">time_threshold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">time_threshold</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the location accuracy.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accuracy</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accuracy</span>: <span class="ident">Accuracy</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">accuracy</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accuracy</span>);
         <span class="self">self</span>
@@ -356,6 +384,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">LocationStartOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
@@ -363,9 +392,11 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
+<span class="doccomment">/// The response received on a `location_updated` signal.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LocationResponse</span>(<span class="ident">OwnedObjectPath</span>, <span class="ident">Location</span>);
 
 <span class="kw">impl</span> <span class="ident">LocationResponse</span> {
+    <span class="doccomment">/// A `SessionProxy` object path.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ObjectPath</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
     }
@@ -390,6 +421,7 @@
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">heading</span>
     }
 
+    <span class="doccomment">/// The location description</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">description</span>.<span class="ident">clone</span>()
     }
@@ -429,13 +461,14 @@
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Timestamp&quot;</span>)]</span>
     <span class="ident">timestamp</span>: (<span class="ident">u64</span>, <span class="ident">u64</span>),
 }
-
+<span class="doccomment">/// The interface lets sandboxed applications query basic information about the location.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LocationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">proxy</span>: <span class="ident">Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">LocationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new location proxy.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">Proxy</span>::<span class="ident">new</span>(
             <span class="ident">connection</span>,
@@ -446,6 +479,7 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self</span> { <span class="ident">proxy</span>, <span class="ident">connection</span> })
     }
 
+    <span class="doccomment">/// Signal emitted when the user location is updated.</span>
     <span class="comment">// FIXME: refactor once zbus supports signals</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_location_updated</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>

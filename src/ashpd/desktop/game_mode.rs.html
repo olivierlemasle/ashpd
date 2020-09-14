@@ -162,6 +162,9 @@
 <span id="162">162</span>
 <span id="163">163</span>
 <span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use ashpd::desktop::game_mode::{GameModeProxy, GameModeStatus};</span>
@@ -189,6 +192,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
+<span class="doccomment">/// The status of the game mode.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">GameModeStatus</span> {
     <span class="doccomment">/// GameMode is inactive.</span>
     <span class="ident">Inactive</span> <span class="op">=</span> <span class="number">0</span>,
@@ -202,6 +206,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
+<span class="doccomment">/// The status of a register game mode request.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">RegisterStatus</span> {
     <span class="doccomment">/// If the game was successfully registered.</span>
     <span class="ident">Success</span> <span class="op">=</span> <span class="number">0</span>,
@@ -211,6 +216,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
+<span class="doccomment">/// The status of an un-register game mode request.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">UnregisterStatus</span> {
     <span class="doccomment">/// If the game was successfully registered.</span>
     <span class="ident">Success</span> <span class="op">=</span> <span class="number">0</span>,

@@ -178,6 +178,16 @@
 <span id="178">178</span>
 <span id="179">179</span>
 <span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -248,16 +258,19 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ScreenshotOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets whether the dialog should offer customization before a screenshot or not.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interactive</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interactive</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">interactive</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">interactive</span>);
         <span class="self">self</span>
@@ -265,7 +278,9 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A response to a screenshot request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Screenshot</span> {
+    <span class="doccomment">/// The screenshot uri.</span>
     <span class="kw">pub</span> <span class="ident">uri</span>: <span class="ident">String</span>,
 }
 
@@ -277,6 +292,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">PickColorOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
@@ -284,19 +300,23 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A response to a pick color request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Color</span> {
     <span class="ident">color</span>: ([<span class="ident">f64</span>; <span class="number">3</span>]),
 }
 
 <span class="kw">impl</span> <span class="ident">Color</span> {
+    <span class="doccomment">/// Red.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">red</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">color</span>[<span class="number">0</span>]
     }
 
+    <span class="doccomment">/// Green.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">green</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">color</span>[<span class="number">1</span>]
     }
 
+    <span class="doccomment">/// Blue.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">color</span>[<span class="number">2</span>]
     }

@@ -260,6 +260,16 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
@@ -307,10 +317,15 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">///</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Flags</span> {
+    <span class="doccomment">/// Resuse the existing document store entry for the file.</span>
     <span class="ident">ReuseExisting</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="doccomment">/// Persistent file.</span>
     <span class="ident">Persistent</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="doccomment">/// Depends on the application needs.</span>
     <span class="ident">AsNeededByApp</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="doccomment">/// Export a directory.</span>
     <span class="ident">ExportDirectory</span> <span class="op">=</span> <span class="number">8</span>,
 }
 
@@ -319,11 +334,16 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="doccomment">/// The possible permissions to grant to a specific application for a specific document.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Permission</span> {
+    <span class="doccomment">/// Read access.</span>
     <span class="ident">Read</span>,
+    <span class="doccomment">/// Write access.</span>
     <span class="ident">Write</span>,
     <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;grant-permissions&quot;</span>)]</span>
+    <span class="doccomment">/// The possibility to grant new permissions to the file.</span>
     <span class="ident">GrantPermissions</span>,
+    <span class="doccomment">/// Delete access.</span>
     <span class="ident">Delete</span>,
 }
 
@@ -394,7 +414,7 @@
     <span class="doccomment">/// * `o_path_fds` - open file descriptors for the files to export</span>
     <span class="doccomment">/// * `flags` - a `Flags` enum.</span>
     <span class="doccomment">/// * `app_id` - an application ID, or empty string</span>
-    <span class="doccomment">/// * `permissions` - the permissions to grant, possible values are &#39;read&#39;, &#39;write&#39;, &#39;grant-permissions&#39; and &#39;delete&#39;</span>
+    <span class="doccomment">/// * `permissions` - the permissions to grant</span>
     <span class="kw">fn</span> <span class="ident">add_full</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_fds</span>: <span class="kw-2">&amp;</span>[<span class="ident">Fd</span>],

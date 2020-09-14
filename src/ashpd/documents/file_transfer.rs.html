@@ -116,6 +116,9 @@
 <span id="116">116</span>
 <span id="117">117</span>
 <span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -154,6 +157,7 @@
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specified options on a start transfer request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TransferOptions</span> {
     <span class="doccomment">/// Whether to allow the chosen application to write to the files.</span>
     <span class="kw">pub</span> <span class="ident">writeable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
@@ -162,11 +166,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TransferOptions</span> {
+    <span class="doccomment">/// Sets whether the chosen application can write to the files or not.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">writeable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">writeable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">writeable</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Whether to stop the transfer automatically after the first retrieve_files call.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">autostop</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">autostop</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">autostop</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">autostop</span>);
         <span class="self">self</span>

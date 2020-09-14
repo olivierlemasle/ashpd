@@ -148,6 +148,24 @@
 <span id="148">148</span>
 <span id="149">149</span>
 <span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -188,23 +206,32 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">WindowIdentifier</span>;
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">fdo</span>::<span class="ident">DBusProxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>, <span class="ident">Connection</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">ObjectPath</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specficied options on an update request</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Currently there are no possible options yet.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UpdateOptions</span> {}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A response containing the update information when an update is available.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UpdateInfo</span> {
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;running-commit&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">running_commit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The currently running ostree commit.</span>
+    <span class="kw">pub</span> <span class="ident">running_commit</span>: <span class="ident">String</span>,
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;local-commit&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">local_commit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The locally installed ostree commit.</span>
+    <span class="kw">pub</span> <span class="ident">local_commit</span>: <span class="ident">String</span>,
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;remote-commit&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">remote_commit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The available commit ot install.</span>
+    <span class="kw">pub</span> <span class="ident">remote_commit</span>: <span class="ident">String</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// The update status.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">UpdateStatus</span> {
     <span class="doccomment">/// Running.</span>
     <span class="ident">Running</span> <span class="op">=</span> <span class="number">0</span>,
@@ -217,6 +244,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A response of the update progress signal.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UpdateProgress</span> {
     <span class="doccomment">/// The number of operations that the update consists of.</span>
     <span class="kw">pub</span> <span class="ident">n_ops</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
@@ -240,11 +268,18 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">UpdateMonitorProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new request proxy.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `connection` - A DBus session connection.</span>
+    <span class="doccomment">/// * `handle` - An object path returned by a create_update_monitor call.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ObjectPath</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">DBusProxy</span>::<span class="ident">new_for</span>(<span class="ident">connection</span>, <span class="ident">handle</span>, <span class="string">&quot;/org/freedesktop/portal/Flatpak&quot;</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span> { <span class="ident">proxy</span>, <span class="ident">connection</span> })
     }
 
+    <span class="doccomment">/// A signal received when there&#39;s progress during the application update.</span>
     <span class="comment">// FIXME: refactor once zbus supports signals</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_progress</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -262,6 +297,7 @@
         }
     }
 
+    <span class="doccomment">/// A signal received when there&#39;s an application update.</span>
     <span class="comment">// FIXME: refactor once zbus supports signals</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_update_available</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -281,7 +317,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="doccomment">///  Ends the update monitoring and cancels any ongoing installation.</span>
+    <span class="doccomment">/// Ends the update monitoring and cancels any ongoing installation.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">proxy</span>.<span class="ident">call</span>(<span class="string">&quot;Close&quot;</span>, <span class="kw-2">&amp;</span>())<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())

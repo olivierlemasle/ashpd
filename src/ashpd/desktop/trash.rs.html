@@ -56,6 +56,9 @@
 <span id="56">56</span>
 <span id="57">57</span>
 <span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -91,8 +94,11 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="doccomment">/// The status of moving a file to the trash.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TrashStatus</span> {
+    <span class="doccomment">/// Moving the file to the trash failed.</span>
     <span class="ident">Failed</span> <span class="op">=</span> <span class="number">0</span>,
+    <span class="doccomment">/// Moving the file to the trash succeeded</span>
     <span class="ident">Succeeded</span> <span class="op">=</span> <span class="number">1</span>,
 }
 

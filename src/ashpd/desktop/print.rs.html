@@ -453,6 +453,121 @@
 <span id="453">453</span>
 <span id="454">454</span>
 <span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -491,15 +606,81 @@
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">HandleToken</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
+<span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">Signature</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="attribute">#[<span class="ident">derive</span>(
+    <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">AsRefStr</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
+)]</span>
+<span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="doccomment">/// The page orientation.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Orientation</span> {
+    <span class="doccomment">/// Landscape.</span>
+    <span class="ident">Landscape</span>,
+    <span class="doccomment">/// Portrait.</span>
+    <span class="ident">Portrait</span>,
+    <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;reverse_landscape&quot;</span>)]</span>
+    <span class="doccomment">/// Reverse landscape.</span>
+    <span class="ident">ReverseLandscape</span>,
+    <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;reverse_portrait&quot;</span>)]</span>
+    <span class="doccomment">/// Reverse portrait.</span>
+    <span class="ident">ReversePortrait</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">zvariant</span>::<span class="ident">Type</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
+    <span class="kw">fn</span> <span class="ident">signature</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+        <span class="ident">String</span>::<span class="ident">signature</span>()
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Serializer</span>,
+    {
+        <span class="ident">String</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>(), <span class="ident">serializer</span>)
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(
+    <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">AsRefStr</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
+)]</span>
+<span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="doccomment">/// The print quality.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Quality</span> {
+    <span class="doccomment">/// Draft quality.</span>
+    <span class="ident">Draft</span>,
+    <span class="doccomment">/// Low quality.</span>
+    <span class="ident">Low</span>,
+    <span class="doccomment">/// Normal quality.</span>
+    <span class="ident">Normal</span>,
+    <span class="doccomment">/// High quality.</span>
+    <span class="ident">High</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">zvariant</span>::<span class="ident">Type</span> <span class="kw">for</span> <span class="ident">Quality</span> {
+    <span class="kw">fn</span> <span class="ident">signature</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+        <span class="ident">String</span>::<span class="ident">signature</span>()
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Quality</span> {
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Serializer</span>,
+    {
+        <span class="ident">String</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>(), <span class="ident">serializer</span>)
+    }
+}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Print settings to set in the print dialog.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Settings</span> {
     <span class="doccomment">/// One of landscape, portrait, reverse_landscape or reverse_portrait.</span>
-    <span class="kw">pub</span> <span class="ident">orientation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">orientation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Orientation</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A paper name according to [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;paper-format&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">paper_format</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
@@ -515,8 +696,8 @@
     <span class="doccomment">/// The default paper source.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;default-source&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">default_source</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Print quality, one of normal, high, low or draft.</span>
-    <span class="kw">pub</span> <span class="ident">quality</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Print quality.</span>
+    <span class="kw">pub</span> <span class="ident">quality</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Quality</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The resolution, sets both resolution-x &amp; resolution-y</span>
     <span class="kw">pub</span> <span class="ident">resolution</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether to use color.</span>
@@ -544,6 +725,7 @@
     <span class="doccomment">/// What pages to print, one of all, even or odd.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;page-set&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">page_set</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The finishings.</span>
     <span class="kw">pub</span> <span class="ident">finishings</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The number of pages per sheet.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;number-up&quot;</span>)]</span>
@@ -552,6 +734,7 @@
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;number-up-layout&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">number_up_layout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;output-bin&quot;</span>)]</span>
+    <span class="doccomment">/// The output bin.</span>
     <span class="kw">pub</span> <span class="ident">output_bin</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The horizontal resolution in dpi.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;resolution-x&quot;</span>)]</span>
@@ -574,143 +757,171 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Settings</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">orientation</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">orientation</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">orientation</span>.<span class="ident">to_string</span>());
+    <span class="doccomment">/// Sets the orientation.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">orientation</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">orientation</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the paper name.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_format</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paper_format</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">paper_format</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paper_format</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the paper width.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_width</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paper_width</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">paper_width</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paper_width</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the paper height.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_height</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paper_height</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">paper_height</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paper_height</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the number of copies to print.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">n_copies</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n_copies</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">n_copies</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">n_copies</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the default paper source.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_source</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">default_source</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">default_source</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">default_source</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quality</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">quality</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">quality</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">quality</span>.<span class="ident">to_string</span>());
+    <span class="doccomment">/// Sets the print quality.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quality</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">quality</span>: <span class="ident">Quality</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">quality</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">quality</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the resolution, both resolution-x &amp; resolution-y.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolution</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resolution</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">resolution</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resolution</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets whether to use color.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">use_color</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">use_color</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">use_color</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the duplex printing mode.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duplex</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">duplex</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">duplex</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">duplex</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Whether to collate copies.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collate</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">collate</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">collate</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">collate</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets whether to reverse the order of the printed pages.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reverse</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">reverse</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reverse</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the media type.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">media_type</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">media_type</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">media_type</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">media_type</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the dithering to use.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dither</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dither</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">dither</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dither</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the page scale in percent.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">scale</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">scale</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets what pages to print, one of all, selection, current or ranges.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_pages</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">print_pages</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">print_pages</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">print_pages</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets a list of page ranges, formatted like this: 0-2,4,9-11.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_ranges</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">page_ranges</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">page_ranges</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">page_ranges</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets what pages to print, one of all, even or odd.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">page_set</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">page_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">page_set</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the finishings.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finishings</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">finishings</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">finishings</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">finishings</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the number of pages per sheet.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">number_up</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number_up</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">number_up</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">number_up</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the number up layout, one of lrtb, lrbt, rltb, rlbt, tblr, tbrl, btlr, btrl.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">number_up_layout</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number_up_layout</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">number_up_layout</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">number_up_layout</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the output bin</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_bin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_bin</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">output_bin</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_bin</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the horizontal resolution in dpi.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolution_x</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resolution_x</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">resolution_x</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resolution_x</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the vertical resolution in dpi.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolution_y</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resolution_y</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">resolution_y</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resolution_y</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the resolution in lines per inch.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_lpi</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">print_lpi</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">print_lpi</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">print_lpi</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the print-to-file base name.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_basename</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_basename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">output_basename</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_basename</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_file_format</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_basename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">output_basename</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_basename</span>.<span class="ident">to_string</span>());
+    <span class="doccomment">/// Sets the print-to-file format, one of PS, PDF, SVG.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_file_format</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_file_format</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">output_file_format</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_file_format</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_uri</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_basename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">output_basename</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_basename</span>.<span class="ident">to_string</span>());
+    <span class="doccomment">/// Sets the print-to-file output uri.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_uri</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_uri</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">output_uri</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_uri</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 }
@@ -718,7 +929,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Setup the printed pages.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PageSetup</span> {
-    <span class="doccomment">/// the PPD name.</span>
+    <span class="doccomment">/// the PPD name. It&#39;s the name to select a given driver.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;PPDName&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">ppdname</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The name of the page setup.</span>
@@ -737,56 +948,66 @@
     <span class="kw">pub</span> <span class="ident">margin_right</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Left margin in millimeters.</span>
     <span class="kw">pub</span> <span class="ident">margin_left</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Orientation, one of portrait, landscape, reverse-portrait or reverse-landscape.</span>
-    <span class="kw">pub</span> <span class="ident">orientation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The page orientation.</span>
+    <span class="kw">pub</span> <span class="ident">orientation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Orientation</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">PageSetup</span> {
+    <span class="doccomment">/// Sets the ppdname.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ppdname</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ppdname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">ppdname</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ppdname</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the name of the page setup.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the user visible name of the page setup.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">display_name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">display_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">display_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">display_name</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">orientation</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">orientation</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">orientation</span>.<span class="ident">to_string</span>());
+    <span class="doccomment">/// Sets the orientation.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">orientation</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">orientation</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the page width.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">width</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">width</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">width</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the page height.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">height</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">height</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">height</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">height</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the page top margin.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_top</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">margin_top</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_top</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the page bottom margin.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_bottom</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_bottom</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">margin_bottom</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_bottom</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the page right margin.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_right</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_right</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">margin_right</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_right</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the page margin left.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_left</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_left</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">margin_left</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_left</span>);
         <span class="self">self</span>
@@ -803,11 +1024,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">PreparePrintOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
         <span class="self">self</span>
@@ -826,16 +1049,19 @@
 }
 
 <span class="kw">impl</span> <span class="ident">PrintOptions</span> {
+    <span class="doccomment">/// A token retrieved from a prepare print response.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">token</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
@@ -843,10 +1069,14 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A response returned by a prepare print request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PreparePrint</span> {
+    <span class="doccomment">/// The printing settings.</span>
     <span class="kw">pub</span> <span class="ident">settings</span>: <span class="ident">Settings</span>,
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;page-setup&quot;</span>)]</span>
+    <span class="doccomment">/// The printed pages setup.</span>
     <span class="kw">pub</span> <span class="ident">page_setup</span>: <span class="ident">PageSetup</span>,
+    <span class="doccomment">/// A token to pass to the print request.</span>
     <span class="kw">pub</span> <span class="ident">token</span>: <span class="ident">u32</span>,
 }
 

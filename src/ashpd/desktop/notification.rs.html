@@ -268,6 +268,31 @@
 <span id="268">268</span>
 <span id="269">269</span>
 <span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -322,10 +347,15 @@
     <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
 )]</span>
 <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="doccomment">/// The notification priority</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Priority</span> {
+    <span class="doccomment">/// Low.</span>
     <span class="ident">Low</span>,
+    <span class="doccomment">/// Normal.</span>
     <span class="ident">Normal</span>,
+    <span class="doccomment">/// High.</span>
     <span class="ident">High</span>,
+    <span class="doccomment">/// Urgent.</span>
     <span class="ident">Urgent</span>,
 }
 
@@ -366,6 +396,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Notification</span> {
+    <span class="doccomment">/// Create a new notification</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `title` - the notification title</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">title</span>: <span class="ident">title</span>.<span class="ident">to_string</span>(),
@@ -378,31 +413,37 @@
         }
     }
 
+    <span class="doccomment">/// Sets the notification body.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">body</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">body</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">body</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets an icon to the notification</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icon</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">icon</span>: <span class="ident">OwnedValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">icon</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">icon</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the notiifcation priority.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">priority</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">priority</span>: <span class="ident">Priority</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">priority</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">priority</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the default action when the user clicks on the notification.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_action</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">default_action</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">default_action</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">default_action</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets a value to be sent in the action_invoked signal.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_action_target</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">default_action_target</span>: <span class="ident">OwnedValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">default_action_target</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">default_action_target</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Adds a new button to the notification.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">button</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">button</span>: <span class="ident">Button</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">buttons</span> {
             <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">buttons</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">buttons</span>.<span class="ident">push</span>(<span class="ident">button</span>),
@@ -426,6 +467,12 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Button</span> {
+    <span class="doccomment">/// Create a new notification button</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Arguments</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `label` - the user visible label of the button</span>
+    <span class="doccomment">/// * `action` - the action name to be invoked when the user clicks on the button.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">action</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">label</span>: <span class="ident">label</span>.<span class="ident">to_string</span>(),
@@ -434,6 +481,7 @@
         }
     }
 
+    <span class="doccomment">/// The value to send with the action name when the button is clicked.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">target</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">target</span>: <span class="ident">OwnedValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">target</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">target</span>);
         <span class="self">self</span>
@@ -441,6 +489,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
+<span class="doccomment">/// An invoked action.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Action</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OwnedValue</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Action</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
@@ -481,6 +530,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">NotificationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new notification proxy.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">Proxy</span>::<span class="ident">new</span>(
             <span class="ident">connection</span>,

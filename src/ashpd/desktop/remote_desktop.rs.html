@@ -480,12 +480,31 @@
 <span id="480">480</span>
 <span id="481">481</span>
 <span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use ashpd::desktop::remote_desktop::{</span>
-<span class="doccomment">//!     CreateRemoteOptions, CreateSession, DeviceType, KeyState, RemoteDesktopProxy, SelectDevices,</span>
+<span class="doccomment">//!     CreateRemoteOptions, CreateSession, DeviceType, KeyState, RemoteDesktopProxy, SelectedDevices,</span>
 <span class="doccomment">//!     SelectDevicesOptions, StartRemoteOptions,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//! use ashpd::{BasicResponse as Basic, HandleToken, RequestProxy, Response, WindowIdentifier};</span>
@@ -526,7 +545,7 @@
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|r: Response&lt;SelectDevices&gt;| {</span>
+<span class="doccomment">//!     request.on_response(|r: Response&lt;SelectedDevices&gt;| {</span>
 <span class="doccomment">//!         proxy</span>
 <span class="doccomment">//!             .notify_keyboard_keycode(</span>
 <span class="doccomment">//!                 handle.clone(),</span>
@@ -571,23 +590,33 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// The keyboard key state.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">KeyState</span> {
+    <span class="doccomment">/// The key is pressed.</span>
     <span class="ident">Pressed</span> <span class="op">=</span> <span class="number">0</span>,
+    <span class="doccomment">/// The key is released..</span>
     <span class="ident">Released</span> <span class="op">=</span> <span class="number">1</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">BitFlags</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// A bit flag for the available devices.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DeviceType</span> {
+    <span class="doccomment">/// A keyboard.</span>
     <span class="ident">Keyboard</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="doccomment">/// A mouse pointer.</span>
     <span class="ident">Pointer</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="doccomment">/// A touchscreen</span>
     <span class="ident">Touchscreen</span> <span class="op">=</span> <span class="number">4</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// The available axis.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Axis</span> {
+    <span class="doccomment">/// Vertical axis.</span>
     <span class="ident">Vertical</span> <span class="op">=</span> <span class="number">0</span>,
+    <span class="doccomment">/// Horizontal axis.</span>
     <span class="ident">Horizontal</span> <span class="op">=</span> <span class="number">1</span>,
 }
 
@@ -601,11 +630,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">CreateRemoteOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the session handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>);
         <span class="self">self</span>
@@ -613,12 +644,14 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A response to a create session request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateSession</span> {
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
     <span class="ident">session_handle</span>: <span class="ident">String</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CreateSession</span> {
+    <span class="doccomment">/// The created session handle.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ObjectPath</span> {
         <span class="ident">ObjectPath</span>::<span class="ident">try_from</span>(<span class="self">self</span>.<span class="ident">session_handle</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>()
     }
@@ -634,11 +667,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SelectDevicesOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the device types to request remote controlling of.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">types</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">types</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">types</span>);
         <span class="self">self</span>
@@ -653,6 +688,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">StartRemoteOptions</span> {
+    <span class="doccomment">/// Sets the handle token.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
@@ -660,7 +696,9 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectDevices</span> {
+<span class="doccomment">/// A response to a select device request.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectedDevices</span> {
+    <span class="doccomment">/// The selected devices.</span>
     <span class="kw">pub</span> <span class="ident">devices</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>,
 }
 

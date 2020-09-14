@@ -180,6 +180,18 @@
 <span id="180">180</span>
 <span id="181">181</span>
 <span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -217,6 +229,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// A bitmask representing the &quot;permissions&quot; of a newely created sandbox.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SandboxFlags</span> {
     <span class="doccomment">/// Share the display access (X11, wayland) with the caller.</span>
     <span class="ident">DisplayAccess</span> <span class="op">=</span> <span class="number">1</span>,
@@ -232,6 +245,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// Flags affecting the created sandbox.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SpawnFlags</span> {
     <span class="doccomment">/// Clear the environment.</span>
     <span class="ident">ClearEnv</span> <span class="op">=</span> <span class="number">1</span>,
@@ -251,12 +265,14 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="doccomment">/// Flags marking what optional features are available.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SupportsFlags</span> {
     <span class="doccomment">/// Supports the expose sandbox pids flag of Spawn.</span>
     <span class="ident">ExposePids</span> <span class="op">=</span> <span class="number">1</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specficied options on a spawn request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpawnOptions</span> {
     <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to the new sandbox, for reading and writing.</span>
     <span class="doccomment">/// Note that absolute paths or subdirectories are not allowed.</span>
@@ -273,26 +289,31 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SpawnOptions</span> {
+    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox, readonly.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_ro</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose_fd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox, readonly.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose_fd_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd_ro</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Sets the created sandbox flags.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_flags</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_flags</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_flags</span>);
         <span class="self">self</span>
@@ -300,6 +321,9 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specficied options on a create monitor request.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Currently there are no possible options yet.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateMonitorOptions</span> {}
 
 <span class="attribute">#[<span class="ident">dbus_proxy</span>(
