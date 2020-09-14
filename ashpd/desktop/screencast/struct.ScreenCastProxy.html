@@ -10,7 +10,7 @@
 <p>Returns a file descriptor of an open PipeWire remote.</p>
 <h1 id="arguments" class="section-header"><a href="#arguments">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - Object path for the <a href="../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object</li>
+<li><code>session_handle</code> - A <a href="../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?
 FIXME: figure out the options we can take here</li>
 </ul>
@@ -21,7 +21,7 @@ An application may only attempt to select sources once per session.</p>
 <p>Returns a <a href="../request/struct.RequestProxy.html"><code>RequestProxy</code></a> object path.</p>
 <h1 id="arguments-1" class="section-header"><a href="#arguments-1">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - Object path of the <a href="../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object</li>
+<li><code>session_handle</code> - A <a href="../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - A <code>SelectSourcesOptions</code></li>
 </ul>
 </div><h4 id='method.start' class="method"><code>pub fn <a href='#method.start' class='fnname'>start</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;parent_window: <a class="struct" href="../../../ashpd/struct.WindowIdentifier.html" title="struct ashpd::WindowIdentifier">WindowIdentifier</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="../../../ashpd/desktop/screencast/struct.StartCastOptions.html" title="struct ashpd::desktop::screencast::StartCastOptions">StartCastOptions</a><br>) -&gt; Result&lt;OwnedObjectPath&gt;</code><a class='srclink' href='../../../src/ashpd/desktop/screencast.rs.html#227-231' title='goto source code'>[src]</a></h4><div class='docblock'><p>Start the screen cast session.</p>
@@ -31,7 +31,7 @@ the selection set up by <code>select_sources</code>.</p>
 <p>Returns a <a href="../request/struct.RequestProxy.html"><code>RequestProxy</code></a> object path.</p>
 <h1 id="arguments-2" class="section-header"><a href="#arguments-2">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - Object path of the <a href="../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object</li>
+<li><code>session_handle</code> - A <a href="../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>parent_window</code> - Identifier for the application window</li>
 <li><code>options</code> - A <code>StartScreenCastOptions</code></li>
 </ul>

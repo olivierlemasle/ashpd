@@ -16,7 +16,7 @@ It can also be used together with a screen cast session</p>
 May only be called if KEYBOARD access was provided after starting the session.</p>
 <h1 id="arguments-1" class="section-header"><a href="#arguments-1">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>keycode</code> - Keyboard code that was pressed or released</li>
 <li><code>state</code> - The new state of the keyboard code</li>
@@ -26,7 +26,7 @@ May only be called if KEYBOARD access was provided after starting the session.</
 May only be called if KEYBOARD access was provided after starting the session.</p>
 <h1 id="arguments-2" class="section-header"><a href="#arguments-2">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>keysym</code> - Keyboard symbol that was pressed or released</li>
 <li><code>state</code> - The new state of the keyboard code</li>
@@ -39,7 +39,7 @@ the motion vector of a pointer motion done using the same advice.</p>
 <p>May only be called if POINTER access was provided after starting the session.</p>
 <h1 id="arguments-3" class="section-header"><a href="#arguments-3">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>dx</code> - Relative axis movement on the x axis</li>
 <li><code>dy</code> - Relative axis movement on the y axis</li>
@@ -49,7 +49,7 @@ the motion vector of a pointer motion done using the same advice.</p>
 May only be called if POINTER access was provided after starting the session.</p>
 <h1 id="arguments-4" class="section-header"><a href="#arguments-4">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>axis</code> - The axis that was scrolled</li>
 </ul>
@@ -59,7 +59,7 @@ The pointer button is encoded according to Linux Evdev button codes.</p>
 <p>May only be called if POINTER access was provided after starting the session.</p>
 <h1 id="arguments-5" class="section-header"><a href="#arguments-5">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>button</code> - The pointer button was pressed or released</li>
 <li><code>state</code> - The new state of the keyboard code</li>
@@ -69,7 +69,7 @@ The pointer button is encoded according to Linux Evdev button codes.</p>
 The (dx, dy) vector represents the new pointer position in the streams logical coordinate space.</p>
 <h1 id="arguments-6" class="section-header"><a href="#arguments-6">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>dx</code> - Relative movement on the x axis</li>
 <li><code>dy</code> - Relative movement on the y axis</li>
@@ -79,7 +79,7 @@ The (dx, dy) vector represents the new pointer position in the streams logical c
 The (x, y) position represents the new pointer position in the streams logical coordinate sspace</p>
 <h1 id="arguments-7" class="section-header"><a href="#arguments-7">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>stream</code> - The PipeWire stream node the coordinate is relative to</li>
 <li><code>x</code> - Pointer motion x coordinate</li>
@@ -91,7 +91,7 @@ The (x, y) position represents the new touch point position in the streams logic
 <p>May only be called if TOUCHSCREEN access was provided after starting the session.</p>
 <h1 id="arguments-8" class="section-header"><a href="#arguments-8">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>stream</code> - The PipeWire stream node the coordinate is relative to</li>
 <li><code>slot</code> - Touch slot where touch point appeared</li>
@@ -104,7 +104,7 @@ The (x, y) position represents where the touch point position in the streams log
 <p>May only be called if TOUCHSCREEN access was provided after starting the session.</p>
 <h1 id="arguments-9" class="section-header"><a href="#arguments-9">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>stream</code> - The PipeWire stream node the coordinate is relative to</li>
 <li><code>slot</code> - Touch slot where touch point appeared</li>
@@ -116,7 +116,7 @@ The (x, y) position represents where the touch point position in the streams log
 <p>May only be called if TOUCHSCREEN access was provided after starting the session.</p>
 <h1 id="arguments-10" class="section-header"><a href="#arguments-10">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - ?</li>
 <li><code>slot</code> - Touch slot where touch point appeared</li>
 </ul>
@@ -125,7 +125,7 @@ The (x, y) position represents where the touch point position in the streams log
 <p>Returns a <a href="../../session/struct.RequestProxy.html"><code>RequestProxy</code></a> object path.</p>
 <h1 id="arguments-11" class="section-header"><a href="#arguments-11">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>options</code> - <a href="../struct.SelectDevicesOptions.html"><code>SelectDevicesOptions</code></a></li>
 </ul>
 </div><h4 id='method.start' class="method"><code>pub fn <a href='#method.start' class='fnname'>start</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;session_handle: ObjectPath, <br>&nbsp;&nbsp;&nbsp;&nbsp;parent_window: <a class="struct" href="../../../ashpd/struct.WindowIdentifier.html" title="struct ashpd::WindowIdentifier">WindowIdentifier</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="struct" href="../../../ashpd/desktop/remote_desktop/struct.StartRemoteOptions.html" title="struct ashpd::desktop::remote_desktop::StartRemoteOptions">StartRemoteOptions</a><br>) -&gt; Result&lt;OwnedObjectPath&gt;</code><a class='srclink' href='../../../src/ashpd/desktop/remote_desktop.rs.html#184-188' title='goto source code'>[src]</a></h4><div class='docblock'><p>Start the remote desktop session.</p>
@@ -135,7 +135,7 @@ if screen cast sources was selected.</p>
 <p>Returns a <a href="../../session/struct.RequestProxy.html"><code>RequestProxy</code></a> object path.</p>
 <h1 id="arguments-12" class="section-header"><a href="#arguments-12">Arguments</a></h1>
 <ul>
-<li><code>session_handle</code> - The <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object handle</li>
+<li><code>session_handle</code> - A <a href="../../session/struct.SessionProxy.html"><code>SessionProxy</code></a> object path.</li>
 <li><code>parent_window</code> - The application window identifier</li>
 <li><code>options</code> - <a href="../struct.StartRemoteOptions.html"><code>StartRemoteOptions</code></a></li>
 </ul>
