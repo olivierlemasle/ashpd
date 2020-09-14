@@ -329,7 +329,7 @@
     <span class="ident">Country</span> <span class="op">=</span> <span class="number">1</span>,
     <span class="doccomment">/// City.</span>
     <span class="ident">City</span> <span class="op">=</span> <span class="number">2</span>,
-    <span class="doccomment">/// Neighborhod.</span>
+    <span class="doccomment">/// Neighborhood.</span>
     <span class="ident">Neighborhood</span> <span class="op">=</span> <span class="number">3</span>,
     <span class="doccomment">/// Street.</span>
     <span class="ident">Street</span> <span class="op">=</span> <span class="number">4</span>,
@@ -357,13 +357,13 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets the distance treshold in meters.</span>
+    <span class="doccomment">/// Sets the distance threshold in meters.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">distance_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">distance_threshold</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">distance_threshold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">distance_threshold</span>);
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets the time treshold in seconds.</span>
+    <span class="doccomment">/// Sets the time threshold in seconds.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">time_threshold</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">time_threshold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">time_threshold</span>);
         <span class="self">self</span>
