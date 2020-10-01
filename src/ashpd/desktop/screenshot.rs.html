@@ -322,8 +322,8 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gdk_color&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">Color</span> {
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Color</span> {
     <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">gdk</span>::<span class="ident">RGBA</span> {
         <span class="ident">gdk</span>::<span class="ident">RGBA</span> {
             <span class="ident">red</span>: <span class="self">self</span>.<span class="ident">red</span>(),

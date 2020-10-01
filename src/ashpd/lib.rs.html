@@ -58,6 +58,8 @@
 <span id="58">58</span>
 <span id="59">59</span>
 <span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! ASHPD, acronym of Aperture Science Handheld Portal Device is a Rust &amp; [zbus](https://gitlab.freedesktop.org/zeenix/zbus) wrapper of</span>
 <span class="doccomment">//! the XDG portals DBus interfaces. The library aims to provide an easy way to</span>
@@ -95,10 +97,12 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! | Feature | Description |</span>
 <span class="doccomment">//! | ---     | ----------- |</span>
-<span class="doccomment">//! | gdk_color | Implement `Into&lt;gdk::RGBA&gt;` for [`Color`] |</span>
+<span class="doccomment">//! | feature_gtk | Implement `Into&lt;gdk::RGBA&gt;` for [`Color`] |</span>
+<span class="doccomment">//! |  | Implement `From&lt;gtk::Window&gt;` for [`WindowIdentifier`] |</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`Color`]: ./desktop/screenshot/struct.Color.html</span>
+<span class="doccomment">//! [`WindowIdentifier`]: ./window_identifier/struct.WindowIdentifier.html</span>
 <span class="doccomment">//!</span>
 <span class="comment">// #![deny(missing_docs)] enable once</span>
 <span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a background or querying the user&#39;s location.</span>
