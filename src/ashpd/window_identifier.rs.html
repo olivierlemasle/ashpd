@@ -63,8 +63,6 @@
 <span id="63">63</span>
 <span id="64">64</span>
 <span id="65">65</span>
-<span id="66">66</span>
-<span id="67">67</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::<span class="ident">Type</span>;
@@ -80,9 +78,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// For other windowing systems, or if you don&#39;t have a suitable handle, just use the `Default` implementation.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Normally, we should provide a `From&lt;gtk::Window&gt; for WindowIdentifier` implementation.</span>
-<span class="doccomment">/// But as that&#39;s currently impossible to do from Rust in a sane way, we should try to provide a C function</span>
-<span class="doccomment">/// that gives us a handle from the `Gdk::Window` and call it from Rust in the `From` implementation.</span>
+<span class="doccomment">/// Please note that the `From&lt;gtk::Window&gt;` implementation is x11 only for now.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// We would love merge requests that adds other `From&lt;T&gt; for WindowIdentifier` implementations for other toolkits.</span>
 <span class="doccomment">///</span>
