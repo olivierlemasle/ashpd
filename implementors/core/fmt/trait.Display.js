@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["ashpd"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html\" title=\"trait core::fmt::Display\">Display</a> for <a class=\"struct\" href=\"ashpd/struct.NString.html\" title=\"struct ashpd::NString\">NString</a>","synthetic":false,"types":["ashpd::helper::NString"]}];
+implementors["ashpd"] = [{"text":"impl Display for NString","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

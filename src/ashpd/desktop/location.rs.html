@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/desktop/location.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>location.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/desktop/location.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>location.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -352,25 +353,25 @@
 
 <span class="kw">impl</span> <span class="ident">LocationAccessOptions</span> {
     <span class="doccomment">/// Sets the session handle token.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">session_handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">session_handle_token</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the distance threshold in meters.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">distance_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">distance_threshold</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">distance_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">distance_threshold</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">distance_threshold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">distance_threshold</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the time threshold in seconds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">time_threshold</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">time_threshold</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">time_threshold</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">time_threshold</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the location accuracy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accuracy</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accuracy</span>: <span class="ident">Accuracy</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accuracy</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accuracy</span>: <span class="ident">Accuracy</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">accuracy</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accuracy</span>);
         <span class="self">self</span>
     }
@@ -385,7 +386,7 @@
 
 <span class="kw">impl</span> <span class="ident">LocationStartOptions</span> {
     <span class="doccomment">/// Sets the handle token.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
         <span class="self">self</span>
     }
@@ -397,47 +398,47 @@
 
 <span class="kw">impl</span> <span class="ident">LocationResponse</span> {
     <span class="doccomment">/// A `SessionProxy` object path.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ObjectPath</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ObjectPath</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
     }
 
     <span class="doccomment">/// The accuracy, in meters.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accuracy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accuracy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">accuracy</span>
     }
 
     <span class="doccomment">/// The altitude, in meters.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">altitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">altitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">altitude</span>
     }
 
     <span class="doccomment">/// The speed, in meters per second.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">speed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">speed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">speed</span>
     }
 
     <span class="doccomment">/// The heading, in degrees, going clockwise. North 0, East 90, South 180, West 270.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">heading</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">heading</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">heading</span>
     }
 
     <span class="doccomment">/// The location description</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">description</span>.<span class="ident">clone</span>()
     }
 
     <span class="doccomment">/// The latitude, in degrees.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">latitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">latitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">latitude</span>
     }
 
     <span class="doccomment">/// The longitude, in degrees.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">longitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">longitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">longitude</span>
     }
 
     <span class="doccomment">/// The timestamp, as seconds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timestamp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timestamp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">timestamp</span>.<span class="number">0</span>
     }
 }
@@ -469,7 +470,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">LocationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new location proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Connection</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">Proxy</span>::<span class="ident">new</span>(
             <span class="ident">connection</span>,
             <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
@@ -481,15 +482,15 @@
 
     <span class="doccomment">/// Signal emitted when the user location is updated.</span>
     <span class="comment">// FIXME: refactor once zbus supports signals</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_location_updated</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_location_updated</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">LocationResponse</span>),
     {
         <span class="kw">loop</span> {
             <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">connection</span>.<span class="ident">receive_message</span>()<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">msg_header</span> <span class="op">=</span> <span class="ident">msg</span>.<span class="ident">header</span>()<span class="question-mark">?</span>;
-            <span class="kw">if</span> <span class="ident">msg_header</span>.<span class="ident">message_type</span>()<span class="question-mark">?</span> <span class="op">=</span><span class="op">=</span> <span class="ident">zbus</span>::<span class="ident">MessageType</span>::<span class="ident">Signal</span>
-                <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">msg_header</span>.<span class="ident">member</span>()<span class="question-mark">?</span> <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;LocationUpdated&quot;</span>)
+            <span class="kw">if</span> <span class="ident">msg_header</span>.<span class="ident">message_type</span>()<span class="question-mark">?</span> <span class="op">==</span> <span class="ident">zbus</span>::<span class="ident">MessageType</span>::<span class="ident">Signal</span>
+                <span class="op">&amp;&amp;</span> <span class="ident">msg_header</span>.<span class="ident">member</span>()<span class="question-mark">?</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="string">&quot;LocationUpdated&quot;</span>)
             {
                 <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">msg</span>.<span class="ident">body</span>::<span class="op">&lt;</span><span class="ident">LocationResponse</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
                 <span class="ident">callback</span>(<span class="ident">response</span>);
@@ -509,7 +510,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`LocationAccessOptions`]: ./struct.LocationAccessOptions.html</span>
     <span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">LocationAccessOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">LocationAccessOptions</span>) <span class="op">-&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">proxy</span>.<span class="ident">call</span>(<span class="string">&quot;CreateSession&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>))
     }
 
@@ -531,13 +532,13 @@
         <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
         <span class="ident">options</span>: <span class="ident">LocationStartOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">proxy</span>
             .<span class="ident">call</span>(<span class="string">&quot;Start&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session_handle</span>, <span class="ident">parent_window</span>, <span class="ident">options</span>))
     }
 
     <span class="doccomment">/// version property</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">proxy</span>.<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>(<span class="string">&quot;version&quot;</span>)
     }
 }
