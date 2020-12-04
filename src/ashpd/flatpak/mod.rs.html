@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/flatpak/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/flatpak/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -278,45 +280,45 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpawnOptions</span> {
     <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to the new sandbox, for reading and writing.</span>
     <span class="doccomment">/// Note that absolute paths or subdirectories are not allowed.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">sandbox_expose</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to the new sandbox, readonly.</span>
     <span class="doccomment">/// Note that absolute paths or subdirectories are not allowed.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">sandbox_expose_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be exposed to the new sandbox, for reading and writing.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose_fd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">sandbox_expose_fd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be exposed to the new sandbox, readonly.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose_fd_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">sandbox_expose_fd_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Flags affecting the created sandbox.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_flags</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">sandbox_flags</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SpawnOptions</span> {
     <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox, readonly.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_ro</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose_fd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox, readonly.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_expose_fd_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd_ro</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the created sandbox flags.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_flags</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_flags</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sandbox_flags</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_flags</span>);
         <span class="self">self</span>
     }
@@ -338,7 +340,7 @@
 <span class="kw">trait</span> <span class="ident">Flatpak</span> {
     <span class="doccomment">/// Creates an update monitor object that will emit signals</span>
     <span class="doccomment">/// when an update for the caller becomes available, and can be used to install it.</span>
-    <span class="kw">fn</span> <span class="ident">create_update_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateMonitorOptions</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">create_update_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateMonitorOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// This methods let you start a new instance of your application, optionally enabling a tighter sandbox.</span>
     <span class="doccomment">///</span>
@@ -362,7 +364,7 @@
         <span class="ident">envs</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SpawnFlags</span><span class="op">&gt;</span>,
         <span class="ident">options</span>: <span class="ident">SpawnOptions</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// This methods let you send a Unix signal to a process that was started `spawn`</span>
     <span class="doccomment">///</span>
@@ -371,7 +373,7 @@
     <span class="doccomment">/// * `pid` - the PID of the process to send the signal to</span>
     <span class="doccomment">/// * `signal` - the signal to send</span>
     <span class="doccomment">/// * `to_process_group` - whether to send the signal to the process group</span>
-    <span class="kw">fn</span> <span class="ident">spawn_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>, <span class="ident">signal</span>: <span class="ident">u32</span>, <span class="ident">to_process_group</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">spawn_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>, <span class="ident">signal</span>: <span class="ident">u32</span>, <span class="ident">to_process_group</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="comment">// FIXME: signal</span>
     <span class="comment">// fn spawn_started(&amp;self, pid: u32, relpid: u32);</span>
@@ -381,11 +383,11 @@
 
     <span class="doccomment">/// Flags marking what optional features are available.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">supports</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">supports</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// version property</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Monitor if there&#39;s an update it and install it.</span>
