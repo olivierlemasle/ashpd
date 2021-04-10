@@ -271,13 +271,13 @@
 <span class="doccomment">//!     let wallpaper =</span>
 <span class="doccomment">//!         File::open(&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;).expect(&quot;wallpaper not found&quot;);</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(_)) = wallpaper::set_from_file(</span>
+<span class="doccomment">//!     if let Response::Ok(_) = wallpaper::set_from_file(</span>
 <span class="doccomment">//!         identifier,</span>
 <span class="doccomment">//!         wallpaper.as_raw_fd(),</span>
 <span class="doccomment">//!         true,</span>
 <span class="doccomment">//!         wallpaper::SetOn::Both,</span>
 <span class="doccomment">//!     )</span>
-<span class="doccomment">//!     .await</span>
+<span class="doccomment">//!     .await?</span>
 <span class="doccomment">//!     {</span>
 <span class="doccomment">//!         // wallpaper was set successfully</span>
 <span class="doccomment">//!     }</span>
@@ -293,13 +293,13 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(_)) = wallpaper::set_from_uri(</span>
+<span class="doccomment">//!     if let Response::Ok(_) = wallpaper::set_from_uri(</span>
 <span class="doccomment">//!         identifier,</span>
 <span class="doccomment">//!         &quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;,</span>
 <span class="doccomment">//!         true,</span>
 <span class="doccomment">//!         wallpaper::SetOn::Both,</span>
 <span class="doccomment">//!     )</span>
-<span class="doccomment">//!     .await</span>
+<span class="doccomment">//!     .await?</span>
 <span class="doccomment">//!     {</span>
 <span class="doccomment">//!         // wallpaper was set successfully</span>
 <span class="doccomment">//!     }</span>

@@ -300,7 +300,7 @@
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(_)) = open_uri::open_file(identifier, file.as_raw_fd(), false, true).await {</span>
+<span class="doccomment">//!     if let Response::Ok(_) = open_uri::open_file(identifier, file.as_raw_fd(), false, true).await? {</span>
 <span class="doccomment">//!         // Success!</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -315,13 +315,13 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(_)) = open_uri::open_uri(</span>
+<span class="doccomment">//!     if let Response::Ok(_) = open_uri::open_uri(</span>
 <span class="doccomment">//!         WindowIdentifier::default(),</span>
 <span class="doccomment">//!         &quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;,</span>
 <span class="doccomment">//!         false,</span>
 <span class="doccomment">//!         true,</span>
 <span class="doccomment">//!     )</span>
-<span class="doccomment">//!     .await</span>
+<span class="doccomment">//!     .await?</span>
 <span class="doccomment">//!     {</span>
 <span class="doccomment">//!         // Success!</span>
 <span class="doccomment">//!     }</span>

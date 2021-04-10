@@ -16,7 +16,7 @@
     <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;</span>).<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">identifier</span> <span class="op">=</span> <span class="ident">WindowIdentifier</span>::<span class="ident">default</span>();
 
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="kw">_</span>)) <span class="op">=</span> <span class="ident">open_uri</span>::<span class="ident">open_file</span>(<span class="ident">identifier</span>, <span class="ident">file</span>.<span class="ident">as_raw_fd</span>(), <span class="bool-val">false</span>, <span class="bool-val">true</span>).<span class="kw">await</span> {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span> <span class="ident">open_uri</span>::<span class="ident">open_file</span>(<span class="ident">identifier</span>, <span class="ident">file</span>.<span class="ident">as_raw_fd</span>(), <span class="bool-val">false</span>, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span> {
         <span class="comment">// Success!</span>
     }
     <span class="prelude-val">Ok</span>(())
@@ -29,13 +29,13 @@
 
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="kw">_</span>)) <span class="op">=</span> <span class="ident">open_uri</span>::<span class="ident">open_uri</span>(
+    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span> <span class="ident">open_uri</span>::<span class="ident">open_uri</span>(
         <span class="ident">WindowIdentifier</span>::<span class="ident">default</span>(),
         <span class="string">&quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;</span>,
         <span class="bool-val">false</span>,
         <span class="bool-val">true</span>,
     )
-    .<span class="kw">await</span>
+    .<span class="kw">await</span><span class="question-mark">?</span>
     {
         <span class="comment">// Success!</span>
     }

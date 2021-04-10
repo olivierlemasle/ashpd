@@ -14,7 +14,7 @@ interact with the various portals defined per the <a href="https://flatpak.githu
 
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">identifier</span> <span class="op">=</span> <span class="ident">WindowIdentifier</span>::<span class="ident">default</span>();
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="ident">color</span>)) <span class="op">=</span> <span class="ident">screenshot</span>::<span class="ident">pick_color</span>(<span class="ident">identifier</span>).<span class="kw">await</span> {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="ident">color</span>) <span class="op">=</span> <span class="ident">screenshot</span>::<span class="ident">pick_color</span>(<span class="ident">identifier</span>).<span class="kw">await</span><span class="question-mark">?</span> {
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;({}, {}, {})&quot;</span>, <span class="ident">color</span>.<span class="ident">red</span>(), <span class="ident">color</span>.<span class="ident">green</span>(), <span class="ident">color</span>.<span class="ident">blue</span>());
     }
     <span class="prelude-val">Ok</span>(())
@@ -28,7 +28,7 @@ interact with the various portals defined per the <a href="https://flatpak.githu
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">identifier</span> <span class="op">=</span> <span class="ident">WindowIdentifier</span>::<span class="ident">default</span>();
     <span class="kw">if</span> <span class="ident">camera</span>::<span class="ident">is_present</span>().<span class="kw">await</span><span class="question-mark">?</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="ident">pipewire_fd</span>)) <span class="op">=</span> <span class="ident">camera</span>::<span class="ident">stream</span>().<span class="kw">await</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Response</span>::<span class="prelude-val">Ok</span>(<span class="ident">pipewire_fd</span>) <span class="op">=</span> <span class="ident">camera</span>::<span class="ident">stream</span>().<span class="kw">await</span><span class="question-mark">?</span> {
             <span class="comment">// Render the stream with GStreamer for example, see the demo</span>
         }
     }

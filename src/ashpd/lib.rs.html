@@ -99,7 +99,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(color)) = screenshot::pick_color(identifier).await {</span>
+<span class="doccomment">//!     if let Response::Ok(color) = screenshot::pick_color(identifier).await? {</span>
 <span class="doccomment">//!         println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -114,7 +114,7 @@
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
 <span class="doccomment">//!     if camera::is_present().await? {</span>
-<span class="doccomment">//!         if let Ok(Response::Ok(pipewire_fd)) = camera::stream().await {</span>
+<span class="doccomment">//!         if let Response::Ok(pipewire_fd) = camera::stream().await? {</span>
 <span class="doccomment">//!             // Render the stream with GStreamer for example, see the demo</span>
 <span class="doccomment">//!         }</span>
 <span class="doccomment">//!     }</span>

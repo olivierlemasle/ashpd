@@ -271,7 +271,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(screenshot)) = screenshot::take(identifier, true, false).await {</span>
+<span class="doccomment">//!     if let Response::Ok(screenshot) = screenshot::take(identifier, true, false).await? {</span>
 <span class="doccomment">//!         println!(&quot;URI: {}&quot;, screenshot.uri);</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -285,7 +285,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(color)) = screenshot::pick_color(identifier).await {</span>
+<span class="doccomment">//!     if let Response::Ok(color) = screenshot::pick_color(identifier).await? {</span>
 <span class="doccomment">//!         println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     Ok(())</span>

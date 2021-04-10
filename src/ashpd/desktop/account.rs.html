@@ -135,8 +135,8 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(user_info)) =</span>
-<span class="doccomment">//!         account::get_user_information(identifier, &quot;App would like to access user information&quot;).await</span>
+<span class="doccomment">//!     if let Response::Ok(user_info) =</span>
+<span class="doccomment">//!         account::get_user_information(identifier, &quot;App would like to access user information&quot;).await?</span>
 <span class="doccomment">//!     {</span>
 <span class="doccomment">//!         println!(&quot;Name: {}&quot;, user_info.name);</span>
 <span class="doccomment">//!         println!(&quot;ID: {}&quot;, user_info.id);</span>
