@@ -77,6 +77,10 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">broken_intra_doc_links</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
@@ -86,6 +90,9 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! It provides an alternative to the C library &lt;https://github.com/flatpak/libportal&gt;.</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! # Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Ask the compositor to pick a color </span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::{desktop::screenshot, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
@@ -99,20 +106,25 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! Start a PipeWire stream from the user&#39;s camera</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::{desktop::camera, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!     if let Ok(Response::Ok(pipewire_node_id)) = camera::stream().await {</span>
-<span class="doccomment">//!         // Render the stream with GStreamer for example, see the demo</span>
+<span class="doccomment">//!     if camera::is_present().await? {</span>
+<span class="doccomment">//!         if let Ok(Response::Ok(pipewire_fd)) = camera::stream().await {</span>
+<span class="doccomment">//!             // Render the stream with GStreamer for example, see the demo</span>
+<span class="doccomment">//!         }</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ## Optional features</span>
+<span class="doccomment">//! For a tour of the various portals, see the ASHPD demo application.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Optional features</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! | Feature | Description |</span>
 <span class="doccomment">//! | ---     | ----------- |</span>
@@ -120,10 +132,6 @@
 <span class="doccomment">//! |  | Implement `From&lt;gtk3::Window&gt;` for [`WindowIdentifier`] |</span>
 <span class="doccomment">//! | feature_gtk4 | Implement `From&lt;Color&gt;` for `gdk4::RGBA` |</span>
 <span class="doccomment">//! |  | Provides [`WindowIdentifier::from_window`] |</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [`Color`]: ./desktop/screenshot/struct.Color.html</span>
-<span class="doccomment">//! [`WindowIdentifier`]: ./window_identifier/struct.WindowIdentifier.html</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>), <span class="ident">not</span>(<span class="ident">doc</span>)))]</span>
 <span class="macro">compile_error</span><span class="macro">!</span>(<span class="string">&quot;You can&#39;t enable both GTK 3 &amp; GTK 4 features at once&quot;</span>);
 
