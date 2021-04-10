@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
@@ -68,36 +68,47 @@
 <span id="65">65</span>
 <span id="66">66</span>
 <span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">broken_intra_doc_links</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="doccomment">//! ASHPD, acronym of Aperture Science Handheld Portal Device is a Rust &amp; [zbus](https://gitlab.freedesktop.org/zeenix/zbus) wrapper of</span>
 <span class="doccomment">//! the XDG portals DBus interfaces. The library aims to provide an easy way to</span>
 <span class="doccomment">//! interact with the various portals defined per the [specifications](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html).</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! It provides an alternative to the C library [https://github.com/flatpak/libportal](https://github.com/flatpak/libportal).</span>
+<span class="doccomment">//! It provides an alternative to the C library &lt;https://github.com/flatpak/libportal&gt;.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use ashpd::desktop::screenshot::{Color, PickColorOptions, ScreenshotProxy};</span>
-<span class="doccomment">//! use ashpd::{RequestProxy, Response, WindowIdentifier};</span>
+<span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use ashpd::{desktop::screenshot, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!    let connection = zbus::Connection::new_session()?;</span>
-<span class="doccomment">//!    let proxy = ScreenshotProxy::new(&amp;connection)?;</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
+<span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
+<span class="doccomment">//!     if let Ok(Response::Ok(color)) = screenshot::pick_color(identifier).await {</span>
+<span class="doccomment">//!         println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!    let request_handle = proxy.pick_color(</span>
-<span class="doccomment">//!             WindowIdentifier::default(),</span>
-<span class="doccomment">//!             PickColorOptions::default()</span>
-<span class="doccomment">//!    )?;</span>
+<span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use ashpd::{desktop::camera, Response, WindowIdentifier};</span>
+<span class="doccomment">//! use zbus::fdo::Result;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!    let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     request.on_response(|response: Response&lt;Color&gt;| {</span>
-<span class="doccomment">//!         if let Ok(color) = response {</span>
-<span class="doccomment">//!             println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
-<span class="doccomment">//!         }</span>
-<span class="doccomment">//!    })?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!    Ok(())</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
+<span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
+<span class="doccomment">//!     if let Ok(Response::Ok(pipewire_node_id)) = camera::stream().await {</span>
+<span class="doccomment">//!         // Render the stream with GStreamer for example, see the demo</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
@@ -105,36 +116,44 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! | Feature | Description |</span>
 <span class="doccomment">//! | ---     | ----------- |</span>
-<span class="doccomment">//! | feature_gtk3 | Implement `Into&lt;gdk3::RGBA&gt;` for [`Color`] |</span>
+<span class="doccomment">//! | feature_gtk3 | Implement `From&lt;Color&gt;` for `gdk3::RGBA` |</span>
 <span class="doccomment">//! |  | Implement `From&lt;gtk3::Window&gt;` for [`WindowIdentifier`] |</span>
-<span class="doccomment">//! | feature_gtk4 | Implement `Into&lt;gdk4::RGBA&gt;` for [`Color`] |</span>
-<span class="doccomment">//! |  | Implement `From&lt;gtk4::Window&gt;` for [`WindowIdentifier`] |</span>
+<span class="doccomment">//! | feature_gtk4 | Implement `From&lt;Color&gt;` for `gdk4::RGBA` |</span>
+<span class="doccomment">//! |  | Provides [`WindowIdentifier::from_window`] |</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`Color`]: ./desktop/screenshot/struct.Color.html</span>
 <span class="doccomment">//! [`WindowIdentifier`]: ./window_identifier/struct.WindowIdentifier.html</span>
-<span class="doccomment">//!</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>), <span class="ident">not</span>(<span class="ident">doc</span>)))]</span>
 <span class="macro">compile_error</span><span class="macro">!</span>(<span class="string">&quot;You can&#39;t enable both GTK 3 &amp; GTK 4 features at once&quot;</span>);
 
-<span class="comment">// #![deny(missing_docs)] enable once</span>
-<span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a background or querying the user&#39;s location.</span>
+<span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a</span>
+<span class="doccomment">/// background or querying the user&#39;s location.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">desktop</span>;
 <span class="doccomment">/// Interact with the documents store or transfer files across apps.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">documents</span>;
-<span class="doccomment">/// Spawn commands outside the sandbox or monitor if the running application has received an update &amp; install it.</span>
+<span class="doccomment">/// Spawn commands outside the sandbox or monitor if the running application has</span>
+<span class="doccomment">/// received an update &amp; install it.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">flatpak</span>;
 <span class="kw">mod</span> <span class="ident">handle_token</span>;
-<span class="kw">mod</span> <span class="ident">helper</span>;
 <span class="kw">mod</span> <span class="ident">request</span>;
 <span class="kw">mod</span> <span class="ident">session</span>;
 <span class="kw">mod</span> <span class="ident">window_identifier</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handle_token</span>::<span class="ident">HandleToken</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">helper</span>::<span class="ident">NString</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">request</span>::{<span class="ident">BasicResponse</span>, <span class="ident">RequestProxy</span>, <span class="ident">Response</span>, <span class="ident">ResponseError</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">session</span>::<span class="ident">SessionProxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">window_identifier</span>::<span class="ident">WindowIdentifier</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">enumflags2</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zbus</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zvariant</span>;
+
+<span class="doccomment">/// Check whether the application is running inside a sandbox.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// **Note** The check is very stupid as is for now.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sandboxed</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;/.flatpak-info&quot;</span>).<span class="ident">exists</span>()
+}
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handle_token</span>::<span class="ident">HandleToken</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">request</span>::{<span class="ident">AsyncRequestProxy</span>, <span class="ident">BasicResponse</span>, <span class="ident">RequestProxy</span>, <span class="ident">Response</span>, <span class="ident">ResponseError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">session</span>::{<span class="ident">AsyncSessionProxy</span>, <span class="ident">SessionProxy</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">window_identifier</span>::<span class="ident">WindowIdentifier</span>;
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "ashpd";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ashpd"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

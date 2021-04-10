@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/desktop/screencast.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>screencast.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/screencast.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>screencast.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -329,66 +329,59 @@
 <span id="326">326</span>
 <span id="327">327</span>
 <span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
-<span id="333">333</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! How to create a screen cast session &amp; start it.</span>
-<span class="doccomment">//! The portal is currently useless without pipewire &amp; rust support.</span>
+<span class="doccomment">//! The portal is currently useless without PipeWire &amp; Rust support.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! ```rust,ignore</span>
 <span class="doccomment">//! use ashpd::desktop::screencast::{</span>
 <span class="doccomment">//!     CreateSession, CreateSessionOptions, CursorMode, ScreenCastProxy, SelectSourcesOptions,</span>
 <span class="doccomment">//!     SourceType, StartCastOptions, Streams,</span>
 <span class="doccomment">//! };</span>
-<span class="doccomment">//! use ashpd::{BasicResponse as Basic, HandleToken, RequestProxy, Response, WindowIdentifier};</span>
-<span class="doccomment">//! use zbus::{self, fdo::Result};</span>
-<span class="doccomment">//! use zvariant::ObjectPath;</span>
+<span class="doccomment">//! use ashpd::{BasicResponse as Basic, HandleToken, Response, SessionProxy, WindowIdentifier};</span>
 <span class="doccomment">//! use enumflags2::BitFlags;</span>
 <span class="doccomment">//! use std::convert::TryFrom;</span>
+<span class="doccomment">//! use zbus::{self, fdo::Result};</span>
+<span class="doccomment">//! use zvariant::ObjectPath;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn select_sources(</span>
-<span class="doccomment">//!     session_handle: ObjectPath,</span>
-<span class="doccomment">//!     proxy: &amp;ScreenCastProxy,</span>
-<span class="doccomment">//!     connection: &amp;zbus::Connection,</span>
+<span class="doccomment">//!     session: &amp;SessionProxy&lt;&#39;c&gt;,</span>
+<span class="doccomment">//!     proxy: &amp;ScreenCastProxy&lt;&#39;c&gt;,</span>
 <span class="doccomment">//! ) -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let request_handle = proxy.select_sources(</span>
-<span class="doccomment">//!         session_handle.clone(),</span>
+<span class="doccomment">//!     let request = proxy.select_sources(</span>
+<span class="doccomment">//!         session,</span>
 <span class="doccomment">//!         SelectSourcesOptions::default()</span>
 <span class="doccomment">//!             .multiple(true)</span>
 <span class="doccomment">//!             .cursor_mode(BitFlags::from(CursorMode::Metadata))</span>
 <span class="doccomment">//!             .types(SourceType::Monitor | SourceType::Window),</span>
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(move |response: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!     request.connect_response(move |response: Response&lt;Basic&gt;| {</span>
 <span class="doccomment">//!         if response.is_ok() {</span>
-<span class="doccomment">//!             start_cast(session_handle, proxy, connection).unwrap();</span>
+<span class="doccomment">//!             start_cast(session, proxy)?;</span>
 <span class="doccomment">//!         }</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn start_cast(</span>
-<span class="doccomment">//!     session_handle: ObjectPath,</span>
-<span class="doccomment">//!     proxy: &amp;ScreenCastProxy,</span>
-<span class="doccomment">//!     connection: &amp;zbus::Connection,</span>
+<span class="doccomment">//!     session: &amp;SessionProxy&lt;&#39;c&gt;,</span>
+<span class="doccomment">//!     proxy: &amp;ScreenCastProxy&lt;&#39;c&gt;,</span>
 <span class="doccomment">//! ) -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let request_handle = proxy.start(</span>
+<span class="doccomment">//!     let request = proxy.start(</span>
 <span class="doccomment">//!         session_handle,</span>
 <span class="doccomment">//!         WindowIdentifier::default(),</span>
 <span class="doccomment">//!         StartCastOptions::default(),</span>
 <span class="doccomment">//!     )?;</span>
-<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(move |r: Response&lt;Streams&gt;| {</span>
+<span class="doccomment">//!     request.connect_response(move |r: Response&lt;Streams&gt;| {</span>
 <span class="doccomment">//!         r.unwrap().streams().iter().for_each(|stream| {</span>
 <span class="doccomment">//!             println!(&quot;{}&quot;, stream.pipewire_node_id());</span>
 <span class="doccomment">//!             println!(&quot;{:#?}&quot;, stream.properties());</span>
 <span class="doccomment">//!         });</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
@@ -399,30 +392,28 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let session_token = HandleToken::try_from(&quot;session120&quot;).unwrap();</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let request_handle = proxy.create_session(</span>
-<span class="doccomment">//!         CreateSessionOptions::default()</span>
-<span class="doccomment">//!             .session_handle_token(session_token)</span>
-<span class="doccomment">//!     )?;</span>
-<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
+<span class="doccomment">//!     let request = proxy</span>
+<span class="doccomment">//!         .create_session(CreateSessionOptions::default().session_handle_token(session_token))?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     request.on_response(|r: Response&lt;CreateSession&gt;| {</span>
-<span class="doccomment">//!         match r {</span>
-<span class="doccomment">//!             Ok(session) =&gt; select_sources(session.handle(), &amp;proxy, &amp;connection).unwrap(),</span>
-<span class="doccomment">//!             Err(_) =&gt; println!(&quot;hello!&quot;),</span>
-<span class="doccomment">//!         };</span>
+<span class="doccomment">//!     request.connect_response(|response: Response&lt;CreateSession&gt;| {</span>
+<span class="doccomment">//!         let response = response.unwrap();</span>
+<span class="doccomment">//!         let session = SessionProxy::new_for_path(&amp;connection, response.session_handle())?;</span>
+<span class="doccomment">//!         select_sources(&amp;session, &amp;proxy)?;</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">HandleToken</span>, <span class="ident">WindowIdentifier</span>};
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+
 <span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">ObjectPath</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">Value</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">AsyncRequestProxy</span>, <span class="ident">AsyncSessionProxy</span>, <span class="ident">HandleToken</span>, <span class="ident">RequestProxy</span>, <span class="ident">WindowIdentifier</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">BitFlags</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
@@ -442,17 +433,18 @@
     <span class="ident">Hidden</span> <span class="op">=</span> <span class="number">1</span>,
     <span class="doccomment">/// The cursor is embedded as part of the stream buffers.</span>
     <span class="ident">Embedded</span> <span class="op">=</span> <span class="number">2</span>,
-    <span class="doccomment">/// The cursor is not part of the screen cast stream, but sent as PipeWire stream metadata.</span>
+    <span class="doccomment">/// The cursor is not part of the screen cast stream, but sent as PipeWire</span>
+    <span class="doccomment">/// stream metadata.</span>
     <span class="ident">Metadata</span> <span class="op">=</span> <span class="number">4</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options on a create a screencast session request.</span>
+<span class="doccomment">/// Specified options on a create a Screen Cast session request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateSessionOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CreateSessionOptions</span> {
@@ -473,13 +465,13 @@
 <span class="doccomment">/// Specified options on a select sources request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectSourcesOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// What types of content to record.</span>
-    <span class="kw">pub</span> <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether to allow selecting multiple sources.</span>
-    <span class="kw">pub</span> <span class="ident">multiple</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+    <span class="ident">multiple</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Determines how the cursor will be drawn in the screen cast stream.</span>
-    <span class="kw">pub</span> <span class="ident">cursor_mode</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">CursorMode</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">cursor_mode</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">CursorMode</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SelectSourcesOptions</span> {
@@ -509,10 +501,10 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options on a start screencast request.</span>
+<span class="doccomment">/// Specified options on a start Screen Cast request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StartCastOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">StartCastOptions</span> {
@@ -527,36 +519,37 @@
 <span class="doccomment">/// A response to the create session request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateSession</span> {
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
+    <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath</span>
     <span class="ident">session_handle</span>: <span class="ident">String</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CreateSession</span> {
     <span class="doccomment">/// The created session handle.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ObjectPath</span> {
-        <span class="ident">ObjectPath</span>::<span class="ident">try_from</span>(<span class="self">self</span>.<span class="ident">session_handle</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">session_handle</span>
     }
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A response to start the streamcast request.</span>
+<span class="doccomment">/// A response to start the Stream Cast request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Streams</span> {
     <span class="ident">streams</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Streams</span> {
     <span class="doccomment">/// The available streams.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">streams</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">streams</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Stream</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">streams</span>
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A pipewire stream.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="doccomment">/// A PipeWire stream.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Stream</span>(<span class="ident">u32</span>, <span class="ident">StreamProperties</span>);
 
 <span class="kw">impl</span> <span class="ident">Stream</span> {
-    <span class="doccomment">/// Thep pipewire stream node</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pipewire_node_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="doccomment">/// The PipeWire stream Node ID</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pipe_wire_node_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 
@@ -566,17 +559,19 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="doccomment">/// The stream properties.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StreamProperties</span> {
-    <span class="doccomment">/// A tuple consisting of the position (x, y) in the compositor coordinate space.</span>
-    <span class="doccomment">/// Note that the position may not be equivalent to a position in a pixel coordinate space.</span>
-    <span class="doccomment">/// Only available for monitor streams.</span>
+    <span class="doccomment">/// A tuple consisting of the position (x, y) in the compositor coordinate</span>
+    <span class="doccomment">/// space. **Note** that the position may not be equivalent to a</span>
+    <span class="doccomment">/// position in a pixel coordinate space. Only available for monitor</span>
+    <span class="doccomment">/// streams.</span>
     <span class="kw">pub</span> <span class="ident">position</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>,
     <span class="doccomment">/// A tuple consisting of (width, height).</span>
-    <span class="doccomment">/// The size represents the size of the stream as it is displayed in the compositor coordinate space.</span>
-    <span class="doccomment">/// Note that this size may not be equivalent to a size in a pixel coordinate space.</span>
-    <span class="doccomment">/// The size may differ from the size of the stream.</span>
+    <span class="doccomment">/// The size represents the size of the stream as it is displayed in the</span>
+    <span class="doccomment">/// compositor coordinate space. **Note** that this size may not be</span>
+    <span class="doccomment">/// equivalent to a size in a pixel coordinate space. The size may</span>
+    <span class="doccomment">/// differ from the size of the stream.</span>
     <span class="kw">pub</span> <span class="ident">size</span>: (<span class="ident">i32</span>, <span class="ident">i32</span>),
 }
 
@@ -588,85 +583,81 @@
 <span class="doccomment">/// The interface lets sandboxed applications create screen cast sessions.</span>
 <span class="kw">trait</span> <span class="ident">ScreenCast</span> {
     <span class="doccomment">/// Create a screen cast session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateSessionOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateSessionOptions</span>);
 
-    <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the screen cast streams are available.</span>
+    <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the screen cast</span>
+    <span class="doccomment">/// streams are available.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns a file descriptor of an open PipeWire remote.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">open_pipe_wire_remote</span>(
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
+    <span class="kw">fn</span> <span class="ident">open_pipe_wire_remote</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>;
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">AsyncSessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Configure what the screen cast session should record.</span>
     <span class="doccomment">/// This method must be called before starting the session.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Passing invalid input to this method will cause the session to be closed.</span>
-    <span class="doccomment">/// An application may only attempt to select sources once per session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
+    <span class="doccomment">/// Passing invalid input to this method will cause the session to be</span>
+    <span class="doccomment">/// closed. An application may only attempt to select sources once per</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
-    <span class="doccomment">/// * `options` - A `SelectSourcesOptions`</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
+    <span class="doccomment">/// * `options` - A `SelectSourcesOptions`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
-    <span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">select_sources</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">SelectSourcesOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">select_sources</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>, <span class="ident">options</span>: <span class="ident">SelectSourcesOptions</span>)
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">AsyncSessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Start the screen cast session.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This will typically result the portal presenting a dialog letting the user do</span>
-    <span class="doccomment">/// the selection set up by `select_sources`.</span>
+    <span class="doccomment">/// This will typically result the portal presenting a dialog letting the</span>
+    <span class="doccomment">/// user do the selection set up by `select_sources`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// An application can only attempt start a session once.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
-    <span class="doccomment">/// * `parent_window` - Identifier for the application window</span>
-    <span class="doccomment">/// * `options` - A `StartScreenCastOptions`</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
+    <span class="doccomment">/// * `parent_window` - Identifier for the application window.</span>
+    <span class="doccomment">/// * `options` - A `StartScreenCastOptions`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
-    <span class="doccomment">/// [`SessionProxy`]: ../session/struct.SessionProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">start</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
-        <span class="ident">options</span>: <span class="ident">StartCastOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">start</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>, <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>, <span class="ident">options</span>: <span class="ident">StartCastOptions</span>)
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">AsyncSessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Available cursor mode.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">available_cursor_modes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">available_cursor_modes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">CursorMode</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Available source types.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">available_source_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">available_source_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// version property</span>
+    <span class="doccomment">/// The version of this DBus interface.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "ashpd";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

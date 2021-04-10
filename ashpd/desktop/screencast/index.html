@@ -1,60 +1,58 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `screencast` mod in crate `ashpd`."><meta name="keywords" content="rust, rustlang, rust-lang, screencast"><title>ashpd::desktop::screencast - Rust</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `screencast` mod in crate `ashpd`."><meta name="keywords" content="rust, rustlang, rust-lang, screencast"><title>ashpd::desktop::screencast - Rust</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a><p class='location'>Module screencast</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'><a href='../../index.html'>ashpd</a>::<wbr><a href='../index.html'>desktop</a></p><script>window.sidebarCurrent = {name: 'screencast', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../../src/ashpd/desktop/screencast.rs.html#1-333' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../../index.html'>ashpd</a>::<wbr><a href='../index.html'>desktop</a>::<wbr><a class="mod" href=''>screencast</a></span></h1><div class='docblock'><p>Start a screencast session and get the pipewire remote of it.</p>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a><p class="location">Module screencast</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class="location"><a href="../../index.html">ashpd</a>::<wbr><a href="../index.html">desktop</a></p><div id="sidebar-vars" data-name="screencast" data-ty="mod" data-relpath="../"></div><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../../index.html">ashpd</a>::<wbr><a href="../index.html">desktop</a>::<wbr><a class="mod" href="">screencast</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../../src/ashpd/desktop/screencast.rs.html#1-328" title="goto source code">[src]</a></span></h1><div class="docblock"><p>Start a screencast session and get the PipeWire remote of it.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>How to create a screen cast session &amp; start it.
-The portal is currently useless without pipewire &amp; rust support.</p>
+The portal is currently useless without PipeWire &amp; Rust support.</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="kw">use</span> <span class="ident">ashpd</span>::<span class="ident">desktop</span>::<span class="ident">screencast</span>::{
     <span class="ident">CreateSession</span>, <span class="ident">CreateSessionOptions</span>, <span class="ident">CursorMode</span>, <span class="ident">ScreenCastProxy</span>, <span class="ident">SelectSourcesOptions</span>,
     <span class="ident">SourceType</span>, <span class="ident">StartCastOptions</span>, <span class="ident">Streams</span>,
 };
-<span class="kw">use</span> <span class="ident">ashpd</span>::{<span class="ident">BasicResponse</span> <span class="kw">as</span> <span class="ident">Basic</span>, <span class="ident">HandleToken</span>, <span class="ident">RequestProxy</span>, <span class="ident">Response</span>, <span class="ident">WindowIdentifier</span>};
-<span class="kw">use</span> <span class="ident">zbus</span>::{<span class="self">self</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">ObjectPath</span>;
+<span class="kw">use</span> <span class="ident">ashpd</span>::{<span class="ident">BasicResponse</span> <span class="kw">as</span> <span class="ident">Basic</span>, <span class="ident">HandleToken</span>, <span class="ident">Response</span>, <span class="ident">SessionProxy</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
+<span class="kw">use</span> <span class="ident">zbus</span>::{<span class="self">self</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">ObjectPath</span>;
 
 <span class="kw">fn</span> <span class="ident">select_sources</span>(
-    <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-    <span class="ident">proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ScreenCastProxy</span>,
-    <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus</span>::<span class="ident">Connection</span>,
+    <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>,
+    <span class="ident">proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ScreenCastProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">request_handle</span> <span class="op">=</span> <span class="ident">proxy</span>.<span class="ident">select_sources</span>(
-        <span class="ident">session_handle</span>.<span class="ident">clone</span>(),
+    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">proxy</span>.<span class="ident">select_sources</span>(
+        <span class="ident">session</span>,
         <span class="ident">SelectSourcesOptions</span>::<span class="ident">default</span>()
             .<span class="ident">multiple</span>(<span class="bool-val">true</span>)
             .<span class="ident">cursor_mode</span>(<span class="ident">BitFlags</span>::<span class="ident">from</span>(<span class="ident">CursorMode</span>::<span class="ident">Metadata</span>))
             .<span class="ident">types</span>(<span class="ident">SourceType</span>::<span class="ident">Monitor</span> <span class="op">|</span> <span class="ident">SourceType</span>::<span class="ident">Window</span>),
     )<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">RequestProxy</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>, <span class="kw-2">&amp;</span><span class="ident">request_handle</span>)<span class="question-mark">?</span>;
-    <span class="ident">request</span>.<span class="ident">on_response</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">response</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">Basic</span><span class="op">&gt;</span><span class="op">|</span> {
+    <span class="ident">request</span>.<span class="ident">connect_response</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">response</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">Basic</span><span class="op">&gt;</span><span class="op">|</span> {
         <span class="kw">if</span> <span class="ident">response</span>.<span class="ident">is_ok</span>() {
-            <span class="ident">start_cast</span>(<span class="ident">session_handle</span>, <span class="ident">proxy</span>, <span class="ident">connection</span>).<span class="ident">unwrap</span>();
+            <span class="ident">start_cast</span>(<span class="ident">session</span>, <span class="ident">proxy</span>)<span class="question-mark">?</span>;
         }
+        <span class="prelude-val">Ok</span>(())
     })<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
 <span class="kw">fn</span> <span class="ident">start_cast</span>(
-    <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-    <span class="ident">proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ScreenCastProxy</span>,
-    <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus</span>::<span class="ident">Connection</span>,
+    <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>,
+    <span class="ident">proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ScreenCastProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">request_handle</span> <span class="op">=</span> <span class="ident">proxy</span>.<span class="ident">start</span>(
+    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">proxy</span>.<span class="ident">start</span>(
         <span class="ident">session_handle</span>,
         <span class="ident">WindowIdentifier</span>::<span class="ident">default</span>(),
         <span class="ident">StartCastOptions</span>::<span class="ident">default</span>(),
     )<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">RequestProxy</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>, <span class="kw-2">&amp;</span><span class="ident">request_handle</span>)<span class="question-mark">?</span>;
-    <span class="ident">request</span>.<span class="ident">on_response</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">r</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">Streams</span><span class="op">&gt;</span><span class="op">|</span> {
+    <span class="ident">request</span>.<span class="ident">connect_response</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">r</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">Streams</span><span class="op">&gt;</span><span class="op">|</span> {
         <span class="ident">r</span>.<span class="ident">unwrap</span>().<span class="ident">streams</span>().<span class="ident">iter</span>().<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">stream</span><span class="op">|</span> {
             <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">stream</span>.<span class="ident">pipewire_node_id</span>());
             <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:#?}&quot;</span>, <span class="ident">stream</span>.<span class="ident">properties</span>());
         });
+        <span class="prelude-val">Ok</span>(())
     })<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
@@ -65,30 +63,30 @@ The portal is currently useless without pipewire &amp; rust support.</p>
 
     <span class="kw">let</span> <span class="ident">session_token</span> <span class="op">=</span> <span class="ident">HandleToken</span>::<span class="ident">try_from</span>(<span class="string">&quot;session120&quot;</span>).<span class="ident">unwrap</span>();
 
-    <span class="kw">let</span> <span class="ident">request_handle</span> <span class="op">=</span> <span class="ident">proxy</span>.<span class="ident">create_session</span>(
-        <span class="ident">CreateSessionOptions</span>::<span class="ident">default</span>()
-            .<span class="ident">session_handle_token</span>(<span class="ident">session_token</span>)
-    )<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">RequestProxy</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>, <span class="kw-2">&amp;</span><span class="ident">request_handle</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">proxy</span>
+        .<span class="ident">create_session</span>(<span class="ident">CreateSessionOptions</span>::<span class="ident">default</span>().<span class="ident">session_handle_token</span>(<span class="ident">session_token</span>))<span class="question-mark">?</span>;
 
-    <span class="ident">request</span>.<span class="ident">on_response</span>(<span class="op">|</span><span class="ident">r</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">CreateSession</span><span class="op">&gt;</span><span class="op">|</span> {
-        <span class="kw">match</span> <span class="ident">r</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">session</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">select_sources</span>(<span class="ident">session</span>.<span class="ident">handle</span>(), <span class="kw-2">&amp;</span><span class="ident">proxy</span>, <span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>(),
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;hello!&quot;</span>),
-        };
+    <span class="ident">request</span>.<span class="ident">connect_response</span>(<span class="op">|</span><span class="ident">response</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">CreateSession</span><span class="op">&gt;</span><span class="op">|</span> {
+        <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">response</span>.<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">session</span> <span class="op">=</span> <span class="ident">SessionProxy</span>::<span class="ident">new_for_path</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>, <span class="ident">response</span>.<span class="ident">session_handle</span>())<span class="question-mark">?</span>;
+        <span class="ident">select_sources</span>(<span class="kw-2">&amp;</span><span class="ident">session</span>, <span class="kw-2">&amp;</span><span class="ident">proxy</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(())
     })<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }</pre></div>
-</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table><tr class='module-item'><td><a class="struct" href="struct.CreateSession.html" title='ashpd::desktop::screencast::CreateSession struct'>CreateSession</a></td><td class='docblock-short'><p>A response to the create session request.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.CreateSessionOptions.html" title='ashpd::desktop::screencast::CreateSessionOptions struct'>CreateSessionOptions</a></td><td class='docblock-short'><p>Specified options on a create a screencast session request.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.ScreenCastProxy.html" title='ashpd::desktop::screencast::ScreenCastProxy struct'>ScreenCastProxy</a></td><td class='docblock-short'><p>The interface lets sandboxed applications create screen cast sessions.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.SelectSourcesOptions.html" title='ashpd::desktop::screencast::SelectSourcesOptions struct'>SelectSourcesOptions</a></td><td class='docblock-short'><p>Specified options on a select sources request.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.StartCastOptions.html" title='ashpd::desktop::screencast::StartCastOptions struct'>StartCastOptions</a></td><td class='docblock-short'><p>Specified options on a start screencast request.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.Stream.html" title='ashpd::desktop::screencast::Stream struct'>Stream</a></td><td class='docblock-short'><p>A pipewire stream.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.StreamProperties.html" title='ashpd::desktop::screencast::StreamProperties struct'>StreamProperties</a></td><td class='docblock-short'><p>The stream properties.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.Streams.html" title='ashpd::desktop::screencast::Streams struct'>Streams</a></td><td class='docblock-short'><p>A response to start the streamcast request.</p>
-</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table><tr class='module-item'><td><a class="enum" href="enum.CursorMode.html" title='ashpd::desktop::screencast::CursorMode enum'>CursorMode</a></td><td class='docblock-short'><p>A bit flag for the possible cursor modes.</p>
-</td></tr><tr class='module-item'><td><a class="enum" href="enum.SourceType.html" title='ashpd::desktop::screencast::SourceType enum'>SourceType</a></td><td class='docblock-short'><p>A bit flag for the available sources to record.</p>
-</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "ashpd";</script><script src="../../../main.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.AsyncScreenCastProxy.html" title="ashpd::desktop::screencast::AsyncScreenCastProxy struct">AsyncScreenCastProxy</a></td><td class="docblock-short"><p>Asynchronous sibling of <a href="../../../ashpd/desktop/screencast/struct.ScreenCastProxy.html" title="ScreenCastProxy"><code>ScreenCastProxy</code></a>.
+The interface lets sandboxed applications create screen cast sessions.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CreateSession.html" title="ashpd::desktop::screencast::CreateSession struct">CreateSession</a></td><td class="docblock-short"><p>A response to the create session request.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CreateSessionOptions.html" title="ashpd::desktop::screencast::CreateSessionOptions struct">CreateSessionOptions</a></td><td class="docblock-short"><p>Specified options on a create a Screen Cast session request.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ScreenCastProxy.html" title="ashpd::desktop::screencast::ScreenCastProxy struct">ScreenCastProxy</a></td><td class="docblock-short"><p>The interface lets sandboxed applications create screen cast sessions.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.SelectSourcesOptions.html" title="ashpd::desktop::screencast::SelectSourcesOptions struct">SelectSourcesOptions</a></td><td class="docblock-short"><p>Specified options on a select sources request.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.StartCastOptions.html" title="ashpd::desktop::screencast::StartCastOptions struct">StartCastOptions</a></td><td class="docblock-short"><p>Specified options on a start Screen Cast request.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Stream.html" title="ashpd::desktop::screencast::Stream struct">Stream</a></td><td class="docblock-short"><p>A PipeWire stream.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.StreamProperties.html" title="ashpd::desktop::screencast::StreamProperties struct">StreamProperties</a></td><td class="docblock-short"><p>The stream properties.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Streams.html" title="ashpd::desktop::screencast::Streams struct">Streams</a></td><td class="docblock-short"><p>A response to start the Stream Cast request.</p>
+</td></tr></table><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<table><tr class="module-item"><td><a class="enum" href="enum.CursorMode.html" title="ashpd::desktop::screencast::CursorMode enum">CursorMode</a></td><td class="docblock-short"><p>A bit flag for the possible cursor modes.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.SourceType.html" title="ashpd::desktop::screencast::SourceType enum">SourceType</a></td><td class="docblock-short"><p>A bit flag for the available sources to record.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd"></div>
+    <script src="../../../main.js"></script><script defer src="../../../search-index.js"></script></body></html>

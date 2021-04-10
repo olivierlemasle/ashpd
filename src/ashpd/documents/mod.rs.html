@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/documents/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/documents/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -273,11 +273,26 @@
 <span id="270">270</span>
 <span id="271">271</span>
 <span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::documents::{DocumentsProxy, Permission};</span>
 <span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
 <span class="doccomment">//!</span>
@@ -307,12 +322,12 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">NString</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
+
 <span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">de</span>::<span class="ident">Deserializer</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 <span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>};
@@ -337,7 +352,8 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
-<span class="doccomment">/// The possible permissions to grant to a specific application for a specific document.</span>
+<span class="doccomment">/// The possible permissions to grant to a specific application for a specific</span>
+<span class="doccomment">/// document.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Permission</span> {
     <span class="doccomment">/// Read access.</span>
     <span class="ident">Read</span>,
@@ -352,7 +368,7 @@
 
 <span class="kw">impl</span> <span class="ident">zvariant</span>::<span class="ident">Type</span> <span class="kw">for</span> <span class="ident">Permission</span> {
     <span class="kw">fn</span> <span class="ident">signature</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">Signature</span>::<span class="ident">from_string_unchecked</span>(<span class="string">&quot;s&quot;</span>.<span class="ident">to_string</span>())
+        <span class="ident">String</span>::<span class="ident">signature</span>()
     }
 }
 
@@ -379,19 +395,21 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>
 )]</span>
-<span class="doccomment">/// The interface lets sandboxed applications make files from the outside world available to sandboxed applications in a controlled way.</span>
+<span class="doccomment">/// The interface lets sandboxed applications make files from the outside world</span>
+<span class="doccomment">/// available to sandboxed applications in a controlled way.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Exported files will be made accessible to the application via a fuse filesystem</span>
-<span class="doccomment">/// that gets mounted at `/run/user/$UID/doc/`. The filesystem gets mounted both outside</span>
-<span class="doccomment">/// and inside the sandbox, but the view inside the sandbox is restricted to just</span>
-<span class="doccomment">/// those files that the application is allowed to access.</span>
+<span class="doccomment">/// Exported files will be made accessible to the application via a fuse</span>
+<span class="doccomment">/// filesystem that gets mounted at `/run/user/$UID/doc/`. The filesystem gets</span>
+<span class="doccomment">/// mounted both outside and inside the sandbox, but the view inside the sandbox</span>
+<span class="doccomment">/// is restricted to just those files that the application is allowed to access.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Individual files will appear at `/run/user/$UID/doc/$DOC_ID/filename`,</span>
 <span class="doccomment">/// where `$DOC_ID` is the ID of the file in the document store.</span>
 <span class="doccomment">/// It is returned by the `Add()` and `AddNamed()` calls.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The permissions that the application has for a document store entry (see `GrantPermissions()`)</span>
-<span class="doccomment">/// are reflected in the POSIX mode bits in the fuse filesystem.</span>
+<span class="doccomment">/// The permissions that the application has for a document store entry (see</span>
+<span class="doccomment">/// `GrantPermissions()`) are reflected in the POSIX mode bits in the fuse</span>
+<span class="doccomment">/// filesystem.</span>
 <span class="kw">trait</span> <span class="ident">Documents</span> {
     <span class="doccomment">/// Adds a file to the document store.</span>
     <span class="doccomment">/// The file is passed in the form of an open file descriptor</span>
@@ -401,23 +419,26 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_fd` - open file descriptor for the file to add</span>
-    <span class="doccomment">/// * `reuse_existing` - whether to reuse an existing document store entry for the file</span>
-    <span class="doccomment">/// * `persistent` - whether to add the file only for this session or permanently</span>
+    <span class="doccomment">/// * `o_path_fd` - Open file descriptor for the file to add.</span>
+    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry</span>
+    <span class="doccomment">///   for the file.</span>
+    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or</span>
+    <span class="doccomment">///   permanently.</span>
     <span class="kw">fn</span> <span class="ident">add</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">o_path_fd</span>: <span class="ident">Fd</span>, <span class="ident">reuse_existing</span>: <span class="ident">bool</span>, <span class="ident">persistent</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Adds multiple files to the document store.</span>
     <span class="doccomment">/// The files are passed in the form of an open file descriptor</span>
     <span class="doccomment">/// to prove that the caller has access to the file.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the IDs of the files in the document store along with other extra info.</span>
+    <span class="doccomment">/// Returns the IDs of the files in the document store along with other</span>
+    <span class="doccomment">/// extra info.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_fds` - open file descriptors for the files to export</span>
-    <span class="doccomment">/// * `flags` - a `Flags` enum.</span>
-    <span class="doccomment">/// * `app_id` - an application ID, or empty string</span>
-    <span class="doccomment">/// * `permissions` - the permissions to grant</span>
+    <span class="doccomment">/// * `o_path_fds` - Open file descriptors for the files to export.</span>
+    <span class="doccomment">/// * `flags` - A `Flags`.</span>
+    <span class="doccomment">/// * `app_id` - An application ID, or empty string.</span>
+    <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
     <span class="kw">fn</span> <span class="ident">add_full</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_fds</span>: <span class="kw-2">&amp;</span>[<span class="ident">Fd</span>],
@@ -432,14 +453,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_parent_fd` - open file descriptor for the parent directory</span>
-    <span class="doccomment">/// * `filename` - the basename for the file</span>
-    <span class="doccomment">/// * `reuse_existing` - whether to reuse an existing document store entry for the file</span>
-    <span class="doccomment">/// * `persistent` - whether to add the file only for this session or permanently</span>
+    <span class="doccomment">/// * `o_path_parent_fd` - Open file descriptor for the parent directory.</span>
+    <span class="doccomment">/// * `filename` - The basename for the file.</span>
+    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry</span>
+    <span class="doccomment">///   for the file.</span>
+    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or</span>
+    <span class="doccomment">///   permanently.</span>
     <span class="kw">fn</span> <span class="ident">add_named</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_parent_fd</span>: <span class="ident">Fd</span>,
-        <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">NString</span>,
+        <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">reuse_existing</span>: <span class="ident">bool</span>,
         <span class="ident">persistent</span>: <span class="ident">bool</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
@@ -448,45 +471,47 @@
     <span class="doccomment">/// The files are passed in the form of an open file descriptor</span>
     <span class="doccomment">/// to prove that the caller has access to the file.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the ID of the file in the document store along with other extra info.</span>
+    <span class="doccomment">/// Returns the ID of the file in the document store along with other extra</span>
+    <span class="doccomment">/// info.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_fd` - open file descriptor for the parent directory</span>
-    <span class="doccomment">/// * `filename` - the basename for the file</span>
-    <span class="doccomment">/// * `flags` - a `Flags`</span>
-    <span class="doccomment">/// * `app_id` - an application ID, or empty string</span>
-    <span class="doccomment">/// * `permissions` - the permissions to grant.</span>
+    <span class="doccomment">/// * `o_path_fd` - Open file descriptor for the parent directory.</span>
+    <span class="doccomment">/// * `filename` - The basename for the file.</span>
+    <span class="doccomment">/// * `flags` - A `Flags`.</span>
+    <span class="doccomment">/// * `app_id` - An application ID, or empty string.</span>
+    <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
     <span class="kw">fn</span> <span class="ident">add_named_full</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_fd</span>: <span class="ident">Fd</span>,
-        <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">NString</span>,
+        <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
         <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant</span>::<span class="ident">OwnedValue</span><span class="op">&gt;</span>)<span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Removes an entry from the document store. The file itself is not deleted.</span>
-    <span class="doccomment">/// This call is available inside the sandbox if the application</span>
-    <span class="doccomment">/// has the &#39;delete&#39; permission for the document.</span>
+    <span class="doccomment">/// Removes an entry from the document store. The file itself is not</span>
+    <span class="doccomment">/// deleted. This call is available inside the sandbox if the</span>
+    <span class="doccomment">/// application has the &#39;delete&#39; permission for the document.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store</span>
+    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
     <span class="kw">fn</span> <span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Returns the path at which the document store fuse filesystem is mounted.</span>
     <span class="doccomment">/// This will typically be /run/user/$UID/doc/.</span>
-    <span class="kw">fn</span> <span class="ident">get_mount_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NString</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">get_mount_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Grants access permissions for a file in the document store to an application.</span>
-    <span class="doccomment">/// This call is available inside the sandbox if the application has the &#39;grant-permissions&#39; permission for the document.</span>
+    <span class="doccomment">/// Grants access permissions for a file in the document store to an</span>
+    <span class="doccomment">/// application. This call is available inside the sandbox if the</span>
+    <span class="doccomment">/// application has the &#39;grant-permissions&#39; permission for the document.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - the ID of the file in the document store.</span>
-    <span class="doccomment">/// * `app_id` - the ID of the application to which permissions are granted.</span>
-    <span class="doccomment">/// * `permissions` - the permissions to grant.</span>
+    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
+    <span class="doccomment">/// * `app_id` - The ID of the application to which permissions are granted.</span>
+    <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
     <span class="kw">fn</span> <span class="ident">grant_permissions</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -494,23 +519,27 @@
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Gets the filesystem path and application permissions for a document store entry.</span>
+    <span class="doccomment">/// Gets the filesystem path and application permissions for a document</span>
+    <span class="doccomment">/// store entry.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the path of the file in the host filesystem along with the [`Permissions`]</span>
+    <span class="doccomment">/// Returns the path of the file in the host filesystem along with the</span>
+    <span class="doccomment">/// [`Permissions`]</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store</span>
-    <span class="kw">fn</span> <span class="ident">info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">NString</span>, <span class="ident">Permissions</span>)<span class="op">&gt;</span>;
+    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
+    <span class="kw">fn</span> <span class="ident">info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">Permissions</span>)<span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Lists documents in the document store for an application (or for all applications).</span>
+    <span class="doccomment">/// Lists documents in the document store for an application (or for all</span>
+    <span class="doccomment">/// applications).</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a `HashMap` mapping document IDs to their filesystem path on the host system</span>
+    <span class="doccomment">/// Returns a `HashMap` mapping document IDs to their filesystem path on the</span>
+    <span class="doccomment">/// host system</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `app-id` - The application ID, or &#39;&#39; to list all documents</span>
-    <span class="kw">fn</span> <span class="ident">list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">NString</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// * `app-id` - The application ID, or &#39;&#39; to list all documents.</span>
+    <span class="kw">fn</span> <span class="ident">list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Looks up the document ID for a file.</span>
     <span class="doccomment">/// This call is not available inside the sandbox.</span>
@@ -520,17 +549,18 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// - `filename` - A path in the host filesystem</span>
-    <span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="ident">NString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// - `filename` - A path in the host filesystem.</span>
+    <span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Revokes access permissions for a file in the document store from an application.</span>
-    <span class="doccomment">/// This call is available inside the sandbox if the application</span>
-    <span class="doccomment">/// has the &#39;grant-permissions&#39; permission for the document.</span>
+    <span class="doccomment">/// Revokes access permissions for a file in the document store from an</span>
+    <span class="doccomment">/// application. This call is available inside the sandbox if the</span>
+    <span class="doccomment">/// application has the &#39;grant-permissions&#39; permission for the document.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store</span>
-    <span class="doccomment">/// * `app_id` - The ID of the application from which permissions are revoked</span>
+    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
+    <span class="doccomment">/// * `app_id` - The ID of the application from which permissions are</span>
+    <span class="doccomment">///   revoked.</span>
     <span class="doccomment">/// * `permissions` - The permissions to revoke.</span>
     <span class="kw">fn</span> <span class="ident">revoke_permissions</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -539,7 +569,7 @@
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
-    <span class="doccomment">/// version property</span>
+    <span class="doccomment">/// The version of this DBus interface.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
@@ -547,4 +577,5 @@
 <span class="doccomment">/// Interact with `org.freedesktop.portal.FileTransfer` interface.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">file_transfer</span>;
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "ashpd";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

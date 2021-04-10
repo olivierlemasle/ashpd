@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/desktop/remote_desktop.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>remote_desktop.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/remote_desktop.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>remote_desktop.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -502,63 +502,87 @@
 <span id="499">499</span>
 <span id="500">500</span>
 <span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! ```rust,ignore</span>
 <span class="doccomment">//! use ashpd::desktop::remote_desktop::{</span>
-<span class="doccomment">//!     CreateRemoteOptions, CreateSession, DeviceType, KeyState, RemoteDesktopProxy, SelectedDevices,</span>
-<span class="doccomment">//!     SelectDevicesOptions, StartRemoteOptions,</span>
+<span class="doccomment">//!     CreateRemoteOptions, CreateSession, DeviceType, KeyState, RemoteDesktopProxy,</span>
+<span class="doccomment">//!     SelectDevicesOptions, SelectedDevices, StartRemoteOptions,</span>
 <span class="doccomment">//! };</span>
-<span class="doccomment">//! use ashpd::{BasicResponse as Basic, HandleToken, RequestProxy, Response, WindowIdentifier};</span>
-<span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
-<span class="doccomment">//! use zvariant::ObjectPath;</span>
+<span class="doccomment">//! use ashpd::{BasicResponse as Basic, HandleToken, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use std::collections::HashMap;</span>
 <span class="doccomment">//! use std::convert::TryFrom;</span>
+<span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
+<span class="doccomment">//! use zvariant::ObjectPath;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn select_devices(</span>
-<span class="doccomment">//!     handle: ObjectPath,</span>
-<span class="doccomment">//!     connection: &amp;Connection,</span>
-<span class="doccomment">//!     proxy: &amp;RemoteDesktopProxy,</span>
+<span class="doccomment">//!     handle: &amp;&#39;static ObjectPath&lt;&#39;_&gt;,</span>
+<span class="doccomment">//!     proxy: &amp;&#39;static RemoteDesktopProxy,</span>
 <span class="doccomment">//! ) -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let request_handle = proxy.select_devices(</span>
-<span class="doccomment">//!         handle.clone(),</span>
+<span class="doccomment">//!     let request = proxy.select_devices(handle,</span>
 <span class="doccomment">//!         SelectDevicesOptions::default().types(DeviceType::Keyboard | DeviceType::Pointer),</span>
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|r: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!     request.connect_response(move |r: Response&lt;Basic&gt;| {</span>
 <span class="doccomment">//!         if r.is_ok() {</span>
-<span class="doccomment">//!             start_remote(handle, connection, proxy).unwrap();</span>
+<span class="doccomment">//!             start_remote(handle, proxy)?;</span>
 <span class="doccomment">//!         }</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn start_remote(</span>
-<span class="doccomment">//!     handle: ObjectPath,</span>
-<span class="doccomment">//!     connection: &amp;Connection,</span>
-<span class="doccomment">//!     proxy: &amp;RemoteDesktopProxy,</span>
+<span class="doccomment">//!     handle: &amp;&#39;static ObjectPath&lt;&#39;_&gt;,</span>
+<span class="doccomment">//!     proxy: &amp;&#39;static RemoteDesktopProxy,</span>
 <span class="doccomment">//! ) -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let request_handle = proxy.start(</span>
-<span class="doccomment">//!         handle.clone(),</span>
+<span class="doccomment">//!     let request = proxy.start(</span>
+<span class="doccomment">//!         handle,</span>
 <span class="doccomment">//!         WindowIdentifier::default(),</span>
 <span class="doccomment">//!         StartRemoteOptions::default(),</span>
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|r: Response&lt;SelectedDevices&gt;| {</span>
-<span class="doccomment">//!         proxy</span>
-<span class="doccomment">//!             .notify_keyboard_keycode(</span>
-<span class="doccomment">//!                 handle.clone(),</span>
-<span class="doccomment">//!                 HashMap::new(),</span>
-<span class="doccomment">//!                 13, // Enter key code</span>
-<span class="doccomment">//!                 KeyState::Pressed,</span>
-<span class="doccomment">//!             )</span>
-<span class="doccomment">//!             .unwrap();</span>
+<span class="doccomment">//!     request.connect_response(move |r: Response&lt;SelectedDevices&gt;| {</span>
+<span class="doccomment">//!         proxy.notify_keyboard_keycode(</span>
+<span class="doccomment">//!             handle,</span>
+<span class="doccomment">//!             HashMap::new(),</span>
+<span class="doccomment">//!             13, // Enter key code</span>
+<span class="doccomment">//!             KeyState::Pressed,</span>
+<span class="doccomment">//!         )?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!         println!(&quot;{:#?}&quot;, r.unwrap().devices);</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -568,28 +592,29 @@
 <span class="doccomment">//!     let connection = Connection::new_session()?;</span>
 <span class="doccomment">//!     let proxy = RemoteDesktopProxy::new(&amp;connection)?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let handle = proxy.create_session(</span>
+<span class="doccomment">//!     let request = proxy.create_session(</span>
 <span class="doccomment">//!         CreateRemoteOptions::default()</span>
 <span class="doccomment">//!             .session_handle_token(HandleToken::try_from(&quot;token&quot;).unwrap()),</span>
 <span class="doccomment">//!     )?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;handle)?;</span>
-<span class="doccomment">//!     request.on_response(|r: Response&lt;CreateSession&gt;| {</span>
-<span class="doccomment">//!         let session = r.unwrap();</span>
-<span class="doccomment">//!         select_devices(session.handle(), &amp;connection, &amp;proxy).unwrap();</span>
+<span class="doccomment">//!     request.connect_response(move |r: Response&lt;CreateSession&gt;| {</span>
+<span class="doccomment">//!         let response = r.unwrap();</span>
+<span class="doccomment">//!         select_devices(response.session_handle(), &amp;proxy)?;</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">HandleToken</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+
 <span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">ObjectPath</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">AsyncRequestProxy</span>, <span class="ident">HandleToken</span>, <span class="ident">RequestProxy</span>, <span class="ident">SessionProxy</span>, <span class="ident">WindowIdentifier</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
@@ -627,9 +652,9 @@
 <span class="doccomment">/// Specified options on a create a remote session request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="kw">pub</span> <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">session_handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CreateRemoteOptions</span> {
@@ -647,16 +672,16 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A response to a create session request.</span>
+<span class="doccomment">/// A response to a `create_session` request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateSession</span> {
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="ident">session_handle</span>: <span class="ident">String</span>,
+    <span class="ident">session_handle</span>: <span class="ident">OwnedObjectPath</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CreateSession</span> {
     <span class="doccomment">/// The created session handle.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ObjectPath</span> {
-        <span class="ident">ObjectPath</span>::<span class="ident">try_from</span>(<span class="self">self</span>.<span class="ident">session_handle</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">session_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ObjectPath</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">session_handle</span>
     }
 }
 
@@ -664,9 +689,9 @@
 <span class="doccomment">/// Specified options on a select devices request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectDevicesOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The device types to request remote controlling of. Default is all.</span>
-    <span class="kw">pub</span> <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SelectDevicesOptions</span> {
@@ -687,7 +712,7 @@
 <span class="doccomment">/// Specified options on a start remote desktop request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StartRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">StartRemoteOptions</span> {
@@ -713,296 +738,330 @@
 <span class="doccomment">/// The interface lets sandboxed applications create remote desktop sessions.</span>
 <span class="kw">trait</span> <span class="ident">RemoteDesktop</span> {
     <span class="doccomment">/// Create a remote desktop session.</span>
-    <span class="doccomment">/// A remote desktop session is used to allow remote controlling a desktop session.</span>
-    <span class="doccomment">/// It can also be used together with a screen cast session</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
+    <span class="doccomment">/// A remote desktop session is used to allow remote controlling a desktop</span>
+    <span class="doccomment">/// session. It can also be used together with a screen cast session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `options` - A [`CreateRemoteOptions`]</span>
+    <span class="doccomment">/// * `options` - A [`CreateRemoteOptions`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`CreateRemoteOptions`]: ./struct.CreateRemoteOptions.html</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../../request/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateRemoteOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateRemoteOptions</span>);
 
-    <span class="doccomment">/// Notify keyboard code</span>
-    <span class="doccomment">/// May only be called if KEYBOARD access was provided after starting the session.</span>
+    <span class="doccomment">/// Notify keyboard code.</span>
+    <span class="doccomment">/// May only be called if KEYBOARD access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `keycode` - Keyboard code that was pressed or released</span>
-    <span class="doccomment">/// * `state` - The new state of the keyboard code</span>
+    <span class="doccomment">/// * `keycode` - Keyboard code that was pressed or released.</span>
+    <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_keyboard_keycode</span>(
+    <span class="kw">fn</span> <span class="ident">notify_keyboard_keycode</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">keycode</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
-    <span class="doccomment">/// Notify keyboard symbol</span>
-    <span class="doccomment">/// May only be called if KEYBOARD access was provided after starting the session.</span>
+    <span class="doccomment">/// Notify keyboard symbol.</span>
+    <span class="doccomment">/// May only be called if KEYBOARD access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `keysym` - Keyboard symbol that was pressed or released</span>
-    <span class="doccomment">/// * `state` - The new state of the keyboard code</span>
+    <span class="doccomment">/// * `keysym` - Keyboard symbol that was pressed or released.</span>
+    <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_keyboard_keysym</span>(
+    <span class="kw">fn</span> <span class="ident">notify_keyboard_keysym</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">keysym</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
-    <span class="doccomment">/// Notify pointer axis</span>
-    <span class="doccomment">/// The axis movement from a &#39;smooth scroll&#39; device, such as a touchpad.</span>
+    <span class="doccomment">/// Notify pointer axis.</span>
+    <span class="doccomment">/// The axis movement from a &quot;smooth scroll&quot; device, such as a touchpad.</span>
     <span class="doccomment">/// When applicable, the size of the motion delta should be equivalent to</span>
     <span class="doccomment">/// the motion vector of a pointer motion done using the same advice.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if POINTER access was provided after starting the session.</span>
+    <span class="doccomment">/// May only be called if POINTER access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `dx` - Relative axis movement on the x axis</span>
-    <span class="doccomment">/// * `dy` - Relative axis movement on the y axis</span>
+    <span class="doccomment">/// * `dx` - Relative axis movement on the x axis.</span>
+    <span class="doccomment">/// * `dy` - Relative axis movement on the y axis.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_pointer_axis</span>(
+    <span class="kw">fn</span> <span class="ident">notify_pointer_axis</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">dx</span>: <span class="ident">f64</span>,
         <span class="ident">dy</span>: <span class="ident">f64</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
-    <span class="doccomment">/// Notify pointer axis discrete</span>
-    <span class="doccomment">/// May only be called if POINTER access was provided after starting the session.</span>
+    <span class="doccomment">/// Notify pointer axis discrete.</span>
+    <span class="doccomment">/// May only be called if POINTER access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `axis` - The axis that was scrolled</span>
+    <span class="doccomment">/// * `axis` - The axis that was scrolled.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_pointer_axis_discrete</span>(
+    <span class="kw">fn</span> <span class="ident">notify_pointer_axis_discrete</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">axis</span>: <span class="ident">Axis</span>,
         <span class="ident">steps</span>: <span class="ident">i32</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
-    <span class="doccomment">/// Notify pointer button</span>
+    <span class="doccomment">/// Notify pointer button.</span>
     <span class="doccomment">/// The pointer button is encoded according to Linux Evdev button codes.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///  May only be called if POINTER access was provided after starting the session.</span>
+    <span class="doccomment">///  May only be called if POINTER access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `button` - The pointer button was pressed or released</span>
-    <span class="doccomment">/// * `state` - The new state of the keyboard code</span>
+    <span class="doccomment">/// * `button` - The pointer button was pressed or released.</span>
+    <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_pointer_button</span>(
+    <span class="kw">fn</span> <span class="ident">notify_pointer_button</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">button</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Notify about a new relative pointer motion event.</span>
-    <span class="doccomment">/// The (dx, dy) vector represents the new pointer position in the streams logical coordinate space.</span>
+    <span class="doccomment">/// The (dx, dy) vector represents the new pointer position in the streams</span>
+    <span class="doccomment">/// logical coordinate space.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `dx` - Relative movement on the x axis</span>
-    <span class="doccomment">/// * `dy` - Relative movement on the y axis</span>
+    <span class="doccomment">/// * `dx` - Relative movement on the x axis.</span>
+    <span class="doccomment">/// * `dy` - Relative movement on the y axis.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_pointer_motion</span>(
+    <span class="kw">fn</span> <span class="ident">notify_pointer_motion</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">dx</span>: <span class="ident">f64</span>,
         <span class="ident">dy</span>: <span class="ident">f64</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Notify about a new absolute pointer motion event.</span>
-    <span class="doccomment">/// The (x, y) position represents the new pointer position in the streams logical coordinate sspace</span>
+    <span class="doccomment">/// The (x, y) position represents the new pointer position in the streams</span>
+    <span class="doccomment">/// logical coordinate space.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to</span>
-    <span class="doccomment">/// * `x` - Pointer motion x coordinate</span>
-    <span class="doccomment">/// * `y` - Pointer motion y coordinate</span>
+    <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
+    <span class="doccomment">/// * `x` - Pointer motion x coordinate.</span>
+    <span class="doccomment">/// * `y` - Pointer motion y coordinate.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_pointer_motion_absolute</span>(
+    <span class="kw">fn</span> <span class="ident">notify_pointer_motion_absolute</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">x</span>: <span class="ident">f64</span>,
         <span class="ident">y</span>: <span class="ident">f64</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Notify about a new touch down event.</span>
-    <span class="doccomment">/// The (x, y) position represents the new touch point position in the streams logical coordinate space</span>
+    <span class="doccomment">/// The (x, y) position represents the new touch point position in the</span>
+    <span class="doccomment">/// streams logical coordinate space.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the session.</span>
+    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to</span>
-    <span class="doccomment">/// * `slot` - Touch slot where touch point appeared</span>
-    <span class="doccomment">/// * `x` - Touch down x coordinate</span>
-    <span class="doccomment">/// * `y` - Touch down y coordinate</span>
+    <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
+    <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
+    <span class="doccomment">/// * `x` - Touch down x coordinate.</span>
+    <span class="doccomment">/// * `y` - Touch down y coordinate.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_touch_down</span>(
+    <span class="kw">fn</span> <span class="ident">notify_touch_down</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
         <span class="ident">x</span>: <span class="ident">f64</span>,
         <span class="ident">y</span>: <span class="ident">f64</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Notify about a new touch motion event.</span>
-    <span class="doccomment">/// The (x, y) position represents where the touch point position in the streams logical coordinate space moved</span>
+    <span class="doccomment">/// The (x, y) position represents where the touch point position in the</span>
+    <span class="doccomment">/// streams logical coordinate space moved.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the session.</span>
+    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to</span>
-    <span class="doccomment">/// * `slot` - Touch slot where touch point appeared</span>
-    <span class="doccomment">/// * `x` - Touch motion x coordinate</span>
-    <span class="doccomment">/// * `y` - Touch motion y coordinate</span>
+    <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
+    <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
+    <span class="doccomment">/// * `x` - Touch motion x coordinate.</span>
+    <span class="doccomment">/// * `y` - Touch motion y coordinate.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_touch_motion</span>(
+    <span class="kw">fn</span> <span class="ident">notify_touch_motion</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
         <span class="ident">x</span>: <span class="ident">f64</span>,
         <span class="ident">y</span>: <span class="ident">f64</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Notify about a new touch up event.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the session.</span>
+    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the</span>
+    <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
     <span class="doccomment">/// * `options` - ?</span>
-    <span class="doccomment">/// * `slot` - Touch slot where touch point appeared</span>
+    <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// FIXME: figure out the options we can take here</span>
-    <span class="kw">fn</span> <span class="ident">notify_touch_up</span>(
+    <span class="kw">fn</span> <span class="ident">notify_touch_up</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>,
+        <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Select input devices to remote control.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
-    <span class="doccomment">/// * `options` - [`SelectDevicesOptions`]</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
+    <span class="doccomment">/// * `options` - [`SelectDevicesOptions`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SelectDevicesOptions`]: ../struct.SelectDevicesOptions.html</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../../session/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">select_devices</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">options</span>: <span class="ident">SelectDevicesOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">select_devices</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>, <span class="ident">options</span>: <span class="ident">SelectDevicesOptions</span>)
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">///  Start the remote desktop session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This will typically result in the portal presenting a dialog letting</span>
-    <span class="doccomment">/// the user select what to share, including devices and optionally screen content</span>
-    <span class="doccomment">/// if screen cast sources was selected.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
+    <span class="doccomment">/// the user select what to share, including devices and optionally screen</span>
+    <span class="doccomment">/// content if screen cast sources was selected.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session_handle` - A [`SessionProxy`] object path.</span>
-    <span class="doccomment">/// * `parent_window` - The application window identifier</span>
-    <span class="doccomment">/// * `options` - [`StartRemoteOptions`]</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`] or [`AsyncSessionProxy`].</span>
+    <span class="doccomment">/// * `parent_window` - The application window identifier.</span>
+    <span class="doccomment">/// * `options` - [`StartRemoteOptions`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`StartRemoteOptions`]: ../struct.StartRemoteOptions.html</span>
     <span class="doccomment">/// [`SessionProxy`]: ../../session/struct.SessionProxy.html</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../../session/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">start</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session_handle</span>: <span class="ident">ObjectPath</span>,
-        <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
-        <span class="ident">options</span>: <span class="ident">StartRemoteOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// [`AsyncSessionProxy`]: ../../session/struct.AsyncSessionProxy.html</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">start</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">S</span>, <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>, <span class="ident">options</span>: <span class="ident">StartRemoteOptions</span>)
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">serde</span>::<span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
 
     <span class="doccomment">/// Available source types.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">available_device_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">available_device_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// version property</span>
+    <span class="doccomment">/// The version of this DBus interface.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "ashpd";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

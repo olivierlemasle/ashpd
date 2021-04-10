@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/desktop/print.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>print.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/print.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>print.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -566,23 +566,18 @@
 <span id="563">563</span>
 <span id="564">564</span>
 <span id="565">565</span>
-<span id="566">566</span>
-<span id="567">567</span>
-<span id="568">568</span>
-<span id="569">569</span>
-<span id="570">570</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Print a file</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::print::{PrintOptions, PrintProxy};</span>
-<span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
-<span class="doccomment">//! use ashpd::{BasicResponse as Basic, RequestProxy, Response, WindowIdentifier};</span>
-<span class="doccomment">//! use zvariant::Fd;</span>
+<span class="doccomment">//! use ashpd::{BasicResponse as Basic, Response, WindowIdentifier};</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//! use std::os::unix::io::AsRawFd;</span>
+<span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
+<span class="doccomment">//! use zvariant::Fd;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = Connection::new_session()?;</span>
@@ -590,7 +585,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/gitlog.pdf&quot;).expect(&quot;file to print was not found&quot;);</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let request_handle = proxy</span>
+<span class="doccomment">//!     let request = proxy</span>
 <span class="doccomment">//!         .print(</span>
 <span class="doccomment">//!             WindowIdentifier::default(),</span>
 <span class="doccomment">//!             &quot;test&quot;,</span>
@@ -599,21 +594,22 @@
 <span class="doccomment">//!         )</span>
 <span class="doccomment">//!         .unwrap();</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let request = RequestProxy::new(&amp;connection, &amp;request_handle)?;</span>
-<span class="doccomment">//!     request.on_response(|r: Response&lt;Basic&gt;| {</span>
+<span class="doccomment">//!     request.connect_response(|r: Response&lt;Basic&gt;| {</span>
 <span class="doccomment">//!         println!(&quot;{:#?}&quot;, r.is_ok());</span>
+<span class="doccomment">//!         Ok(())</span>
 <span class="doccomment">//!     })?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">HandleToken</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
 <span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">Signature</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">AsyncRequestProxy</span>, <span class="ident">HandleToken</span>, <span class="ident">RequestProxy</span>, <span class="ident">WindowIdentifier</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(
     <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">AsRefStr</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
@@ -715,7 +711,8 @@
     <span class="doccomment">/// A media type according to [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;media-type&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">media_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The dithering to use, one of fine, none, coarse, lineart, grayscale or error-diffusion.</span>
+    <span class="doccomment">/// The dithering to use, one of fine, none, coarse, lineart, grayscale or</span>
+    <span class="doccomment">/// error-diffusion.</span>
     <span class="kw">pub</span> <span class="ident">dither</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The scale in percent</span>
     <span class="kw">pub</span> <span class="ident">scale</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
@@ -880,7 +877,8 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets the number up layout, one of lrtb, lrbt, rltb, rlbt, tblr, tbrl, btlr, btrl.</span>
+    <span class="doccomment">/// Sets the number up layout, one of lrtb, lrbt, rltb, rlbt, tblr, tbrl,</span>
+    <span class="doccomment">/// btlr, btrl.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">number_up_layout</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number_up_layout</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">number_up_layout</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">number_up_layout</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
@@ -1021,9 +1019,9 @@
 <span class="doccomment">/// Specified options on a prepare print request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PreparePrintOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether to make the dialog modal.</span>
-    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">PreparePrintOptions</span> {
@@ -1044,11 +1042,11 @@
 <span class="doccomment">/// Specified options on a print request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PrintOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="kw">pub</span> <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether to make the dialog modal.</span>
-    <span class="kw">pub</span> <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Token that was returned by a previous `prepare_print` call.</span>
-    <span class="kw">pub</span> <span class="ident">token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">PrintOptions</span> {
@@ -1090,22 +1088,21 @@
 )]</span>
 <span class="doccomment">/// The interface lets sandboxed applications print.</span>
 <span class="kw">trait</span> <span class="ident">Print</span> {
-    <span class="doccomment">/// Presents a print dialog to the user and returns print settings and page setup.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
+    <span class="doccomment">/// Presents a print dialog to the user and returns print settings and page</span>
+    <span class="doccomment">/// setup.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `parent_window` - Identifier for the application window</span>
-    <span class="doccomment">/// * `title` - Title for the print dialog</span>
-    <span class="doccomment">/// * `settings` - [`Settings`]</span>
-    <span class="doccomment">/// * `page_setup` - [`PageSetup`]</span>
-    <span class="doccomment">/// * `options` - [`PreparePrintOptions`]</span>
+    <span class="doccomment">/// * `parent_window` - Identifier for the application window.</span>
+    <span class="doccomment">/// * `title` - Title for the print dialog.</span>
+    <span class="doccomment">/// * `settings` - [`Settings`].</span>
+    <span class="doccomment">/// * `page_setup` - [`PageSetup`].</span>
+    <span class="doccomment">/// * `options` - [`PreparePrintOptions`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Settings`]: ./struct.Settings.html</span>
     <span class="doccomment">/// [`PageSetup`]: ./struct.PageSetup.html</span>
     <span class="doccomment">/// [`PreparePrintOptions`]: ./struct.PreparePrintOptions.html</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">prepare_print</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
@@ -1113,34 +1110,28 @@
         <span class="ident">settings</span>: <span class="ident">Settings</span>,
         <span class="ident">page_setup</span>: <span class="ident">PageSetup</span>,
         <span class="ident">options</span>: <span class="ident">PreparePrintOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    );
 
     <span class="doccomment">/// Asks to print a file.</span>
-    <span class="doccomment">/// The file must be passed in the form of a file descriptor open for reading.</span>
-    <span class="doccomment">/// This ensures that sandboxed applications only print files that they have access to.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`RequestProxy`] object path.</span>
+    <span class="doccomment">/// The file must be passed in the form of a file descriptor open for</span>
+    <span class="doccomment">/// reading. This ensures that sandboxed applications only print files</span>
+    <span class="doccomment">/// that they have access to.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `parent_window` - The application window identifier</span>
-    <span class="doccomment">/// * `title` - The title for the print dialog</span>
-    <span class="doccomment">/// * `fd` - File descriptor for reading the content to print</span>
-    <span class="doccomment">/// * `options` - [`PrintOptions`]</span>
+    <span class="doccomment">/// * `parent_window` - The application window identifier.</span>
+    <span class="doccomment">/// * `title` - The title for the print dialog.</span>
+    <span class="doccomment">/// * `fd` - File descriptor for reading the content to print.</span>
+    <span class="doccomment">/// * `options` - [`PrintOptions`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`PrintOptions`]: ./struct.PrintOptions.html</span>
-    <span class="doccomment">/// [`RequestProxy`]: ../request/struct.RequestProxy.html</span>
-    <span class="kw">fn</span> <span class="ident">print</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>,
-        <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">fd</span>: <span class="ident">Fd</span>,
-        <span class="ident">options</span>: <span class="ident">PrintOptions</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">print</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">parent_window</span>: <span class="ident">WindowIdentifier</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">fd</span>: <span class="ident">Fd</span>, <span class="ident">options</span>: <span class="ident">PrintOptions</span>);
 
-    <span class="doccomment">/// version property</span>
+    <span class="doccomment">/// The version of this DBus interface.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "ashpd";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

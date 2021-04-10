@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/flatpak/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/flatpak/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -196,16 +196,46 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Spawn a process outside of the sandbox, only works in a Flatpak.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use enumflags2::BitFlags;</span>
+<span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::flatpak::{FlatpakProxy, SpawnFlags, SpawnOptions};</span>
-<span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
+<span class="doccomment">//! use enumflags2::BitFlags;</span>
 <span class="doccomment">//! use std::collections::HashMap;</span>
+<span class="doccomment">//! use zbus::{fdo::Result, Connection};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() -&gt; Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = Connection::new_session()?;</span>
@@ -213,7 +243,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     proxy.spawn(</span>
 <span class="doccomment">//!         &quot;contrast&quot;.into(),</span>
-<span class="doccomment">//!         vec![&quot;&quot;.into()],</span>
+<span class="doccomment">//!         &amp;[],</span>
 <span class="doccomment">//!         HashMap::new(),</span>
 <span class="doccomment">//!         HashMap::new(),</span>
 <span class="doccomment">//!         SpawnFlags::ClearEnv | SpawnFlags::NoNetwork,</span>
@@ -223,24 +253,26 @@
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">NString</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+
 <span class="kw">use</span> <span class="ident">enumflags2</span>::<span class="ident">BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Fd</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">flatpak</span>::<span class="ident">update_monitor</span>::{<span class="ident">AsyncUpdateMonitorProxy</span>, <span class="ident">UpdateMonitorProxy</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="doccomment">/// A bitmask representing the &quot;permissions&quot; of a newely created sandbox.</span>
+<span class="doccomment">/// A bitmask representing the &quot;permissions&quot; of a newly created sandbox.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SandboxFlags</span> {
-    <span class="doccomment">/// Share the display access (X11, wayland) with the caller.</span>
+    <span class="doccomment">/// Share the display access (X11, Wayland) with the caller.</span>
     <span class="ident">DisplayAccess</span> <span class="op">=</span> <span class="number">1</span>,
-    <span class="doccomment">/// Share the sound access (pulseaudio) with the caller.</span>
+    <span class="doccomment">/// Share the sound access (PulseAudio) with the caller.</span>
     <span class="ident">SoundAccess</span> <span class="op">=</span> <span class="number">2</span>,
     <span class="doccomment">/// Share the gpu access with the caller.</span>
-    <span class="ident">GPUAccess</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="ident">GpuAccess</span> <span class="op">=</span> <span class="number">4</span>,
     <span class="doccomment">/// Allow sandbox access to (filtered) session bus.</span>
     <span class="ident">SessionBusAccess</span> <span class="op">=</span> <span class="number">8</span>,
     <span class="doccomment">/// Allow sandbox access to accessibility bus.</span>
@@ -255,15 +287,18 @@
     <span class="ident">ClearEnv</span> <span class="op">=</span> <span class="number">1</span>,
     <span class="doccomment">/// Spawn the latest version of the app.</span>
     <span class="ident">Latest</span> <span class="op">=</span> <span class="number">2</span>,
-    <span class="doccomment">/// Spawn in a sandbox (equivalent of the sandbox option of flatpak run).</span>
+    <span class="doccomment">/// Spawn in a sandbox (equivalent of the sandbox option of `flatpak run`).</span>
     <span class="ident">Sandbox</span> <span class="op">=</span> <span class="number">4</span>,
-    <span class="doccomment">/// Spawn without network (equivalent of the unshare=network option of flatpak run).</span>
+    <span class="doccomment">/// Spawn without network (equivalent of the `unshare=network` option of</span>
+    <span class="doccomment">/// `flatpak run`).</span>
     <span class="ident">NoNetwork</span> <span class="op">=</span> <span class="number">8</span>,
     <span class="doccomment">/// Kill the sandbox when the caller disappears from the session bus.</span>
     <span class="ident">Kill</span> <span class="op">=</span> <span class="number">16</span>,
-    <span class="doccomment">/// Expose the sandbox pids in the callers sandbox, only supported if using user namespaces for containers (not setuid), see the support property.</span>
+    <span class="doccomment">/// Expose the sandbox pids in the callers sandbox, only supported if using</span>
+    <span class="doccomment">/// user namespaces for containers (not setuid), see the support property.</span>
     <span class="ident">Expose</span> <span class="op">=</span> <span class="number">32</span>,
-    <span class="doccomment">/// Emit a SpawnStarted signal once the sandboxed process has been fully started.</span>
+    <span class="doccomment">/// Emit a SpawnStarted signal once the sandboxed process has been fully</span>
+    <span class="doccomment">/// started.</span>
     <span class="ident">Emit</span> <span class="op">=</span> <span class="number">64</span>,
 }
 
@@ -276,44 +311,62 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specficied options on a spawn request.</span>
+<span class="doccomment">/// Specified options on a spawn request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpawnOptions</span> {
-    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to the new sandbox, for reading and writing.</span>
-    <span class="doccomment">/// Note that absolute paths or subdirectories are not allowed.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to the new sandbox, readonly.</span>
-    <span class="doccomment">/// Note that absolute paths or subdirectories are not allowed.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be exposed to the new sandbox, for reading and writing.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose_fd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be exposed to the new sandbox, readonly.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_expose_fd_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to</span>
+    <span class="doccomment">/// the new sandbox, for reading and writing.</span>
+    <span class="ident">sandbox_expose</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to</span>
+    <span class="doccomment">/// the new sandbox, read-only.</span>
+    <span class="ident">sandbox_expose_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be</span>
+    <span class="doccomment">/// exposed to the new sandbox, for reading and writing.</span>
+    <span class="ident">sandbox_expose_fd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be</span>
+    <span class="doccomment">/// exposed to the new sandbox, read-only.</span>
+    <span class="ident">sandbox_expose_fd_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Flags affecting the created sandbox.</span>
-    <span class="kw">pub</span> <span class="ident">sandbox_flags</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">sandbox_flags</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SpawnOptions</span> {
     <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose</span>);
+    <span class="doccomment">/// **Note** that absolute paths or subdirectories are not allowed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">sandbox_expose</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
+            <span class="ident">sandbox_expose</span>
+                .<span class="ident">to_vec</span>()
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">to_string</span>())
+                .<span class="ident">collect</span>(),
+        );
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox, readonly.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_ro</span>);
+    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox,</span>
+    <span class="doccomment">/// read-only. **Note** that absolute paths or subdirectories are not</span>
+    <span class="doccomment">/// allowed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_ro</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">sandbox_expose_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
+            <span class="ident">sandbox_expose_ro</span>
+                .<span class="ident">to_vec</span>()
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">to_string</span>())
+                .<span class="ident">collect</span>(),
+        );
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose_fd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd</span>: <span class="kw-2">&amp;</span>[<span class="ident">Fd</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">sandbox_expose_fd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd</span>.<span class="ident">to_vec</span>());
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox, readonly.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd_ro</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose_fd_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd_ro</span>);
+    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox,</span>
+    <span class="doccomment">/// read-only.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd_ro</span>: <span class="kw-2">&amp;</span>[<span class="ident">Fd</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">sandbox_expose_fd_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_expose_fd_ro</span>.<span class="ident">to_vec</span>());
         <span class="self">self</span>
     }
 
@@ -325,7 +378,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specficied options on a create monitor request.</span>
+<span class="doccomment">/// Specified options on a create monitor request.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Currently there are no possible options yet.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CreateMonitorOptions</span> {}
@@ -335,57 +388,64 @@
     <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>,
     <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/Flatpak&quot;</span>
 )]</span>
-<span class="doccomment">/// The interface exposes some interactions with Flatpak on the host to the sandbox.</span>
-<span class="doccomment">/// For example, it allows you to restart the applications or start a more sandboxed instance.</span>
+<span class="doccomment">/// The interface exposes some interactions with Flatpak on the host to the</span>
+<span class="doccomment">/// sandbox. For example, it allows you to restart the applications or start a</span>
+<span class="doccomment">/// more sandboxed instance.</span>
 <span class="kw">trait</span> <span class="ident">Flatpak</span> {
     <span class="doccomment">/// Creates an update monitor object that will emit signals</span>
-    <span class="doccomment">/// when an update for the caller becomes available, and can be used to install it.</span>
-    <span class="kw">fn</span> <span class="ident">create_update_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateMonitorOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedObjectPath</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// when an update for the caller becomes available, and can be used to</span>
+    <span class="doccomment">/// install it.</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;UpdateMonitor&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">create_update_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="ident">CreateMonitorOptions</span>);
 
-    <span class="doccomment">/// This methods let you start a new instance of your application, optionally enabling a tighter sandbox.</span>
+    <span class="doccomment">/// This methods let you start a new instance of your application,</span>
+    <span class="doccomment">/// optionally enabling a tighter sandbox.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the PID of the new process</span>
+    <span class="doccomment">/// Returns the PID of the new process.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `cwd_path` - the working directory for the new process</span>
-    <span class="doccomment">/// * `arvg` - the argv for the new process, starting with the executable to launch</span>
-    <span class="doccomment">/// * `fds` - Array of file descriptors to pass to the new process</span>
-    <span class="doccomment">/// * `envs` - Array of variable/value pairs for the environment of the new process</span>
+    <span class="doccomment">/// * `cwd_path` - The working directory for the new process.</span>
+    <span class="doccomment">/// * `arvg` - The argv for the new process, starting with the executable to</span>
+    <span class="doccomment">///   launch.</span>
+    <span class="doccomment">/// * `fds` - Array of file descriptors to pass to the new process.</span>
+    <span class="doccomment">/// * `envs` - Array of variable/value pairs for the environment of the new</span>
+    <span class="doccomment">///   process.</span>
     <span class="doccomment">/// * `flags`</span>
-    <span class="doccomment">/// * `options` - A [`SpawnOptions`]</span>
+    <span class="doccomment">/// * `options` - A [`SpawnOptions`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`SpawnOptions`]: ./struct.SpawnOptions.html</span>
     <span class="kw">fn</span> <span class="ident">spawn</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">cwd_path</span>: <span class="ident">NString</span>,
-        <span class="ident">argv</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">NString</span><span class="op">&gt;</span>,
+        <span class="ident">cwd_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">argv</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
         <span class="ident">fds</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">Fd</span><span class="op">&gt;</span>,
         <span class="ident">envs</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SpawnFlags</span><span class="op">&gt;</span>,
         <span class="ident">options</span>: <span class="ident">SpawnOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// This methods let you send a Unix signal to a process that was started `spawn`</span>
+    <span class="doccomment">/// This methods let you send a Unix signal to a process that was started</span>
+    <span class="doccomment">/// `spawn`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `pid` - the PID of the process to send the signal to</span>
-    <span class="doccomment">/// * `signal` - the signal to send</span>
-    <span class="doccomment">/// * `to_process_group` - whether to send the signal to the process group</span>
+    <span class="doccomment">/// * `pid` - The PID of the process to send the signal to.</span>
+    <span class="doccomment">/// * `signal` - The signal to send.</span>
+    <span class="doccomment">/// * `to_process_group` - Whether to send the signal to the process group.</span>
     <span class="kw">fn</span> <span class="ident">spawn_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>, <span class="ident">signal</span>: <span class="ident">u32</span>, <span class="ident">to_process_group</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
-    <span class="comment">// FIXME: signal</span>
-    <span class="comment">// fn spawn_started(&amp;self, pid: u32, relpid: u32);</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">signal</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">spawn_started</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>, <span class="ident">relpid</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
-    <span class="comment">// FIXME: signal</span>
-    <span class="comment">// fn spawn_existed(&amp;self, pid: u32, exit_status: u32);</span>
+    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">signal</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">spawn_existed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>, <span class="ident">exit_status</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 
     <span class="doccomment">/// Flags marking what optional features are available.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">supports</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">supports</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SupportsFlags</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// version property</span>
+    <span class="doccomment">/// The version of this DBus interface.</span>
     <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 }
@@ -393,4 +453,5 @@
 <span class="doccomment">/// Monitor if there&#39;s an update it and install it.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">update_monitor</span>;
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "ashpd";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
