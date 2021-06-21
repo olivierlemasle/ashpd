@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["TrashStatus","The status of moving a file to the trash."]],"fn":[["trash_file","Sends a file to the trash"]],"struct":[["AsyncTrashProxy","Asynchronous sibling of [`TrashProxy`]. The interface lets sandboxed applications send files to the trashcan."],["TrashProxy","The interface lets sandboxed applications send files to the trashcan."]]});
+initSidebarItems({"struct":[["TrashProxy","The interface lets sandboxed applications send files to the trashcan."]]});

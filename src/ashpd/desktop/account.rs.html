@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/account.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>account.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -122,41 +122,40 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
-<span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
-<span id="125">125</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{desktop::account, Response, WindowIdentifier};</span>
-<span class="doccomment">//! use zbus::fdo::Result;</span>
+<span class="doccomment">//! use ashpd::desktop::account::AccountProxy;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!     if let Response::Ok(user_info) =</span>
-<span class="doccomment">//!         account::get_user_information(identifier, &quot;App would like to access user information&quot;).await?</span>
-<span class="doccomment">//!     {</span>
-<span class="doccomment">//!         println!(&quot;Name: {}&quot;, user_info.name);</span>
-<span class="doccomment">//!         println!(&quot;ID: {}&quot;, user_info.id);</span>
-<span class="doccomment">//!     }</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let proxy = AccountProxy::new(&amp;connection).await?;</span>
+<span class="doccomment">//!     let user_info = proxy</span>
+<span class="doccomment">//!         .user_information(</span>
+<span class="doccomment">//!             Default::default(),</span>
+<span class="doccomment">//!             &quot;App would like to access user information&quot;,</span>
+<span class="doccomment">//!         )</span>
+<span class="doccomment">//!         .await?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;Name: {}&quot;, user_info.name());</span>
+<span class="doccomment">//!     println!(&quot;ID: {}&quot;, user_info.id());</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 
-<span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">lock</span>::<span class="ident">Mutex</span>, <span class="ident">FutureExt</span>};
-<span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_request_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">AsyncRequestProxy</span>, <span class="ident">HandleToken</span>, <span class="ident">RequestProxy</span>, <span class="ident">Response</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// The possible options for a get user information request.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UserInfoOptions</span> {
+<span class="doccomment">/// Specified options for a [`AccountProxy::user_information`] request.</span>
+<span class="kw">struct</span> <span class="ident">UserInfoOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="ident">handle_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HandleToken</span><span class="op">&gt;</span>,
+    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
     <span class="doccomment">/// Shown in the dialog to explain why the information is needed.</span>
     <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
@@ -167,91 +166,84 @@
         <span class="self">self</span>.<span class="ident">reason</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reason</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
-
-    <span class="doccomment">/// Sets the handle token.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle_token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">handle_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handle_token</span>);
-        <span class="self">self</span>
-    }
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Clone</span>, <span class="ident">TypeDict</span>)]</span>
-<span class="doccomment">/// The response of a `get_user_information` request.</span>
+<span class="doccomment">/// The response of a [`AccountProxy::user_information`] request.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UserInfo</span> {
     <span class="doccomment">/// User identifier.</span>
-    <span class="kw">pub</span> <span class="ident">id</span>: <span class="ident">String</span>,
+    <span class="ident">id</span>: <span class="ident">String</span>,
     <span class="doccomment">/// User name.</span>
-    <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">String</span>,
+    <span class="ident">name</span>: <span class="ident">String</span>,
     <span class="doccomment">/// User image uri.</span>
-    <span class="kw">pub</span> <span class="ident">image</span>: <span class="ident">String</span>,
+    <span class="ident">image</span>: <span class="ident">String</span>,
 }
 
-<span class="attribute">#[<span class="ident">dbus_proxy</span>(
-    <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Account&quot;</span>,
-    <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
-    <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
-)]</span>
+<span class="kw">impl</span> <span class="ident">UserInfo</span> {
+    <span class="doccomment">/// User identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">id</span>
+    }
+
+    <span class="doccomment">/// User name.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name</span>
+    }
+
+    <span class="doccomment">/// User image uri.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">image</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">image</span>
+    }
+}
+
 <span class="doccomment">/// The interface lets sandboxed applications query basic information about the</span>
 <span class="doccomment">/// user, like his name and avatar photo.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The portal backend will present the user with a dialog to confirm which (if</span>
 <span class="doccomment">/// any) information to share.</span>
-<span class="kw">trait</span> <span class="ident">Account</span> {
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AccountProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::azync::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AccountProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new instance of [`AccountProxy`].</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::azync::Connection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AccountProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="ident">connection</span>)
+            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)
+            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
+            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)
+            .<span class="ident">build_async</span>()
+            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+    }
+
+    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">zbus::azync::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
+    }
+
     <span class="doccomment">/// Gets information about the user.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `window` - Identifier for the window.</span>
-    <span class="doccomment">/// * `options` - A [`UserInfoOptions`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`UserInfoOptions`]: ./struct.UserInfoOptions.html</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">object</span> <span class="op">=</span> <span class="string">&quot;Request&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">get_user_information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">window</span>: <span class="ident">WindowIdentifier</span>, <span class="ident">options</span>: <span class="ident">UserInfoOptions</span>);
-
-    <span class="doccomment">/// The version of this DBus interface.</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
-}
-
-<span class="doccomment">/// Get the user information</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// An async wrapper around the `AsyncAccountProxy::get_user_information`</span>
-<span class="doccomment">/// function.</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_user_information</span>(
-    <span class="ident">window_identifier</span>: <span class="ident">WindowIdentifier</span>,
-    <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zbus</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Response</span><span class="op">&lt;</span><span class="ident">UserInfo</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus</span>::<span class="ident">azync</span>::<span class="ident">Connection</span>::<span class="ident">new_session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">AsyncAccountProxy</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>);
-    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">proxy</span>
-        .<span class="ident">get_user_information</span>(
-            <span class="ident">window_identifier</span>,
-            <span class="ident">UserInfoOptions</span>::<span class="ident">default</span>().<span class="ident">reason</span>(<span class="kw-2">&amp;</span><span class="ident">reason</span>),
+    <span class="doccomment">/// * `identifier` - Identifier for the window.</span>
+    <span class="doccomment">/// * `reason` - A user-visible reason for the request.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetUserInformation&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">user_information</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+        <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UserInfo</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">UserInfoOptions::default</span>().<span class="ident">reason</span>(<span class="ident">reason</span>);
+        <span class="ident">call_request_method</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+            <span class="string">&quot;GetUserInformation&quot;</span>,
+            <span class="kw-2">&amp;</span>(<span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
         )
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-
-    <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures</span>::<span class="ident">channel</span>::<span class="ident">oneshot</span>::<span class="ident">channel</span>();
-
-    <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Mutex</span>::<span class="ident">new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
-    <span class="kw">let</span> <span class="ident">signal_id</span> <span class="op">=</span> <span class="ident">request</span>
-        .<span class="ident">connect_response</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">response</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">UserInfo</span><span class="op">&gt;</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">clone</span>();
-            <span class="kw">async</span> <span class="kw">move</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span> <span class="ident">s</span>.<span class="ident">lock</span>().<span class="kw">await</span>.<span class="ident">take</span>() {
-                    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">send</span>(<span class="ident">response</span>);
-                }
-                <span class="prelude-val">Ok</span>(())
-            }
-            .<span class="ident">boxed</span>()
-        })
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-
-    <span class="kw">while</span> <span class="ident">request</span>.<span class="ident">next_signal</span>().<span class="kw">await</span><span class="question-mark">?</span>.<span class="ident">is_some</span>() {}
-    <span class="ident">request</span>.<span class="ident">disconnect_signal</span>(<span class="ident">signal_id</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-
-    <span class="kw">let</span> <span class="ident">user_information</span> <span class="op">=</span> <span class="ident">receiver</span>.<span class="kw">await</span>.<span class="ident">unwrap</span>();
-    <span class="prelude-val">Ok</span>(<span class="ident">user_information</span>)
+        .<span class="kw">await</span>
+    }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

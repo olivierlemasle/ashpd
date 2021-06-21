@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["AsyncEmailProxy","Asynchronous sibling of [`EmailProxy`]. The interface lets sandboxed applications request sending an email."],["EmailOptions","Specified options for a compose email request."],["EmailProxy","The interface lets sandboxed applications request sending an email."]]});
+initSidebarItems({"struct":[["Email","Specified options for a [`EmailProxy::compose_email`] request."],["EmailProxy","The interface lets sandboxed applications request sending an email."]]});

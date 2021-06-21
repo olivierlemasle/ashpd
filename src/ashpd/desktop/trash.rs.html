@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/trash.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>trash.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
@@ -67,51 +67,78 @@
 <span id="64">64</span>
 <span id="65">65</span>
 <span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use ashpd::desktop::trash::TrashProxy;</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//! use std::os::unix::io::AsRawFd;</span>
-<span class="doccomment">//! use ashpd::desktop::trash::{trash_file, TrashStatus};</span>
-<span class="doccomment">//! use zbus::fdo::Result;</span>
+<span class="doccomment">//! use zvariant::Fd;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;()&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
+<span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
+<span class="doccomment">//!     let proxy = TrashProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     match trash_file(file.as_raw_fd()).await? {</span>
-<span class="doccomment">//!         TrashStatus::Succeeded =&gt; println!(&quot;the file was removed!&quot;),</span>
-<span class="doccomment">//!         TrashStatus::Failed =&gt; println!(&quot;oof, couldn&#39;t remove the file&quot;),</span>
-<span class="doccomment">//!     };</span>
-<span class="doccomment">//!</span>
+<span class="doccomment">//!     proxy.trash_file(Fd::from(file.as_raw_fd())).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">AsRawFd</span>;
 
-<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_method</span>, <span class="ident">Error</span>};
+<span class="kw">use</span> <span class="ident">serde::Serialize</span>;
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">dbus_proxy</span>, <span class="ident">fdo</span>::<span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::<span class="ident">Type</span>;
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::<span class="ident">Type</span>;
+<span class="kw">use</span> <span class="ident">std::os::unix::io::AsRawFd</span>;
+<span class="kw">use</span> <span class="ident">zvariant::Type</span>;
+<span class="kw">use</span> <span class="ident">zvariant_derive::Type</span>;
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="doccomment">/// The status of moving a file to the trash.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TrashStatus</span> {
+<span class="kw">enum</span> <span class="ident">TrashStatus</span> {
     <span class="doccomment">/// Moving the file to the trash failed.</span>
     <span class="ident">Failed</span> <span class="op">=</span> <span class="number">0</span>,
     <span class="doccomment">/// Moving the file to the trash succeeded</span>
     <span class="ident">Succeeded</span> <span class="op">=</span> <span class="number">1</span>,
 }
 
-<span class="attribute">#[<span class="ident">dbus_proxy</span>(
-    <span class="ident">interface</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Trash&quot;</span>,
-    <span class="ident">default_service</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>,
-    <span class="ident">default_path</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>
-)]</span>
 <span class="doccomment">/// The interface lets sandboxed applications send files to the trashcan.</span>
-<span class="kw">trait</span> <span class="ident">Trash</span> {
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Trash&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TrashProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::azync::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TrashProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new instance of [`TrashProxy`].</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::azync::Connection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TrashProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="ident">connection</span>)
+            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Trash&quot;</span>)
+            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
+            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)
+            .<span class="ident">build_async</span>()
+            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+    }
+
+    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">zbus::azync::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
+    }
+
     <span class="doccomment">/// Sends a file to the trashcan.</span>
     <span class="doccomment">/// Applications are allowed to trash a file if they can open it in</span>
     <span class="doccomment">/// read/write mode.</span>
@@ -119,21 +146,18 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `fd` - The file descriptor.</span>
-    <span class="kw">fn</span> <span class="ident">trash_file</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fd</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TrashStatus</span><span class="op">&gt;</span>;
-
-    <span class="doccomment">/// The version of this DBus interface.</span>
-    <span class="attribute">#[<span class="ident">dbus_proxy</span>(<span class="ident">property</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;version&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
-}
-
-<span class="doccomment">/// Sends a file to the trash</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// A helper function around the `AsyncTrashProxy::trash_file`.</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">trash_file</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span><span class="op">&gt;</span>(<span class="ident">file</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TrashStatus</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus</span>::<span class="ident">azync</span>::<span class="ident">Connection</span>::<span class="ident">new_session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">AsyncTrashProxy</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>);
-    <span class="ident">proxy</span>.<span class="ident">trash_file</span>(<span class="ident">file</span>).<span class="kw">await</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;TrashFile&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">trash_file</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fd</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>,
+    {
+        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;TrashFile&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">fd</span>.<span class="ident">as_raw_fd</span>())).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">match</span> <span class="ident">status</span> {
+            <span class="ident">TrashStatus::Failed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error::TrashFailed</span>),
+            <span class="ident">TrashStatus::Succeeded</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
+        }
+    }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
