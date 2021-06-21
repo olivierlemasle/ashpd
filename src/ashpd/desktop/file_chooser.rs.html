@@ -489,6 +489,20 @@
 <span id="487">487</span>
 <span id="488">488</span>
 <span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -752,9 +766,9 @@
     <span class="doccomment">/// Suggested filename.</span>
     <span class="ident">current_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Suggested folder to save the file in.</span>
-    <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The current file (when saving an existing file).</span>
-    <span class="ident">current_file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">current_file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// List of serialized file filters.</span>
     <span class="ident">filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Request that this filter be set by default at dialog creation.</span>
@@ -778,13 +792,19 @@
 
     <span class="doccomment">/// Sets the current folder.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_folder</span>.<span class="ident">into</span>());
+        <span class="comment">// TODO: weird api expecting a null terminated byte array instead of a string, investigate way?</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">current_folder</span>.<span class="ident">into</span>();
+        <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="number">0</span>);
+        <span class="self">self</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bytes</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets the absolute path of the file.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_file</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_file</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">current_file</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_file</span>.<span class="ident">into</span>());
+        <span class="comment">// TODO: weird api expecting a null terminated byte array instead of a string, investigate way?</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">current_file</span>.<span class="ident">into</span>();
+        <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="number">0</span>);
+        <span class="self">self</span>.<span class="ident">current_file</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bytes</span>);
         <span class="self">self</span>
     }
 
@@ -825,9 +845,9 @@
     <span class="doccomment">/// List of serialized combo boxes to add to the file chooser</span>
     <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Choice</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Suggested folder to save the file in.</span>
-    <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// An array of file names to be saved.</span>
-    <span class="ident">files</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">files</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SaveFilesOptions</span> {
@@ -851,13 +871,21 @@
 
     <span class="doccomment">/// Specifies the current folder path.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_folder</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">current_folder</span>.<span class="ident">into</span>();
+        <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="number">0</span>);
+        <span class="comment">// TODO: weird api expecting a null terminated byte array instead of a string, investigate way?</span>
+        <span class="self">self</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bytes</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets a list of files to save.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">files</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">files</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">files</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">files</span>.<span class="ident">to_vec</span>().<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">to_string</span>()).<span class="ident">collect</span>());
+        <span class="comment">// TODO: weird api expecting a null terminated byte array instead of a string, investigate way?</span>
+        <span class="self">self</span>.<span class="ident">files</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">files</span>.<span class="ident">to_vec</span>().<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">into</span>();
+            <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="number">0</span>);
+            <span class="ident">bytes</span>
+        }).<span class="ident">collect</span>());
         <span class="self">self</span>
     }
 }
