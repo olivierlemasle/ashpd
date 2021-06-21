@@ -137,6 +137,14 @@
 <span id="135">135</span>
 <span id="136">136</span>
 <span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
 </pre><pre class="rust">
 <span class="doccomment">//! **Note** this portal doesn&#39;t work for sandboxed applications.</span>
 <span class="doccomment">//! # Examples</span>
@@ -162,6 +170,7 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_method</span>, <span class="ident">Error</span>};
+<span class="kw">use</span> <span class="ident">futures::StreamExt</span>;
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
@@ -273,6 +282,13 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_status&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NetworkStatus</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;GetStatus&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>
+    }
+
+    <span class="doccomment">/// Emitted when the network configuration changes.</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_changed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">receive_signal</span>(<span class="string">&quot;changed&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">next</span>().<span class="kw">await</span>.<span class="ident">ok_or</span>(<span class="ident">Error::NoResponse</span>)<span class="question-mark">?</span>;
+        <span class="ident">message</span>.<span class="ident">body</span>::<span class="op">&lt;</span>()<span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="ident">From::from</span>)
     }
 }
 </pre></div>
