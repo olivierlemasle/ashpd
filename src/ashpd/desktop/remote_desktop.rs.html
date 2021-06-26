@@ -678,7 +678,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `types` - The device types to request remote controlling of.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`SelectDevices`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.SelectDevices).</span>
@@ -706,7 +706,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `identifier` - The application window identifier.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.Start).</span>
@@ -733,7 +733,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `keycode` - Keyboard code that was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
@@ -761,7 +761,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `keysym` - Keyboard symbol that was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
@@ -790,7 +790,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyTouchUp`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchUp).</span>
@@ -814,7 +814,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">/// * `x` - Touch down x coordinate.</span>
@@ -849,7 +849,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">/// * `x` - Touch motion x coordinate.</span>
@@ -881,7 +881,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `x` - Pointer motion x coordinate.</span>
     <span class="doccomment">/// * `y` - Pointer motion y coordinate.</span>
@@ -911,7 +911,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `dx` - Relative movement on the x axis.</span>
     <span class="doccomment">/// * `dy` - Relative movement on the y axis.</span>
     <span class="doccomment">///</span>
@@ -936,7 +936,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `button` - The pointer button was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
@@ -964,7 +964,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `axis` - The axis that was scrolled.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyPointerAxisDiscrete`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerAxisDiscrete).</span>
@@ -995,7 +995,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `dx` - Relative axis movement on the x axis.</span>
     <span class="doccomment">/// * `dy` - Relative axis movement on the y axis.</span>
     <span class="doccomment">///</span>

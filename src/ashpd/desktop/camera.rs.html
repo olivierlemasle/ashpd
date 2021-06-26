@@ -91,6 +91,10 @@
 <span id="91">91</span>
 <span id="92">92</span>
 <span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -115,7 +119,10 @@
     <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>},
     <span class="ident">Error</span>,
 };
-<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{
+    <span class="ident">collections::HashMap</span>,
+    <span class="ident">os::unix::prelude</span>::{<span class="ident">AsRawFd</span>, <span class="ident">RawFd</span>},
+};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
@@ -168,10 +175,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`OpenPipeWireRemote`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Camera.OpenPipeWireRemote).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenPipeWireRemote&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_pipe_wire_remote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Fd</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_pipe_wire_remote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RawFd</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// FIXME: figure out what are the possible options</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span>
+        <span class="kw">let</span> <span class="ident">fd</span>: <span class="ident">Fd</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">fd</span>.<span class="ident">as_raw_fd</span>())
     }
 
     <span class="doccomment">/// A boolean stating whether there is any cameras available.</span>

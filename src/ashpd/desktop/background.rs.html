@@ -182,6 +182,29 @@
 <span id="182">182</span>
 <span id="183">183</span>
 <span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
 </pre><pre class="rust">
 <span class="doccomment">//! **Note** this portal only works for sandboxed applications.</span>
 <span class="doccomment">//!</span>
@@ -196,6 +219,29 @@
 <span class="doccomment">//!         &quot;Automatically fetch your latest mails&quot;,</span>
 <span class="doccomment">//!         true,</span>
 <span class="doccomment">//!         Some(&amp;[&quot;geary&quot;]),</span>
+<span class="doccomment">//!         false,</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .await?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;{}&quot;, response.auto_start());</span>
+<span class="doccomment">//!     println!(&quot;{}&quot;, response.run_in_background());</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! If the [`None`] is provided as an argument for `command_line`, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop</span>
+<span class="doccomment">//! file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction) will be used.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use ashpd::desktop::background;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//!     let response = background::request(</span>
+<span class="doccomment">//!         Default::default(),</span>
+<span class="doccomment">//!         &quot;Automatically fetch your latest mails&quot;,</span>
+<span class="doccomment">//!         true,</span>
+<span class="doccomment">//!         None::&lt;&amp;[&amp;str]&gt;,</span>
 <span class="doccomment">//!         false,</span>
 <span class="doccomment">//!     )</span>
 <span class="doccomment">//!     .await?;</span>
@@ -251,8 +297,8 @@
     }
 
     <span class="doccomment">/// Specifies the command line to execute.</span>
-    <span class="doccomment">/// If this is not specified, the Exec line from the desktop file will be</span>
-    <span class="doccomment">/// used.</span>
+    <span class="doccomment">/// If this is not specified, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop</span>
+    <span class="doccomment">/// file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">command</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Serialize</span><span class="op">&gt;</span>(
         <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">command</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">S</span>]<span class="op">&gt;</span>,
@@ -317,8 +363,8 @@
     <span class="doccomment">/// * `reason` - Sets a user-visible reason for the request.</span>
     <span class="doccomment">/// * `auto_start` - Sets whether to auto start the application or not.</span>
     <span class="doccomment">/// * `command_line` - Specifies the command line to execute.</span>
-    <span class="doccomment">///     If this is not specified, the Exec line from the desktop file will be</span>
-    <span class="doccomment">///     used.</span>
+    <span class="doccomment">///     If this is not specified, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop</span>
+    <span class="doccomment">/// file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction)</span>
     <span class="doccomment">/// * `dbus_activatable` - Sets whether the application is dbus activatable.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`RequestBackground`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Background.RequestBackground).</span>
