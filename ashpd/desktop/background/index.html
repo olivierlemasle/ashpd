@@ -5,7 +5,7 @@
 <span class="kw">use</span> <span class="ident">ashpd::desktop::background</span>;
 
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ashpd::Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">background::request_background</span>(
+    <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">background::request</span>(
         <span class="ident">Default::default</span>(),
         <span class="string">&quot;Automatically fetch your latest mails&quot;</span>,
         <span class="bool-val">true</span>,
@@ -25,7 +25,7 @@
 is allowed to run in the background or started automatically when the user
 logs in.</p>
 </div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="fn" href="fn.request_background.html" title="ashpd::desktop::background::request_background fn">request_background</a></div><div class="item-right docblock-short"><p>A handy wrapper around <a href="struct.BackgroundProxy.html#method.request_background" title="BackgroundProxy::request_background"><code>BackgroundProxy::request_background</code></a>.</p>
+<div class="item-table"><div class="item-left module-item"><a class="fn" href="fn.request.html" title="ashpd::desktop::background::request fn">request</a></div><div class="item-right docblock-short"><p>A handy wrapper around <a href="struct.BackgroundProxy.html#method.request_background" title="BackgroundProxy::request_background"><code>BackgroundProxy::request_background</code></a>.</p>
 </div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script>
 </body></html>
