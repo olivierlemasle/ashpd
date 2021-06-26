@@ -36,10 +36,10 @@ interact with the various portals defined per the <a href="https://flatpak.githu
 }</pre></div>
 <p>For a tour of the various portals, see the ASHPD demo application.</p>
 <h1 id="optional-features" class="section-header"><a href="#optional-features">Optional features</a></h1><table><thead><tr><th>Feature</th><th>Description</th></tr></thead><tbody>
-<tr><td>feature_gtk3</td><td>Implement <code>From&lt;Color&gt;</code> for <code>gdk3::RGBA</code></td></tr>
-<tr><td></td><td>Provides <code>WindowIdentifier::from_window</code></td></tr>
-<tr><td>feature_gtk4</td><td>Implement <code>From&lt;Color&gt;</code> for <code>gdk4::RGBA</code></td></tr>
-<tr><td></td><td>Provides <code>WindowIdentifier::from_window</code></td></tr>
+<tr><td>feature_gtk3</td><td>Implement From&lt;<a href="desktop/screenshot/struct.Color.html">Color</a>&gt; for <a href="https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.RGBA.html"><code>gdk3::RGBA</code></a></td></tr>
+<tr><td></td><td>Provides <code>WindowIdentifier::from_window</code> that takes a <a href="https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.Window.html"><code>IsA&lt;gdk3::Window&gt;</code></a></td></tr>
+<tr><td>feature_gtk4</td><td>Implement From&lt;<a href="desktop/screenshot/struct.Color.html">Color</a>&gt; for <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gdk4/struct.RGBA.html"><code>gdk4::RGBA</code></a></td></tr>
+<tr><td></td><td>Provides <code>WindowIdentifier::from_root</code> that takes a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Root.html"><code>IsA&lt;gtk4::Root&gt;</code></a></td></tr>
 </tbody></table>
 </div></details><h2 id="reexports" class="section-header"><a href="#reexports">Re-exports</a></h2>
 <div class="item-table"><div class="item-left import-item"><code>pub use <a class="mod" href="https://docs.rs/enumflags2/0.6/enumflags2/index.html" title="mod enumflags2">enumflags2</a>;</code></div><div class="item-right docblock-short"></div><div class="item-left import-item"><code>pub use <a class="mod" href="https://docs.rs/zbus/latest/zbus/index.html" title="mod zbus">zbus</a>;</code></div><div class="item-right docblock-short"></div></div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>

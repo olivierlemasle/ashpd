@@ -127,10 +127,10 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! | Feature | Description |</span>
 <span class="doccomment">//! | ---     | ----------- |</span>
-<span class="doccomment">//! | feature_gtk3 | Implement `From&lt;Color&gt;` for `gdk3::RGBA` |</span>
-<span class="doccomment">//! |  | Provides `WindowIdentifier::from_window` |</span>
-<span class="doccomment">//! | feature_gtk4 | Implement `From&lt;Color&gt;` for `gdk4::RGBA` |</span>
-<span class="doccomment">//! |  | Provides `WindowIdentifier::from_window` |</span>
+<span class="doccomment">//! | feature_gtk3 | Implement From&lt;[Color](desktop::screenshot::Color)&gt; for [`gdk3::RGBA`](https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.RGBA.html) |</span>
+<span class="doccomment">//! |  | Provides `WindowIdentifier::from_window` that takes a [`IsA&lt;gdk3::Window&gt;`](https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.Window.html) |</span>
+<span class="doccomment">//! | feature_gtk4 | Implement From&lt;[Color](desktop::screenshot::Color)&gt; for [`gdk4::RGBA`](https://gtk-rs.org/gtk4-rs/stable/latest/docs/gdk4/struct.RGBA.html) |</span>
+<span class="doccomment">//! |  | Provides `WindowIdentifier::from_root` that takes a [`IsA&lt;gtk4::Root&gt;`](https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Root.html) |</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>), <span class="ident">not</span>(<span class="ident">doc</span>)))]</span>
 <span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both GTK 3 &amp; GTK 4 features at once&quot;</span>);
 
