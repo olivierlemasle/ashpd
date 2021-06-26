@@ -229,6 +229,7 @@
 <span id="229">229</span>
 <span id="230">230</span>
 <span id="231">231</span>
+<span id="232">232</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">futures::prelude::stream</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{
@@ -430,7 +431,8 @@
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">zvariant::ObjectPath::try_from</span>(<span class="macro">format!</span>(
             <span class="string">&quot;/org/freedesktop/portal/desktop/request/{}/{}&quot;</span>,
             <span class="ident">unique_identifier</span>, <span class="ident">handle_token</span>
-        ))<span class="question-mark">?</span>;
+        ))
+        .<span class="ident">unwrap</span>();
         <span class="ident">RequestProxy::new</span>(<span class="ident">connection</span>, <span class="ident">path</span>).<span class="kw">await</span>
     }
 

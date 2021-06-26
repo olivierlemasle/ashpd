@@ -59,15 +59,6 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
-<span id="62">62</span>
-<span id="63">63</span>
-<span id="64">64</span>
-<span id="65">65</span>
-<span id="66">66</span>
-<span id="67">67</span>
-<span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::desktop::request::ResponseError</span>;
 
@@ -80,8 +71,6 @@
     <span class="ident">ZbusFdo</span>(<span class="ident">zbus::fdo::Error</span>),
     <span class="doccomment">/// A zbus specific error.</span>
     <span class="ident">Zbus</span>(<span class="ident">zbus::Error</span>),
-    <span class="doccomment">/// A conversion error.</span>
-    <span class="ident">Zvariant</span>(<span class="ident">zvariant::Error</span>),
     <span class="doccomment">/// Failure to parse a response&#39;s body.</span>
     <span class="ident">DBusMalformedMessage</span>(<span class="ident">zbus::MessageError</span>),
     <span class="doccomment">/// A signal returned no response.</span>
@@ -103,7 +92,6 @@
                 <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;zbus malformed message error: {}&quot;</span>, <span class="ident">e</span>))
             }
             <span class="self">Self</span><span class="ident">::Zbus</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;zbus error: {}&quot;</span>, <span class="ident">e</span>)),
-            <span class="self">Self</span><span class="ident">::Zvariant</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;zvariant error: {}&quot;</span>, <span class="ident">e</span>)),
             <span class="self">Self</span><span class="ident">::NoResponse</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;portal error: no response&quot;</span>),
             <span class="self">Self</span><span class="ident">::RegisterGameRejected</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Failed to register/un-register game mode&quot;</span>),
             <span class="self">Self</span><span class="ident">::TrashFailed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Failed to trash a file&quot;</span>),
@@ -131,12 +119,6 @@
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">zbus::fdo::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">zbus::fdo::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span><span class="ident">::ZbusFdo</span>(<span class="ident">e</span>)
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">zvariant::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">zvariant::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span><span class="ident">::Zvariant</span>(<span class="ident">e</span>)
     }
 }
 </pre></div>
