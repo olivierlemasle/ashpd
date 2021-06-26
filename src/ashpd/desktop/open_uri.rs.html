@@ -282,6 +282,12 @@
 <span id="282">282</span>
 <span id="283">283</span>
 <span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -454,6 +460,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `directory` - File descriptor for a file.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`OpenDirectory`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenDirectory).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenDirectory&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_directory</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -481,6 +489,8 @@
     <span class="doccomment">/// * `file` - File descriptor for the file to open.</span>
     <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
     <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or not.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`OpenFile`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenFile).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenFile&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_file</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -510,6 +520,8 @@
     <span class="doccomment">/// * `uri` - The uri to open.</span>
     <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
     <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or not.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`OpenURI`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenURI).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenURI&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_uri</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,

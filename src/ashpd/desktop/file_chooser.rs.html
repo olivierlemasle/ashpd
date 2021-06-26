@@ -508,6 +508,12 @@
 <span id="508">508</span>
 <span id="509">509</span>
 <span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -952,6 +958,8 @@
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `title` - Title for the file chooser dialog.</span>
     <span class="doccomment">/// * `options` - [`OpenFileOptions`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`OpenFile`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileChooser.OpenFile).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenFile&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -975,6 +983,8 @@
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `title` - Title for the file chooser dialog.</span>
     <span class="doccomment">/// * `options` - [`SaveFileOptions`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`SaveFile`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileChooser.SaveFile).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SaveFile&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1003,6 +1013,8 @@
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `title` - Title for the file chooser dialog.</span>
     <span class="doccomment">/// * `options` - [`SaveFilesOptions`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`SaveFiles`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileChooser.SaveFiles).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SaveFiles&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_files</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,

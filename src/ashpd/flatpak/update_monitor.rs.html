@@ -143,6 +143,12 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -168,8 +174,10 @@
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="kw">super</span><span class="ident">::DESTINATION</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
-<span class="kw">use</span> <span class="ident">futures::prelude::stream</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>},
+    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zvariant::ObjectPath</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
@@ -239,7 +247,7 @@
     <span class="doccomment">/// Create a new instance of [`UpdateMonitorProxy`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note** A [`UpdateMonitorProxy`] is not supposed to be created manually.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(
         <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::azync::Connection</span>,
         <span class="ident">path</span>: <span class="ident">ObjectPath</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UpdateMonitorProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -258,25 +266,27 @@
     }
 
     <span class="doccomment">/// A signal received when there&#39;s progress during the application update.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`Progress`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-Flatpak-UpdateMonitor.Progress).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Progress&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_progress</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UpdateProgress</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">receive_signal</span>(<span class="string">&quot;Progress&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">next</span>().<span class="kw">await</span>.<span class="ident">ok_or</span>(<span class="ident">Error::NoResponse</span>)<span class="question-mark">?</span>;
-        <span class="ident">message</span>.<span class="ident">body</span>::<span class="op">&lt;</span><span class="ident">UpdateProgress</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="ident">From::from</span>)
+        <span class="ident">receive_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Progress&quot;</span>).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// A signal received when there&#39;s an application update.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`UpdateAvailable`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-Flatpak-UpdateMonitor.UpdateAvailable).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UpdateAvailable&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_update_available</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UpdateInfo</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">receive_signal</span>(<span class="string">&quot;UpdateAvailable&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">next</span>().<span class="kw">await</span>.<span class="ident">ok_or</span>(<span class="ident">Error::NoResponse</span>)<span class="question-mark">?</span>;
-        <span class="ident">message</span>.<span class="ident">body</span>::<span class="op">&lt;</span><span class="ident">UpdateInfo</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="ident">From::from</span>)
+        <span class="ident">receive_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;UpdateAvailable&quot;</span>).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Asks to install an update of the calling app.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note** that updates are only allowed if the new version</span>
     <span class="doccomment">/// has the same permissions (or less) than the currently installed version.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`Update`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Flatpak-UpdateMonitor.Update).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Update&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">UpdateOptions::default</span>();
@@ -284,6 +294,8 @@
     }
 
     <span class="doccomment">/// Ends the update monitoring and cancels any ongoing installation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`Close`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Flatpak-UpdateMonitor.Close).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Close&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Close&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>

@@ -171,6 +171,17 @@
 <span id="171">171</span>
 <span id="172">172</span>
 <span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -199,8 +210,10 @@
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_method</span>, <span class="ident">Error</span>};
-<span class="kw">use</span> <span class="ident">futures::prelude::stream</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>},
+    <span class="ident">Error</span>,
+};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
@@ -275,6 +288,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `key` - A key returned by [`FileTransferProxy::start_transfer`].</span>
     <span class="doccomment">/// * `fds` - A list of file descriptors of the files to register.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`AddFiles`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.AddFiles).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddFiles&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_files</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">AsRawFd</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">fds</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">F</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// FIXME: figure out the options we can take here</span>
@@ -294,6 +309,8 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `key` - A key returned by [`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`RetrieveFiles`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.RetrieveFiles).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RetrieveFiles&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">retrieve_files</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// FIXME: figure out the options we can take here</span>
@@ -301,6 +318,7 @@
 
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;RetrieveFiles&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">options</span>)).<span class="kw">await</span>
     }
+
     <span class="doccomment">/// Starts a session for a file transfer.</span>
     <span class="doccomment">/// The caller should call [`FileTransferProxy::add_files`] at least once, to add files to this</span>
     <span class="doccomment">/// session.</span>
@@ -314,6 +332,8 @@
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// a key that can be passed to [`FileTransferProxy::retrieve_files`] to obtain the files.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`StartTransfer`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.StartTransfer).</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start_transfer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>, <span class="ident">auto_stop</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">TransferOptions::default</span>()
             .<span class="ident">writeable</span>(<span class="ident">writeable</span>)
@@ -328,6 +348,8 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `key` - A key returned by [`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`StopTransfer`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.StopTransfer).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;StopTransfer&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stop_transfer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;StopTransfer&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>)).<span class="kw">await</span>
@@ -338,11 +360,11 @@
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * The key returned by [`FileTransferProxy::start_transfer`]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`TransferClosed`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-FileTransfer.TransferClosed).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;TransferClosed&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">transfer_closed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">receive_signal</span>(<span class="string">&quot;TransferClosed&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">next</span>().<span class="kw">await</span>.<span class="ident">ok_or</span>(<span class="ident">Error::NoResponse</span>)<span class="question-mark">?</span>;
-        <span class="ident">message</span>.<span class="ident">body</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>().<span class="ident">map_err</span>(<span class="ident">From::from</span>)
+        <span class="ident">receive_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;TransferClosed&quot;</span>).<span class="kw">await</span>
     }
 }
 </pre></div>

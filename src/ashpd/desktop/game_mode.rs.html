@@ -274,6 +274,21 @@
 <span id="274">274</span>
 <span id="275">275</span>
 <span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -379,6 +394,8 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `pid` - Process id to query the GameMode status of.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`QueryStatus`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatus).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryStatus&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Status</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;QueryStatus&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">pid</span>)).<span class="kw">await</span>
@@ -391,6 +408,8 @@
     <span class="doccomment">/// * `target` - Pid file descriptor to query the GameMode status of.</span>
     <span class="doccomment">/// * `requester` - Pid file descriptor of the process requesting the</span>
     <span class="doccomment">///   information.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`QueryStatusByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatusByPIDFd).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryStatusByPIDFd&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_status_by_pidfd</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -418,6 +437,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `target` - Process id to query the GameMode status of.</span>
     <span class="doccomment">/// * `requester` - Process id of the process requesting the information.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`QueryStatusByPid`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatusByPid).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryStatusByPid&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_status_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">i32</span>, <span class="ident">requester</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Status</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;QueryStatusByPid&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">target</span>, <span class="ident">requester</span>)).<span class="kw">await</span>
@@ -433,6 +454,8 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `pid` - Process id of the game to register.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`RegisterGame`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGame).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RegisterGame&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">register_game</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;RegisterGame&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">pid</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -447,8 +470,9 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `target` - Process file descriptor of the game to register.</span>
-    <span class="doccomment">/// * `requester` - Process file descriptor of the process requesting the</span>
-    <span class="doccomment">///   registration.</span>
+    <span class="doccomment">/// * `requester` - Process file descriptor of the process requesting the registration.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`RegisterGameByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGameByPIDFd).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RegisterGameByPIDFd&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">register_game_by_pidfd</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>, <span class="ident">requester</span>: <span class="kw-2">&amp;</span><span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -476,7 +500,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `target` - Process id of the game to register.</span>
     <span class="doccomment">/// * `requester` - Process id of the process requesting the registration.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RegisterGameRejected&quot;</span>)]</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`RegisterGameByPid`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGameByPid).</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RegisterGameByPid&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">register_game_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">i32</span>, <span class="ident">requester</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;RegisterGameByPid&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">target</span>, <span class="ident">requester</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">status</span> {
@@ -494,6 +520,8 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// `pid` - Process id of the game to un-register.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`UnregisterGame`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGame).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UnregisterGame&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unregister_game</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;UnregisterGame&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">pid</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -508,8 +536,9 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `target` - Pid file descriptor of the game to un-register.</span>
-    <span class="doccomment">/// * `requester` - Pid file descriptor of the process requesting the</span>
-    <span class="doccomment">///   un-registration.</span>
+    <span class="doccomment">/// * `requester` - Pid file descriptor of the process requesting the un-registration.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`UnregisterGameByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGameByPIDFd).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UnregisterGameByPIDFd&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unregister_game_by_pidfd</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -540,8 +569,9 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `target` - Process id of the game to un-register.</span>
-    <span class="doccomment">/// * `requester` - Process id of the process requesting the</span>
-    <span class="doccomment">///   un-registration.</span>
+    <span class="doccomment">/// * `requester` - Process id of the process requesting the un-registration.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also [`UnregisterGameByPid`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGameByPid).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UnregisterGameByPid&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unregister_game_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">i32</span>, <span class="ident">requester</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;UnregisterGameByPid&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">target</span>, <span class="ident">requester</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
