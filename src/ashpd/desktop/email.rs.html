@@ -155,6 +155,7 @@
 <span id="155">155</span>
 <span id="156">156</span>
 <span id="157">157</span>
+<span id="158">158</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -164,8 +165,6 @@
 <span class="doccomment">//! use ashpd::desktop::email::{Email, EmailProxy};</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//! use std::fs::File;</span>
-<span class="doccomment">//! use std::os::unix::io::AsRawFd;</span>
-<span class="doccomment">//! use zvariant::Fd;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
@@ -178,19 +177,19 @@
 <span class="doccomment">//!                 .address(&quot;test@gmail.com&quot;)</span>
 <span class="doccomment">//!                 .subject(&quot;email subject&quot;)</span>
 <span class="doccomment">//!                 .body(&quot;the pre-filled email body&quot;)</span>
-<span class="doccomment">//!                 .attach(Fd::from(file.as_raw_fd())),</span>
+<span class="doccomment">//!                 .attach(&amp;file),</span>
 <span class="doccomment">//!         )</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="kw">use</span> <span class="ident">zvariant::Fd</span>;
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
-
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
+<span class="kw">use</span> <span class="ident">zvariant::Fd</span>;
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`EmailProxy::compose_email`] request.</span>
@@ -256,7 +255,8 @@
     }
 
     <span class="doccomment">/// Attaches a file to the email.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attach</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attachment</span>: <span class="ident">Fd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attach</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">AsRawFd</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attachment</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">attachment</span> <span class="op">=</span> <span class="ident">Fd::from</span>(<span class="ident">attachment</span>.<span class="ident">as_raw_fd</span>());
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">attachment_fds</span> {
             <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">attachments</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">attachments</span>.<span class="ident">push</span>(<span class="ident">attachment</span>),
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -268,6 +268,8 @@
 }
 
 <span class="doccomment">/// The interface lets sandboxed applications request sending an email.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Email`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-org.freedesktop.portal.Email).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EmailProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::azync::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);

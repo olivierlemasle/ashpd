@@ -365,6 +365,23 @@
 <span id="365">365</span>
 <span id="366">366</span>
 <span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -403,15 +420,14 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">DESTINATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt::Debug</span>, <span class="ident">str::FromStr</span>};
-
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_method</span>, <span class="ident">Error</span>};
 <span class="kw">use</span> <span class="ident">enumflags2::BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">de::Deserializer</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt::Debug</span>, <span class="ident">str::FromStr</span>};
 <span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive::Type</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">BitFlags</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
@@ -486,6 +502,8 @@
 <span class="doccomment">/// The permissions that the application has for a document store entry (see</span>
 <span class="doccomment">/// [`DocumentsProxy::grant_permissions`]) are reflected in the POSIX mode bits in the fuse</span>
 <span class="doccomment">/// filesystem.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Documents`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-org.freedesktop.portal.Documents).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DocumentsProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::azync::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
@@ -528,9 +546,14 @@
         <span class="ident">persistent</span>: <span class="ident">bool</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
+        <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Debug</span>,
     {
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Add&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">o_path_fd</span>, <span class="ident">reuse_existing</span>, <span class="ident">persistent</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="string">&quot;Add&quot;</span>,
+            <span class="kw-2">&amp;</span>(<span class="ident">Fd::from</span>(<span class="ident">o_path_fd</span>.<span class="ident">as_raw_fd</span>()), <span class="ident">reuse_existing</span>, <span class="ident">persistent</span>),
+        )
+        .<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Adds multiple files to the document store.</span>
@@ -583,12 +606,17 @@
         <span class="ident">persistent</span>: <span class="ident">bool</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
+        <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Debug</span>,
     {
         <span class="ident">call_method</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="string">&quot;AddNamed&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">o_path_parent_fd</span>, <span class="ident">filename</span>, <span class="ident">reuse_existing</span>, <span class="ident">persistent</span>),
+            <span class="kw-2">&amp;</span>(
+                <span class="ident">Fd::from</span>(<span class="ident">o_path_parent_fd</span>.<span class="ident">as_raw_fd</span>()),
+                <span class="ident">filename</span>,
+                <span class="ident">reuse_existing</span>,
+                <span class="ident">persistent</span>,
+            ),
         )
         .<span class="kw">await</span>
     }
@@ -617,12 +645,18 @@
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant::OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
+        <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Debug</span>,
     {
         <span class="ident">call_method</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="string">&quot;AddNamedFull&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">o_path_fd</span>, <span class="ident">filename</span>, <span class="ident">flags</span>, <span class="ident">app_id</span>, <span class="ident">permissions</span>),
+            <span class="kw-2">&amp;</span>(
+                <span class="ident">Fd::from</span>(<span class="ident">o_path_fd</span>.<span class="ident">as_raw_fd</span>()),
+                <span class="ident">filename</span>,
+                <span class="ident">flags</span>,
+                <span class="ident">app_id</span>,
+                <span class="ident">permissions</span>,
+            ),
         )
         .<span class="kw">await</span>
     }
