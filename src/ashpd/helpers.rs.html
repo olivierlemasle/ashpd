@@ -54,7 +54,6 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
-<span id="57">57</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::desktop</span>::{
     <span class="ident">request</span>::{<span class="ident">BasicResponse</span>, <span class="ident">RequestProxy</span>},
@@ -62,7 +61,6 @@
 };
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Error</span>;
 <span class="kw">use</span> <span class="ident">futures::TryFutureExt</span>;
-<span class="kw">use</span> <span class="ident">std::fmt::Debug</span>;
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">call_request_method</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">B</span><span class="op">&gt;</span>(
     <span class="ident">proxy</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::azync::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
@@ -71,8 +69,8 @@
     <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">R</span>: <span class="ident">serde::de::DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
-    <span class="ident">B</span>: <span class="ident">serde::ser::Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
+    <span class="ident">R</span>: <span class="ident">serde::de::DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
+    <span class="ident">B</span>: <span class="ident">serde::ser::Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
 {
     <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">RequestProxy::from_unique_name</span>(<span class="ident">proxy</span>.<span class="ident">connection</span>(), <span class="ident">handle_token</span>).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="kw">let</span> (<span class="ident">response</span>, <span class="ident">path</span>) <span class="op">=</span> <span class="macro">futures::try_join!</span>(
@@ -82,7 +80,7 @@
             .<span class="ident">into_future</span>()
             .<span class="ident">map_err</span>(<span class="ident">From::from</span>),
     )<span class="question-mark">?</span>;
-    <span class="macro">assert_eq!</span>(<span class="ident">path</span>.<span class="ident">into_inner</span>(), <span class="ident">request</span>.<span class="ident">inner</span>().<span class="ident">path</span>().<span class="ident">clone</span>());
+    <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">into_inner</span>(), <span class="ident">request</span>.<span class="ident">inner</span>().<span class="ident">path</span>());
     <span class="prelude-val">Ok</span>(<span class="ident">response</span>)
 }
 
@@ -93,7 +91,7 @@
     <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">B</span>: <span class="ident">serde::ser::Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
+    <span class="ident">B</span>: <span class="ident">serde::ser::Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
 {
     <span class="ident">call_request_method</span>::<span class="op">&lt;</span><span class="ident">BasicResponse</span>, <span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">proxy</span>, <span class="ident">handle_token</span>, <span class="ident">method_name</span>, <span class="ident">body</span>).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
@@ -106,7 +104,7 @@
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">R</span>: <span class="ident">serde::de::DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
-    <span class="ident">B</span>: <span class="ident">serde::ser::Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
+    <span class="ident">B</span>: <span class="ident">serde::ser::Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
 {
     <span class="ident">proxy</span>
         .<span class="ident">call</span>::<span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">method_name</span>, <span class="ident">body</span>)

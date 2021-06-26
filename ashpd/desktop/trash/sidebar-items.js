@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["TrashProxy","The interface lets sandboxed applications send files to the trashcan."]]});
+initSidebarItems({"fn":[["trash_file","A handy wrapper around [`TrashProxy::trash_file`]."]],"struct":[["TrashProxy","The interface lets sandboxed applications send files to the trashcan."]]});

@@ -220,6 +220,38 @@
 <span id="220">220</span>
 <span id="221">221</span>
 <span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -230,6 +262,21 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
 <span class="doccomment">//!     let uri = screenshot::take(Default::default(), true, true).await?;</span>
+<span class="doccomment">//!     println!(&quot;URI: {}&quot;, uri);</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Or by using the Proxy directly</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotProxy;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
+<span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection).await?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let uri = proxy.screenshot(Default::default(), true, true).await?;</span>
 <span class="doccomment">//!     println!(&quot;URI: {}&quot;, uri);</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
@@ -247,6 +294,23 @@
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Or by using the Proxy directly</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotProxy;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
+<span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection).await?;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let color = proxy.pick_color(Default::default()).await?;</span>
+<span class="doccomment">//!     println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_request_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};

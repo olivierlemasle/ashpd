@@ -74,8 +74,44 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```rust,no_run</span>
+<span class="doccomment">//! use ashpd::desktop::trash;</span>
+<span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/adwaita-night.jpg&quot;).unwrap();</span>
+<span class="doccomment">//!     trash::trash_file(&amp;file).await?;</span>
+<span class="doccomment">//!     Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Or by using the Proxy directly</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::trash::TrashProxy;</span>
@@ -150,6 +186,14 @@
             <span class="ident">TrashStatus::Succeeded</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
         }
     }
+}
+
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_trash_file&quot;</span>)]</span>
+<span class="doccomment">/// A handy wrapper around [`TrashProxy::trash_file`].</span>
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">trash_file</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">AsRawFd</span><span class="op">&gt;</span>(<span class="ident">fd</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus::azync::Connection::new_session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">TrashProxy::new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="ident">proxy</span>.<span class="ident">trash_file</span>(<span class="ident">fd</span>).<span class="kw">await</span>
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>

@@ -487,7 +487,7 @@
 
         <span class="kw">match</span> <span class="ident">handle</span> {
             <span class="prelude-val">Some</span>(<span class="ident">h</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">WindowIdentifier::Gtk4</span> {
-                <span class="ident">root</span>: <span class="ident">win</span>.<span class="ident">as_ref</span>().<span class="ident">clone</span>(),
+                <span class="ident">root</span>: <span class="ident">win</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>(),
                 <span class="ident">handle</span>: <span class="ident">h</span>,
             },
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">WindowIdentifier::default</span>(),
