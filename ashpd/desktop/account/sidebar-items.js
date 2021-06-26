@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["AccountProxy","The interface lets sandboxed applications query basic information about the user, like his name and avatar photo."],["UserInfo","The response of a [`AccountProxy::user_information`] request."]]});
+initSidebarItems({"fn":[["user_information","A handy wrapper around [`AccountProxy::user_information`]."]],"struct":[["AccountProxy","The interface lets sandboxed applications query basic information about the user, like his name and avatar photo."],["UserInfo","The response of a [`AccountProxy::user_information`] request."]]});
