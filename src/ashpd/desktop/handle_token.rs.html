@@ -76,6 +76,8 @@
 <span id="76">76</span>
 <span id="77">77</span>
 <span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">core::fmt</span>;
 <span class="kw">use</span> <span class="ident">rand::distributions::Alphanumeric</span>;
@@ -108,7 +110,7 @@
             .<span class="ident">take</span>(<span class="number">10</span>)
             .<span class="ident">map</span>(<span class="ident">char::from</span>)
             .<span class="ident">collect</span>();
-        <span class="ident">HandleToken::try_from</span>(<span class="ident">token</span>).<span class="ident">unwrap</span>()
+        <span class="ident">HandleToken::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;ashpd_{}&quot;</span>, <span class="ident">token</span>)).<span class="ident">unwrap</span>()
     }
 }
 
@@ -126,7 +128,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">HandleInvalidCharacter</span>;
     <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">char</span> <span class="kw">in</span> <span class="ident">value</span>.<span class="ident">chars</span>() {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">char</span>.<span class="ident">is_ascii_alphanumeric</span>() {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">char</span>.<span class="ident">is_ascii_alphanumeric</span>() <span class="op">&amp;&amp;</span> <span class="ident">char</span> <span class="op">!</span><span class="op">=</span> <span class="string">&#39;_&#39;</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HandleInvalidCharacter</span>(<span class="ident">char</span>));
             }
         }
@@ -153,6 +155,8 @@
         <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;/test&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">false</span>);
 
         <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;تجربة&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">false</span>);
+
+        <span class="ident">HandleToken::default</span>(); <span class="comment">// ensure we don&#39;t panic</span>
     }
 }
 </pre></div>
