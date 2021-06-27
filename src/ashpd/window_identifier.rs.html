@@ -445,7 +445,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The constructor returns a valid handle under both Wayland &amp; x11.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** The function has to be async as the Wayland handle retrieval</span>
+    <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
     <span class="doccomment">/// API is async as well.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_root</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">gtk4::glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk4::Root</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">use</span> <span class="ident">futures::lock::Mutex</span>;
@@ -503,7 +503,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The constructor returns a valid handle under both Wayland &amp; x11.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** The function has to be async as the Wayland handle retrieval</span>
+    <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
     <span class="doccomment">/// API is async as well.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_window</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">gtk3::glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk3::gdk::Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">use</span> <span class="ident">gtk3::prelude</span>::{<span class="ident">Cast</span>, <span class="ident">ObjectExt</span>};

@@ -224,18 +224,6 @@
 <span id="224">224</span>
 <span id="225">225</span>
 <span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">super</span><span class="ident">::DESTINATION</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -391,28 +379,14 @@
 }
 
 <span class="doccomment">/// The Request interface is shared by all portal interfaces.</span>
-<span class="doccomment">/// When a portal method is called, the reply includes a handle (i.e. object</span>
-<span class="doccomment">/// path) for a Request object, which will stay alive for the duration of the</span>
-<span class="doccomment">/// user interaction related to the method call.</span>
+<span class="doccomment">/// When a portal method is called, the reply includes a handle (i.e. object path)</span>
+<span class="doccomment">/// for a Request object, which will stay alive for the duration of the user interaction related to the method call.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The portal indicates that a portal request interaction is over by emitting</span>
 <span class="doccomment">/// the &quot;Response&quot; signal on the Request object.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The application can abort the interaction calling Close() on the Request</span>
+<span class="doccomment">/// The application can abort the interaction calling [`close()`][`RequestProxy::close`] on the Request</span>
 <span class="doccomment">/// object.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Since version 0.9 of xdg-desktop-portal, the handle will be of the form</span>
-<span class="doccomment">/// `/org/freedesktop/portal/desktop/request/SENDER/TOKEN`, where SENDER is the</span>
-<span class="doccomment">/// callers unique name,  with the initial &#39;:&#39; removed and all &#39;.&#39; replaced by</span>
-<span class="doccomment">/// &#39;_&#39;, and TOKEN is a unique token that the caller provided with the</span>
-<span class="doccomment">/// handle_token key in the options vardict.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This change was made to let applications subscribe to the Response signal</span>
-<span class="doccomment">/// before making the initial portal call, thereby avoiding a race condition.</span>
-<span class="doccomment">/// It is recommended that the caller should verify that the returned handle is</span>
-<span class="doccomment">/// what it expected, and update its signal subscription if it isn&#39;t.</span>
-<span class="doccomment">/// This ensures that applications will work with both old and new versions of</span>
-<span class="doccomment">/// xdg-desktop-portal.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Request`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-org.freedesktop.portal.Request).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
@@ -467,6 +441,8 @@
     <span class="doccomment">/// Closes the portal request to which this object refers and ends all</span>
     <span class="doccomment">/// related user interaction (dialogs, etc). A Response signal will not</span>
     <span class="doccomment">/// be emitted in this case.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Close`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Request.Close).</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>

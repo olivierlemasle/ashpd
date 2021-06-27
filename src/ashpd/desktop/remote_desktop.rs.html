@@ -510,6 +510,31 @@
 <span id="510">510</span>
 <span id="511">511</span>
 <span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -655,6 +680,8 @@
     <span class="doccomment">/// A remote desktop session is used to allow remote controlling a desktop</span>
     <span class="doccomment">/// session. It can also be used together with a screen cast session.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.CreateSession).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateSession&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -678,8 +705,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `types` - The device types to request remote controlling of.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`SelectDevices`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.SelectDevices).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SelectDevices&quot;</span>)]</span>
@@ -706,8 +735,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `identifier` - The application window identifier.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.Start).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Start&quot;</span>)]</span>
@@ -728,14 +759,16 @@
     }
 
     <span class="doccomment">/// Notify keyboard code.</span>
-    <span class="doccomment">/// May only be called if KEYBOARD access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Keyboard`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `keycode` - Keyboard code that was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyKeyboardKeycode`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyKeyboardKeycode).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyKeyboardKeycode&quot;</span>)]</span>
@@ -756,14 +789,16 @@
     }
 
     <span class="doccomment">/// Notify keyboard symbol.</span>
-    <span class="doccomment">/// May only be called if KEYBOARD access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Keyboard`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `keysym` - Keyboard symbol that was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyKeyboardKeysym`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyKeyboardKeysym).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyKeyboardKeysym&quot;</span>)]</span>
@@ -785,13 +820,14 @@
 
     <span class="doccomment">/// Notify about a new touch up event.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Touchscreen`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyTouchUp`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchUp).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchUp&quot;</span>)]</span>
@@ -809,16 +845,17 @@
     <span class="doccomment">/// The (x, y) position represents the new touch point position in the</span>
     <span class="doccomment">/// streams logical coordinate space.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Touchscreen`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">/// * `x` - Touch down x coordinate.</span>
     <span class="doccomment">/// * `y` - Touch down y coordinate.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyTouchDown`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchDown).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchDown&quot;</span>)]</span>
@@ -844,16 +881,17 @@
     <span class="doccomment">/// The (x, y) position represents where the touch point position in the</span>
     <span class="doccomment">/// streams logical coordinate space moved.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if TOUCHSCREEN access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Touchscreen`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">/// * `x` - Touch motion x coordinate.</span>
     <span class="doccomment">/// * `y` - Touch motion y coordinate.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyTouchMotion`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchMotion).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchMotion&quot;</span>)]</span>
@@ -881,10 +919,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `x` - Pointer motion x coordinate.</span>
     <span class="doccomment">/// * `y` - Pointer motion y coordinate.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyPointerMotionAbsolute`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerMotionAbsolute).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerMotionAbsolute&quot;</span>)]</span>
@@ -911,9 +951,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `dx` - Relative movement on the x axis.</span>
     <span class="doccomment">/// * `dy` - Relative movement on the y axis.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyPointerMotion`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerMotion).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerMotion&quot;</span>)]</span>
@@ -931,14 +973,16 @@
     <span class="doccomment">/// Notify pointer button.</span>
     <span class="doccomment">/// The pointer button is encoded according to Linux Evdev button codes.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///  May only be called if POINTER access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Pointer`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `button` - The pointer button was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyPointerButton`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerButton).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerButton&quot;</span>)]</span>
@@ -959,13 +1003,15 @@
     }
 
     <span class="doccomment">/// Notify pointer axis discrete.</span>
-    <span class="doccomment">/// May only be called if POINTER access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Pointer`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `axis` - The axis that was scrolled.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyPointerAxisDiscrete`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerAxisDiscrete).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerAxisDiscrete&quot;</span>)]</span>
@@ -990,14 +1036,16 @@
     <span class="doccomment">/// When applicable, the size of the motion delta should be equivalent to</span>
     <span class="doccomment">/// the motion vector of a pointer motion done using the same advice.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// May only be called if POINTER access was provided after starting the</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** only works if [`DeviceType::Pointer`] access was provided after starting the session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `dx` - Relative axis movement on the x axis.</span>
     <span class="doccomment">/// * `dy` - Relative axis movement on the y axis.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyPointerAxis`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerAxis).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerAxis&quot;</span>)]</span>
@@ -1013,6 +1061,8 @@
     }
 
     <span class="doccomment">/// Available source types.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AvailableDeviceTypes`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-property-org-freedesktop-portal-RemoteDesktop.AvailableDeviceTypes).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AvailableDeviceTypes&quot;</span>)]</span>

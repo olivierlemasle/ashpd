@@ -256,6 +256,10 @@
 <span id="256">256</span>
 <span id="257">257</span>
 <span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -449,6 +453,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`PickColor`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Screenshot.PickColor).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;PickColor&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pick_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Color</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -473,6 +479,8 @@
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The screenshot URI.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Screenshot`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Screenshot.Screenshot).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Screenshot&quot;</span>)]</span>

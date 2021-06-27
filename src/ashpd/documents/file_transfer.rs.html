@@ -182,6 +182,16 @@
 <span id="182">182</span>
 <span id="183">183</span>
 <span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -224,7 +234,7 @@
     <span class="doccomment">/// Whether to allow the chosen application to write to the files.</span>
     <span class="ident">writeable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether to stop the transfer automatically after the first</span>
-    <span class="doccomment">/// [`FileTransferProxy::retrieve_files`] call.</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;autostop&quot;</span>)]</span>
     <span class="ident">auto_stop</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
@@ -237,7 +247,7 @@
     }
 
     <span class="doccomment">/// Whether to stop the transfer automatically after the first</span>
-    <span class="doccomment">/// [`FileTransferProxy::retrieve_files`] call.</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">auto_stop</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">auto_stop</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">auto_stop</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">auto_stop</span>);
         <span class="self">self</span>
@@ -280,14 +290,15 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
     }
 
-    <span class="doccomment">/// Adds files to a session.</span>
-    <span class="doccomment">/// This method can be called multiple times on a given session.</span>
-    <span class="doccomment">/// **Note** that only regular files (not directories) can be added.</span>
+    <span class="doccomment">/// Adds files to a session. This method can be called multiple times on a given session.</span>
+    <span class="doccomment">/// **Note** only regular files (not directories) can be added.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by [`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">/// * `key` - A key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
     <span class="doccomment">/// * `fds` - A list of file descriptors of the files to register.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AddFiles`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.AddFiles).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddFiles&quot;</span>)]</span>
@@ -300,15 +311,19 @@
     }
 
     <span class="doccomment">/// Retrieves files that were previously added to the session with</span>
-    <span class="doccomment">/// [`FileTransferProxy::add_files`]. The files will be exported in the document portal</span>
+    <span class="doccomment">/// [`add_files()`][`FileTransferProxy::add_files`]. The files will be exported in the document portal</span>
     <span class="doccomment">/// as-needed for the caller, and they will be writable if the owner of</span>
     <span class="doccomment">/// the session allowed it.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the list of file paths.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by [`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">/// * `key` - A key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The list of file paths.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`RetrieveFiles`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.RetrieveFiles).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RetrieveFiles&quot;</span>)]</span>
@@ -320,18 +335,19 @@
     }
 
     <span class="doccomment">/// Starts a session for a file transfer.</span>
-    <span class="doccomment">/// The caller should call [`FileTransferProxy::add_files`] at least once, to add files to this</span>
+    <span class="doccomment">/// The caller should call [`add_files()`][`FileTransferProxy::add_files`] at least once, to add files to this</span>
     <span class="doccomment">/// session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `writeable` - Sets whether the chosen application can write to the files or not.</span>
-    <span class="doccomment">/// * `auto_stop` - Whether to stop the transfer automatically after the first</span>
-    <span class="doccomment">///             [`FileTransferProxy::retrieve_files`] call.</span>
+    <span class="doccomment">/// * `auto_stop` - Whether to stop the transfer automatically after the first [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// a key that can be passed to [`FileTransferProxy::retrieve_files`] to obtain the files.</span>
+    <span class="doccomment">/// Key that can be passed to [`retrieve_files()`][`FileTransferProxy::retrieve_files`] to obtain the files.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`StartTransfer`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.StartTransfer).</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start_transfer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>, <span class="ident">auto_stop</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -342,12 +358,14 @@
     }
 
     <span class="doccomment">/// Ends the transfer.</span>
-    <span class="doccomment">/// Further calls to [`FileTransferProxy::add_files`] or [`FileTransferProxy::retrieve_files`] for this key will</span>
+    <span class="doccomment">/// Further calls to [`add_files()`][`FileTransferProxy::add_files`] or [`retrieve_files()`][`FileTransferProxy::retrieve_files`] for this key will</span>
     <span class="doccomment">/// return an error.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by [`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">/// * `key` - A key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`StopTransfer`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-FileTransfer.StopTransfer).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;StopTransfer&quot;</span>)]</span>
@@ -359,7 +377,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * The key returned by [`FileTransferProxy::start_transfer`]</span>
+    <span class="doccomment">/// * The key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`TransferClosed`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-FileTransfer.TransferClosed).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;TransferClosed&quot;</span>)]</span>

@@ -149,6 +149,14 @@
 <span id="149">149</span>
 <span id="150">150</span>
 <span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -267,6 +275,8 @@
 
     <span class="doccomment">/// A signal received when there&#39;s progress during the application update.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Progress`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-Flatpak-UpdateMonitor.Progress).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Progress&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_progress</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UpdateProgress</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -274,6 +284,8 @@
     }
 
     <span class="doccomment">/// A signal received when there&#39;s an application update.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`UpdateAvailable`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-Flatpak-UpdateMonitor.UpdateAvailable).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UpdateAvailable&quot;</span>)]</span>
@@ -283,8 +295,10 @@
 
     <span class="doccomment">/// Asks to install an update of the calling app.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** that updates are only allowed if the new version</span>
-    <span class="doccomment">/// has the same permissions (or less) than the currently installed version.</span>
+    <span class="doccomment">/// **Note** updates are only allowed if the new version has the same permissions (or less)</span>
+    <span class="doccomment">/// than the currently installed version.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Update`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Flatpak-UpdateMonitor.Update).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Update&quot;</span>)]</span>
@@ -294,6 +308,8 @@
     }
 
     <span class="doccomment">/// Ends the update monitoring and cancels any ongoing installation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Close`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Flatpak-UpdateMonitor.Close).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Close&quot;</span>)]</span>

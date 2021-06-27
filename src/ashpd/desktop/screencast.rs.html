@@ -325,6 +325,18 @@
 <span id="325">325</span>
 <span id="326">326</span>
 <span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -476,9 +488,8 @@
     <span class="doccomment">/// A tuple consisting of the position (x, y) in the compositor coordinate</span>
     <span class="doccomment">/// space.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///  **Note** that the position may not be equivalent to a</span>
-    <span class="doccomment">/// position in a pixel coordinate space. Only available for monitor</span>
-    <span class="doccomment">/// streams.</span>
+    <span class="doccomment">/// **Note** the position may not be equivalent to a position in a pixel coordinate space.</span>
+    <span class="doccomment">/// Only available for monitor streams.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">position</span>
     }
@@ -487,9 +498,8 @@
     <span class="doccomment">/// The size represents the size of the stream as it is displayed in the</span>
     <span class="doccomment">/// compositor coordinate space.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** that this size may not be</span>
-    <span class="doccomment">/// equivalent to a size in a pixel coordinate space. The size may</span>
-    <span class="doccomment">/// differ from the size of the stream.</span>
+    <span class="doccomment">/// **Note** the size may not be equivalent to a size in a pixel coordinate space.</span>
+    <span class="doccomment">/// The size may differ from the size of the stream.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">size</span>
     }
@@ -528,6 +538,8 @@
 
     <span class="doccomment">/// Create a screen cast session.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-ScreenCast.CreateSession).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateSession&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -550,11 +562,15 @@
     <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the screen cast</span>
     <span class="doccomment">/// streams are available.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a file descriptor of an open PipeWire remote.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`ScreenCastProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`ScreenCastProxy::create_session`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// File descriptor of an open PipeWire remote.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`OpenPipeWireRemote`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-ScreenCast.OpenPipeWireRemote).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenPipeWireRemote&quot;</span>)]</span>
@@ -574,10 +590,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`ScreenCastProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`ScreenCastProxy::create_session`].</span>
     <span class="doccomment">/// * `cursor_mode` - Sets how the cursor will be drawn on the screen cast stream.</span>
     <span class="doccomment">/// * `types` - Sets the types of content to record.</span>
     <span class="doccomment">/// * `multiple`- Sets whether to allow selecting multiple sources.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`SelectSources`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-ScreenCast.SelectSources).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SelectSources&quot;</span>)]</span>
@@ -610,8 +628,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`ScreenCastProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`ScreenCastProxy::create_session`].</span>
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-ScreenCast.Start).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Start&quot;</span>)]</span>
@@ -633,6 +653,8 @@
 
     <span class="doccomment">/// Available cursor mode.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AvailableCursorModes`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-property-org-freedesktop-portal-ScreenCast.AvailableCursorModes).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AvailableCursorModes&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">available_cursor_modes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">CursorMode</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -643,6 +665,8 @@
     }
 
     <span class="doccomment">/// Available source types.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AvailableSourceTypes`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-property-org-freedesktop-portal-ScreenCast.AvailableSourceTypes).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AvailableSourceTypes&quot;</span>)]</span>

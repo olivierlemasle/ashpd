@@ -78,6 +78,7 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
+<span id="81">81</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">core::fmt</span>;
 <span class="kw">use</span> <span class="ident">rand::distributions::Alphanumeric</span>;
@@ -91,8 +92,7 @@
 <span class="doccomment">/// `/org/freedesktop/portal/desktop/request/SENDER/TOKEN` where sender is the</span>
 <span class="doccomment">/// caller&#39;s unique name and token is the [`HandleToken`].</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// A valid object path element must only contain the ASCII characters</span>
-<span class="doccomment">/// `[A-Z][a-z][0-9]_`</span>
+<span class="doccomment">/// A valid object path element must only contain the ASCII characters `[A-Z][a-z][0-9]_`</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HandleToken</span>(<span class="ident">String</span>);
 
@@ -155,6 +155,8 @@
         <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;/test&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">false</span>);
 
         <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;تجربة&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">false</span>);
+
+        <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;test_token&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">true</span>);
 
         <span class="ident">HandleToken::default</span>(); <span class="comment">// ensure we don&#39;t panic</span>
     }

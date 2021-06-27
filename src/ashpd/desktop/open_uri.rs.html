@@ -287,7 +287,6 @@
 <span id="287">287</span>
 <span id="288">288</span>
 <span id="289">289</span>
-<span id="290">290</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -372,16 +371,9 @@
 <span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = OpenURIProxy::new(&amp;connection).await?;</span>
+<span class="doccomment">//!     let uri = &quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .open_uri(</span>
-<span class="doccomment">//!             Default::default(),</span>
-<span class="doccomment">//!             &quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;,</span>
-<span class="doccomment">//!             false,</span>
-<span class="doccomment">//!             true,</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
+<span class="doccomment">//!     proxy.open_uri(Default::default(), uri, false, true).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
@@ -461,6 +453,8 @@
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `directory` - File descriptor for a file.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`OpenDirectory`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenDirectory).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenDirectory&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_directory</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
@@ -489,6 +483,8 @@
     <span class="doccomment">/// * `file` - File descriptor for the file to open.</span>
     <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
     <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or not.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`OpenFile`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenFile).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenFile&quot;</span>)]</span>
@@ -520,6 +516,8 @@
     <span class="doccomment">/// * `uri` - The uri to open.</span>
     <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
     <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or not.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`OpenURI`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenURI).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenURI&quot;</span>)]</span>

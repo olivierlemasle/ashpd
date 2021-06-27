@@ -596,6 +596,10 @@
 <span id="596">596</span>
 <span id="597">597</span>
 <span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -1137,6 +1141,8 @@
     <span class="doccomment">/// * `page_setup` - [`PageSetup`].</span>
     <span class="doccomment">/// * `modal` - Whether the dialog should be a modal.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`PreparePrint`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Print.PreparePrint).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;PreparePint&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">prepare_print</span>(
@@ -1167,8 +1173,10 @@
     <span class="doccomment">/// * `identifier` - The application window identifier.</span>
     <span class="doccomment">/// * `title` - The title for the print dialog.</span>
     <span class="doccomment">/// * `fd` - File descriptor for reading the content to print.</span>
-    <span class="doccomment">/// * `token` - A token returned by a call to [`PrintProxy::prepare_print`].</span>
+    <span class="doccomment">/// * `token` - A token returned by a call to [`prepare_print()`][`PrintProxy::prepare_print`].</span>
     <span class="doccomment">/// * `modal` - Whether the dialog should be a modal.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Print`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Print.Print).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Print&quot;</span>)]</span>

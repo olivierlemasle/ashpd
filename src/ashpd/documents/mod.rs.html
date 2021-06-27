@@ -401,6 +401,44 @@
 <span id="401">401</span>
 <span id="402">402</span>
 <span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -549,15 +587,17 @@
     <span class="doccomment">/// The file is passed in the form of an open file descriptor</span>
     <span class="doccomment">/// to prove that the caller has access to the file.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the ID of the file in the document store.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `o_path_fd` - Open file descriptor for the file to add.</span>
-    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry</span>
-    <span class="doccomment">///   for the file.</span>
-    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or</span>
-    <span class="doccomment">///   permanently.</span>
+    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry for the file.</span>
+    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or permanently.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The ID of the file in the document store.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Add`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.Add).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Add&quot;</span>)]</span>
@@ -582,15 +622,18 @@
     <span class="doccomment">/// The files are passed in the form of an open file descriptor</span>
     <span class="doccomment">/// to prove that the caller has access to the file.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the IDs of the files in the document store along with other</span>
-    <span class="doccomment">/// extra info.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `o_path_fds` - Open file descriptors for the files to export.</span>
     <span class="doccomment">/// * `flags` - A [`Flags`].</span>
     <span class="doccomment">/// * `app_id` - An application ID, or empty string.</span>
     <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The IDs of the files in the document store along with other extra info.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AddFull`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.AddFull).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddFull&quot;</span>)]</span>
@@ -607,16 +650,18 @@
 
     <span class="doccomment">/// Creates an entry in the document store for writing a new file.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the ID of the file in the document store.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `o_path_parent_fd` - Open file descriptor for the parent directory.</span>
     <span class="doccomment">/// * `filename` - The basename for the file.</span>
-    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry</span>
-    <span class="doccomment">///   for the file.</span>
-    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or</span>
-    <span class="doccomment">///   permanently.</span>
+    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry for the file.</span>
+    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or permanently.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The ID of the file in the document store.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AddNamed`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.AddNamed).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddNamed&quot;</span>)]</span>
@@ -647,9 +692,6 @@
     <span class="doccomment">/// The files are passed in the form of an open file descriptor</span>
     <span class="doccomment">/// to prove that the caller has access to the file.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the ID of the file in the document store along with other extra</span>
-    <span class="doccomment">/// info.</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `o_path_fd` - Open file descriptor for the parent directory.</span>
@@ -657,6 +699,12 @@
     <span class="doccomment">/// * `flags` - A [`Flags`].</span>
     <span class="doccomment">/// * `app_id` - An application ID, or empty string.</span>
     <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The ID of the file in the document store along with other extra info.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AddNamedFull`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.AddNamedFull).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddNamedFull&quot;</span>)]</span>
@@ -686,12 +734,16 @@
     }
 
     <span class="doccomment">/// Removes an entry from the document store. The file itself is not</span>
-    <span class="doccomment">/// deleted. This call is available inside the sandbox if the</span>
-    <span class="doccomment">/// application has the &#39;delete&#39; permission for the document.</span>
+    <span class="doccomment">/// deleted.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** This call is available inside the sandbox if the</span>
+    <span class="doccomment">/// application has the [`Permission::Delete`] for the document.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Delete`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.Delete).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Delete&quot;</span>)]</span>
@@ -700,7 +752,9 @@
     }
 
     <span class="doccomment">/// Returns the path at which the document store fuse filesystem is mounted.</span>
-    <span class="doccomment">/// This will typically be /run/user/$UID/doc/.</span>
+    <span class="doccomment">/// This will typically be `/run/user/$UID/doc/`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`GetMountPoint`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.GetMountPoint).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetMountPoint&quot;</span>)]</span>
@@ -710,14 +764,18 @@
     }
 
     <span class="doccomment">/// Grants access permissions for a file in the document store to an</span>
-    <span class="doccomment">/// application. This call is available inside the sandbox if the</span>
-    <span class="doccomment">/// application has the &#39;grant-permissions&#39; permission for the document.</span>
+    <span class="doccomment">/// application.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** This call is available inside the sandbox if the</span>
+    <span class="doccomment">/// application has the [`Permission::GrantPermissions`] for the document.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
     <span class="doccomment">/// * `app_id` - The ID of the application to which permissions are granted.</span>
     <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`GrantPermissions`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.GrantPermissions).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GrantPermissions&quot;</span>)]</span>
@@ -733,12 +791,15 @@
     <span class="doccomment">/// Gets the filesystem path and application permissions for a document</span>
     <span class="doccomment">/// store entry.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the path of the file in the host filesystem along with the</span>
-    <span class="doccomment">/// [`Permissions`]</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The path of the file in the host filesystem along with the [`Permissions`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Info`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.Info).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Info&quot;</span>)]</span>
@@ -749,12 +810,15 @@
     <span class="doccomment">/// Lists documents in the document store for an application (or for all</span>
     <span class="doccomment">/// applications).</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a [`HashMap`] mapping document IDs to their filesystem path on the</span>
-    <span class="doccomment">/// host system</span>
-    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `app-id` - The application ID, or &#39;&#39; to list all documents.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`HashMap`] mapping document IDs to their filesystem path on the host system.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`List`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.List).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;List&quot;</span>)]</span>
@@ -763,31 +827,43 @@
     }
 
     <span class="doccomment">/// Looks up the document ID for a file.</span>
-    <span class="doccomment">/// This call is not available inside the sandbox.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns the ID of the file in the document store,</span>
-    <span class="doccomment">/// or &#39;&#39; if the file is not in the document store</span>
+    <span class="doccomment">/// **Note** This call is not available inside the sandbox.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// - `filename` - A path in the host filesystem.</span>
+    <span class="doccomment">/// * `filename` - A path in the host filesystem.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Returns</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The ID of the file in the document store, or [`None`] if the file is not in the document store.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Lookup`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.Lookup).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Lookup&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">filename</span>)).<span class="kw">await</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">doc_id</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">filename</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">if</span> <span class="ident">doc_id</span>.<span class="ident">is_empty</span>() {
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">doc_id</span>))
+        }
     }
 
     <span class="doccomment">/// Revokes access permissions for a file in the document store from an</span>
-    <span class="doccomment">/// application. This call is available inside the sandbox if the</span>
-    <span class="doccomment">/// application has the &#39;grant-permissions&#39; permission for the document.</span>
+    <span class="doccomment">/// application.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** This call is available inside the sandbox if the</span>
+    <span class="doccomment">/// application has the [`Permission::GrantPermissions`] for the document.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
-    <span class="doccomment">/// * `app_id` - The ID of the application from which permissions are</span>
-    <span class="doccomment">///   revoked.</span>
+    <span class="doccomment">/// * `app_id` - The ID of the application from which the permissions are revoked.</span>
     <span class="doccomment">/// * `permissions` - The permissions to revoke.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`RevokePermissions`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.RevokePermissions).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RevokePermissions&quot;</span>)]</span>

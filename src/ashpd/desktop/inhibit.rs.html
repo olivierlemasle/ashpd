@@ -228,6 +228,14 @@
 <span id="228">228</span>
 <span id="229">229</span>
 <span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -393,6 +401,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `identifier` - The application window identifier.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`CreateMonitor`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Inhibit.CreateMonitor).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateMonitor&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_monitor</span>(
@@ -419,6 +429,8 @@
     <span class="doccomment">/// * `flags` - The flags determine what changes are inhibited.</span>
     <span class="doccomment">/// * `reason` - User-visible reason for the inhibition.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Inhibit`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Inhibit.Inhibit).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Inhibit&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">inhibit</span>(
@@ -439,6 +451,8 @@
 
     <span class="doccomment">/// Signal emitted when the session state changes.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`StateChanged`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-Inhibit.StateChanged).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;StateChanged&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_state_changed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InhibitState</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -447,11 +461,13 @@
 
     <span class="doccomment">/// Acknowledges that the caller received the &quot;state_changed&quot; signal.</span>
     <span class="doccomment">/// This method should be called within one second after receiving a</span>
-    <span class="doccomment">/// `state_changed` signal with the `SessionState::QueryEnd` state.</span>
+    <span class="doccomment">/// [`receive_state_changed()`][`InhibitProxy::receive_state_changed`] signal with the [`SessionState::QueryEnd`] state.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`InhibitProxy::create_monitor`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_monitor()`][`InhibitProxy::create_monitor`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`QueryEndResponse`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-signal-org-freedesktop-portal-Inhibit.QueryEndResponse).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryEndResponse&quot;</span>)]</span>

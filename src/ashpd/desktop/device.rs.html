@@ -106,8 +106,9 @@
 <span id="106">106</span>
 <span id="107">107</span>
 <span id="108">108</span>
+<span id="109">109</span>
 </pre><pre class="rust">
-<span class="doccomment">//! **Note** this portal doesn&#39;t work for sandboxed applications.</span>
+<span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Access a [`Device`](crate::desktop::device::Device)</span>
@@ -198,9 +199,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `pid` - The pid of the application on whose behalf the request is</span>
-    <span class="doccomment">///   made.</span>
+    <span class="doccomment">/// * `pid` - The pid of the application on whose behalf the request is made.</span>
     <span class="doccomment">/// * `devices` - A list of devices to request access to.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AccessDevice`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Device.AccessDevice).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AccessDevice&quot;</span>)]</span>

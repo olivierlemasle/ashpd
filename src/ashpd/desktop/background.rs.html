@@ -205,8 +205,10 @@
 <span id="205">205</span>
 <span id="206">206</span>
 <span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
 </pre><pre class="rust">
-<span class="doccomment">//! **Note** this portal only works for sandboxed applications.</span>
+<span class="doccomment">//! **Note** This portal only works for sandboxed applications.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -265,9 +267,9 @@
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
     <span class="doccomment">/// User-visible reason for the request.</span>
     <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// `true` if the app also wants to be started automatically at login.</span>
+    <span class="doccomment">/// [`true`] if the app also wants to be started automatically at login.</span>
     <span class="ident">autostart</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// if `true`, use D-Bus activation for autostart.</span>
+    <span class="doccomment">/// if [`true`], use D-Bus activation for autostart.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;dbus-activatable&quot;</span>)]</span>
     <span class="ident">dbus_activatable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Command to use when auto-starting at login.</span>
@@ -366,6 +368,8 @@
     <span class="doccomment">///     If this is not specified, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop</span>
     <span class="doccomment">/// file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction)</span>
     <span class="doccomment">/// * `dbus_activatable` - Sets whether the application is dbus activatable.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`RequestBackground`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Background.RequestBackground).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RequestBackground&quot;</span>)]</span>
