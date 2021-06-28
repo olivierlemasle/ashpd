@@ -232,7 +232,7 @@
     <span class="ident">Error</span>,
 };
 <span class="kw">use</span> <span class="ident">serde</span>::{
-    <span class="ident">de</span>::{<span class="self">self</span>, <span class="ident">DeserializeOwned</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SeError</span>, <span class="ident">Visitor</span>},
+    <span class="ident">de</span>::{<span class="self">self</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SeError</span>, <span class="ident">Visitor</span>},
     <span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>,
 };
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
@@ -250,7 +250,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">enum</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
+    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
 {
     <span class="doccomment">/// Success, the request is carried out.</span>
     <span class="prelude-val">Ok</span>(<span class="ident">T</span>),
@@ -260,7 +260,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
+    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
 {
     <span class="kw">fn</span> <span class="ident">signature</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zvariant::Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="op">&lt;</span>(<span class="ident">ResponseType</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>)<span class="op">&gt;</span><span class="ident">::signature</span>()
@@ -269,7 +269,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
+    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
 {
     <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -317,7 +317,7 @@
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>(<span class="ident">ResponseType</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
+    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
 {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: (<span class="ident">ResponseType</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">f</span>.<span class="number">0</span> {
@@ -430,7 +430,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Response&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_response</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">R</span>: <span class="ident">DeserializeOwned</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
+        <span class="ident">R</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">zvariant::Type</span>,
     {
         <span class="kw">match</span> <span class="ident">receive_signal</span>::<span class="op">&lt;</span><span class="ident">Response</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Response&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span> {
             <span class="ident">Response::Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
