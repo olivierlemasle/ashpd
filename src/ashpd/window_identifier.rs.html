@@ -317,6 +317,15 @@
 <span id="317">317</span>
 <span id="318">318</span>
 <span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">ser::Serializer</span>, <span class="ident">Serialize</span>};
 
@@ -413,14 +422,13 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span> {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>)]</span>
-            <span class="self">Self</span><span class="ident">::Gtk4</span> { <span class="ident">root</span>: <span class="kw">_</span>, <span class="ident">handle</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
-            <span class="self">Self</span><span class="ident">::Gtk3</span> { <span class="ident">handle</span>, <span class="ident">window</span>: <span class="kw">_</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
-            <span class="self">Self</span><span class="ident">::Other</span>(<span class="ident">handle</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
-        };
-        <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="ident">handle</span>)
+        <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="self">self</span>.<span class="ident">inner</span>())
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">inner</span>())
     }
 }
 
@@ -428,6 +436,16 @@
     <span class="doccomment">/// Create a new window identifier</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span><span class="ident">::Other</span>(<span class="ident">identifier</span>.<span class="ident">to_string</span>())
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>)]</span>
+            <span class="self">Self</span><span class="ident">::Gtk4</span> { <span class="ident">root</span>: <span class="kw">_</span>, <span class="ident">handle</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
+            <span class="self">Self</span><span class="ident">::Gtk3</span> { <span class="ident">handle</span>, <span class="ident">window</span>: <span class="kw">_</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
+            <span class="self">Self</span><span class="ident">::Other</span>(<span class="ident">handle</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
+        }
     }
 }
 
