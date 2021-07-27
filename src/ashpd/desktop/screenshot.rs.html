@@ -260,6 +260,25 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -320,6 +339,8 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 
+<span class="kw">use</span> <span class="ident">std::fmt::Debug</span>;
+
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_request_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
@@ -351,11 +372,17 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Clone</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Clone</span>, <span class="ident">TypeDict</span>)]</span>
 <span class="doccomment">/// A response to a [`ScreenshotProxy::screenshot`] request.</span>
 <span class="kw">struct</span> <span class="ident">Screenshot</span> {
     <span class="doccomment">/// The screenshot uri.</span>
     <span class="ident">uri</span>: <span class="ident">String</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Screenshot</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">uri</span>)
+    }
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
@@ -420,6 +447,17 @@
             .<span class="ident">field</span>(<span class="string">&quot;green&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">green</span>())
             .<span class="ident">field</span>(<span class="string">&quot;blue&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">blue</span>())
             .<span class="ident">finish</span>()
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">Color</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
+            <span class="string">&quot;({}, {}, {})&quot;</span>,
+            <span class="self">self</span>.<span class="ident">red</span>(),
+            <span class="self">self</span>.<span class="ident">green</span>(),
+            <span class="self">self</span>.<span class="ident">blue</span>()
+        ))
     }
 }
 
