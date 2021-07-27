@@ -192,6 +192,18 @@
 <span id="192">192</span>
 <span id="193">193</span>
 <span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -219,14 +231,16 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
+
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Value</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>},
     <span class="ident">Error</span>,
 };
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Value</span>};
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`FileTransferProxy::start_transfer`] request.</span>
@@ -290,12 +304,14 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
     }
 
-    <span class="doccomment">/// Adds files to a session. This method can be called multiple times on a given session.</span>
-    <span class="doccomment">/// **Note** only regular files (not directories) can be added.</span>
+    <span class="doccomment">/// Adds files to a session. This method can be called multiple times on a</span>
+    <span class="doccomment">/// given session. **Note** only regular files (not directories) can be</span>
+    <span class="doccomment">/// added.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">/// * `key` - A key returned by</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
     <span class="doccomment">/// * `fds` - A list of file descriptors of the files to register.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
@@ -311,13 +327,14 @@
     }
 
     <span class="doccomment">/// Retrieves files that were previously added to the session with</span>
-    <span class="doccomment">/// [`add_files()`][`FileTransferProxy::add_files`]. The files will be exported in the document portal</span>
-    <span class="doccomment">/// as-needed for the caller, and they will be writable if the owner of</span>
-    <span class="doccomment">/// the session allowed it.</span>
+    <span class="doccomment">/// [`add_files()`][`FileTransferProxy::add_files`]. The files will be</span>
+    <span class="doccomment">/// exported in the document portal as-needed for the caller, and they</span>
+    <span class="doccomment">/// will be writable if the owner of the session allowed it.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">/// * `key` - A key returned by</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
@@ -335,17 +352,21 @@
     }
 
     <span class="doccomment">/// Starts a session for a file transfer.</span>
-    <span class="doccomment">/// The caller should call [`add_files()`][`FileTransferProxy::add_files`] at least once, to add files to this</span>
-    <span class="doccomment">/// session.</span>
+    <span class="doccomment">/// The caller should call [`add_files()`][`FileTransferProxy::add_files`]</span>
+    <span class="doccomment">/// at least once, to add files to this session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `writeable` - Sets whether the chosen application can write to the files or not.</span>
-    <span class="doccomment">/// * `auto_stop` - Whether to stop the transfer automatically after the first [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
+    <span class="doccomment">/// * `writeable` - Sets whether the chosen application can write to the</span>
+    <span class="doccomment">///   files or not.</span>
+    <span class="doccomment">/// * `auto_stop` - Whether to stop the transfer automatically after the</span>
+    <span class="doccomment">///   first [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Key that can be passed to [`retrieve_files()`][`FileTransferProxy::retrieve_files`] to obtain the files.</span>
+    <span class="doccomment">/// Key that can be passed to</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] to obtain the</span>
+    <span class="doccomment">/// files.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
@@ -358,12 +379,14 @@
     }
 
     <span class="doccomment">/// Ends the transfer.</span>
-    <span class="doccomment">/// Further calls to [`add_files()`][`FileTransferProxy::add_files`] or [`retrieve_files()`][`FileTransferProxy::retrieve_files`] for this key will</span>
-    <span class="doccomment">/// return an error.</span>
+    <span class="doccomment">/// Further calls to [`add_files()`][`FileTransferProxy::add_files`] or</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] for this key</span>
+    <span class="doccomment">/// will return an error.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">/// * `key` - A key returned by</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
@@ -377,7 +400,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * The key returned by [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">/// * The key returned by</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>

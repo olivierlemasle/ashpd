@@ -353,6 +353,14 @@
 <span id="353">353</span>
 <span id="354">354</span>
 <span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -389,22 +397,24 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">SessionProxy</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">call_request_method</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
-};
-<span class="kw">use</span> <span class="ident">enumflags2::BitFlags</span>;
-<span class="kw">use</span> <span class="ident">futures::TryFutureExt</span>;
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">collections::HashMap</span>,
     <span class="ident">fmt::Debug</span>,
     <span class="ident">os::unix::prelude</span>::{<span class="ident">AsRawFd</span>, <span class="ident">RawFd</span>},
 };
+
+<span class="kw">use</span> <span class="ident">enumflags2::BitFlags</span>;
+<span class="kw">use</span> <span class="ident">futures::TryFutureExt</span>;
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">SessionProxy</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">call_request_method</span>},
+    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">BitFlags</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
@@ -414,6 +424,8 @@
     <span class="ident">Monitor</span> <span class="op">=</span> <span class="number">1</span>,
     <span class="doccomment">/// A specific window</span>
     <span class="ident">Window</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="doccomment">/// Virtual</span>
+    <span class="ident">Virtual</span> <span class="op">=</span> <span class="number">4</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Type</span>, <span class="ident">BitFlags</span>)]</span>
@@ -481,8 +493,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// A response to a [`ScreenCastProxy::create_session`] request.</span>
 <span class="kw">struct</span> <span class="ident">CreateSession</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
     <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath</span>
+    <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
     <span class="ident">session_handle</span>: <span class="ident">String</span>,
 }
 
@@ -511,8 +523,8 @@
     <span class="doccomment">/// A tuple consisting of the position (x, y) in the compositor coordinate</span>
     <span class="doccomment">/// space.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the position may not be equivalent to a position in a pixel coordinate space.</span>
-    <span class="doccomment">/// Only available for monitor streams.</span>
+    <span class="doccomment">/// **Note** the position may not be equivalent to a position in a pixel</span>
+    <span class="doccomment">/// coordinate space. Only available for monitor streams.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">position</span>
     }
@@ -521,9 +533,9 @@
     <span class="doccomment">/// The size represents the size of the stream as it is displayed in the</span>
     <span class="doccomment">/// compositor coordinate space.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the size may not be equivalent to a size in a pixel coordinate space.</span>
-    <span class="doccomment">/// The size may differ from the size of the stream.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
+    <span class="doccomment">/// **Note** the size may not be equivalent to a size in a pixel coordinate</span>
+    <span class="doccomment">/// space. The size may differ from the size of the stream.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">size</span>
     }
 }
@@ -541,7 +553,7 @@
 <span class="doccomment">/// The stream properties.</span>
 <span class="kw">struct</span> <span class="ident">StreamProperties</span> {
     <span class="ident">position</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>,
-    <span class="ident">size</span>: (<span class="ident">i32</span>, <span class="ident">i32</span>),
+    <span class="ident">size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// The interface lets sandboxed applications create screen cast sessions.</span>
@@ -596,7 +608,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`ScreenCastProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`ScreenCastProxy::create_session`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
@@ -622,8 +635,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`ScreenCastProxy::create_session`].</span>
-    <span class="doccomment">/// * `cursor_mode` - Sets how the cursor will be drawn on the screen cast stream.</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`ScreenCastProxy::create_session`].</span>
+    <span class="doccomment">/// * `cursor_mode` - Sets how the cursor will be drawn on the screen cast</span>
+    <span class="doccomment">///   stream.</span>
     <span class="doccomment">/// * `types` - Sets the types of content to record.</span>
     <span class="doccomment">/// * `multiple`- Sets whether to allow selecting multiple sources.</span>
     <span class="doccomment">///</span>
@@ -660,7 +675,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with [`create_session()`][`ScreenCastProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`ScreenCastProxy::create_session`].</span>
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>

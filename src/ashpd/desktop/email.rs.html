@@ -195,6 +195,9 @@
 <span id="195">195</span>
 <span id="196">196</span>
 <span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -246,12 +249,14 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
-<span class="kw">use</span> <span class="ident">serde::Serialize</span>;
 <span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
+
+<span class="kw">use</span> <span class="ident">serde::Serialize</span>;
 <span class="kw">use</span> <span class="ident">zvariant::Fd</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`EmailProxy::compose_email`] request.</span>
@@ -358,7 +363,8 @@
 
     <span class="doccomment">/// Presents a window that lets the user compose an email.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the default email client for the host will need to support `mailto:` URIs following RFC 2368.</span>
+    <span class="doccomment">/// **Note** the default email client for the host will need to support</span>
+    <span class="doccomment">/// `mailto:` URIs following RFC 2368.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>

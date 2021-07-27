@@ -255,6 +255,10 @@
 <span id="255">255</span>
 <span id="256">256</span>
 <span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -321,16 +325,18 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
+<span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
+
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="self">self</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
+<span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">desktop</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>},
     <span class="ident">helpers::call_basic_response_method</span>,
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="self">self</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
-<span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(
     <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>,
@@ -362,7 +368,8 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Clone</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`WallpaperProxy::set_wallpaper_file`] or a [`WallpaperProxy::set_wallpaper_uri`] request.</span>
+<span class="doccomment">/// Specified options for a [`WallpaperProxy::set_wallpaper_file`] or a</span>
+<span class="doccomment">/// [`WallpaperProxy::set_wallpaper_uri`] request.</span>
 <span class="kw">struct</span> <span class="ident">WallpaperOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
@@ -376,7 +383,8 @@
 
 <span class="kw">impl</span> <span class="ident">WallpaperOptions</span> {
     <span class="doccomment">/// Whether to show a preview of the picture.</span>
-    <span class="doccomment">/// **Note** the portal may decide to show a preview even if this option is not set.</span>
+    <span class="doccomment">/// **Note** the portal may decide to show a preview even if this option is</span>
+    <span class="doccomment">/// not set.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_preview</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">show_preview</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">show_preview</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">show_preview</span>);
         <span class="self">self</span>

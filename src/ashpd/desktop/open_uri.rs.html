@@ -287,6 +287,11 @@
 <span id="287">287</span>
 <span id="288">288</span>
 <span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -378,11 +383,13 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
+
 <span class="kw">use</span> <span class="ident">zvariant::Fd</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`OpenURIProxy::open_directory`] request.</span>
@@ -392,7 +399,8 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`OpenURIProxy::open_file`] or [`OpenURIProxy::open_uri`] request.</span>
+<span class="doccomment">/// Specified options for a [`OpenURIProxy::open_file`] or</span>
+<span class="doccomment">/// [`OpenURIProxy::open_uri`] request.</span>
 <span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
@@ -482,7 +490,8 @@
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `file` - File descriptor for the file to open.</span>
     <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
-    <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or not.</span>
+    <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or</span>
+    <span class="doccomment">///   not.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
@@ -515,7 +524,8 @@
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `uri` - The uri to open.</span>
     <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
-    <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or not.</span>
+    <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or</span>
+    <span class="doccomment">///   not.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>

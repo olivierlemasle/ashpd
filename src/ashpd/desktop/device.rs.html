@@ -107,6 +107,7 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
+<span id="110">110</span>
 </pre><pre class="rust">
 <span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.</span>
 <span class="doccomment">//! # Examples</span>
@@ -122,15 +123,15 @@
 <span class="doccomment">//!     proxy.access_device(6879, &amp;[Device::Speakers]).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
-<span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
 <span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zvariant::Signature</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`DeviceProxy::access_device`] request.</span>
@@ -199,7 +200,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `pid` - The pid of the application on whose behalf the request is made.</span>
+    <span class="doccomment">/// * `pid` - The pid of the application on whose behalf the request is</span>
+    <span class="doccomment">///   made.</span>
     <span class="doccomment">/// * `devices` - A list of devices to request access to.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>

@@ -600,6 +600,10 @@
 <span id="600">600</span>
 <span id="601">601</span>
 <span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -637,16 +641,18 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
+<span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
+
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
+<span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
+<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>};
+<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_request_method</span>},
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
-<span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>};
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(
     <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">AsRefStr</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
@@ -1076,7 +1082,8 @@
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
     <span class="doccomment">/// Whether to make the dialog modal.</span>
     <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Token that was returned by a previous [`PrintProxy::prepare_print`] call.</span>
+    <span class="doccomment">/// Token that was returned by a previous [`PrintProxy::prepare_print`]</span>
+    <span class="doccomment">/// call.</span>
     <span class="ident">token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
 }
 
@@ -1173,7 +1180,8 @@
     <span class="doccomment">/// * `identifier` - The application window identifier.</span>
     <span class="doccomment">/// * `title` - The title for the print dialog.</span>
     <span class="doccomment">/// * `fd` - File descriptor for reading the content to print.</span>
-    <span class="doccomment">/// * `token` - A token returned by a call to [`prepare_print()`][`PrintProxy::prepare_print`].</span>
+    <span class="doccomment">/// * `token` - A token returned by a call to</span>
+    <span class="doccomment">///   [`prepare_print()`][`PrintProxy::prepare_print`].</span>
     <span class="doccomment">/// * `modal` - Whether the dialog should be a modal.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>

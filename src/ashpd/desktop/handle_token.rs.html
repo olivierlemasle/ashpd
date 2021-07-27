@@ -79,20 +79,25 @@
 <span id="79">79</span>
 <span id="80">80</span>
 <span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">core::fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">convert::TryFrom</span>, <span class="ident">fmt::Display</span>};
+
 <span class="kw">use</span> <span class="ident">rand::distributions::Alphanumeric</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">thread_rng</span>, <span class="ident">Rng</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">convert::TryFrom</span>, <span class="ident">fmt::Display</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive::Type</span>;
 
 <span class="doccomment">/// A handle token is a DBus Object Path element, specified in the</span>
-<span class="doccomment">/// `RequestProxy` or [`SessionProxy`](crate::desktop::SessionProxy) object path following this format</span>
-<span class="doccomment">/// `/org/freedesktop/portal/desktop/request/SENDER/TOKEN` where sender is the</span>
-<span class="doccomment">/// caller&#39;s unique name and token is the [`HandleToken`].</span>
+<span class="doccomment">/// `RequestProxy` or [`SessionProxy`](crate::desktop::SessionProxy) object path</span>
+<span class="doccomment">/// following this format `/org/freedesktop/portal/desktop/request/SENDER/TOKEN`</span>
+<span class="doccomment">/// where sender is the caller&#39;s unique name and token is the [`HandleToken`].</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// A valid object path element must only contain the ASCII characters `[A-Z][a-z][0-9]_`</span>
+<span class="doccomment">/// A valid object path element must only contain the ASCII characters</span>
+<span class="doccomment">/// `[A-Z][a-z][0-9]_`</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HandleToken</span>(<span class="ident">String</span>);
 
@@ -145,8 +150,9 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span><span class="ident">::HandleToken</span>;
     <span class="kw">use</span> <span class="ident">std::convert::TryFrom</span>;
+
+    <span class="kw">use</span> <span class="kw">super</span><span class="ident">::HandleToken</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">handle_token</span>() {

@@ -207,6 +207,8 @@
 <span id="207">207</span>
 <span id="208">208</span>
 <span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
 </pre><pre class="rust">
 <span class="doccomment">//! **Note** This portal only works for sandboxed applications.</span>
 <span class="doccomment">//!</span>
@@ -255,10 +257,11 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_request_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 <span class="kw">use</span> <span class="ident">serde::Serialize</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
+
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_request_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`BackgroundProxy::request_background`] request.</span>
@@ -364,8 +367,9 @@
     <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
     <span class="doccomment">/// * `reason` - Sets a user-visible reason for the request.</span>
     <span class="doccomment">/// * `auto_start` - Sets whether to auto start the application or not.</span>
-    <span class="doccomment">/// * `command_line` - Specifies the command line to execute.</span>
-    <span class="doccomment">///     If this is not specified, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop</span>
+    <span class="doccomment">/// * `command_line` - Specifies the command line to execute. If this is not</span>
+    <span class="doccomment">///   specified, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables)</span>
+    <span class="doccomment">///   line from the [desktop</span>
     <span class="doccomment">/// file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction)</span>
     <span class="doccomment">/// * `dbus_activatable` - Sets whether the application is dbus activatable.</span>
     <span class="doccomment">///</span>

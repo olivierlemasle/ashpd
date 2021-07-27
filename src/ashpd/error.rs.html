@@ -59,6 +59,8 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::desktop::request::ResponseError</span>;
 
@@ -75,9 +77,11 @@
     <span class="ident">DBusMalformedMessage</span>(<span class="ident">zbus::MessageError</span>),
     <span class="doccomment">/// A signal returned no response.</span>
     <span class="ident">NoResponse</span>,
-    <span class="doccomment">/// Failed to register a game with [`GameModeProxy::register_game`](`crate::desktop::game_mode::GameModeProxy::register_game`).</span>
+    <span class="doccomment">/// Failed to register a game with</span>
+    <span class="doccomment">/// [`GameModeProxy::register_game`](`crate::desktop::game_mode::GameModeProxy::register_game`).</span>
     <span class="ident">RegisterGameRejected</span>,
-    <span class="doccomment">/// Failed to trash a file, caused by [`TrashProxy::trash_file`](`crate::desktop::trash::TrashProxy::trash_file`).</span>
+    <span class="doccomment">/// Failed to trash a file, caused by</span>
+    <span class="doccomment">/// [`TrashProxy::trash_file`](`crate::desktop::trash::TrashProxy::trash_file`).</span>
     <span class="ident">TrashFailed</span>,
 }
 
