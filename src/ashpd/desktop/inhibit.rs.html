@@ -239,6 +239,7 @@
 <span id="239">239</span>
 <span id="240">240</span>
 <span id="241">241</span>
+<span id="242">242</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -332,7 +333,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>)]</span>
 <span class="doccomment">/// A response to a [`InhibitProxy::create_monitor`] request.</span>
 <span class="kw">struct</span> <span class="ident">CreateMonitor</span> {
-    <span class="ident">session_handle</span>: <span class="ident">OwnedObjectPath</span>,
+    <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath</span>
+    <span class="ident">session_handle</span>: <span class="ident">String</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>)]</span>
@@ -421,7 +423,7 @@
             <span class="ident">SessionProxy::from_unique_name</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">connection</span>(), <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>)
                 .<span class="ident">into_future</span>(),
         )<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">proxy</span>.<span class="ident">inner</span>().<span class="ident">path</span>(), <span class="kw-2">&amp;</span><span class="ident">monitor</span>.<span class="ident">session_handle</span>.<span class="ident">into_inner</span>());
+        <span class="macro">assert_eq!</span>(<span class="ident">proxy</span>.<span class="ident">inner</span>().<span class="ident">path</span>().<span class="ident">as_str</span>(), <span class="kw-2">&amp;</span><span class="ident">monitor</span>.<span class="ident">session_handle</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">proxy</span>)
     }
 
