@@ -273,7 +273,7 @@
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!     wallpaper::set_from_file(&amp;WindowIdentifier::default(), &amp;file, true, SetOn::Both).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -287,7 +287,7 @@
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let wallpaper = File::open(&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
@@ -305,7 +305,7 @@
 <span class="doccomment">//! use ashpd::desktop::wallpaper::{self, SetOn};</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let uri = &quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;;</span>
 <span class="doccomment">//!     wallpaper::set_from_uri(&amp;WindowIdentifier::default(), &amp;uri, true, SetOn::Both).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -318,7 +318,7 @@
 <span class="doccomment">//! use ashpd::desktop::wallpaper::{SetOn, WallpaperProxy};</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = WallpaperProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     proxy</span>

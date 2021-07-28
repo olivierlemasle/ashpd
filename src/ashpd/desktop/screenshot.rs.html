@@ -293,7 +293,7 @@
 <span class="doccomment">//! use ashpd::desktop::screenshot;</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let uri = screenshot::take(&amp;WindowIdentifier::default(), true, true).await?;</span>
 <span class="doccomment">//!     println!(&quot;URI: {}&quot;, uri);</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -306,7 +306,7 @@
 <span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotProxy;</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!</span>
@@ -322,7 +322,7 @@
 <span class="doccomment">//! use ashpd::desktop::screenshot;</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let color = screenshot::pick_color(&amp;WindowIdentifier::default()).await?;</span>
 <span class="doccomment">//!     println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
 <span class="doccomment">//!</span>
@@ -336,7 +336,7 @@
 <span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotProxy;</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!</span>

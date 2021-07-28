@@ -5,7 +5,7 @@ or their avatar uri.</p>
 <span class="kw">use</span> <span class="ident">ashpd::desktop::account</span>;
 <span class="kw">use</span> <span class="ident">ashpd::WindowIdentifier</span>;
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ashpd::Error</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ashpd::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">user_info</span> <span class="op">=</span> <span class="ident">account::user_information</span>(
         <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier::default</span>(),
         <span class="string">&quot;App would like to access user information&quot;</span>,
@@ -22,7 +22,7 @@ or their avatar uri.</p>
 <span class="kw">use</span> <span class="ident">ashpd::desktop::account::AccountProxy</span>;
 <span class="kw">use</span> <span class="ident">ashpd::WindowIdentifier</span>;
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ashpd::Error</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ashpd::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus::azync::Connection::new_session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">AccountProxy::new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="kw">await</span><span class="question-mark">?</span>;

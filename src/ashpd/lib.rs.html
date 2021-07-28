@@ -79,6 +79,9 @@
 <span id="79">79</span>
 <span id="80">80</span>
 <span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
 </pre><pre class="rust">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">broken_intra_doc_links</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
@@ -95,7 +98,7 @@
 <span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotProxy;</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection).await?;</span>
@@ -111,7 +114,7 @@
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::camera::CameraProxy;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! pub async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! pub async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = CameraProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     if proxy.is_camera_present().await? {</span>
@@ -136,6 +139,9 @@
 <span class="doccomment">//! |  | Provides `WindowIdentifier::from_native` that takes a [`IsA&lt;gtk4::Native&gt;`](https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Native.html) |</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>), <span class="ident">not</span>(<span class="ident">doc</span>)))]</span>
 <span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both GTK 3 &amp; GTK 4 features at once&quot;</span>);
+
+<span class="doccomment">/// Alias for a [`Result`] with the error type `ashpd::Error`.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a</span>
 <span class="doccomment">/// background or querying the user&#39;s location.</span>

@@ -208,7 +208,7 @@
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!     email::compose(</span>
 <span class="doccomment">//!         &amp;WindowIdentifier::default(),</span>
@@ -230,7 +230,7 @@
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = EmailProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>

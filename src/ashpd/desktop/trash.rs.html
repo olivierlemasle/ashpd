@@ -110,7 +110,7 @@
 <span class="doccomment">//! use ashpd::desktop::trash;</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/adwaita-night.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!     trash::trash_file(&amp;file).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -123,7 +123,7 @@
 <span class="doccomment">//! use ashpd::desktop::trash::TrashProxy;</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = TrashProxy::new(&amp;connection).await?;</span>

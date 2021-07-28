@@ -539,7 +539,7 @@
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{Choice, FileChooserProxy, FileFilter, OpenFileOptions};</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let proxy = FileChooserProxy::new(&amp;connection).await?;</span>
@@ -574,7 +574,7 @@
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{FileChooserProxy, FileFilter, SaveFileOptions};</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = FileChooserProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let files = proxy</span>
@@ -601,7 +601,7 @@
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{FileChooserProxy, SaveFilesOptions};</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let proxy = FileChooserProxy::new(&amp;connection).await?;</span>

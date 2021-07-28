@@ -5,7 +5,7 @@
 <span class="kw">use</span> <span class="ident">ashpd::desktop::background</span>;
 <span class="kw">use</span> <span class="ident">ashpd::WindowIdentifier</span>;
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ashpd::Error</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ashpd::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">background::request</span>(
         <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier::default</span>(),
         <span class="string">&quot;Automatically fetch your latest mails&quot;</span>,
@@ -27,7 +27,7 @@ file</a> will be used.</p>
 <span class="kw">use</span> <span class="ident">ashpd::desktop::background</span>;
 <span class="kw">use</span> <span class="ident">ashpd::WindowIdentifier</span>;
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ashpd::Error</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ashpd::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">background::request</span>(
         <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier::default</span>(),
         <span class="string">&quot;Automatically fetch your latest mails&quot;</span>,

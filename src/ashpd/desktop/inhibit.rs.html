@@ -252,7 +252,7 @@
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//! use std::{thread, time};</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
+<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = InhibitProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
