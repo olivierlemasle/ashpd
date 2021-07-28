@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;window_identifier.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window_identifier.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;window_identifier.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window_identifier.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -338,14 +338,29 @@
 <span id="338">338</span>
 <span id="339">339</span>
 <span id="340">340</span>
-<span id="341">341</span>
-<span id="342">342</span>
-<span id="343">343</span>
-<span id="344">344</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">ser::Serializer</span>, <span class="ident">Serialize</span>};
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>))]</span>
+<span class="kw">use</span> <span class="ident">futures::lock::Mutex</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>))]</span>
+<span class="kw">use</span> <span class="ident">std::sync::Arc</span>;
+
+<span class="comment">// This is needed for docs so that we include glib only once</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>, <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)))]</span>
+<span class="kw">use</span> <span class="ident">gtk4::glib</span>::{<span class="self">self</span>, <span class="ident">clone</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">gtk4::prelude</span>::<span class="kw-2">*</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">gtk3</span>::{
+    <span class="ident">gdk</span> <span class="kw">as</span> <span class="ident">gdk3</span>,
+    <span class="ident">glib</span>::{<span class="self">self</span>, <span class="ident">clone</span>, <span class="ident">translate</span>::<span class="kw-2">*</span>},
+    <span class="ident">prelude</span>::<span class="kw-2">*</span>,
+};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ffi::c_void</span>, <span class="ident">os::raw::c_char</span>};
+
 <span class="doccomment">/// Most portals interact with the user by showing dialogs.</span>
 <span class="doccomment">/// These dialogs should generally be placed on top of the application window</span>
 <span class="doccomment">/// that triggered them. To arrange this, the compositor needs to know about the</span>
@@ -364,14 +379,14 @@
 <span class="doccomment">/// ## With GTK 4</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The feature `feature_gtk4` must be enabled. You can get a</span>
-<span class="doccomment">/// [`WindowIdentifier`] from a `gtk4::Root` using `WindowIdentifier::from_root`</span>
+<span class="doccomment">/// [`WindowIdentifier`] from a [`IsA&lt;gtk4::Native&gt;`](https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Native.html) using `WindowIdentifier::from_native`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust, ignore</span>
-<span class="doccomment">/// let widget = gtk::Button::new();</span>
+<span class="doccomment">/// let widget = gtk4::Button::new();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let ctx = glib::MainContext::default();</span>
 <span class="doccomment">/// ctx.spawn_async(async move {</span>
-<span class="doccomment">///     let identifier = WindowIdentifier::from_root(widget.root().unwrap()).await;</span>
+<span class="doccomment">///     let identifier = WindowIdentifier::from_native(&amp;widget.native().unwrap()).await;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     /// Open some portals</span>
 <span class="doccomment">/// });</span>
@@ -382,14 +397,14 @@
 <span class="doccomment">/// ## With GTK 3</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The feature `feature_gtk3` must be enabled. You can get a</span>
-<span class="doccomment">/// [`WindowIdentifier`] from a `gdk3::Window` using</span>
+<span class="doccomment">/// [`WindowIdentifier`] from a [`IsA&lt;gdk3::Window&gt;`](https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.Window.html) using</span>
 <span class="doccomment">/// `WindowIdentifier::from_window`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust, ignore</span>
-<span class="doccomment">/// let widget = gtk::Button::new();</span>
+<span class="doccomment">/// let widget = gtk4::Button::new();</span>
 <span class="doccomment">/// let ctx = glib::MainContext::default();</span>
 <span class="doccomment">/// ctx.spawn_async(async move {</span>
-<span class="doccomment">///     let identifier = WindowIdentifier::from_window(widget.window().unwrap()).await;</span>
+<span class="doccomment">///     let identifier = WindowIdentifier::from_window(&amp;widget.window().unwrap()).await;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     /// Open some portals</span>
 <span class="doccomment">/// });</span>
@@ -414,7 +429,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">Gtk4</span> {
         <span class="doccomment">/// The top level window</span>
-        <span class="ident">root</span>: <span class="ident">gtk4::Root</span>,
+        <span class="ident">native</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">gtk4::Native</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="doccomment">/// The exported window handle</span>
         <span class="ident">handle</span>: <span class="ident">String</span>,
     },
@@ -425,12 +440,15 @@
         <span class="doccomment">/// The exported window handle</span>
         <span class="ident">handle</span>: <span class="ident">String</span>,
         <span class="comment">// the top level window</span>
-        <span class="ident">window</span>: <span class="ident">gtk3::gdk::Window</span>,
+        <span class="ident">window</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">gdk3::Window</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     },
     <span class="doccomment">/// For Other Toolkits</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">Other</span>(<span class="ident">String</span>),
 }
+
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {}
 
 <span class="kw">impl</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
     <span class="kw">fn</span> <span class="ident">signature</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">zvariant::Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
@@ -470,7 +488,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>)]</span>
-            <span class="self">Self</span><span class="ident">::Gtk4</span> { <span class="ident">root</span>: <span class="kw">_</span>, <span class="ident">handle</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
+            <span class="self">Self</span><span class="ident">::Gtk4</span> { <span class="ident">native</span>: <span class="kw">_</span>, <span class="ident">handle</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
             <span class="self">Self</span><span class="ident">::Gtk3</span> { <span class="ident">handle</span>, <span class="ident">window</span>: <span class="kw">_</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
             <span class="self">Self</span><span class="ident">::Other</span>(<span class="ident">handle</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>,
@@ -486,43 +504,32 @@
 
 <span class="kw">impl</span> <span class="ident">WindowIdentifier</span> {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>)]</span>
-    <span class="doccomment">/// Creates a [`WindowIdentifier`] from a [`gtk::Root`](https://gnome.pages.gitlab.gnome.org/gtk/gtk4/iface.Root.html).</span>
-    <span class="doccomment">/// `gtk::Root` is the interface implemented by all the widgets that can act</span>
-    <span class="doccomment">/// as a top level widget.</span>
+    <span class="doccomment">/// Creates a [`WindowIdentifier`] from a [`gtk4::Native`](https://docs.gtk.org/gtk4/class.Native.html).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The constructor returns a valid handle under both Wayland &amp; x11.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
     <span class="doccomment">/// API is async as well.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_root</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">gtk4::glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk4::Root</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">use</span> <span class="ident">std::sync::Arc</span>;
-
-        <span class="kw">use</span> <span class="ident">futures::lock::Mutex</span>;
-        <span class="kw">use</span> <span class="ident">gtk4::glib</span>;
-        <span class="kw">use</span> <span class="ident">gtk4::prelude</span>::{<span class="ident">Cast</span>, <span class="ident">NativeExt</span>, <span class="ident">ObjectExt</span>, <span class="ident">SurfaceExt</span>};
-
-        <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">win</span>
-            .<span class="ident">as_ref</span>()
-            .<span class="ident">surface</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;The window has to be mapped first&quot;</span>);
-
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_native</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk4::Native</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">native</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">native</span>.<span class="ident">surface</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">surface</span>
             .<span class="ident">display</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Surface has to be attached to a display&quot;</span>)
             .<span class="ident">type_</span>()
             .<span class="ident">name</span>()
-            .<span class="ident">as_ref</span>()
         {
             <span class="string">&quot;GdkWaylandDisplay&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures::channel::oneshot::channel</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
                 <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
 
-                <span class="kw">let</span> <span class="ident">top_level</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">downcast</span>::<span class="op">&lt;</span><span class="ident">gdk4wayland::WaylandToplevel</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+                <span class="kw">let</span> <span class="ident">top_level</span> <span class="op">=</span> <span class="ident">surface</span>
+                    .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk4wayland::WaylandToplevel</span><span class="op">&gt;</span>()
+                    .<span class="ident">unwrap</span>();
 
-                <span class="ident">top_level</span>.<span class="ident">export_handle</span>(<span class="macro">glib::clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">move</span> <span class="op">|</span><span class="ident">_level</span>, <span class="ident">handle</span><span class="op">|</span> {
+                <span class="ident">top_level</span>.<span class="ident">export_handle</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">move</span> <span class="op">|</span><span class="ident">_level</span>, <span class="ident">handle</span><span class="op">|</span> {
                     <span class="kw">let</span> <span class="ident">wayland_handle</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;wayland:{}&quot;</span>, <span class="ident">handle</span>);
                     <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">glib::MainContext::default</span>();
-                    <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">glib::clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span>, @<span class="ident">strong</span> <span class="ident">wayland_handle</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">async</span> <span class="kw">move</span> {
+                    <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span>, @<span class="ident">strong</span> <span class="ident">wayland_handle</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">async</span> <span class="kw">move</span> {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">lock</span>().<span class="kw">await</span>.<span class="ident">take</span>() {
                             <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">send</span>(<span class="ident">wayland_handle</span>);
                         }
@@ -530,16 +537,15 @@
                 }));
                 <span class="ident">receiver</span>.<span class="kw">await</span>.<span class="ident">ok</span>()
             }
-            <span class="string">&quot;GdkX11Display&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">surface</span>.<span class="ident">downcast</span>::<span class="op">&lt;</span><span class="ident">gdk4x11::X11Surface</span><span class="op">&gt;</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="ident">w</span>.<span class="ident">xid</span>()) {
-                <span class="prelude-val">Ok</span>(<span class="ident">xid</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="macro">format!</span>(<span class="string">&quot;x11:{}&quot;</span>, <span class="ident">xid</span>)),
-                <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-            },
+            <span class="string">&quot;GdkX11Display&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">surface</span>
+                .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk4x11::X11Surface</span><span class="op">&gt;</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;x11:{}&quot;</span>, <span class="ident">w</span>.<span class="ident">xid</span>())),
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         };
 
         <span class="kw">match</span> <span class="ident">handle</span> {
             <span class="prelude-val">Some</span>(<span class="ident">h</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">WindowIdentifier::Gtk4</span> {
-                <span class="ident">root</span>: <span class="ident">win</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>(),
+                <span class="ident">native</span>: <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="ident">native</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>())),
                 <span class="ident">handle</span>: <span class="ident">h</span>,
             },
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">WindowIdentifier::default</span>(),
@@ -553,24 +559,18 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
     <span class="doccomment">/// API is async as well.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_window</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">gtk3::glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk3::gdk::Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">use</span> <span class="ident">gtk3::prelude</span>::{<span class="ident">Cast</span>, <span class="ident">ObjectExt</span>};
-
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">win</span>.<span class="ident">as_ref</span>().<span class="ident">display</span>().<span class="ident">type_</span>().<span class="ident">name</span>().<span class="ident">as_ref</span>() {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_window</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gdk3::Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">win</span>.<span class="ident">as_ref</span>().<span class="ident">display</span>().<span class="ident">type_</span>().<span class="ident">name</span>() {
             <span class="string">&quot;GdkWaylandDisplay&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">use</span> <span class="ident">std::sync::Arc</span>;
-
-                <span class="kw">use</span> <span class="ident">futures::lock::Mutex</span>;
-                <span class="kw">use</span> <span class="ident">gtk3::glib</span>;
                 <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures::channel::oneshot::channel</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
                 <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
 
                 <span class="ident">export_wayland_handle</span>(
                     <span class="ident">win</span>,
-                    <span class="macro">glib::clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">move</span> <span class="op">|</span><span class="ident">_level</span>, <span class="ident">handle</span><span class="op">|</span> {
+                    <span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">move</span> <span class="op">|</span><span class="ident">_level</span>, <span class="ident">handle</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="ident">wayland_handle</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;wayland:{}&quot;</span>, <span class="ident">handle</span>);
                         <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">glib::MainContext::default</span>();
-                        <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">glib::clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span>, @<span class="ident">strong</span> <span class="ident">wayland_handle</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">async</span> <span class="kw">move</span> {
+                        <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span>, @<span class="ident">strong</span> <span class="ident">wayland_handle</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">async</span> <span class="kw">move</span> {
                             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">lock</span>().<span class="kw">await</span>.<span class="ident">take</span>() {
                                 <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">send</span>(<span class="ident">wayland_handle</span>);
                             }
@@ -582,15 +582,14 @@
             <span class="string">&quot;GdkX11Display&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">win</span>
                 .<span class="ident">as_ref</span>()
                 .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3x11::X11Window</span><span class="op">&gt;</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="ident">w</span>.<span class="ident">xid</span>())
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">xid</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;x11:{}&quot;</span>, <span class="ident">xid</span>)),
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;x11:{}&quot;</span>, <span class="ident">w</span>.<span class="ident">xid</span>())),
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         };
 
         <span class="kw">match</span> <span class="ident">handle</span> {
             <span class="prelude-val">Some</span>(<span class="ident">h</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">WindowIdentifier::Gtk3</span> {
                 <span class="ident">handle</span>: <span class="ident">h</span>,
-                <span class="ident">window</span>: <span class="ident">win</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>(),
+                <span class="ident">window</span>: <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="ident">win</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>())),
             },
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">WindowIdentifier::default</span>(),
         }
@@ -600,38 +599,40 @@
 <span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>)]</span>
-        <span class="kw">if</span> <span class="kw">let</span> <span class="self">Self</span><span class="ident">::Gtk4</span> { <span class="ident">root</span>, <span class="ident">handle</span>: <span class="kw">_</span> } <span class="op">=</span> <span class="self">self</span> {
-            <span class="kw">use</span> <span class="ident">gtk4::prelude</span>::{<span class="ident">Cast</span>, <span class="ident">NativeExt</span>, <span class="ident">ObjectExt</span>, <span class="ident">SurfaceExt</span>};
-
-            <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">root</span>.<span class="ident">surface</span>().<span class="ident">expect</span>(<span class="string">&quot;The window has to be mapped first&quot;</span>);
-            <span class="kw">if</span> <span class="ident">surface</span>
-                .<span class="ident">display</span>()
-                .<span class="ident">expect</span>(<span class="string">&quot;Surface has to be attached to a display&quot;</span>)
+        <span class="kw">if</span> <span class="kw">let</span> <span class="self">Self</span><span class="ident">::Gtk4</span> { <span class="ident">native</span>, <span class="ident">handle</span>: <span class="kw">_</span> } <span class="op">=</span> <span class="self">self</span> {
+            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">glib::MainContext::default</span>();
+            <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">native</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">async</span> <span class="kw">move</span> {
+                <span class="kw">let</span> <span class="ident">native</span> <span class="op">=</span> <span class="ident">native</span>.<span class="ident">lock</span>().<span class="kw">await</span>;
+                <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">native</span>.<span class="ident">surface</span>().<span class="ident">unwrap</span>();
+                <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">display</span>()
+                .<span class="ident">unwrap</span>()
                 .<span class="ident">type_</span>()
-                .<span class="ident">name</span>()
-                <span class="op">=</span><span class="op">=</span> <span class="string">&quot;GdkWaylandDisplay&quot;</span>
+                .<span class="ident">name</span>();
+                <span class="kw">if</span> <span class="ident">name</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;GdkWaylandDisplay&quot;</span>
             {
-                <span class="kw">let</span> <span class="ident">top_level</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">downcast</span>::<span class="op">&lt;</span><span class="ident">gdk4wayland::WaylandToplevel</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+                <span class="kw">let</span> <span class="ident">top_level</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk4wayland::WaylandToplevel</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
                 <span class="ident">top_level</span>.<span class="ident">unexport_handle</span>();
             }
+            }));
         }
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
         <span class="kw">if</span> <span class="kw">let</span> <span class="self">Self</span><span class="ident">::Gtk3</span> { <span class="ident">window</span>, <span class="ident">handle</span>: <span class="kw">_</span> } <span class="op">=</span> <span class="self">self</span> {
-            <span class="kw">use</span> <span class="ident">gtk3::prelude::ObjectExt</span>;
-
-            <span class="kw">if</span> <span class="ident">window</span>.<span class="ident">display</span>().<span class="ident">type_</span>().<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="string">&quot;GdkWaylandDisplay&quot;</span> {
-                <span class="ident">unexport_wayland_handle</span>(<span class="ident">window</span>);
-            }
+            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">glib::MainContext::default</span>();
+            <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">window</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">async</span> <span class="kw">move</span> {
+                <span class="kw">let</span> <span class="ident">window</span> <span class="op">=</span> <span class="ident">window</span>.<span class="ident">lock</span>().<span class="kw">await</span>;
+                <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">window</span>.<span class="ident">display</span>().<span class="ident">type_</span>().<span class="ident">name</span>();
+                <span class="kw">if</span> <span class="ident">name</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;GdkWaylandDisplay&quot;</span> {
+                    <span class="ident">unexport_wayland_handle</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">window</span>);
+                }
+            }));
         }
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unexport_wayland_handle</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">gtk3::glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk3::gdk::Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) {
-    <span class="kw">use</span> <span class="ident">gtk3::gdk</span>;
-
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unexport_wayland_handle</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gdk3::Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) {
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_window_unexport_handle</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gdk::ffi::GdkWindow</span>);
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_window_unexport_handle</span>(<span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gdk3::ffi::GdkWindow</span>);
     }
     <span class="kw">unsafe</span> {
         <span class="ident">gdk_wayland_window_unexport_handle</span>(<span class="ident">win</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
@@ -640,29 +641,22 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk3&quot;</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">export_wayland_handle</span><span class="op">&lt;</span>
-    <span class="ident">W</span>: <span class="ident">gtk3::glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk3::gdk::Window</span><span class="op">&gt;</span>,
-    <span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">gtk3::gdk::Window</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+    <span class="ident">W</span>: <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gdk3::Window</span><span class="op">&gt;</span>,
+    <span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">gdk3::Window</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 <span class="op">&gt;</span>(
     <span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>,
     <span class="ident">callback</span>: <span class="ident">P</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-    <span class="kw">use</span> <span class="ident">std::ffi::c_void</span>;
-    <span class="kw">use</span> <span class="ident">std::os::raw::c_char</span>;
-
-    <span class="kw">use</span> <span class="ident">gtk3::glib</span>::{<span class="self">self</span>, <span class="ident">translate</span>::<span class="kw-2">*</span>};
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
         <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_window_export_handle</span>(
-            <span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gtk3::gdk::ffi::GdkWindow</span>,
-            <span class="ident">cb</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>
-                <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gtk3::gdk::ffi::GdkWindow</span>, <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>),
-            <span class="op">&gt;</span>,
+            <span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gdk3::ffi::GdkWindow</span>,
+            <span class="ident">cb</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gdk3::ffi::GdkWindow</span>, <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)<span class="op">&gt;</span>,
             <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
             <span class="ident">destroy_notify</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)<span class="op">&gt;</span>,
         ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
     }
-    <span class="kw">let</span> <span class="ident">callback_data</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">callback</span>);
-    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">callback_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">gtk3::gdk::Window</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-        <span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gtk3::gdk::ffi::GdkWindow</span>,
+    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">callback_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">gdk3::Window</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+        <span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gdk3::ffi::GdkWindow</span>,
         <span class="ident">handle</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
         <span class="ident">user_data</span>: <span class="ident">glib::ffi::gpointer</span>,
     ) {
@@ -671,18 +665,16 @@
         <span class="kw">let</span> <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="ident">P</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">user_data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
         (<span class="kw-2">*</span><span class="ident">callback</span>)(<span class="kw-2">&amp;</span><span class="ident">window</span>, <span class="ident">handle</span>.<span class="ident">as_str</span>());
     }
-    <span class="kw">let</span> <span class="ident">callback</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">callback_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy_notify</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">gtk3::gdk::Window</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy_notify</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">gdk3::Window</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
         <span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>,
     ) {
-        <span class="kw">let</span> <span class="ident">_callback</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
+        <span class="ident">Box::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
     }
-    <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">callback_data</span>;
     <span class="kw">unsafe</span> {
         <span class="ident">gdk_wayland_window_export_handle</span>(
             <span class="ident">win</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-            <span class="ident">callback</span>,
-            <span class="ident">Box::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">callback_trampoline</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>),
+            <span class="ident">Box::into_raw</span>(<span class="ident">Box::new</span>(<span class="ident">callback</span>)) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
             <span class="prelude-val">Some</span>(<span class="ident">destroy_notify</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>),
         )
     }

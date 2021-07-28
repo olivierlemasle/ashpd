@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;desktop&#x2F;file_chooser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;desktop&#x2F;file_chooser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ashpd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -527,6 +527,9 @@
 <span id="527">527</span>
 <span id="528">528</span>
 <span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -534,6 +537,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{Choice, FileChooserProxy, FileFilter, OpenFileOptions};</span>
+<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
@@ -541,7 +545,7 @@
 <span class="doccomment">//!     let proxy = FileChooserProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let files = proxy</span>
 <span class="doccomment">//!         .open_file(</span>
-<span class="doccomment">//!             Default::default(),</span>
+<span class="doccomment">//!             &amp;WindowIdentifier::default(),</span>
 <span class="doccomment">//!             &quot;open a file to read&quot;,</span>
 <span class="doccomment">//!             OpenFileOptions::default()</span>
 <span class="doccomment">//!                 .accept_label(&quot;read&quot;)</span>
@@ -568,13 +572,14 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{FileChooserProxy, FileFilter, SaveFileOptions};</span>
+<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
 <span class="doccomment">//!     let proxy = FileChooserProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let files = proxy</span>
 <span class="doccomment">//!         .save_file(</span>
-<span class="doccomment">//!             Default::default(),</span>
+<span class="doccomment">//!             &amp;WindowIdentifier::default(),</span>
 <span class="doccomment">//!             &quot;open a file to write&quot;,</span>
 <span class="doccomment">//!             SaveFileOptions::default()</span>
 <span class="doccomment">//!                 .accept_label(&quot;write&quot;)</span>
@@ -594,6 +599,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::file_chooser::{FileChooserProxy, SaveFilesOptions};</span>
+<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; Result&lt;(), ashpd::Error&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::azync::Connection::new_session().await?;</span>
@@ -601,7 +607,7 @@
 <span class="doccomment">//!     let proxy = FileChooserProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let files = proxy</span>
 <span class="doccomment">//!         .save_files(</span>
-<span class="doccomment">//!             Default::default(),</span>
+<span class="doccomment">//!             &amp;WindowIdentifier::default(),</span>
 <span class="doccomment">//!             &quot;open files to write&quot;,</span>
 <span class="doccomment">//!             SaveFilesOptions::default()</span>
 <span class="doccomment">//!                 .accept_label(&quot;write files&quot;)</span>
@@ -985,7 +991,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenFile&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
         <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -993,7 +999,7 @@
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
             <span class="string">&quot;OpenFile&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
         )
         .<span class="kw">await</span>
     }
@@ -1012,7 +1018,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SaveFile&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
         <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">options</span>: <span class="ident">SaveFileOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1020,7 +1026,7 @@
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
             <span class="string">&quot;SaveFile&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
         )
         .<span class="kw">await</span>
     }
@@ -1044,7 +1050,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SaveFiles&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_files</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
         <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">options</span>: <span class="ident">SaveFilesOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1052,7 +1058,7 @@
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
             <span class="string">&quot;SaveFiles&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
         )
         .<span class="kw">await</span>
     }
