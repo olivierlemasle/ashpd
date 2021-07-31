@@ -1155,7 +1155,7 @@
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`PreparePrint`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Print.PreparePrint).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;PreparePint&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;PreparePrint&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">prepare_print</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
@@ -1168,7 +1168,7 @@
         <span class="ident">call_request_method</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
-            <span class="string">&quot;PreparePint&quot;</span>,
+            <span class="string">&quot;PreparePrint&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="ident">settings</span>, <span class="ident">page_setup</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
         )
         .<span class="kw">await</span>
