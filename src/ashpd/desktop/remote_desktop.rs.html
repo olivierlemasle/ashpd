@@ -757,7 +757,7 @@
     <span class="doccomment">/// The selected devices.</span>
     <span class="kw">pub</span> <span class="ident">devices</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The selected streams if a ScreenCast portal is used on the same session</span>
-    <span class="kw">pub</span> <span class="ident">streams</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">streams</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// The interface lets sandboxed applications create remote desktop sessions.</span>
@@ -867,7 +867,7 @@
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
         )
         .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>((<span class="ident">response</span>.<span class="ident">devices</span>, <span class="ident">response</span>.<span class="ident">streams</span>))
+        <span class="prelude-val">Ok</span>((<span class="ident">response</span>.<span class="ident">devices</span>, <span class="ident">response</span>.<span class="ident">streams</span>.<span class="ident">unwrap_or_default</span>()))
     }
 
     <span class="doccomment">/// Notify keyboard code.</span>
