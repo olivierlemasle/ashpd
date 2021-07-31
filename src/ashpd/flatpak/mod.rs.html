@@ -311,6 +311,20 @@
 <span id="311">311</span>
 <span id="312">312</span>
 <span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -343,7 +357,7 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">DESTINATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/Flatpak&quot;</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">fmt::Debug</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">ffi::CString</span>, <span class="ident">fmt::Debug</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
 
 <span class="kw">use</span> <span class="ident">enumflags2::BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde::Serialize</span>;
@@ -579,10 +593,24 @@
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SpawnFlags</span><span class="op">&gt;</span>,
         <span class="ident">options</span>: <span class="ident">SpawnOptions</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">cwd_path</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">cwd_path</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">argv</span> <span class="op">=</span> <span class="ident">argv</span>
+            .<span class="ident">iter</span>()
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">CString::new</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap</span>())
+            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="ident">call_method</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="string">&quot;Spawn&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">cwd_path</span>, <span class="ident">argv</span>, <span class="ident">fds</span>, <span class="ident">envs</span>, <span class="ident">flags</span>, <span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(
+                <span class="ident">cwd_path</span>.<span class="ident">as_bytes_with_nul</span>(),
+                <span class="ident">argv</span>.<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">as_bytes_with_nul</span>())
+                    .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>(),
+                <span class="ident">fds</span>,
+                <span class="ident">envs</span>,
+                <span class="ident">flags</span>,
+                <span class="ident">options</span>,
+            ),
         )
         .<span class="kw">await</span>
     }
