@@ -242,6 +242,7 @@
 <span id="242">242</span>
 <span id="243">243</span>
 <span id="244">244</span>
+<span id="245">245</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -338,6 +339,7 @@
 <span class="doccomment">/// A response to a [`InhibitProxy::create_monitor`] request.</span>
 <span class="kw">struct</span> <span class="ident">CreateMonitor</span> {
     <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath</span>
+    <span class="comment">// replace with an ObjectPath once https://github.com/flatpak/xdg-desktop-portal/pull/609&#39;s merged</span>
     <span class="ident">session_handle</span>: <span class="ident">String</span>,
 }
 

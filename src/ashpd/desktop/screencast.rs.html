@@ -363,6 +363,7 @@
 <span id="363">363</span>
 <span id="364">364</span>
 <span id="365">365</span>
+<span id="366">366</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -497,6 +498,7 @@
 <span class="doccomment">/// A response to a [`ScreenCastProxy::create_session`] request.</span>
 <span class="kw">struct</span> <span class="ident">CreateSession</span> {
     <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath</span>
+    <span class="comment">// replace with an ObjectPath once https://github.com/flatpak/xdg-desktop-portal/pull/609&#39;s merged</span>
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
     <span class="ident">session_handle</span>: <span class="ident">String</span>,
 }
