@@ -451,6 +451,32 @@
 <span id="451">451</span>
 <span id="452">452</span>
 <span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -490,8 +516,17 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">DESTINATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt::Debug</span>, <span class="ident">str::FromStr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{
+    <span class="ident">collections::HashMap</span>,
+    <span class="ident">ffi</span>::{<span class="ident">CString</span>, <span class="ident">OsString</span>},
+    <span class="ident">os::unix::prelude::AsRawFd</span>,
+    <span class="ident">os::unix</span>::{<span class="ident">ffi::OsStrExt</span>, <span class="ident">prelude::OsStringExt</span>},
+};
+<span class="kw">use</span> <span class="ident">std</span>::{
+    <span class="ident">fmt::Debug</span>,
+    <span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>},
+    <span class="ident">str::FromStr</span>,
+};
 
 <span class="kw">use</span> <span class="ident">enumflags2::BitFlags</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">de::Deserializer</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
@@ -685,22 +720,25 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AddNamed`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.AddNamed).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddNamed&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_named</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_named</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">P</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_parent_fd</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>,
-        <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">filename</span>: <span class="ident">P</span>,
         <span class="ident">reuse_existing</span>: <span class="ident">bool</span>,
         <span class="ident">persistent</span>: <span class="ident">bool</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Debug</span>,
+        <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
     {
+        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
         <span class="ident">call_method</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="string">&quot;AddNamed&quot;</span>,
             <span class="kw-2">&amp;</span>(
                 <span class="ident">Fd::from</span>(<span class="ident">o_path_parent_fd</span>.<span class="ident">as_raw_fd</span>()),
-                <span class="ident">filename</span>,
+                <span class="ident">cstr</span>.<span class="ident">as_bytes_with_nul</span>(),
                 <span class="ident">reuse_existing</span>,
                 <span class="ident">persistent</span>,
             ),
@@ -728,23 +766,26 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`AddNamedFull`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.AddNamedFull).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddNamedFull&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_named_full</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_named_full</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">P</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_fd</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>,
-        <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">filename</span>: <span class="ident">P</span>,
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
         <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant::OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">Debug</span>,
+        <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
     {
+        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
         <span class="ident">call_method</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
             <span class="string">&quot;AddNamedFull&quot;</span>,
             <span class="kw-2">&amp;</span>(
                 <span class="ident">Fd::from</span>(<span class="ident">o_path_fd</span>.<span class="ident">as_raw_fd</span>()),
-                <span class="ident">filename</span>,
+                <span class="ident">cstr</span>.<span class="ident">as_bytes_with_nul</span>(),
                 <span class="ident">flags</span>,
                 <span class="ident">app_id</span>,
                 <span class="ident">permissions</span>,
@@ -779,8 +820,10 @@
     <span class="doccomment">/// See also [`GetMountPoint`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.GetMountPoint).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetMountPoint&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_mount_point&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">mount_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">mount_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">cstr</span>: <span class="ident">OsString</span> <span class="op">=</span> <span class="ident">OsStringExt::from_vec</span>(<span class="ident">bytes</span>);
+        <span class="prelude-val">Ok</span>(<span class="ident">Path::new</span>(<span class="kw-2">&amp;</span><span class="ident">cstr</span>).<span class="ident">to_path_buf</span>())
     }
 
     <span class="doccomment">/// Grants access permissions for a file in the document store to an</span>
@@ -824,8 +867,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Info`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.Info).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Info&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">Permissions</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>)).<span class="kw">await</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">PathBuf</span>, <span class="ident">Permissions</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> (<span class="ident">bytes</span>, <span class="ident">permissions</span>): (<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Permissions</span>) <span class="op">=</span>
+            <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">cstr</span>: <span class="ident">OsString</span> <span class="op">=</span> <span class="ident">OsStringExt::from_vec</span>(<span class="ident">bytes</span>);
+
+        <span class="prelude-val">Ok</span>((<span class="ident">Path::new</span>(<span class="kw-2">&amp;</span><span class="ident">cstr</span>).<span class="ident">to_path_buf</span>(), <span class="ident">permissions</span>))
     }
 
     <span class="doccomment">/// Lists documents in the document store for an application (or for all</span>
@@ -865,8 +912,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Lookup`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-Documents.Lookup).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Lookup&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">doc_id</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">filename</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">lookup</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">Debug</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">filename</span>: <span class="ident">P</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
+        <span class="kw">let</span> <span class="ident">doc_id</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">cstr</span>.<span class="ident">as_bytes_with_nul</span>())).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="ident">doc_id</span>.<span class="ident">is_empty</span>() {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
         } <span class="kw">else</span> {
