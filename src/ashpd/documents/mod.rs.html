@@ -481,6 +481,10 @@
 <span id="481">481</span>
 <span id="482">482</span>
 <span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -857,6 +861,8 @@
     <span class="doccomment">/// Gets the filesystem path and application permissions for a document</span>
     <span class="doccomment">/// store entry.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** This call is not available inside the sandbox.</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
@@ -878,6 +884,8 @@
 
     <span class="doccomment">/// Lists documents in the document store for an application (or for all</span>
     <span class="doccomment">/// applications).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note** This call is not available inside the sandbox.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
