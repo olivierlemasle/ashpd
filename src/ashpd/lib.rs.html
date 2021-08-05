@@ -83,8 +83,8 @@
 <span id="83">83</span>
 <span id="84">84</span>
 </pre><pre class="rust">
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">broken_intra_doc_links</span>)]</span>
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">rustdoc::broken_intra_doc_links</span>)]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span> <span class="comment">// until zbus::DBusProxy adds docs to the generated trait</span>
 <span class="doccomment">//! ASHPD, acronym of Aperture Science Handheld Portal Device is a Rust &amp; [zbus](https://gitlab.freedesktop.org/dbus/zbus) wrapper of</span>
 <span class="doccomment">//! the XDG portals DBus interfaces. The library aims to provide an easy way to</span>
 <span class="doccomment">//! interact with the various portals defined per the [specifications](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html).</span>
@@ -166,7 +166,7 @@
     <span class="ident">std::path::Path::new</span>(<span class="string">&quot;/.flatpak-info&quot;</span>).<span class="ident">exists</span>()
 }
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::error::Error</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::error</span>::{<span class="ident">Error</span>, <span class="ident">PortalError</span>};
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ashpd" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
