@@ -140,7 +140,7 @@
 <span class="kw">use</span> <span class="ident">zvariant_derive::Type</span>;
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_method</span>, <span class="ident">Error</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">error::PortalError</span>, <span class="ident">helpers::call_method</span>, <span class="ident">Error</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
@@ -194,7 +194,7 @@
     {
         <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;TrashFile&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">Fd::from</span>(<span class="ident">fd</span>.<span class="ident">as_raw_fd</span>()))).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">status</span> {
-            <span class="ident">TrashStatus::Failed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error::TrashFailed</span>),
+            <span class="ident">TrashStatus::Failed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">PortalError::Failed</span>),
             <span class="ident">TrashStatus::Succeeded</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
         }
     }

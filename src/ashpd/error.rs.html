@@ -50,26 +50,52 @@
 <span id="50">50</span>
 <span id="51">51</span>
 <span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::desktop::request::ResponseError</span>;
+<span class="kw">use</span> <span class="ident">zbus_macros::DBusError</span>;
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DBusError</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">dbus_error</span>(<span class="ident">prefix</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Error&quot;</span>)]</span>
+<span class="doccomment">/// An error type that describes the various DBus errors.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See https://github.com/flatpak/xdg-desktop-portal/blob/master/src/xdp-utils.h#L119-L127.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PortalError</span> {
+    <span class="ident">ZBus</span>(<span class="ident">zbus::Error</span>),
+    <span class="ident">Failed</span>,
+    <span class="ident">InvalidArgument</span>,
+    <span class="ident">NotFound</span>,
+    <span class="ident">Exists</span>,
+    <span class="ident">NotAllowed</span>,
+    <span class="ident">Cancelled</span>,
+    <span class="ident">WindowDestroyed</span>,
+}
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// The error type for ashpd.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
     <span class="doccomment">/// The portal request didn&#39;t succeed.</span>
-    <span class="ident">Portal</span>(<span class="ident">ResponseError</span>),
+    <span class="ident">Response</span>(<span class="ident">ResponseError</span>),
+    <span class="doccomment">/// Something Failed on the portal request.</span>
+    <span class="ident">Portal</span>(<span class="ident">PortalError</span>),
     <span class="doccomment">/// A zbus::fdo specific error.</span>
-    <span class="ident">ZbusFdo</span>(<span class="ident">zbus::fdo::Error</span>),
-    <span class="doccomment">/// A zbus specific error.</span>
-    <span class="ident">Zbus</span>(<span class="ident">zbus::Error</span>),
+    <span class="ident">Zbus</span>(<span class="ident">zbus::fdo::Error</span>),
     <span class="doccomment">/// A signal returned no response.</span>
     <span class="ident">NoResponse</span>,
-    <span class="doccomment">/// Failed to register a game with</span>
-    <span class="doccomment">/// [`GameModeProxy::register_game`](`crate::desktop::game_mode::GameModeProxy::register_game`).</span>
-    <span class="ident">RegisterGameRejected</span>,
-    <span class="doccomment">/// Failed to trash a file, caused by</span>
-    <span class="doccomment">/// [`TrashProxy::trash_file`](`crate::desktop::trash::TrashProxy::trash_file`).</span>
-    <span class="ident">TrashFailed</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">Error</span> {}
@@ -77,30 +103,34 @@
 <span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span><span class="ident">::Portal</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Portal response error: {}&quot;</span>, <span class="ident">e</span>)),
-            <span class="self">Self</span><span class="ident">::ZbusFdo</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;zbus fdo error: {}&quot;</span>, <span class="ident">e</span>)),
-            <span class="self">Self</span><span class="ident">::Zbus</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;zbus error: {}&quot;</span>, <span class="ident">e</span>)),
-            <span class="self">Self</span><span class="ident">::NoResponse</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;portal error: no response&quot;</span>),
-            <span class="self">Self</span><span class="ident">::RegisterGameRejected</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Failed to register/un-register game mode&quot;</span>),
-            <span class="self">Self</span><span class="ident">::TrashFailed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Failed to trash a file&quot;</span>),
+            <span class="self">Self</span><span class="ident">::Response</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Portal request didn&#39;t succeed: {}&quot;</span>, <span class="ident">e</span>)),
+            <span class="self">Self</span><span class="ident">::Zbus</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;ZBus Error: {}&quot;</span>, <span class="ident">e</span>)),
+            <span class="self">Self</span><span class="ident">::Portal</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Portal request failed: {}&quot;</span>, <span class="ident">e</span>)),
+            <span class="self">Self</span><span class="ident">::NoResponse</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Portal error: no response&quot;</span>),
         }
     }
 }
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ResponseError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">ResponseError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span><span class="ident">::Response</span>(<span class="ident">e</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">PortalError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">PortalError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span><span class="ident">::Portal</span>(<span class="ident">e</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">zbus::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">zbus::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span><span class="ident">::Zbus</span>(<span class="ident">e</span>)
+        <span class="self">Self</span><span class="ident">::Portal</span>(<span class="ident">PortalError::ZBus</span>(<span class="ident">e</span>))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">zbus::fdo::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">zbus::fdo::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span><span class="ident">::ZbusFdo</span>(<span class="ident">e</span>)
+        <span class="self">Self</span><span class="ident">::Zbus</span>(<span class="ident">e</span>)
     }
 }
 </pre></div>
