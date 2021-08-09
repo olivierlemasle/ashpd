@@ -259,7 +259,7 @@
 <span class="kw">use</span> <span class="ident">zvariant::OwnedValue</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive::Type</span>;
 
-<span class="kw">use</span> <span class="kw">super</span><span class="ident">::DESTINATION</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">super</span>::DESTINATION</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">desktop::HandleToken</span>,
     <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>},
@@ -311,7 +311,7 @@
                 )
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">de::SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -377,8 +377,8 @@
 <span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">ResponseError</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span><span class="ident">::Cancelled</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Cancelled&quot;</span>),
-            <span class="self">Self</span><span class="ident">::Other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Other&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Cancelled</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Cancelled&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Other&quot;</span>),
         }
     }
 }
@@ -399,8 +399,8 @@
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ResponseError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ResponseType</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">ResponseError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">err</span> {
-            <span class="ident">ResponseError::Other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Other</span>,
-            <span class="ident">ResponseError::Cancelled</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Cancelled</span>,
+            <span class="ident">ResponseError::Other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Other</span>,
+            <span class="ident">ResponseError::Cancelled</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Cancelled</span>,
         }
     }
 }

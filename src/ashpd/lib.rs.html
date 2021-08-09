@@ -150,7 +150,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">documents</span>;
 <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">mod</span> <span class="ident">window_identifier</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::window_identifier::WindowIdentifier</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::window_identifier::WindowIdentifier</span>;
 <span class="doccomment">/// Spawn commands outside the sandbox or monitor if the running application has</span>
 <span class="doccomment">/// received an update &amp; install it.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">flatpak</span>;
@@ -166,7 +166,7 @@
     <span class="ident">std::path::Path::new</span>(<span class="string">&quot;/.flatpak-info&quot;</span>).<span class="ident">exists</span>()
 }
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::error</span>::{<span class="ident">Error</span>, <span class="ident">PortalError</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::error</span>::{<span class="ident">Error</span>, <span class="ident">PortalError</span>};
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ashpd" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
