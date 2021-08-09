@@ -165,7 +165,6 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
-<span id="168">168</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -323,8 +322,7 @@
         .<span class="ident">add_listener_local</span>()
         .<span class="ident">global</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">global</span><span class="op">|</span> {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">props</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">props</span> {
-                <span class="kw">if</span> <span class="ident">props</span>.<span class="ident">get</span>(<span class="string">&quot;media.class&quot;</span>) <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;Video/Source&quot;</span>)
-                    <span class="op">&amp;&amp;</span> <span class="ident">props</span>.<span class="ident">get</span>(<span class="string">&quot;media.role&quot;</span>) <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;Camera&quot;</span>)
+                <span class="kw">if</span> <span class="ident">props</span>.<span class="ident">get</span>(<span class="string">&quot;media.role&quot;</span>) <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;Camera&quot;</span>)
                 {
                     <span class="ident">callback</span>.<span class="ident">clone</span>()(<span class="ident">global</span>.<span class="ident">id</span>);
                     <span class="ident">loop_clone</span>.<span class="ident">quit</span>();
