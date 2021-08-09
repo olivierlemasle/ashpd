@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["CameraProxy","The interface lets sandboxed applications access camera devices, such as web cams."]]});
+initSidebarItems({"fn":[["pipewire_node_id","A helper to get the PipeWire Node ID to use with the camera file descriptor returned by [`CameraProxy::open_pipe_wire_remote`]."]],"struct":[["CameraProxy","The interface lets sandboxed applications access camera devices, such as web cams."]]});
