@@ -9,7 +9,7 @@ interact with the various portals defined per the <a href="https://flatpak.githu
 <span class="kw">use</span> <span class="ident">ashpd::WindowIdentifier</span>;
 
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ashpd::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus::azync::Connection::session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus::Connection::session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">ScreenshotProxy::new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">proxy</span>.<span class="ident">pick_color</span>(<span class="kw-2">&amp;</span><span class="ident">WindowIdentifier::default</span>()).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -23,7 +23,7 @@ interact with the various portals defined per the <a href="https://flatpak.githu
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">ashpd::desktop::camera::CameraProxy</span>;
 
 <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ashpd::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus::azync::Connection::session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus::Connection::session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">CameraProxy::new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="kw">if</span> <span class="ident">proxy</span>.<span class="ident">is_camera_present</span>().<span class="kw">await</span><span class="question-mark">?</span> {
         <span class="ident">proxy</span>.<span class="ident">access_camera</span>().<span class="kw">await</span><span class="question-mark">?</span>;

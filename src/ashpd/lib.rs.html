@@ -99,7 +99,7 @@
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let connection = zbus::azync::Connection::session().await?;</span>
+<span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let color = proxy.pick_color(&amp;WindowIdentifier::default()).await?;</span>
@@ -115,7 +115,7 @@
 <span class="doccomment">//! use ashpd::desktop::camera::CameraProxy;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! pub async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let connection = zbus::azync::Connection::session().await?;</span>
+<span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
 <span class="doccomment">//!     let proxy = CameraProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     if proxy.is_camera_present().await? {</span>
 <span class="doccomment">//!         proxy.access_camera().await?;</span>
