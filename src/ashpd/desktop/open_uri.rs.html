@@ -298,6 +298,9 @@
 <span id="298">298</span>
 <span id="299">299</span>
 <span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Open a file</span>
@@ -387,7 +390,7 @@
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
 <span class="doccomment">//!     let proxy = OpenURIProxy::new(&amp;connection).await?;</span>
-<span class="doccomment">//!     let uri = &quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;;</span>
+<span class="doccomment">//!     let uri = &quot;https://github.com/bilelmoussaoui/ashpd&quot;;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     proxy.open_uri(&amp;WindowIdentifier::default(), uri, false, true).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -537,6 +540,9 @@
     <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
     <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or</span>
     <span class="doccomment">///   not.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// *Note* that `file` uris are explicitly not supported by this method.</span>
+    <span class="doccomment">/// Use [`Self::open_file`] or [`Self::open_directory`] instead.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
