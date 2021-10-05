@@ -168,6 +168,9 @@
 <span id="168">168</span>
 <span id="169">169</span>
 <span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -280,24 +283,27 @@
 <span class="doccomment">/// A helper to get the PipeWire Node ID to use with the camera file descriptor returned by</span>
 <span class="doccomment">/// [`CameraProxy::open_pipe_wire_remote`].</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Currently, the camera portal only gives us a file descriptor except such fd can be re-used by other</span>
-<span class="doccomment">/// portals like the screen cast one. Not passing a node id makes the `pipewiresrc` for example confused</span>
-<span class="doccomment">/// about which node to use.</span>
+<span class="doccomment">/// Currently, the camera portal only gives us a file descriptor. Not passing a node id</span>
+<span class="doccomment">/// may cause the media session controller to auto-connect the client to an incorrect node.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The method looks for the available output streams of a `media.role` type of `Camera`</span>
-<span class="doccomment">/// and return their Node ID. This is necessary until the camera portal is capable of handling multiple camera streams</span>
-<span class="doccomment">/// and so giving the user the Node ID information.</span>
+<span class="doccomment">/// and return their Node ID.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// *Note* using this method requires access to `xdg-run/pipewire-0` which sandboxed applications don&#39;t have access to.</span>
-<span class="doccomment">/// In the case of Flatpak, make sure to add `--filesystem=xdg-run/pipewire-0` to your `finish-args`.</span>
+<span class="doccomment">/// *Note* The socket referenced by `fd` must not be used while this function is running.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_pipewire&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pipewire_node_id</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">pw::Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pipewire_node_id</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">pw::Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">fd</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc::fcntl</span>(<span class="ident">fd</span>, <span class="ident">libc::F_DUPFD_CLOEXEC</span>, <span class="number">3</span>) };
+
+    <span class="kw">if</span> <span class="ident">fd</span> <span class="op">=</span><span class="op">=</span> <span class="op">-</span><span class="number">1</span> {
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">pw::Error::CreationFailed</span>);
+    }
+
     <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures::channel::oneshot::channel</span>();
 
     <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">std::sync::Arc::new</span>(<span class="ident">std::sync::Mutex::new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
     <span class="ident">std::thread::spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="ident">inner_sender</span> <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">clone</span>();
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">pipewire_node_id_inner</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">node_id</span><span class="op">|</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">pipewire_node_id_inner</span>(<span class="ident">fd</span>, <span class="kw">move</span> <span class="op">|</span><span class="ident">node_id</span><span class="op">|</span> {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">guard</span>) <span class="op">=</span> <span class="ident">inner_sender</span>.<span class="ident">lock</span>() {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inner_sender</span>) <span class="op">=</span> <span class="ident">guard</span>.<span class="ident">take</span>() {
                     <span class="kw">let</span> <span class="ident">_result</span> <span class="op">=</span> <span class="ident">inner_sender</span>.<span class="ident">send</span>(<span class="prelude-val">Ok</span>(<span class="ident">node_id</span>));
@@ -315,11 +321,11 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_pipewire&quot;</span>)]</span>
-<span class="kw">fn</span> <span class="ident">pipewire_node_id_inner</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">u32</span>) <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">pw::Error</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">pipewire_node_id_inner</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">u32</span>) <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">pw::Error</span><span class="op">&gt;</span> {
     <span class="kw">use</span> <span class="ident">pw::prelude</span>::<span class="kw-2">*</span>;
     <span class="kw">let</span> <span class="ident">mainloop</span> <span class="op">=</span> <span class="ident">pw::MainLoop::new</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">pw::Context::new</span>(<span class="kw-2">&amp;</span><span class="ident">mainloop</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">connect</span>(<span class="prelude-val">None</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">connect_fd</span>(<span class="ident">fd</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">registry</span> <span class="op">=</span> <span class="ident">core</span>.<span class="ident">get_registry</span>()<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">loop_clone</span> <span class="op">=</span> <span class="ident">mainloop</span>.<span class="ident">clone</span>();
