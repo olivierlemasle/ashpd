@@ -163,7 +163,7 @@
 <span class="doccomment">/// Check whether the application is running inside a sandbox.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// **Note** The check is very stupid as is for now.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sandboxed</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sandboxed</span>() -&gt; <span class="ident">bool</span> {
     <span class="ident">std::path::Path::new</span>(<span class="string">&quot;/.flatpak-info&quot;</span>).<span class="ident">exists</span>()
 }
 
