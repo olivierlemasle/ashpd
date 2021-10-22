@@ -243,6 +243,7 @@
 <span id="243">243</span>
 <span id="244">244</span>
 <span id="245">245</span>
+<span id="246">246</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">collections::HashMap</span>,
     <span class="ident">convert::TryFrom</span>,
@@ -444,6 +445,7 @@
             <span class="ident">unique_identifier</span>, <span class="ident">handle_token</span>
         ))
         .<span class="ident">unwrap</span>();
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;log&quot;</span>)]</span>
         <span class="macro">tracing::info!</span>(<span class="string">&quot;Creating a org.freedesktop.portal.Request {}&quot;</span>, <span class="ident">path</span>);
         <span class="ident">RequestProxy::new</span>(<span class="ident">connection</span>, <span class="ident">path</span>).<span class="kw">await</span>
     }

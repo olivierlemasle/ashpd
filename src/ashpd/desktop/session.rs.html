@@ -106,6 +106,7 @@
 <span id="106">106</span>
 <span id="107">107</span>
 <span id="108">108</span>
+<span id="109">109</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">convert::TryFrom</span>, <span class="ident">fmt::Debug</span>};
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
@@ -161,6 +162,7 @@
             <span class="ident">unique_identifier</span>, <span class="ident">handle_token</span>
         ))
         .<span class="ident">unwrap</span>();
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;log&quot;</span>)]</span>
         <span class="macro">tracing::info!</span>(<span class="string">&quot;Creating a org.freedesktop.portal.Session {}&quot;</span>, <span class="ident">path</span>);
         <span class="ident">SessionProxy::new</span>(<span class="ident">connection</span>, <span class="ident">path</span>).<span class="kw">await</span>
     }

@@ -82,12 +82,16 @@
 <span id="82">82</span>
 <span id="83">83</span>
 <span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">core::fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">convert::TryFrom</span>, <span class="ident">fmt::Display</span>};
 
 <span class="kw">use</span> <span class="ident">rand::distributions::Alphanumeric</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">thread_rng</span>, <span class="ident">Rng</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="kw">use</span> <span class="ident">zbus_names::OwnedMemberName</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive::Type</span>;
 
 <span class="doccomment">/// A handle token is a DBus Object Path element, specified in the</span>
@@ -98,7 +102,7 @@
 <span class="doccomment">/// A valid object path element must only contain the ASCII characters</span>
 <span class="doccomment">/// `[A-Z][a-z][0-9]_`</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HandleToken</span>(<span class="ident">String</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HandleToken</span>(<span class="ident">OwnedMemberName</span>);
 
 <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">HandleToken</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
@@ -136,7 +140,9 @@
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HandleInvalidCharacter</span>(<span class="ident">char</span>));
             }
         }
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">value</span>.<span class="ident">to_string</span>()))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(
+            <span class="ident">OwnedMemberName::try_from</span>(<span class="ident">value</span>).<span class="ident">expect</span>(<span class="string">&quot;Invalid handle token&quot;</span>),
+        ))
     }
 }
 

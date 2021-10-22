@@ -606,6 +606,101 @@
 <span id="606">606</span>
 <span id="607">607</span>
 <span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
+<span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Print a file</span>
@@ -645,34 +740,92 @@
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">str::FromStr</span>};
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Signature</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">TypeDict</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_request_method</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+    <span class="ident">Error</span>, <span class="ident">ParseError</span>, <span class="ident">WindowIdentifier</span>,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(
-    <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">AsRefStr</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
-)]</span>
-<span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="doccomment">/// The page orientation.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Orientation</span> {
     <span class="doccomment">/// Landscape.</span>
     <span class="ident">Landscape</span>,
     <span class="doccomment">/// Portrait.</span>
     <span class="ident">Portrait</span>,
-    <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;reverse_landscape&quot;</span>)]</span>
     <span class="doccomment">/// Reverse landscape.</span>
     <span class="ident">ReverseLandscape</span>,
-    <span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;reverse_portrait&quot;</span>)]</span>
     <span class="doccomment">/// Reverse portrait.</span>
     <span class="ident">ReversePortrait</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Landscape</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Landscape&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Portrait</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Portrait&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::ReverseLandscape</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Reverse Landscape&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::ReversePortrait</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Reverse Portrait&quot;</span>),
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Landscape</span> =&gt; <span class="string">&quot;Landscape&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::Portrait</span> =&gt; <span class="string">&quot;Portrait&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::ReverseLandscape</span> =&gt; <span class="string">&quot;Reverse Landscape&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::ReversePortrait</span> =&gt; <span class="string">&quot;Reverse Portrait&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Orientation</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">o</span>: <span class="ident">Orientation</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">match</span> <span class="ident">o</span> {
+            <span class="ident">Orientation::Landscape</span> =&gt; <span class="string">&quot;Landscape&quot;</span>,
+            <span class="ident">Orientation::Portrait</span> =&gt; <span class="string">&quot;Portrait&quot;</span>,
+            <span class="ident">Orientation::ReverseLandscape</span> =&gt; <span class="string">&quot;Reverse Landscape&quot;</span>,
+            <span class="ident">Orientation::ReversePortrait</span> =&gt; <span class="string">&quot;Reverse Portrait&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
+    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">ParseError</span>;
+
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">s</span> {
+            <span class="string">&quot;Landscape&quot;</span> <span class="op">|</span> <span class="string">&quot;landscape&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::Landscape</span>),
+            <span class="string">&quot;Portrait&quot;</span> <span class="op">|</span> <span class="string">&quot;portrait&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::Portrait</span>),
+            <span class="string">&quot;ReverseLandscape&quot;</span> <span class="op">|</span> <span class="string">&quot;reverse_landscape&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::ReverseLandscape</span>),
+            <span class="string">&quot;ReversePortrait&quot;</span> <span class="op">|</span> <span class="string">&quot;reverse_portrait&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::ReversePortrait</span>),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>(
+                <span class="string">&quot;Failed to parse orientation, invalid value&quot;</span>.<span class="ident">to_string</span>(),
+            )),
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Serializer</span>,
+    {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Landscape</span> =&gt; <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="string">&quot;landscape&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Portrait</span> =&gt; <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="string">&quot;portrait&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::ReverseLandscape</span> =&gt; <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="string">&quot;reverse_landscape&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::ReversePortrait</span> =&gt; <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="string">&quot;reverse_portrait&quot;</span>),
+        }
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
@@ -681,19 +834,7 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">S</span>: <span class="ident">Serializer</span>,
-    {
-        <span class="ident">String::serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>(), <span class="ident">serializer</span>)
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(
-    <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">EnumString</span>, <span class="ident">AsRefStr</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
-)]</span>
-<span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="doccomment">/// The print quality.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Quality</span> {
     <span class="doccomment">/// Draft quality.</span>
@@ -706,18 +847,67 @@
     <span class="ident">High</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">Quality</span> {
-    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">String::signature</span>()
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Quality</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Draft</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Draft&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Low&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Normal&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;High&quot;</span>),
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Quality</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Draft</span> =&gt; <span class="string">&quot;Draft&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Quality</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">q</span>: <span class="ident">Quality</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">match</span> <span class="ident">q</span> {
+            <span class="ident">Quality::Draft</span> =&gt; <span class="string">&quot;Draft&quot;</span>,
+            <span class="ident">Quality::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
+            <span class="ident">Quality::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
+            <span class="ident">Quality::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Quality</span> {
+    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">ParseError</span>;
+
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">s</span> {
+            <span class="string">&quot;Draft&quot;</span> <span class="op">|</span> <span class="string">&quot;draft&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::Draft</span>),
+            <span class="string">&quot;Low&quot;</span> <span class="op">|</span> <span class="string">&quot;low&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::Low</span>),
+            <span class="string">&quot;Normal&quot;</span> <span class="op">|</span> <span class="string">&quot;normal&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::Normal</span>),
+            <span class="string">&quot;High&quot;</span> <span class="op">|</span> <span class="string">&quot;high&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::High</span>),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>(
+                <span class="string">&quot;Failed to parse quality, invalid value&quot;</span>.<span class="ident">to_string</span>(),
+            )),
+        }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Quality</span> {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
-        <span class="ident">String::serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>(), <span class="ident">serializer</span>)
+        <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">to_lowercase</span>())
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">Quality</span> {
+    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+        <span class="ident">String::signature</span>()
     }
 }
 

@@ -306,6 +306,53 @@
 <span id="306">306</span>
 <span id="307">307</span>
 <span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -348,21 +395,19 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">str::FromStr</span>};
+
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="self">self</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">strum_macros</span>::{<span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>};
 <span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">OwnedValue</span>, <span class="ident">Signature</span>};
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>},
-    <span class="ident">Error</span>,
+    <span class="ident">Error</span>, <span class="ident">ParseError</span>,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(
-    <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">AsRefStr</span>, <span class="ident">EnumString</span>, <span class="ident">IntoStaticStr</span>, <span class="ident">ToString</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
-)]</span>
-<span class="attribute">#[<span class="ident">strum</span>(<span class="ident">serialize_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="doccomment">/// The notification priority</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Priority</span> {
     <span class="doccomment">/// Low.</span>
@@ -375,18 +420,67 @@
     <span class="ident">Urgent</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">Priority</span> {
-    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">String::signature</span>()
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Priority</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Low&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Normal&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;High&quot;</span>),
+            <span class="ident"><span class="self">Self</span>::Urgent</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Urgent&quot;</span>),
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Priority</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::Urgent</span> =&gt; <span class="string">&quot;Urgent&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Priority</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">d</span>: <span class="ident">Priority</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">match</span> <span class="ident">d</span> {
+            <span class="ident">Priority::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
+            <span class="ident">Priority::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
+            <span class="ident">Priority::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
+            <span class="ident">Priority::Urgent</span> =&gt; <span class="string">&quot;Urgent&quot;</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Priority</span> {
+    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">ParseError</span>;
+
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">s</span> {
+            <span class="string">&quot;Low&quot;</span> <span class="op">|</span> <span class="string">&quot;low&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::Low</span>),
+            <span class="string">&quot;Normal&quot;</span> <span class="op">|</span> <span class="string">&quot;normal&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::Normal</span>),
+            <span class="string">&quot;High&quot;</span> <span class="op">|</span> <span class="string">&quot;high&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::High</span>),
+            <span class="string">&quot;Urgent&quot;</span> <span class="op">|</span> <span class="string">&quot;urgent&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::Urgent</span>),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>(
+                <span class="string">&quot;Failed to parse priority, invalid value&quot;</span>.<span class="ident">to_string</span>(),
+            )),
+        }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Priority</span> {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
-        <span class="ident">String::serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>(), <span class="ident">serializer</span>)
+        <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">to_lowercase</span>())
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">Priority</span> {
+    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+        <span class="ident">String::signature</span>()
     }
 }
 
