@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["RealtimeProxy","Interface for setting a thread to realtime from within the sandbox."]]});

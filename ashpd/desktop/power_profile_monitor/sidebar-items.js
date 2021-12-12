@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PowerProfileMonitorProxy","The interface provides information about the user-selected system-wide power profile, to sandboxed applications. It is not a portal in the strict sense, since it does not involve user interaction."]]});

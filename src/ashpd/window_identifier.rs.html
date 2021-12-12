@@ -304,7 +304,7 @@
 <span class="doccomment">/// this reason.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Under X11, the [`WindowIdentifier`] should have the form `x11:XID`, where</span>
-<span class="doccomment">/// XID is the XID of the application window. Under Wayland, it should have the</span>
+<span class="doccomment">/// XID is the XID of the application window in hexadecimal. Under Wayland, it should have the</span>
 <span class="doccomment">/// form `wayland:HANDLE`, where HANDLE is a surface handle obtained with the</span>
 <span class="doccomment">/// [xdg-foreign](https://github.com/wayland-project/wayland-protocols/blob/master/unstable/xdg-foreign/xdg-foreign-unstable-v2.xml) protocol.</span>
 <span class="doccomment">///</span>
@@ -473,7 +473,7 @@
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">backend</span>.<span class="ident">is_x11</span>() {
             <span class="ident">surface</span>
                 .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk4x11::X11Surface</span><span class="op">&gt;</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;x11:{}&quot;</span>, <span class="ident">w</span>.<span class="ident">xid</span>()))
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;x11:0x{:x}&quot;</span>, <span class="ident">w</span>.<span class="ident">xid</span>()))
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         };
@@ -516,7 +516,7 @@
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">backend</span>.<span class="ident">is_x11</span>() {
             <span class="ident">win</span>.<span class="ident">as_ref</span>()
                 .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3x11::X11Window</span><span class="op">&gt;</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;x11:{}&quot;</span>, <span class="ident">w</span>.<span class="ident">xid</span>()))
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;x11:0x{:x}&quot;</span>, <span class="ident">w</span>.<span class="ident">xid</span>()))
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         };
