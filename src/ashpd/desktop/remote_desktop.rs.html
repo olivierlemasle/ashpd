@@ -772,7 +772,7 @@
 
 <span class="doccomment">/// The interface lets sandboxed applications create remote desktop sessions.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.RemoteDesktop`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-org.freedesktop.portal.RemoteDesktop).</span>
+<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.RemoteDesktop`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.RemoteDesktop).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.RemoteDesktop&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RemoteDesktopProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
@@ -800,7 +800,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.CreateSession).</span>
+    <span class="doccomment">/// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.CreateSession).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateSession&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CreateRemoteOptions::default</span>();
@@ -829,7 +829,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`SelectDevices`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.SelectDevices).</span>
+    <span class="doccomment">/// See also [`SelectDevices`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.SelectDevices).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SelectDevices&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">select_devices</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -860,7 +860,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.Start).</span>
+    <span class="doccomment">/// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.Start).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Start&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -892,7 +892,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyKeyboardKeycode`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyKeyboardKeycode).</span>
+    <span class="doccomment">/// See also [`NotifyKeyboardKeycode`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyKeyboardKeycode).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyKeyboardKeycode&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_keyboard_keycode</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -925,7 +925,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyKeyboardKeysym`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyKeyboardKeysym).</span>
+    <span class="doccomment">/// See also [`NotifyKeyboardKeysym`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyKeyboardKeysym).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyKeyboardKeysym&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_keyboard_keysym</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -957,7 +957,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyTouchUp`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchUp).</span>
+    <span class="doccomment">/// See also [`NotifyTouchUp`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchUp).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchUp&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_touch_up</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -988,7 +988,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyTouchDown`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchDown).</span>
+    <span class="doccomment">/// See also [`NotifyTouchDown`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchDown).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchDown&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_touch_down</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1027,7 +1027,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyTouchMotion`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchMotion).</span>
+    <span class="doccomment">/// See also [`NotifyTouchMotion`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchMotion).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchMotion&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_touch_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1062,7 +1062,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyPointerMotionAbsolute`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerMotionAbsolute).</span>
+    <span class="doccomment">/// See also [`NotifyPointerMotionAbsolute`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerMotionAbsolute).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerMotionAbsolute&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_motion_absolute</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1095,7 +1095,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyPointerMotion`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerMotion).</span>
+    <span class="doccomment">/// See also [`NotifyPointerMotion`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerMotion).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerMotion&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1125,7 +1125,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyPointerButton`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerButton).</span>
+    <span class="doccomment">/// See also [`NotifyPointerButton`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerButton).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerButton&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_button</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1157,7 +1157,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyPointerAxisDiscrete`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerAxisDiscrete).</span>
+    <span class="doccomment">/// See also [`NotifyPointerAxisDiscrete`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerAxisDiscrete).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerAxisDiscrete&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_axis_discrete</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1194,7 +1194,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`NotifyPointerAxis`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerAxis).</span>
+    <span class="doccomment">/// See also [`NotifyPointerAxis`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyPointerAxis).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerAxis&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_axis</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1212,7 +1212,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AvailableDeviceTypes`](https://flatpak.github.io/xdg-desktop-portal/portal-docs.html#gdbus-property-org-freedesktop-portal-RemoteDesktop.AvailableDeviceTypes).</span>
+    <span class="doccomment">/// See also [`AvailableDeviceTypes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-RemoteDesktop.AvailableDeviceTypes).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AvailableDeviceTypes&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">available_device_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>()
@@ -1222,5 +1222,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (928783de6 2021-12-11)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (8f117a77d 2021-12-13)" ></div>
 </body></html>
