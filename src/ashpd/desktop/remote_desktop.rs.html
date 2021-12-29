@@ -613,6 +613,8 @@
 <span id="611">611</span>
 <span id="612">612</span>
 <span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -643,7 +645,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::remote_desktop::{DeviceType, KeyState, RemoteDesktopProxy};</span>
-<span class="doccomment">//! use ashpd::desktop::screencast::{CursorMode, ScreenCastProxy, SourceType};</span>
+<span class="doccomment">//! use ashpd::desktop::screencast::{CursorMode, PersistMode, ScreenCastProxy, SourceType};</span>
 <span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
@@ -661,6 +663,8 @@
 <span class="doccomment">//!             CursorMode::Metadata.into(),</span>
 <span class="doccomment">//!             SourceType::Monitor | SourceType::Window,</span>
 <span class="doccomment">//!             true,</span>
+<span class="doccomment">//!             None,</span>
+<span class="doccomment">//!             PersistMode::DoNot,</span>
 <span class="doccomment">//!         )</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
@@ -679,6 +683,7 @@
 
 <span class="kw">use</span> <span class="ident">enumflags2</span>::{<span class="ident">bitflags</span>, <span class="ident">BitFlags</span>};
 <span class="kw">use</span> <span class="ident">futures::TryFutureExt</span>;
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zvariant::Value</span>;
 <span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
@@ -690,15 +695,13 @@
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="doccomment">/// The keyboard key state.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">KeyState</span> {
     <span class="doccomment">/// The key is pressed.</span>
-    <span class="ident">Pressed</span>,
+    <span class="ident">Pressed</span> <span class="op">=</span> <span class="number">0</span>,
     <span class="doccomment">/// The key is released..</span>
-    <span class="ident">Released</span>,
+    <span class="ident">Released</span> <span class="op">=</span> <span class="number">1</span>,
 }
 
 <span class="attribute">#[<span class="ident">bitflags</span>]</span>
@@ -714,8 +717,7 @@
     <span class="ident">Touchscreen</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="doccomment">/// The available axis.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Axis</span> {
     <span class="doccomment">/// Vertical axis.</span>
@@ -1196,6 +1198,7 @@
     <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
     <span class="doccomment">/// * `dx` - Relative axis movement on the x axis.</span>
     <span class="doccomment">/// * `dy` - Relative axis movement on the y axis.</span>
+    <span class="doccomment">/// * `finish` - Whether it is the last axis event.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
@@ -1206,10 +1209,11 @@
         <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">dx</span>: <span class="ident">f64</span>,
         <span class="ident">dy</span>: <span class="ident">f64</span>,
+        <span class="ident">finish</span>: <span class="ident">bool</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// The `notify` methods don&#39;t take any options for now</span>
-        <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+        <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L911</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+        <span class="ident">options</span>.<span class="ident">insert</span>(<span class="string">&quot;finish&quot;</span>, <span class="ident">Value::Bool</span>(<span class="ident">finish</span>));
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;NotifyPointerAxis&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">dx</span>, <span class="ident">dy</span>)).<span class="kw">await</span>
     }
 
@@ -1227,5 +1231,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (f8abed9ed 2021-12-26)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (83b15bfe1 2021-12-28)" ></div>
 </body></html>

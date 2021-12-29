@@ -539,6 +539,14 @@
 <span id="537">537</span>
 <span id="538">538</span>
 <span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -612,9 +620,14 @@
     <span class="ident">ExportDirectory</span>,
 }
 
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">OwnedDocumentID</span> <span class="op">=</span> <span class="ident">String</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">OwnedApplicationID</span> <span class="op">=</span> <span class="ident">String</span>;
+
 <span class="doccomment">/// A [`HashMap`] mapping application IDs to the permissions for that</span>
 <span class="doccomment">/// application</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Permissions</span> <span class="op">=</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Permission</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Permissions</span> <span class="op">=</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">OwnedApplicationID</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Permission</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="doccomment">/// The possible permissions to grant to a specific application for a specific</span>
@@ -772,7 +785,7 @@
         <span class="ident">o_path_fd</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>,
         <span class="ident">reuse_existing</span>: <span class="ident">bool</span>,
         <span class="ident">persistent</span>: <span class="ident">bool</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>,
     {
@@ -807,9 +820,9 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">o_path_fds</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">F</span>],
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
-        <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant::OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span><span class="op">&gt;</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant::OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">o_path</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">o_path_fds</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">Fd::from</span>(<span class="ident">f</span>.<span class="ident">as_raw_fd</span>())).<span class="ident">collect</span>();
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;AddFull&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">o_path</span>, <span class="ident">flags</span>, <span class="ident">app_id</span>, <span class="ident">permissions</span>)).<span class="kw">await</span>
     }
@@ -839,7 +852,7 @@
         <span class="ident">filename</span>: <span class="ident">P</span>,
         <span class="ident">reuse_existing</span>: <span class="ident">bool</span>,
         <span class="ident">persistent</span>: <span class="ident">bool</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>,
         <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>,
@@ -884,9 +897,9 @@
         <span class="ident">o_path_fd</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>,
         <span class="ident">filename</span>: <span class="ident">P</span>,
         <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">Flags</span><span class="op">&gt;</span>,
-        <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant::OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">OwnedDocumentID</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">zvariant::OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>,
         <span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>,
@@ -921,7 +934,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Delete`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Delete).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Delete&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Delete&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>)).<span class="kw">await</span>
     }
 
@@ -956,8 +969,8 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GrantPermissions&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">grant_permissions</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;GrantPermissions&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>, <span class="ident">app_id</span>, <span class="ident">permissions</span>)).<span class="kw">await</span>
@@ -981,7 +994,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Info`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Info).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Info&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">PathBuf</span>, <span class="ident">Permissions</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">PathBuf</span>, <span class="ident">Permissions</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">bytes</span>, <span class="ident">permissions</span>): (<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Permissions</span>) <span class="op">=</span>
             <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>((<span class="ident">path_from_null_terminated</span>(<span class="ident">bytes</span>), <span class="ident">permissions</span>))
@@ -1005,7 +1018,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`List`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.List).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;List&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">PathBuf</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">list</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span>, <span class="ident">PathBuf</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">response</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">app_id</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_response</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">PathBuf</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
@@ -1036,7 +1052,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">lookup</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">zvariant::Type</span> <span class="op">+</span> <span class="ident">fmt::Debug</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">filename</span>: <span class="ident">P</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
             .<span class="ident">expect</span>(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
         <span class="kw">let</span> <span class="ident">doc_id</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">cstr</span>.<span class="ident">as_bytes_with_nul</span>())).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1066,8 +1082,8 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RevokePermissions&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">revoke_permissions</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">app_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;RevokePermissions&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>, <span class="ident">app_id</span>, <span class="ident">permissions</span>)).<span class="kw">await</span>
@@ -1079,5 +1095,5 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">file_transfer::FileTransferProxy</span>;
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (f8abed9ed 2021-12-26)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (83b15bfe1 2021-12-28)" ></div>
 </body></html>
