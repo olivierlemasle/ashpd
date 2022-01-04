@@ -325,7 +325,7 @@
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="kw">let</span> <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">fds</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">Fd::from</span>(<span class="ident">f</span>.<span class="ident">as_raw_fd</span>())).<span class="ident">collect</span>();
 
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;AddFiles&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">files</span>, <span class="ident">options</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;AddFiles&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">files</span>, <span class="ident">options</span>)).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Retrieves files that were previously added to the session with</span>
@@ -351,7 +351,7 @@
         <span class="comment">// see https://github.com/GNOME/gtk/blob/master/gdk/filetransferportal.c#L284</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
 
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;RetrieveFiles&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">options</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;RetrieveFiles&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">options</span>)).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Starts a session for a file transfer.</span>
@@ -378,7 +378,7 @@
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">TransferOptions::default</span>()
             .<span class="ident">writeable</span>(<span class="ident">writeable</span>)
             .<span class="ident">auto_stop</span>(<span class="ident">auto_stop</span>);
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;StartTransfer&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;StartTransfer&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Ends the transfer.</span>
@@ -396,7 +396,7 @@
     <span class="doccomment">/// See also [`StopTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.StopTransfer).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;StopTransfer&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stop_transfer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;StopTransfer&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;StopTransfer&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>)).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Emitted when the transfer is closed.</span>
@@ -411,7 +411,7 @@
     <span class="doccomment">/// See also [`TransferClosed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-FileTransfer.TransferClosed).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;TransferClosed&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">transfer_closed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">receive_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;TransferClosed&quot;</span>).<span class="kw">await</span>
+        <span class="ident">receive_signal</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;TransferClosed&quot;</span>).<span class="kw">await</span>
     }
 }
 </code></pre></div>

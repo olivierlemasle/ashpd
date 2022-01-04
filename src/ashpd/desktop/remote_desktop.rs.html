@@ -615,6 +615,19 @@
 <span id="613">613</span>
 <span id="614">614</span>
 <span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -772,9 +785,9 @@
 <span class="doccomment">/// A response to a [`RemoteDesktopProxy::select_devices`] request.</span>
 <span class="kw">struct</span> <span class="ident">SelectedDevices</span> {
     <span class="doccomment">/// The selected devices.</span>
-    <span class="kw">pub</span> <span class="ident">devices</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>,
+    <span class="ident">devices</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The selected streams if a ScreenCast portal is used on the same session</span>
-    <span class="kw">pub</span> <span class="ident">streams</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">streams</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// The interface lets sandboxed applications create remote desktop sessions.</span>
@@ -813,14 +826,17 @@
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CreateRemoteOptions::default</span>();
         <span class="kw">let</span> (<span class="ident">session</span>, <span class="ident">proxy</span>) <span class="op">=</span> <span class="macro">futures::try_join!</span>(
             <span class="ident">call_request_method</span>::<span class="op">&lt;</span><span class="ident">CreateSession</span>, <span class="ident">CreateRemoteOptions</span><span class="op">&gt;</span>(
-                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+                <span class="self">self</span>.<span class="ident">inner</span>(),
                 <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
                 <span class="string">&quot;CreateSession&quot;</span>,
                 <span class="kw-2">&amp;</span><span class="ident">options</span>
             )
             .<span class="ident">into_future</span>(),
-            <span class="ident">SessionProxy::from_unique_name</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">connection</span>(), <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>)
-                .<span class="ident">into_future</span>()
+            <span class="ident">SessionProxy::from_unique_name</span>(
+                <span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">connection</span>(),
+                <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>
+            )
+            .<span class="ident">into_future</span>()
         )<span class="question-mark">?</span>;
         <span class="macro">assert_eq!</span>(<span class="ident">proxy</span>.<span class="ident">inner</span>().<span class="ident">path</span>().<span class="ident">as_str</span>(), <span class="kw-2">&amp;</span><span class="ident">session</span>.<span class="ident">session_handle</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">proxy</span>)
@@ -845,7 +861,7 @@
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">SelectDevicesOptions::default</span>().<span class="ident">types</span>(<span class="ident">types</span>);
         <span class="ident">call_basic_response_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
             <span class="string">&quot;SelectDevices&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
@@ -876,7 +892,7 @@
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">StartRemoteOptions::default</span>();
         <span class="kw">let</span> <span class="ident">response</span>: <span class="ident">SelectedDevices</span> <span class="op">=</span> <span class="ident">call_request_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
             <span class="string">&quot;Start&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
@@ -911,7 +927,7 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">call_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="string">&quot;NotifyKeyboardKeycode&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">keycode</span>, <span class="ident">state</span>),
         )
@@ -944,7 +960,7 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">call_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="string">&quot;NotifyKeyboardKeysym&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">keysym</span>, <span class="ident">state</span>),
         )
@@ -974,7 +990,7 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now</span>
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;NotifyTouchUp&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">slot</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;NotifyTouchUp&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">slot</span>)).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Notify about a new touch down event.</span>
@@ -1009,7 +1025,7 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">call_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="string">&quot;NotifyTouchDown&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">stream</span>, <span class="ident">slot</span>, <span class="ident">x</span>, <span class="ident">y</span>),
         )
@@ -1048,7 +1064,7 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">call_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="string">&quot;NotifyTouchMotion&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">stream</span>, <span class="ident">slot</span>, <span class="ident">x</span>, <span class="ident">y</span>),
         )
@@ -1082,7 +1098,7 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">call_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="string">&quot;NotifyPointerMotionAbsolute&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">stream</span>, <span class="ident">x</span>, <span class="ident">y</span>),
         )
@@ -1113,7 +1129,12 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now</span>
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;NotifyPointerMotion&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">dx</span>, <span class="ident">dy</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(
+            <span class="self">self</span>.<span class="ident">inner</span>(),
+            <span class="string">&quot;NotifyPointerMotion&quot;</span>,
+            <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">dx</span>, <span class="ident">dy</span>),
+        )
+        .<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Notify pointer button.</span>
@@ -1144,7 +1165,7 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">call_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="string">&quot;NotifyPointerButton&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">button</span>, <span class="ident">state</span>),
         )
@@ -1176,7 +1197,7 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">call_method</span>(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
+            <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="string">&quot;NotifyPointerAxisDiscrete&quot;</span>,
             <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">axis</span>, <span class="ident">steps</span>),
         )
@@ -1214,7 +1235,12 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L911</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
         <span class="ident">options</span>.<span class="ident">insert</span>(<span class="string">&quot;finish&quot;</span>, <span class="ident">Value::Bool</span>(<span class="ident">finish</span>));
-        <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;NotifyPointerAxis&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">dx</span>, <span class="ident">dy</span>)).<span class="kw">await</span>
+        <span class="ident">call_method</span>(
+            <span class="self">self</span>.<span class="ident">inner</span>(),
+            <span class="string">&quot;NotifyPointerAxis&quot;</span>,
+            <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>, <span class="ident">dx</span>, <span class="ident">dy</span>),
+        )
+        .<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Available source types.</span>

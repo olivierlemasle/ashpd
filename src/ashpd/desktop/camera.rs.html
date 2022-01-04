@@ -178,6 +178,11 @@
 <span id="176">176</span>
 <span id="177">177</span>
 <span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -250,8 +255,13 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AccessCamera&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">access_camera</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CameraAccessOptions::default</span>();
-        <span class="ident">call_basic_response_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>, <span class="string">&quot;AccessCamera&quot;</span>, <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>))
-            .<span class="kw">await</span>
+        <span class="ident">call_basic_response_method</span>(
+            <span class="self">self</span>.<span class="ident">inner</span>(),
+            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+            <span class="string">&quot;AccessCamera&quot;</span>,
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>),
+        )
+        .<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the camera nodes are</span>
@@ -269,7 +279,7 @@
         <span class="comment">// `options` parameter doesn&#39;t seems to be used yet</span>
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/camera.c#L178</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="kw">let</span> <span class="ident">fd</span>: <span class="ident">OwnedFd</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">fd</span>: <span class="ident">OwnedFd</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">fd</span>.<span class="ident">into_raw_fd</span>())
     }
 
@@ -280,7 +290,7 @@
     <span class="doccomment">/// See also [`IsCameraPresent`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-Camera.IsCameraPresent).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;IsCameraPresent&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">is_camera_present</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="number">0</span>
+        <span class="self">self</span>.<span class="ident">inner</span>()
             .<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="string">&quot;IsCameraPresent&quot;</span>)
             .<span class="kw">await</span>
             .<span class="ident">map_err</span>(<span class="ident">From::from</span>)
