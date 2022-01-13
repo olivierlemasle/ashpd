@@ -97,6 +97,8 @@
 <span id="94">94</span>
 <span id="95">95</span>
 <span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">convert::TryFrom</span>,
     <span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>, <span class="ident">Display</span>},
@@ -126,7 +128,9 @@
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">HandleToken</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;HandleToken&quot;</span>).<span class="ident">field</span>(<span class="self">self</span>).<span class="ident">finish</span>()
+        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;HandleToken&quot;</span>)
+            .<span class="ident">field</span>(<span class="kw-2">&amp;</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>).<span class="ident">as_str</span>())
+            .<span class="ident">finish</span>()
     }
 }
 
