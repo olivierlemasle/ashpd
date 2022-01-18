@@ -115,7 +115,7 @@
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">convert::TryFrom</span>, <span class="ident">fmt::Debug</span>};
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">zvariant</span>::{<span class="ident">ObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>};
+<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">ObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">desktop</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>},
@@ -162,7 +162,7 @@
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">unique_name</span> <span class="op">=</span> <span class="ident">connection</span>.<span class="ident">unique_name</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">unique_identifier</span> <span class="op">=</span> <span class="ident">unique_name</span>.<span class="ident">trim_start_matches</span>(<span class="string">&#39;:&#39;</span>).<span class="ident">replace</span>(<span class="string">&#39;.&#39;</span>, <span class="string">&quot;_&quot;</span>);
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">zvariant::ObjectPath::try_from</span>(<span class="macro">format!</span>(
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">ObjectPath::try_from</span>(<span class="macro">format!</span>(
             <span class="string">&quot;/org/freedesktop/portal/desktop/session/{}/{}&quot;</span>,
             <span class="ident">unique_identifier</span>, <span class="ident">handle_token</span>
         ))
@@ -204,13 +204,13 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
-        <span class="ident">zvariant::ObjectPath::serialize</span>(<span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">path</span>(), <span class="ident">serializer</span>)
+        <span class="ident">ObjectPath::serialize</span>(<span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">path</span>(), <span class="ident">serializer</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">zvariant::Type</span> <span class="kw">for</span> <span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Type</span> <span class="kw">for</span> <span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">zvariant::ObjectPath::signature</span>()
+        <span class="ident">ObjectPath::signature</span>()
     }
 }
 
@@ -222,5 +222,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ee5d8d37b 2022-01-17)" ></div>
 </body></html>

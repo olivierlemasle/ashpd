@@ -302,6 +302,8 @@
 <span id="297">297</span>
 <span id="298">298</span>
 <span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -334,8 +336,7 @@
 
 <span class="kw">use</span> <span class="ident">futures::TryFutureExt</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">zvariant::OwnedObjectPath</span>;
-<span class="kw">use</span> <span class="ident">zvariant_derive</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">TypeDict</span>};
+<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">SessionProxy</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -360,8 +361,9 @@
     <span class="ident">Exact</span> <span class="op">=</span> <span class="number">5</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`LocationProxy::create_session`] request.</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">CreateSessionOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
     <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>,
@@ -395,8 +397,9 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`LocationProxy::start`] request.</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">SessionStartOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
@@ -480,7 +483,8 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">TypeDict</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">LocationInner</span> {
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Accuracy&quot;</span>)]</span>
     <span class="ident">accuracy</span>: <span class="ident">f64</span>,
@@ -560,7 +564,7 @@
             .<span class="ident">time_threshold</span>(<span class="ident">time_threshold</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>))
             .<span class="ident">accuracy</span>(<span class="ident">accuracy</span>.<span class="ident">unwrap_or</span>(<span class="ident">Accuracy::Exact</span>));
         <span class="kw">let</span> (<span class="ident">path</span>, <span class="ident">proxy</span>) <span class="op">=</span> <span class="macro">futures::try_join!</span>(
-            <span class="ident">call_method</span>::<span class="op">&lt;</span><span class="ident">zvariant::OwnedObjectPath</span>, <span class="ident">CreateSessionOptions</span><span class="op">&gt;</span>(
+            <span class="ident">call_method</span>::<span class="op">&lt;</span><span class="ident">OwnedObjectPath</span>, <span class="ident">CreateSessionOptions</span><span class="op">&gt;</span>(
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
                 <span class="string">&quot;CreateSession&quot;</span>,
                 <span class="kw-2">&amp;</span>(<span class="ident">options</span>)
@@ -602,5 +606,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ee5d8d37b 2022-01-17)" ></div>
 </body></html>
