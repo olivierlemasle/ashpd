@@ -620,7 +620,7 @@
 <span class="doccomment">/// If you have access to `RawWindowHandle` you can convert it to a [`WindowIdentifier`] with</span>
 <span class="doccomment">/// ```rust, ignore</span>
 <span class="doccomment">///     let handle = RawWindowHandle::Xlib(XlibHandle::empty());</span>
-<span class="doccomment">///     let identifier = WindowIdentifier::from_raw_handle(handle).await;///</span>
+<span class="doccomment">///     let identifier = WindowIdentifier::from_raw_handle(handle);///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// In case you don&#39;t have access to a WindowIdentifier:</span>
@@ -809,7 +809,7 @@
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>)]</span>
     <span class="doccomment">/// Create an instance of [`WindowIdentifier`] from a [`RawWindowHandle`](raw_window_handle::RawWindowHandle).</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">form_raw_handle</span>(<span class="ident">handle</span>: <span class="ident">RawWindowHandle</span>) -&gt; <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">form_raw_handle</span>(<span class="ident">handle</span>: <span class="ident">RawWindowHandle</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">use</span> <span class="ident">raw_window_handle::RawWindowHandle</span>::{<span class="ident">Wayland</span>, <span class="ident">Xlib</span>};
         <span class="kw">match</span> <span class="ident">handle</span> {
             <span class="ident">Wayland</span>(<span class="ident">wl_handle</span>) =&gt; <span class="kw">match</span> <span class="ident">wayland_handle_export</span>(<span class="ident">wl_handle</span>.<span class="ident">surface</span>) {
