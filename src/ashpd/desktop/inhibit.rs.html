@@ -256,6 +256,19 @@
 <span id="248">248</span>
 <span id="249">249</span>
 <span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! How to inhibit logout/user switch</span>
@@ -337,14 +350,19 @@
 <span class="attribute">#[<span class="ident">bitflags</span>]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpInhibitFlags&quot;</span>)]</span>
 <span class="doccomment">/// The actions to inhibit that can end the user&#39;s session</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">InhibitFlags</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_INHIBIT_FLAG_LOGOUT&quot;</span>)]</span>
     <span class="doccomment">/// Logout.</span>
     <span class="ident">Logout</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_INHIBIT_FLAG_USER_SWITCH&quot;</span>)]</span>
     <span class="doccomment">/// User switch.</span>
     <span class="ident">UserSwitch</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_INHIBIT_FLAG_SUSPEND&quot;</span>)]</span>
     <span class="doccomment">/// Suspend.</span>
     <span class="ident">Suspend</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_INHIBIT_FLAG_IDLE&quot;</span>)]</span>
     <span class="doccomment">/// Idle.</span>
     <span class="ident">Idle</span>,
 }
@@ -384,12 +402,16 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpLoginSessionState&quot;</span>)]</span>
 <span class="doccomment">/// The current state of the user&#39;s session.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SessionState</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOGIN_SESSION_RUNNING&quot;</span>)]</span>
     <span class="doccomment">/// Running.</span>
     <span class="ident">Running</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOGIN_SESSION_QUERY_END&quot;</span>)]</span>
     <span class="doccomment">/// The user asked to end the session e.g logout.</span>
     <span class="ident">QueryEnd</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOGIN_SESSION_ENDING&quot;</span>)]</span>
     <span class="doccomment">/// The session is ending.</span>
     <span class="ident">Ending</span> <span class="op">=</span> <span class="number">3</span>,
 }
@@ -431,6 +453,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`CreateMonitor`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Inhibit.CreateMonitor).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateMonitor&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_session_monitor_start&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_monitor</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
@@ -462,6 +485,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`Inhibit`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Inhibit.Inhibit).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Inhibit&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_session_inhibit&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">inhibit</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
@@ -484,6 +508,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`StateChanged`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Inhibit.StateChanged).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;StateChanged&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpPortal::session-state-changed&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_state_changed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InhibitState</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">receive_signal</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;StateChanged&quot;</span>).<span class="kw">await</span>
     }
@@ -502,6 +527,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`QueryEndResponse`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Inhibit.QueryEndResponse).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryEndResponse&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_session_monitor_query_end_response&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_end_response</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;QueryEndResponse&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session</span>)).<span class="kw">await</span>
     }

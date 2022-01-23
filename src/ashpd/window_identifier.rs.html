@@ -527,6 +527,9 @@
 <span id="519">519</span>
 <span id="520">520</span>
 <span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">ser::Serializer</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Signature</span>, <span class="ident">Type</span>};
 
@@ -633,6 +636,7 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// We would love merge requests that adds other `From&lt;T&gt; for WindowIdentifier`</span>
 <span class="doccomment">/// implementations for other toolkits.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpParent&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">WindowIdentifier</span> {
     <span class="doccomment">/// Gtk 4 Window Identifier</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_gtk4&quot;</span>)]</span>
@@ -726,6 +730,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
     <span class="doccomment">/// API is async as well.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_parent_new_gtk&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_native</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk4::Native</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">native</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">native</span>.<span class="ident">surface</span>();
         <span class="kw">let</span> <span class="ident">backend</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">display</span>().<span class="ident">backend</span>();
@@ -771,6 +776,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
     <span class="doccomment">/// API is async as well.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_parent_new_gtk&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_window</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk3::gdk::Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="ident">W</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">backend</span> <span class="op">=</span> <span class="ident">win</span>.<span class="ident">as_ref</span>().<span class="ident">display</span>().<span class="ident">backend</span>();
         <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">backend</span>.<span class="ident">is_wayland</span>() {
