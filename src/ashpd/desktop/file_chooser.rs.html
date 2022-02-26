@@ -558,6 +558,8 @@
 <span id="551">551</span>
 <span id="552">552</span>
 <span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Opening a file</span>
@@ -651,6 +653,7 @@
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>};
 <span class="kw">use</span> <span class="ident">std::os::unix::ffi::OsStrExt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ffi::CString</span>, <span class="ident">path::Path</span>};
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
@@ -663,7 +666,8 @@
 <span class="doccomment">/// pattern.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileFilter</span>(<span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">FilterType</span>, <span class="ident">String</span>)<span class="op">&gt;</span>);
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
 <span class="kw">enum</span> <span class="ident">FilterType</span> {
     <span class="ident">GlobPattern</span> <span class="op">=</span> <span class="number">0</span>,
     <span class="ident">MimeType</span> <span class="op">=</span> <span class="number">1</span>,
@@ -1112,5 +1116,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (e0a55f449 2022-01-28)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (d3ad51b48 2022-02-25)" ></div>
 </body></html>

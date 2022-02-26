@@ -304,6 +304,8 @@
 <span id="297">297</span>
 <span id="298">298</span>
 <span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -324,14 +326,15 @@
 
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt::Debug</span>, <span class="ident">os::unix::io::AsRawFd</span>};
 
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">error::PortalError</span>, <span class="ident">helpers::call_method</span>, <span class="ident">Error</span>};
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="doccomment">/// The status of the game mode.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i8</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Status</span> {
     <span class="doccomment">/// GameMode is inactive.</span>
     <span class="ident">Inactive</span> <span class="op">=</span> <span class="number">0</span>,
@@ -343,7 +346,8 @@
     <span class="ident">Rejected</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i8</span>)]</span>
 <span class="doccomment">/// The status of a (un-)register game mode request.</span>
 <span class="kw">enum</span> <span class="ident">RegisterStatus</span> {
     <span class="doccomment">/// If the game was successfully (un-)registered.</span>
@@ -604,5 +608,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (e0a55f449 2022-01-28)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (d3ad51b48 2022-02-25)" ></div>
 </body></html>

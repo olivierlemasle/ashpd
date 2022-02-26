@@ -4,15 +4,15 @@
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
-        </a><h2 class="location"><a href="#">Crate ashpd</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 0.2.0</li><li><a id="all-types" href="all.html">All Items</a></li></div></ul><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><div id="sidebar-vars" data-name="ashpd" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../ashpd/index.html">
+        </a><h2 class="location"><a href="#">Crate ashpd</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 0.2.0</li><li><a id="all-types" href="all.html">All Items</a></li></div></ul><section><div class="block"><ul><li><a href="#modules">Modules</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div></section><div id="sidebar-vars" data-name="ashpd" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
-    <h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">ashpd</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/ashpd/lib.rs.html#1-42" title="goto source code">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="ashpd" class="section-header"><a href="#ashpd">ASHPD</a></h2>
+    <h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">ashpd</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/ashpd/lib.rs.html#1-42">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="ashpd"><a href="#ashpd">ASHPD</a></h2>
 <p><a href="https://docs.rs/ashpd/"><img src="https://docs.rs/ashpd/badge.svg" alt="docs" /></a> <a href="https://crates.io/crates/ashpd"><img src="https://img.shields.io/crates/v/ashpd" alt="crates.io" /></a> <img src="https://github.com/bilelmoussaoui/ashpd/workflows/CI/badge.svg" alt="CI" /></p>
 <p>ASHPD, acronym of Aperture Science Handheld Portal Device is a Rust &amp; <a href="https://gitlab.freedesktop.org/dbus/zbus">zbus</a> wrapper of
 the XDG portals DBus interfaces. The library aims to provide an easy way to
 interact with the various portals defined per the <a href="https://flatpak.github.io/xdg-desktop-portal/index.html">specifications</a>.
 It provides an alternative to the C library <a href="https://github.com/flatpak/libportal">https://github.com/flatpak/libportal</a></p>
-<h3 id="examples" class="section-header"><a href="#examples">Examples</a></h3>
+<h3 id="examples"><a href="#examples">Examples</a></h3>
 <p>Ask the compositor to pick a color</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">ashpd::desktop::screenshot::ScreenshotProxy</span>;
@@ -41,7 +41,7 @@ It provides an alternative to the C library <a href="https://github.com/flatpak/
     }
     <span class="prelude-val">Ok</span>(())
 }</code></pre></div>
-<h3 id="optional-features" class="section-header"><a href="#optional-features">Optional features</a></h3><div><table><thead><tr><th>Feature</th><th>Description</th></tr></thead><tbody>
+<h3 id="optional-features"><a href="#optional-features">Optional features</a></h3><div><table><thead><tr><th>Feature</th><th>Description</th></tr></thead><tbody>
 <tr><td>log</td><td>Record various debug information using the <code>tracing</code> library</td></tr>
 <tr><td>feature_gtk3</td><td>Implement <code>From&lt;Color&gt;</code> for <a href="https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.RGBA.html"><code>gdk3::RGBA</code></a></td></tr>
 <tr><td></td><td>Provides <code>WindowIdentifier::from_window</code> that takes a <a href="https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.Window.html"><code>IsA&lt;gdk3::Window&gt;</code></a></td></tr>
@@ -50,7 +50,7 @@ It provides an alternative to the C library <a href="https://github.com/flatpak/
 <tr><td>feature_pipewire</td><td>Provides <code>ashpd::desktop::camera::pipewire_node_id</code> that helps you retrieve the PipeWire Node ID to use with the file descriptor returned by the camera portal</td></tr>
 <tr><td>raw_handle</td><td>Provides <code>WindowIdentifier::from_raw_handle</code> and <code>WindowIdentifier::as_raw_handle</code> for <a href="https://lib.rs/crates/raw-window-handle">raw-window-handle</a> crate</td></tr>
 </tbody></table>
-</div><h3 id="demo" class="section-header"><a href="#demo">Demo</a></h3>
+</div><h3 id="demo"><a href="#demo">Demo</a></h3>
 <p>The library comes with a <a href="./ashpd-demo">demo</a> built using the <a href="https://gtk-rs.org/gtk4-rs">GTK 4 Rust bindings</a> and previews most of the portals. It is meant as a test case for the portals (from a distributor perspective) and as a way for the developers to see which portals exists and how to integrate them into their application using ASHPD.</p>
 <a href="https://flathub.org/apps/details/com.belmoussaoui.ashpd.demo">
 <img src="https://flathub.org/assets/badges/flathub-badge-i-en.png" width="190px" />
@@ -73,5 +73,5 @@ this reason.</p>
 <div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.is_sandboxed.html" title="ashpd::is_sandboxed fn">is_sandboxed</a></div><div class="item-right docblock-short"><p>Check whether the application is running inside a sandbox.</p>
 </div></div></div><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2>
 <div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.Result.html" title="ashpd::Result type">Result</a></div><div class="item-right docblock-short"><p>Alias for a <a href="type.Result.html" title="Result"><code>Result</code></a> with the error type <code>ashpd::Error</code>.</p>
-</div></div></div></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (e0a55f449 2022-01-28)" ></div>
+</div></div></div></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (d3ad51b48 2022-02-25)" ></div>
 </body></html>
