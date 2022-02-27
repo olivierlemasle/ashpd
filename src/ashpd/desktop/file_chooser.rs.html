@@ -667,7 +667,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileFilter</span>(<span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">FilterType</span>, <span class="ident">String</span>)<span class="op">&gt;</span>);
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="kw">enum</span> <span class="ident">FilterType</span> {
     <span class="ident">GlobPattern</span> <span class="op">=</span> <span class="number">0</span>,
     <span class="ident">MimeType</span> <span class="op">=</span> <span class="number">1</span>,

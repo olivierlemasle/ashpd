@@ -334,7 +334,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="doccomment">/// The status of the game mode.</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i8</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Status</span> {
     <span class="doccomment">/// GameMode is inactive.</span>
     <span class="ident">Inactive</span> <span class="op">=</span> <span class="number">0</span>,
@@ -347,7 +347,7 @@
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i8</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
 <span class="doccomment">/// The status of a (un-)register game mode request.</span>
 <span class="kw">enum</span> <span class="ident">RegisterStatus</span> {
     <span class="doccomment">/// If the game was successfully (un-)registered.</span>
