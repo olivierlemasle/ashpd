@@ -1,3 +1,0 @@
-(function() {var implementors = {};
-implementors["ashpd"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html\" title=\"trait core::ops::drop::Drop\">Drop</a> for <a class=\"enum\" href=\"ashpd/enum.WindowIdentifier.html\" title=\"enum ashpd::WindowIdentifier\">WindowIdentifier</a>","synthetic":false,"types":["ashpd::window_identifier::WindowIdentifier"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
