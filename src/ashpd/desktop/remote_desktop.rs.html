@@ -649,11 +649,30 @@
 <span id="642">642</span>
 <span id="643">643</span>
 <span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::remote_desktop::{DeviceType, KeyState, RemoteDesktopProxy};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{</span>
+<span class="doccomment">//!     desktop::remote_desktop::{DeviceType, KeyState, RemoteDesktopProxy},</span>
+<span class="doccomment">//!     WindowIdentifier,</span>
+<span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
@@ -661,26 +680,36 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let session = proxy.create_session().await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy.select_devices(&amp;session, DeviceType::Keyboard | DeviceType::Pointer).await?;</span>
+<span class="doccomment">//!     proxy</span>
+<span class="doccomment">//!         .select_devices(&amp;session, DeviceType::Keyboard | DeviceType::Pointer)</span>
+<span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let (devices, _) = proxy.start(&amp;session, &amp;WindowIdentifier::default()).await?;</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, devices);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     // 13 for Enter key code</span>
-<span class="doccomment">//!     proxy.notify_keyboard_keycode(&amp;session, 13, KeyState::Pressed).await?;</span>
+<span class="doccomment">//!     proxy</span>
+<span class="doccomment">//!         .notify_keyboard_keycode(&amp;session, 13, KeyState::Pressed)</span>
+<span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! You can also use the Remote Desktop portal with the ScreenCast one. In order to do so,</span>
-<span class="doccomment">//! you need to call [`ScreenCastProxy::select_sources()`](crate::desktop::screencast::ScreenCastProxy::select_sources)</span>
-<span class="doccomment">//! on the session created with [`RemoteDesktopProxy::create_session()`](crate::desktop::remote_desktop::RemoteDesktopProxy::create_session)</span>
+<span class="doccomment">//! You can also use the Remote Desktop portal with the ScreenCast one. In order</span>
+<span class="doccomment">//! to do so, you need to call</span>
+<span class="doccomment">//! [`ScreenCastProxy::select_sources()`][select_sources]</span>
+<span class="doccomment">//! on the session created with</span>
+<span class="doccomment">//! [`RemoteDesktopProxy::create_session()`][create_session]</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::remote_desktop::{DeviceType, KeyState, RemoteDesktopProxy};</span>
-<span class="doccomment">//! use ashpd::desktop::screencast::{CursorMode, PersistMode, ScreenCastProxy, SourceType};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{</span>
+<span class="doccomment">//!     desktop::{</span>
+<span class="doccomment">//!         remote_desktop::{DeviceType, KeyState, RemoteDesktopProxy},</span>
+<span class="doccomment">//!         screencast::{CursorMode, PersistMode, ScreenCastProxy, SourceType},</span>
+<span class="doccomment">//!     },</span>
+<span class="doccomment">//!     WindowIdentifier,</span>
+<span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
@@ -690,7 +719,9 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let session = proxy.create_session().await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy.select_devices(&amp;session, DeviceType::Keyboard | DeviceType::Pointer).await?;</span>
+<span class="doccomment">//!     proxy</span>
+<span class="doccomment">//!         .select_devices(&amp;session, DeviceType::Keyboard | DeviceType::Pointer)</span>
+<span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!     screencast</span>
 <span class="doccomment">//!         .select_sources(</span>
 <span class="doccomment">//!             &amp;session,</span>
@@ -707,11 +738,15 @@
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, streams);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     // 13 for Enter key code</span>
-<span class="doccomment">//!     proxy.notify_keyboard_keycode(&amp;session, 13, KeyState::Pressed).await?;</span>
+<span class="doccomment">//!     proxy</span>
+<span class="doccomment">//!         .notify_keyboard_keycode(&amp;session, 13, KeyState::Pressed)</span>
+<span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
+<span class="doccomment">//! [select_sources]: crate::desktop::screencast::ScreenCastProxy::select_sources</span>
+<span class="doccomment">//! [create_session]: crate::desktop::remote_desktop::RemoteDesktopProxy::create_session</span>
 
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
 
@@ -721,7 +756,6 @@
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">screencast::Stream</span>, <span class="ident">HandleToken</span>, <span class="ident">SessionProxy</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">call_request_method</span>},
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,

@@ -213,12 +213,12 @@
 <span id="206">206</span>
 <span id="207">207</span>
 <span id="208">208</span>
-<span id="209">209</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::documents::{FileTransferProxy};</span>
 <span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use ashpd::documents::FileTransferProxy;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
@@ -226,9 +226,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let key = proxy.start_transfer(true, true).await?;</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .add_files(&amp;key, &amp;[&amp;file])</span>
-<span class="doccomment">//!         .await?;</span>
+<span class="doccomment">//!     proxy.add_files(&amp;key, &amp;[&amp;file]).await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     // The files would be retrieved by another process</span>
 <span class="doccomment">//!     let files = proxy.retrieve_files(&amp;key).await?;</span>

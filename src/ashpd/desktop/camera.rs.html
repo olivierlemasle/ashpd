@@ -198,6 +198,8 @@
 <span id="191">191</span>
 <span id="192">192</span>
 <span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
@@ -315,16 +317,18 @@
     }
 }
 
-<span class="doccomment">/// A helper to get the PipeWire Node ID to use with the camera file descriptor returned by</span>
-<span class="doccomment">/// [`CameraProxy::open_pipe_wire_remote`].</span>
+<span class="doccomment">/// A helper to get the PipeWire Node ID to use with the camera file descriptor</span>
+<span class="doccomment">/// returned by [`CameraProxy::open_pipe_wire_remote`].</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Currently, the camera portal only gives us a file descriptor. Not passing a node id</span>
-<span class="doccomment">/// may cause the media session controller to auto-connect the client to an incorrect node.</span>
+<span class="doccomment">/// Currently, the camera portal only gives us a file descriptor. Not passing a</span>
+<span class="doccomment">/// node id may cause the media session controller to auto-connect the client to</span>
+<span class="doccomment">/// an incorrect node.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The method looks for the available output streams of a `media.role` type of `Camera`</span>
-<span class="doccomment">/// and return their Node ID if it found any.</span>
+<span class="doccomment">/// The method looks for the available output streams of a `media.role` type of</span>
+<span class="doccomment">/// `Camera` and return their Node ID if it found any.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// *Note* The socket referenced by `fd` must not be used while this function is running.</span>
+<span class="doccomment">/// *Note* The socket referenced by `fd` must not be used while this function is</span>
+<span class="doccomment">/// running.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;feature_pipewire&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pipewire_node_id</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="ident">pw::Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">fd</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc::fcntl</span>(<span class="ident">fd</span>, <span class="ident">libc::F_DUPFD_CLOEXEC</span>, <span class="number">3</span>) };

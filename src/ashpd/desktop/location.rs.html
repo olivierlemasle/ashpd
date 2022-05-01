@@ -317,11 +317,17 @@
 <span id="310">310</span>
 <span id="311">311</span>
 <span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::location::{Accuracy, LocationProxy};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{</span>
+<span class="doccomment">//!     desktop::location::{Accuracy, LocationProxy},</span>
+<span class="doccomment">//!     WindowIdentifier,</span>
+<span class="doccomment">//! };</span>
 <span class="doccomment">//! use futures::TryFutureExt;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
@@ -329,7 +335,9 @@
 <span class="doccomment">//!     let proxy = LocationProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let session = proxy.create_session(None, None, Some(Accuracy::Street)).await?;</span>
+<span class="doccomment">//!     let session = proxy</span>
+<span class="doccomment">//!         .create_session(None, None, Some(Accuracy::Street))</span>
+<span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let (_, location) = futures::try_join!(</span>
 <span class="doccomment">//!         proxy.start(&amp;session, &amp;identifier).into_future(),</span>

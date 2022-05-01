@@ -313,14 +313,19 @@
 <span id="306">306</span>
 <span id="307">307</span>
 <span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Sets a wallpaper from a file:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::wallpaper::{self, SetOn};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use ashpd::{</span>
+<span class="doccomment">//!     desktop::wallpaper::{self, SetOn},</span>
+<span class="doccomment">//!     WindowIdentifier,</span>
+<span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;).unwrap();</span>
@@ -332,9 +337,12 @@
 <span class="doccomment">//! Or by using the Proxy directly</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::wallpaper::{SetOn, WallpaperProxy};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
 <span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use ashpd::{</span>
+<span class="doccomment">//!     desktop::wallpaper::{SetOn, WallpaperProxy},</span>
+<span class="doccomment">//!     WindowIdentifier,</span>
+<span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let wallpaper = File::open(&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;).unwrap();</span>
@@ -350,9 +358,11 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Sets a wallpaper from a URI:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::wallpaper::{self, SetOn};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use ashpd::{</span>
+<span class="doccomment">//!     desktop::wallpaper::{self, SetOn},</span>
+<span class="doccomment">//!     WindowIdentifier,</span>
+<span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let uri = &quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;;</span>
@@ -364,8 +374,10 @@
 <span class="doccomment">//! Or by using the Proxy directly</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::wallpaper::{SetOn, WallpaperProxy};</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{</span>
+<span class="doccomment">//!     desktop::wallpaper::{SetOn, WallpaperProxy},</span>
+<span class="doccomment">//!     WindowIdentifier,</span>
+<span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
@@ -382,11 +394,10 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">str::FromStr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">os::unix::prelude::AsRawFd</span>, <span class="ident">str::FromStr</span>};
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="self">self</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
+<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">desktop</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>},
@@ -394,7 +405,8 @@
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
 <span class="doccomment">/// Where to set the wallpaper on.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SetOn</span> {
     <span class="doccomment">/// Set the wallpaper only on the lock-screen.</span>
@@ -443,9 +455,7 @@
             <span class="string">&quot;Lockscreen&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">SetOn::Lockscreen</span>),
             <span class="string">&quot;Background&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">SetOn::Background</span>),
             <span class="string">&quot;Both&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">SetOn::Both</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(
-                <span class="string">&quot;Failed to parse SetOn, invalid value&quot;</span>.<span class="ident">to_string</span>(),
-            )),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(<span class="string">&quot;Failed to parse SetOn, invalid value&quot;</span>)),
         }
     }
 }
@@ -456,12 +466,6 @@
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
         <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">to_lowercase</span>())
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Type</span> <span class="kw">for</span> <span class="ident">SetOn</span> {
-    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">String::signature</span>()
     }
 }
 

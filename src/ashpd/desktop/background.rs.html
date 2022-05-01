@@ -215,15 +215,12 @@
 <span id="208">208</span>
 <span id="209">209</span>
 <span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
 </pre><pre class="rust"><code><span class="doccomment">//! **Note** This portal only works for sandboxed applications.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::background;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::background, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let response = background::request(</span>
@@ -246,8 +243,7 @@
 <span class="doccomment">//! file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction) will be used.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::background;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::background, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let response = background::request(</span>
@@ -295,7 +291,7 @@
 <span class="kw">impl</span> <span class="ident">BackgroundOptions</span> {
     <span class="doccomment">/// Sets a user-visible reason for the request.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reason</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">reason</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reason</span>.<span class="ident">to_string</span>());
+        <span class="self">self</span>.<span class="ident">reason</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reason</span>.<span class="ident">to_owned</span>());
         <span class="self">self</span>
     }
 
@@ -315,7 +311,7 @@
     <span class="doccomment">/// If this is not specified, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop</span>
     <span class="doccomment">/// file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction)</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">command</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">command</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]<span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">command</span> <span class="op">=</span> <span class="ident">command</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">to_string</span>()).<span class="ident">collect</span>());
+        <span class="self">self</span>.<span class="ident">command</span> <span class="op">=</span> <span class="ident">command</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()).<span class="ident">collect</span>());
         <span class="self">self</span>
     }
 }

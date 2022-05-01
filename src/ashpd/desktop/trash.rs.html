@@ -127,12 +127,15 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::trash;</span>
+<span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use ashpd::desktop::trash;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/adwaita-night.jpg&quot;).unwrap();</span>
@@ -144,8 +147,9 @@
 <span class="doccomment">//! Or by using the Proxy directly</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::trash::TrashProxy;</span>
 <span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use ashpd::desktop::trash::TrashProxy;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>

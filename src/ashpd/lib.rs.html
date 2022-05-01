@@ -46,7 +46,6 @@
 <span id="39">39</span>
 <span id="40">40</span>
 <span id="41">41</span>
-<span id="42">42</span>
 </pre><pre class="rust"><code><span class="attribute">#![<span class="ident">deny</span>(<span class="ident">rustdoc::broken_intra_doc_links</span>)]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span> <span class="comment">// until zbus::DBusProxy adds docs to the generated trait</span>
 <span class="attribute">#![<span class="ident">doc</span>(
@@ -73,8 +72,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">flatpak</span>;
 <span class="kw">mod</span> <span class="ident">helpers</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">enumflags2</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zbus</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zbus::zvariant</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="self">self</span>, <span class="ident">zvariant</span>};
 
 <span class="doccomment">/// Check whether the application is running inside a sandbox.</span>
 <span class="doccomment">///</span>

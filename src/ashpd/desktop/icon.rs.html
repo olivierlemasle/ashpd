@@ -59,19 +59,31 @@
 <span id="52">52</span>
 <span id="53">53</span>
 <span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">serde::ser</span>::{<span class="ident">Serialize</span>, <span class="ident">SerializeTuple</span>};
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="self">self</span>, <span class="ident">Type</span>};
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;(sv)&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Icon</span> {
     <span class="ident">Uri</span>(<span class="ident">String</span>),
     <span class="ident">Names</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>),
     <span class="ident">Bytes</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>),
 }
 
-<span class="kw">impl</span> <span class="ident">Type</span> <span class="kw">for</span> <span class="ident">Icon</span> {
-    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">zvariant::Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">zvariant::Signature::from_static_str_unchecked</span>(<span class="string">&quot;(sv)&quot;</span>)
+<span class="kw">impl</span> <span class="ident">Icon</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_names</span>(<span class="ident">names</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) -&gt; <span class="self">Self</span> {
+        <span class="ident"><span class="self">Self</span>::Names</span>(
+            <span class="ident">names</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">name</span><span class="op">|</span> <span class="ident">name</span>.<span class="ident">to_owned</span>().<span class="ident">to_owned</span>())
+                .<span class="ident">collect</span>(),
+        )
     }
 }
 

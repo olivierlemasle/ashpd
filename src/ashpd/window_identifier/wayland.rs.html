@@ -135,8 +135,10 @@
 <span id="128">128</span>
 <span id="129">129</span>
 <span id="130">130</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::WindowIdentifierType</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span id="131">131</span>
+<span id="132">132</span>
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::fmt</span>;
+
 <span class="kw">use</span> <span class="ident">wayland_client</span>::{
     <span class="ident">protocol</span>::{<span class="ident">__interfaces::WL_SURFACE_INTERFACE</span>, <span class="ident">wl_surface::WlSurface</span>},
     <span class="ident">ConnectionHandle</span>, <span class="ident">Proxy</span>, <span class="ident">QueueHandle</span>,
@@ -145,6 +147,8 @@
     <span class="ident">zxdg_exported_v2</span>::{<span class="ident">Event</span>, <span class="ident">ZxdgExportedV2</span>},
     <span class="ident">zxdg_exporter_v2::ZxdgExporterV2</span>,
 };
+
+<span class="kw">use</span> <span class="ident"><span class="kw">super</span>::WindowIdentifierType</span>;
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WaylandWindowIdentifier</span> {
     <span class="ident">exported</span>: <span class="ident">ZxdgExportedV2</span>,

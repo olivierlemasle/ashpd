@@ -291,15 +291,12 @@
 <span id="284">284</span>
 <span id="285">285</span>
 <span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Taking a screenshot</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::screenshot;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::screenshot, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let uri = screenshot::take(&amp;WindowIdentifier::default(), true, true).await?;</span>
@@ -311,14 +308,15 @@
 <span class="doccomment">//! Or by using the Proxy directly</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotProxy;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::screenshot::ScreenshotProxy, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
 <span class="doccomment">//!     let proxy = ScreenshotProxy::new(&amp;connection).await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let uri = proxy.screenshot(&amp;WindowIdentifier::default(), true, true).await?;</span>
+<span class="doccomment">//!     let uri = proxy</span>
+<span class="doccomment">//!         .screenshot(&amp;WindowIdentifier::default(), true, true)</span>
+<span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!     println!(&quot;URI: {}&quot;, uri);</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
@@ -327,8 +325,7 @@
 <span class="doccomment">//! ## Picking a color</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::screenshot;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::screenshot, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let color = screenshot::pick_color(&amp;WindowIdentifier::default()).await?;</span>
@@ -341,8 +338,7 @@
 <span class="doccomment">//! Or by using the Proxy directly</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotProxy;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::screenshot::ScreenshotProxy, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>

@@ -154,11 +154,6 @@
 <span id="147">147</span>
 <span id="148">148</span>
 <span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
 </pre><pre class="rust"><code><span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -175,9 +170,10 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">str::FromStr</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
+
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
+<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>};
@@ -190,7 +186,8 @@
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
 <span class="doccomment">/// The possible device to request access to.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Device</span> {
     <span class="doccomment">/// A microphone.</span>
@@ -239,9 +236,7 @@
             <span class="string">&quot;Microphone&quot;</span> <span class="op">|</span> <span class="string">&quot;microphone&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Device::Microphone</span>),
             <span class="string">&quot;Speakers&quot;</span> <span class="op">|</span> <span class="string">&quot;speakers&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Device::Speakers</span>),
             <span class="string">&quot;Camera&quot;</span> <span class="op">|</span> <span class="string">&quot;camera&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Device::Camera</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(
-                <span class="string">&quot;Failed to parse device, invalid value&quot;</span>.<span class="ident">to_string</span>(),
-            )),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(<span class="string">&quot;Failed to parse device, invalid value&quot;</span>)),
         }
     }
 }
@@ -252,12 +247,6 @@
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
         <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">to_lowercase</span>())
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Type</span> <span class="kw">for</span> <span class="ident">Device</span> {
-    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="ident">String::signature</span>()
     }
 }
 
@@ -296,7 +285,8 @@
     <span class="doccomment">///   made.</span>
     <span class="doccomment">/// * `devices` - A list of devices to request access to.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// *Note* Asking for multiple devices at the same time may or may not be supported</span>
+    <span class="doccomment">/// *Note* Asking for multiple devices at the same time may or may not be</span>
+    <span class="doccomment">/// supported</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>

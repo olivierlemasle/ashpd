@@ -201,6 +201,8 @@
 <span id="194">194</span>
 <span id="195">195</span>
 <span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
 </pre><pre class="rust"><code><span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::desktop::settings::SettingsProxy;</span>
 <span class="doccomment">//!</span>
@@ -358,7 +360,8 @@
         <span class="ident">T::try_from</span>(<span class="ident">value</span>).<span class="ident">map_err</span>(<span class="ident">From::from</span>)
     }
 
-    <span class="doccomment">/// Reads the value of namespace: `org.freedesktop.appearance` and `color-scheme` key.</span>
+    <span class="doccomment">/// Reads the value of namespace: `org.freedesktop.appearance` and</span>
+    <span class="doccomment">/// `color-scheme` key.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">color_scheme</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ColorScheme</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">scheme</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>
             .<span class="ident">read</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>(<span class="string">&quot;org.freedesktop.appearance&quot;</span>, <span class="string">&quot;color-scheme&quot;</span>)
@@ -371,7 +374,8 @@
         <span class="prelude-val">Ok</span>(<span class="ident">scheme</span>)
     }
 
-    <span class="doccomment">/// Listen to changes of the namespace `org.freedesktop.appearance` for `color-scheme` key.</span>
+    <span class="doccomment">/// Listen to changes of the namespace `org.freedesktop.appearance` for</span>
+    <span class="doccomment">/// `color-scheme` key.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_color_scheme_changed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ColorScheme</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">loop</span> {
             <span class="kw">let</span> <span class="ident">setting</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">receive_setting_changed</span>().<span class="kw">await</span><span class="question-mark">?</span>;

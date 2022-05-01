@@ -161,18 +161,17 @@
 <span id="154">154</span>
 <span id="155">155</span>
 <span id="156">156</span>
-<span id="157">157</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust, no_run</span>
-<span class="doccomment">//! use ashpd::desktop::account;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::account, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let user_info = account::user_information(</span>
 <span class="doccomment">//!         &amp;WindowIdentifier::default(),</span>
 <span class="doccomment">//!         &quot;App would like to access user information&quot;,</span>
-<span class="doccomment">//!     ).await?;</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;Name: {}&quot;, user_info.name());</span>
 <span class="doccomment">//!     println!(&quot;ID: {}&quot;, user_info.id());</span>
@@ -184,8 +183,7 @@
 <span class="doccomment">//! Or by using the Proxy directly</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::account::AccountProxy;</span>
-<span class="doccomment">//! use ashpd::WindowIdentifier;</span>
+<span class="doccomment">//! use ashpd::{desktop::account::AccountProxy, WindowIdentifier};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
@@ -223,7 +221,7 @@
 <span class="kw">impl</span> <span class="ident">UserInfoOptions</span> {
     <span class="doccomment">/// Sets a user-visible reason for the request.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reason</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">reason</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reason</span>.<span class="ident">to_string</span>());
+        <span class="self">self</span>.<span class="ident">reason</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reason</span>.<span class="ident">to_owned</span>());
         <span class="self">self</span>
     }
 }
