@@ -145,6 +145,7 @@
 <span id="138">138</span>
 <span id="139">139</span>
 <span id="140">140</span>
+<span id="141">141</span>
 </pre><pre class="rust"><code><span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -179,6 +180,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
 <span class="doccomment">/// The possible device to request access to.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Device</span> {
     <span class="doccomment">/// A microphone.</span>
