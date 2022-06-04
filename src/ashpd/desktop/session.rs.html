@@ -169,7 +169,7 @@
             <span class="ident">unique_identifier</span>, <span class="ident">handle_token</span>
         ))
         .<span class="ident">unwrap</span>();
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;log&quot;</span>)]</span>
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
         <span class="macro">tracing::info!</span>(<span class="string">&quot;Creating a org.freedesktop.portal.Session {}&quot;</span>, <span class="ident">path</span>);
         <span class="ident">SessionProxy::new</span>(<span class="ident">connection</span>, <span class="ident">path</span>).<span class="kw">await</span>
     }
