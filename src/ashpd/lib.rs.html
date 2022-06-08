@@ -65,7 +65,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tokio&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;async-std&quot;</span>), <span class="ident">not</span>(<span class="ident">doc</span>)))]</span>
 <span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both async-std &amp; tokio features at once&quot;</span>);
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">once_cell::sync::OnceCell</span>;
+<span class="kw">use</span> <span class="ident">once_cell::sync::OnceCell</span>;
 
 <span class="kw">static</span> <span class="ident">SESSION</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">zbus::Connection</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">OnceCell::new</span>();
 
