@@ -70,7 +70,6 @@
 <span id="63">63</span>
 <span id="64">64</span>
 <span id="65">65</span>
-<span id="66">66</span>
 </pre><pre class="rust"><code><span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -78,7 +77,6 @@
 <span class="doccomment">//! use ashpd::desktop::proxy_resolver::ProxyResolverProxy;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
 <span class="doccomment">//!     let proxy = ProxyResolverProxy::new().await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.lookup(&quot;www.google.com&quot;).await?);</span>
