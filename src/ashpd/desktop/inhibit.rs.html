@@ -271,7 +271,6 @@
 <span id="264">264</span>
 <span id="265">265</span>
 <span id="266">266</span>
-<span id="267">267</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! How to inhibit logout/user switch</span>
@@ -285,8 +284,7 @@
 <span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
-<span class="doccomment">//!     let proxy = InhibitProxy::new(&amp;connection).await?;</span>
+<span class="doccomment">//!     let proxy = InhibitProxy::new().await?;</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let session = proxy.create_monitor(&amp;identifier).await?;</span>
@@ -321,7 +319,10 @@
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">SessionProxy</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">call_request_method</span>, <span class="ident">receive_signal</span>},
+    <span class="ident">helpers</span>::{
+        <span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">call_request_method</span>, <span class="ident">receive_signal</span>,
+        <span class="ident">session_connection</span>,
+    },
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
 
@@ -354,7 +355,7 @@
 }
 
 <span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpInhibitFlags&quot;</span>)]</span>
 <span class="doccomment">/// The actions to inhibit that can end the user&#39;s session</span>
@@ -407,7 +408,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpLoginSessionState&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="doccomment">/// The current state of the user&#39;s session.</span>
@@ -433,8 +434,9 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">InhibitProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new instance of [`InhibitProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::Connection</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InhibitProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="ident">connection</span>)
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InhibitProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
             .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Inhibit&quot;</span>)<span class="question-mark">?</span>
             .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
             .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
@@ -470,11 +472,7 @@
         <span class="kw">let</span> (<span class="ident">monitor</span>, <span class="ident">proxy</span>): (<span class="ident">CreateMonitor</span>, <span class="ident">SessionProxy</span>) <span class="op">=</span> <span class="macro">futures::try_join!</span>(
             <span class="ident">call_request_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>, <span class="string">&quot;CreateMonitor&quot;</span>, <span class="ident">body</span>)
                 .<span class="ident">into_future</span>(),
-            <span class="ident">SessionProxy::from_unique_name</span>(
-                <span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">connection</span>(),
-                <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>
-            )
-            .<span class="ident">into_future</span>(),
+            <span class="ident">SessionProxy::from_unique_name</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>).<span class="ident">into_future</span>(),
         )<span class="question-mark">?</span>;
         <span class="macro">assert_eq!</span>(<span class="ident">proxy</span>.<span class="ident">inner</span>().<span class="ident">path</span>().<span class="ident">as_str</span>(), <span class="kw-2">&amp;</span><span class="ident">monitor</span>.<span class="ident">session_handle</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">proxy</span>)

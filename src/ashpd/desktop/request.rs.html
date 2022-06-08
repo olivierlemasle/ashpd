@@ -247,7 +247,6 @@
 <span id="240">240</span>
 <span id="241">241</span>
 <span id="242">242</span>
-<span id="243">243</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">collections::HashMap</span>,
     <span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>},
@@ -263,7 +262,7 @@
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::DESTINATION</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">desktop::HandleToken</span>,
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>},
+    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>, <span class="ident">session_connection</span>},
     <span class="ident">Error</span>,
 };
 
@@ -363,7 +362,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>)]</span>
 <span class="doccomment">/// An error returned a portal request caused by either the user cancelling the</span>
 <span class="doccomment">/// request or something else.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ResponseError</span> {
@@ -384,7 +383,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">enum</span> <span class="ident">ResponseType</span> {
     <span class="doccomment">/// Success, the request is carried out.</span>
@@ -421,12 +420,13 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">RequestProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">RequestProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::Connection</span>, <span class="ident">path</span>: <span class="ident">P</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RequestProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="ident">P</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RequestProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">P</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">ObjectPath</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
         <span class="ident">P::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">zbus::Error</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="ident">connection</span>)
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
             .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Request&quot;</span>)<span class="question-mark">?</span>
             .<span class="ident">path</span>(<span class="ident">path</span>)<span class="question-mark">?</span>
             .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
@@ -435,10 +435,8 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
     }
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_unique_name</span>(
-        <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::Connection</span>,
-        <span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">HandleToken</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RequestProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_unique_name</span>(<span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">HandleToken</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RequestProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">unique_name</span> <span class="op">=</span> <span class="ident">connection</span>.<span class="ident">unique_name</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">unique_identifier</span> <span class="op">=</span> <span class="ident">unique_name</span>.<span class="ident">trim_start_matches</span>(<span class="string">&#39;:&#39;</span>).<span class="ident">replace</span>(<span class="string">&#39;.&#39;</span>, <span class="string">&quot;_&quot;</span>);
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">ObjectPath::try_from</span>(<span class="macro">format!</span>(
@@ -448,7 +446,7 @@
         .<span class="ident">unwrap</span>();
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
         <span class="macro">tracing::info!</span>(<span class="string">&quot;Creating a org.freedesktop.portal.Request {}&quot;</span>, <span class="ident">path</span>);
-        <span class="ident">RequestProxy::new</span>(<span class="ident">connection</span>, <span class="ident">path</span>).<span class="kw">await</span>
+        <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">path</span>).<span class="kw">await</span>
     }
 
     <span class="doccomment">/// Get a reference to the underlying Proxy.</span>

@@ -549,8 +549,7 @@
 <span class="doccomment">//! use ashpd::documents::{DocumentsProxy, Permission};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
-<span class="doccomment">//!     let proxy = DocumentsProxy::new(&amp;connection).await?;</span>
+<span class="doccomment">//!     let proxy = DocumentsProxy::new().await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.mount_point().await?);</span>
 <span class="doccomment">//!</span>
@@ -596,12 +595,12 @@
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedValue</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">path_from_null_terminated</span>},
+    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">path_from_null_terminated</span>, <span class="ident">session_connection</span>},
     <span class="ident">Error</span>,
 };
 
 <span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="doccomment">///</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Flags</span> {
@@ -711,8 +710,9 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DocumentsProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new instance of [`DocumentsProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::Connection</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">DocumentsProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="ident">connection</span>)
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">DocumentsProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
             .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)<span class="question-mark">?</span>
             .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
             .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>

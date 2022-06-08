@@ -245,6 +245,8 @@
 <span id="238">238</span>
 <span id="239">239</span>
 <span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Compose an email</span>
@@ -283,8 +285,7 @@
 <span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let connection = zbus::Connection::session().await?;</span>
-<span class="doccomment">//!     let proxy = EmailProxy::new(&amp;connection).await?;</span>
+<span class="doccomment">//!     let proxy = EmailProxy::new().await?;</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
 <span class="doccomment">//!     proxy</span>
 <span class="doccomment">//!         .compose_email(</span>
@@ -307,7 +308,10 @@
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">helpers::call_basic_response_method</span>, <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">session_connection</span>},
+    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// Specified options for a [`EmailProxy::compose_email`] request.</span>
@@ -432,8 +436,9 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">EmailProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new instance of [`EmailProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="ident">zbus::Connection</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EmailProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="ident">connection</span>)
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EmailProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
             .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)<span class="question-mark">?</span>
             .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
             .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
@@ -479,8 +484,7 @@
 <span class="doccomment">/// A handy wrapper around [`EmailProxy::compose_email`]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_compose_email&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">compose</span>(<span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>, <span class="ident">email</span>: <span class="ident">Email</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">zbus::Connection::session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">EmailProxy::new</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">EmailProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="ident">proxy</span>.<span class="ident">compose_email</span>(<span class="ident">identifier</span>, <span class="ident">email</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 
     <span class="prelude-val">Ok</span>(())

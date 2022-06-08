@@ -239,6 +239,16 @@
 <span id="232">232</span>
 <span id="233">233</span>
 <span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">ffi::OsStr</span>,
     <span class="ident">fmt::Debug</span>,
@@ -259,7 +269,7 @@
         <span class="ident">request</span>::{<span class="ident">BasicResponse</span>, <span class="ident">RequestProxy</span>, <span class="ident">Response</span>},
         <span class="ident">HandleToken</span>,
     },
-    <span class="ident">Error</span>, <span class="ident">PortalError</span>,
+    <span class="ident">Error</span>, <span class="ident">PortalError</span>, <span class="ident">SESSION</span>,
 };
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">call_request_method</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">B</span><span class="op">&gt;</span>(
@@ -280,7 +290,7 @@
     );
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
     <span class="macro">tracing::debug!</span>(<span class="string">&quot;The body is: {:#?}&quot;</span>, <span class="ident">body</span>);
-    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">RequestProxy::from_unique_name</span>(<span class="ident">proxy</span>.<span class="ident">connection</span>(), <span class="ident">handle_token</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">RequestProxy::from_unique_name</span>(<span class="ident">handle_token</span>).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="comment">// We don&#39;t use receive_response because we want to create the stream in advance</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
     <span class="macro">tracing::info!</span>(
@@ -442,6 +452,16 @@
             <span class="prelude-val">Some</span>(<span class="ident">scope</span>.<span class="ident">starts_with</span>(<span class="string">&quot;snap.&quot;</span>))
         })
         .<span class="ident">any</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>))
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">session_connection</span>() -&gt; <span class="ident">zbus::Result</span><span class="op">&lt;</span><span class="ident">zbus::Connection</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">cnx</span>) <span class="op">=</span> <span class="ident">SESSION</span>.<span class="ident">get</span>() {
+        <span class="prelude-val">Ok</span>(<span class="ident">cnx</span>.<span class="ident">clone</span>())
+    } <span class="kw">else</span> {
+        <span class="kw">let</span> <span class="ident">cnx</span> <span class="op">=</span> <span class="ident">zbus::Connection::session</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">SESSION</span>.<span class="ident">set</span>(<span class="ident">cnx</span>.<span class="ident">clone</span>()).<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t reset a OnceCell&quot;</span>);
+        <span class="prelude-val">Ok</span>(<span class="ident">cnx</span>)
+    }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
