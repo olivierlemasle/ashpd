@@ -147,6 +147,21 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">sync::Arc</span>};
 
 <span class="kw">use</span> <span class="ident">futures::lock::Mutex</span>;
@@ -168,12 +183,14 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Gtk4WindowIdentifier</span> {
     <span class="ident">native</span>: <span class="ident">gtk4::Native</span>,
     <span class="ident">type_</span>: <span class="ident">WindowIdentifierType</span>,
+    <span class="ident">exported</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Gtk4WindowIdentifier</span> {
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">native</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gtk4::Native</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">native</span>.<span class="ident">surface</span>();
         <span class="kw">match</span> <span class="ident">surface</span>.<span class="ident">display</span>().<span class="ident">backend</span>() {
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4_wayland&quot;</span>)]</span>
             <span class="ident">Backend::Wayland</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">top_level</span> <span class="op">=</span> <span class="ident">surface</span>
                     .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk4wayland::WaylandToplevel</span><span class="op">&gt;</span>()
@@ -187,7 +204,7 @@
                         <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures::channel::oneshot::channel</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
                         <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
 
-                        <span class="ident">top_level</span>.<span class="ident">export_handle</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> =&gt; <span class="kw">move</span> <span class="op">|</span><span class="kw">_</span>, <span class="ident">handle</span><span class="op">|</span> {
+                        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">top_level</span>.<span class="ident">export_handle</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> =&gt; <span class="kw">move</span> <span class="op">|</span><span class="kw">_</span>, <span class="ident">handle</span><span class="op">|</span> {
                             <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">glib::MainContext::default</span>();
                             <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">handle</span>.<span class="ident">to_owned</span>();
                             <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span>, @<span class="ident">strong</span> <span class="ident">handle</span> =&gt; <span class="kw">async</span> <span class="kw">move</span> {
@@ -196,6 +213,10 @@
                                 }
                             }));
                         }));
+
+                        <span class="kw">if</span> <span class="op">!</span><span class="ident">result</span> {
+                            <span class="kw">return</span> <span class="prelude-val">None</span>;
+                        }
                         <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">receiver</span>.<span class="kw">await</span>.<span class="ident">ok</span>();
                         <span class="ident">top_level</span>.<span class="ident">set_data</span>(<span class="ident">WINDOW_HANDLE_KEY</span>, (<span class="ident">handle</span>.<span class="ident">clone</span>(), <span class="number">1</span>));
                         <span class="ident">handle</span>
@@ -203,15 +224,18 @@
                 };
                 <span class="prelude-val">Some</span>(<span class="ident">Gtk4WindowIdentifier</span> {
                     <span class="ident">native</span>: <span class="ident">native</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>(),
+                    <span class="ident">exported</span>: <span class="ident">handle</span>.<span class="ident">is_some</span>(),
                     <span class="ident">type_</span>: <span class="ident">WindowIdentifierType::Wayland</span>(<span class="ident">handle</span>.<span class="ident">unwrap_or_default</span>()),
                 })
             }
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4_x11&quot;</span>)]</span>
             <span class="ident">Backend::X11</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">xid</span> <span class="op">=</span> <span class="ident">surface</span>
                     .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk4x11::X11Surface</span><span class="op">&gt;</span>()
                     .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="ident">w</span>.<span class="ident">xid</span>())<span class="question-mark">?</span>;
                 <span class="prelude-val">Some</span>(<span class="ident">Gtk4WindowIdentifier</span> {
                     <span class="ident">native</span>: <span class="ident">native</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>(),
+                    <span class="ident">exported</span>: <span class="bool-val">false</span>,
                     <span class="ident">type_</span>: <span class="ident">WindowIdentifierType::X11</span>(<span class="ident">xid</span>),
                 })
             }
@@ -225,6 +249,7 @@
         <span class="kw">let</span> <span class="ident">display</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">display</span>();
         <span class="kw">unsafe</span> {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">type_</span> {
+                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4_wayland&quot;</span>)]</span>
                 <span class="ident">WindowIdentifierType::Wayland</span>(<span class="kw">_</span>) =&gt; {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wayland_handle</span> <span class="op">=</span> <span class="ident">WaylandHandle::empty</span>();
                     <span class="ident">wayland_handle</span>.<span class="ident">surface</span> <span class="op">=</span> <span class="ident">gdk4wayland::ffi::gdk_wayland_surface_get_wl_surface</span>(
@@ -243,6 +268,7 @@
                     );
                     <span class="ident">RawWindowHandle::Wayland</span>(<span class="ident">wayland_handle</span>)
                 }
+                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4_x11&quot;</span>)]</span>
                 <span class="ident">WindowIdentifierType::X11</span>(<span class="ident">xid</span>) =&gt; {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x11_handle</span> <span class="op">=</span> <span class="ident">XlibHandle::empty</span>();
                     <span class="ident">x11_handle</span>.<span class="ident">window</span> <span class="op">=</span> <span class="ident">xid</span>;
@@ -268,7 +294,11 @@
 
 <span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Gtk4WindowIdentifier</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">exported</span> {
+            <span class="kw">return</span>;
+        }
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">type_</span> {
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4_wayland&quot;</span>)]</span>
             <span class="ident">WindowIdentifierType::Wayland</span>(<span class="kw">_</span>) =&gt; {
                 <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">native</span>.<span class="ident">surface</span>();
                 <span class="kw">let</span> <span class="ident">top_level</span> <span class="op">=</span> <span class="ident">surface</span>
@@ -290,5 +320,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.1 (e092d0b6b 2022-07-16)" ></div>
 </body></html>
