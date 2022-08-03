@@ -188,7 +188,7 @@
 <span id="181">181</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">sync::Arc</span>};
 
-<span class="kw">use</span> <span class="ident">futures::lock::Mutex</span>;
+<span class="kw">use</span> <span class="ident">futures_util::lock::Mutex</span>;
 <span class="kw">use</span> <span class="ident">gdk::Backend</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">glib::translate::ToGlibPtr</span>;
@@ -228,7 +228,7 @@
                         <span class="kw-2">*</span><span class="ident">ref_count</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="ident">handle</span>.<span class="ident">clone</span>()
                     } <span class="kw">else</span> {
-                        <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures::channel::oneshot::channel</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
+                        <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures_channel::oneshot::channel</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
                         <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
 
                         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">top_level</span>.<span class="ident">export_handle</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> =&gt; <span class="kw">move</span> <span class="op">|</span><span class="kw">_</span>, <span class="ident">handle</span><span class="op">|</span> {

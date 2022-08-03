@@ -258,7 +258,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;async-std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">async_std</span>::{<span class="ident">fs::File</span>, <span class="ident">prelude</span>::<span class="kw-2">*</span>};
-<span class="kw">use</span> <span class="ident">futures::StreamExt</span>;
+<span class="kw">use</span> <span class="ident">futures_util::StreamExt</span>;
 <span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tokio&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">tokio</span>::{<span class="ident">fs::File</span>, <span class="ident">io::AsyncReadExt</span>};
@@ -303,7 +303,7 @@
         .<span class="kw">await</span>
         .<span class="ident">map_err</span>::<span class="op">&lt;</span><span class="ident">PortalError</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">From::from</span>)<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> (<span class="ident">response</span>, <span class="ident">path</span>) <span class="op">=</span> <span class="macro">futures::try_join!</span>(
+    <span class="kw">let</span> (<span class="ident">response</span>, <span class="ident">path</span>) <span class="op">=</span> <span class="macro">futures_util::try_join!</span>(
         <span class="kw">async</span> {
             <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">next</span>().<span class="kw">await</span>.<span class="ident">ok_or</span>(<span class="ident">Error::NoResponse</span>)<span class="question-mark">?</span>;
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
