@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["retrieve_secret","A handy wrapper around [`SecretProxy::retrieve_secret`]."]],"struct":[["SecretProxy","The interface lets sandboxed applications retrieve a per-application secret. The secret can then be used for encrypting confidential data inside the sandbox."]]});
+window.SIDEBAR_ITEMS = {"fn":[["retrieve","A handy wrapper around [`Secret::retrieve`]."]],"struct":[["Secret","The interface lets sandboxed applications retrieve a per-application secret."]]};

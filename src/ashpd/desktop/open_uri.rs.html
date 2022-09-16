@@ -1,11 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/open_uri.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>open_uri.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/open_uri.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>open_uri.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
-                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -228,165 +229,24 @@
 <span id="221">221</span>
 <span id="222">222</span>
 <span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
-<span id="289">289</span>
-<span id="290">290</span>
-<span id="291">291</span>
-<span id="292">292</span>
-<span id="293">293</span>
-<span id="294">294</span>
-<span id="295">295</span>
-<span id="296">296</span>
-<span id="297">297</span>
-<span id="298">298</span>
-<span id="299">299</span>
-<span id="300">300</span>
-<span id="301">301</span>
-<span id="302">302</span>
-<span id="303">303</span>
-<span id="304">304</span>
-<span id="305">305</span>
-<span id="306">306</span>
-<span id="307">307</span>
-<span id="308">308</span>
-<span id="309">309</span>
-<span id="310">310</span>
-<span id="311">311</span>
-<span id="312">312</span>
-<span id="313">313</span>
-<span id="314">314</span>
-<span id="315">315</span>
-<span id="316">316</span>
-<span id="317">317</span>
-<span id="318">318</span>
-<span id="319">319</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Open a URI or a directory.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Wrapper of the DBus interface: [`org.freedesktop.portal.OpenURI`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.OpenURI).</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Open a file</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::{desktop::open_uri, WindowIdentifier};</span>
+<span class="doccomment">//! use ashpd::desktop::open_uri::OpenFileRequest;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;).unwrap();</span>
-<span class="doccomment">//!     open_uri::open_file(&amp;WindowIdentifier::default(), &amp;file, false, true).await?;</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Or by using the Proxy directly</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::fs::File;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::{desktop::open_uri::OpenURIProxy, WindowIdentifier};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let proxy = OpenURIProxy::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .open_file(&amp;WindowIdentifier::default(), &amp;file, false, true)</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Open a directory</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::fs::File;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::{desktop::open_uri, WindowIdentifier};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let directory = File::open(&quot;/home/bilelmoussaoui/Downloads&quot;).unwrap();</span>
-<span class="doccomment">//!     open_uri::open_directory(&amp;WindowIdentifier::default(), &amp;directory).await?;</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Or by using the Proxy directly</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::fs::File;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::{desktop::open_uri::OpenURIProxy, WindowIdentifier};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let directory = File::open(&quot;/home/bilelmoussaoui/Downloads&quot;).unwrap();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let proxy = OpenURIProxy::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .open_directory(&amp;WindowIdentifier::default(), &amp;directory)</span>
+<span class="doccomment">//!     OpenFileRequest::default()</span>
+<span class="doccomment">//!         .ask(true)</span>
+<span class="doccomment">//!         .build_file(&amp;file)</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
@@ -396,35 +256,34 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{desktop::open_uri, WindowIdentifier};</span>
+<span class="doccomment">//! use ashpd::desktop::open_uri::OpenFileRequest;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
 <span class="doccomment">//!     let uri =</span>
 <span class="doccomment">//!         url::Url::parse(&quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
-<span class="doccomment">//!     open_uri::open_uri(&amp;WindowIdentifier::default(), &amp;uri, false, true).await?;</span>
+<span class="doccomment">//!     OpenFileRequest::default().ask(true).build_uri(&amp;uri).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Or by using the Proxy directly</span>
+<span class="doccomment">//! ## Open a directory</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{desktop::open_uri::OpenURIProxy, WindowIdentifier};</span>
+<span class="doccomment">//! use std::fs::File;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use ashpd::desktop::open_uri::OpenDirectoryRequest;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = OpenURIProxy::new().await?;</span>
-<span class="doccomment">//!     let uri = url::Url::parse(&quot;https://github.com/bilelmoussaoui/ashpd&quot;).unwrap();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .open_uri(&amp;WindowIdentifier::default(), &amp;uri, false, true)</span>
-<span class="doccomment">//!         .await?;</span>
+<span class="doccomment">//!     let directory = File::open(&quot;/home/bilelmoussaoui/Downloads&quot;).unwrap();</span>
+<span class="doccomment">//!     OpenDirectoryRequest::default().build(&amp;directory).await?;</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
 
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use</span> <span class="ident">url::Url</span>;
+<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -432,72 +291,26 @@
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`OpenURIProxy::open_directory`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">OpenDirOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="comment">// Token to activate the chosen application.</span>
     <span class="ident">activation_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">OpenDirOptions</span> {
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_activation_token</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">activation_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">activation_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">activation_token</span>.<span class="ident">to_owned</span>());
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`OpenURIProxy::open_file`] or</span>
-<span class="doccomment">/// [`OpenURIProxy::open_uri`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Whether to allow the chosen application to write to the file.</span>
-    <span class="doccomment">/// This key only takes effect the uri points to a local file that is</span>
-    <span class="doccomment">/// exported in the document portal, and the chosen application is sandboxed</span>
-    <span class="doccomment">/// itself.</span>
     <span class="ident">writeable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether to ask the user to choose an app. If this is not passed, or</span>
-    <span class="doccomment">/// false, the portal may use a default or pick the last choice.</span>
     <span class="ident">ask</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="comment">// Token to activate the chosen application.</span>
     <span class="ident">activation_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">OpenFileOptions</span> {
-    <span class="doccomment">/// Whether the file should be writeable or not.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">writeable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">writeable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">writeable</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Whether to always ask the user which application to use or not.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ask</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ask</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">ask</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ask</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_activation_token</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">activation_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">activation_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">activation_token</span>.<span class="ident">to_owned</span>());
-    }
-}
-
-<span class="doccomment">/// The interface lets sandboxed applications open URIs</span>
-<span class="doccomment">/// (e.g. a http: link to the applications homepage) under the control of the</span>
-<span class="doccomment">/// user.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.OpenURI`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.OpenURI).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.OpenURI&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenURIProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="kw">struct</span> <span class="ident">OpenURIProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">OpenURIProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`OpenURIProxy`].</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OpenURIProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
@@ -509,29 +322,16 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
     }
 
-    <span class="doccomment">/// Asks to open the directory containing a local file in the file browser.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `directory` - File descriptor for a file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`OpenDirectory`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenDirectory).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenDirectory&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_directory&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_directory</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
         <span class="ident">directory</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
+        <span class="ident">options</span>: <span class="ident">OpenDirOptions</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">OpenDirOptions::default</span>();
         <span class="ident">call_basic_response_method</span>(
             <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
@@ -541,28 +341,12 @@
         .<span class="kw">await</span>
     }
 
-    <span class="doccomment">/// Asks to open a local file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `file` - File descriptor for the file to open.</span>
-    <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
-    <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or</span>
-    <span class="doccomment">///   not.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`OpenFile`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenFile).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenFile&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
         <span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-        <span class="ident">writeable</span>: <span class="ident">bool</span>,
-        <span class="ident">ask</span>: <span class="ident">bool</span>,
+        <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">OpenFileOptions::default</span>().<span class="ident">ask</span>(<span class="ident">ask</span>).<span class="ident">writeable</span>(<span class="ident">writeable</span>);
         <span class="ident">call_basic_response_method</span>(
             <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
@@ -572,32 +356,12 @@
         .<span class="kw">await</span>
     }
 
-    <span class="doccomment">/// Asks to open a local file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `uri` - The uri to open.</span>
-    <span class="doccomment">/// * `writeable` - Whether the file should be writeable or not.</span>
-    <span class="doccomment">/// * `ask` - Whether to always ask the user which application to use or</span>
-    <span class="doccomment">///   not.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// *Note* that `file` uris are explicitly not supported by this method.</span>
-    <span class="doccomment">/// Use [`Self::open_file`] or [`Self::open_directory`] instead.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`OpenURI`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-OpenURI.OpenURI).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenURI&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_uri&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_uri</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
         <span class="ident">uri</span>: <span class="kw-2">&amp;</span><span class="ident">url::Url</span>,
-        <span class="ident">writeable</span>: <span class="ident">bool</span>,
-        <span class="ident">ask</span>: <span class="ident">bool</span>,
+        <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">OpenFileOptions::default</span>().<span class="ident">ask</span>(<span class="ident">ask</span>).<span class="ident">writeable</span>(<span class="ident">writeable</span>);
         <span class="ident">call_basic_response_method</span>(
             <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
@@ -608,41 +372,86 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.OpenURI&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_uri&quot;</span>)]</span>
-<span class="doccomment">/// A handy wrapper around [`OpenURIProxy::open_uri`].</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_uri</span>(
-    <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-    <span class="ident">uri</span>: <span class="kw-2">&amp;</span><span class="ident">url::Url</span>,
-    <span class="ident">writeable</span>: <span class="ident">bool</span>,
-    <span class="ident">ask</span>: <span class="ident">bool</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">OpenURIProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="ident">proxy</span>.<span class="ident">open_uri</span>(<span class="ident">identifier</span>, <span class="ident">uri</span>, <span class="ident">writeable</span>, <span class="ident">ask</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="prelude-val">Ok</span>(())
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenFileRequest</span> {
+    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+    <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
 }
 
-<span class="doccomment">/// A handy wrapper around [`OpenURIProxy::open_file`].</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_file</span>(
-    <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-    <span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-    <span class="ident">writeable</span>: <span class="ident">bool</span>,
-    <span class="ident">ask</span>: <span class="ident">bool</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">OpenURIProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="ident">proxy</span>.<span class="ident">open_file</span>(<span class="ident">identifier</span>, <span class="ident">file</span>, <span class="ident">writeable</span>, <span class="ident">ask</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="prelude-val">Ok</span>(())
+<span class="kw">impl</span> <span class="ident">OpenFileRequest</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Sets a window identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    }
+
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Whether the file should be writeable or not.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">writeable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_writeable</span>(<span class="ident">writeable</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_writeable</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">writeable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">writeable</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Whether to always ask the user which application to use or not.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ask</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ask</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">ask</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ask</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ask</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">ask</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">ask</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ask</span>);
+    }
+
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build_file</span>(<span class="self">self</span>, <span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">OpenURIProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>.<span class="ident">open_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="ident">file</span>, <span class="self">self</span>.<span class="ident">options</span>).<span class="kw">await</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build_uri</span>(<span class="self">self</span>, <span class="ident">uri</span>: <span class="kw-2">&amp;</span><span class="ident">Url</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">OpenURIProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>.<span class="ident">open_uri</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="ident">uri</span>, <span class="self">self</span>.<span class="ident">options</span>).<span class="kw">await</span>
+    }
 }
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_directory&quot;</span>)]</span>
-<span class="doccomment">/// A handy wrapper around [`OpenURIProxy::open_directory`].</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_directory</span>(
-    <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-    <span class="ident">directory</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">OpenURIProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="ident">proxy</span>.<span class="ident">open_directory</span>(<span class="ident">identifier</span>, <span class="ident">directory</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="prelude-val">Ok</span>(())
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.OpenURI&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenDirectoryRequest</span> {
+    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+    <span class="ident">options</span>: <span class="ident">OpenDirOptions</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">OpenDirectoryRequest</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Sets a window identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    }
+
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>, <span class="ident">directory</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">OpenURIProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>
+            .<span class="ident">open_directory</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="ident">directory</span>, <span class="self">self</span>.<span class="ident">options</span>)
+            .<span class="kw">await</span>
+    }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.1 (e092d0b6b 2022-07-16)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

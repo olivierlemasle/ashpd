@@ -1,11 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/file_chooser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/file_chooser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
-                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -565,35 +566,130 @@
 <span id="558">558</span>
 <span id="559">559</span>
 <span id="560">560</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+</pre><pre class="rust"><code><span class="doccomment">//! The interface lets sandboxed applications ask the user for access to files</span>
+<span class="doccomment">//! outside the sandbox. The portal backend will present the user with a file</span>
+<span class="doccomment">//! chooser dialog.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ## Opening a file</span>
+<span class="doccomment">//! Wrapper of the DBus interface: [`org.freedesktop.portal.FileChooser`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.FileChooser).</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! #### Opening a file</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{</span>
-<span class="doccomment">//!     desktop::file_chooser::{Choice, FileChooserProxy, FileFilter, OpenFileOptions},</span>
-<span class="doccomment">//!     WindowIdentifier,</span>
-<span class="doccomment">//! };</span>
+<span class="doccomment">//! use ashpd::desktop::file_chooser::{Choice, FileFilter, OpenFileRequest};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = FileChooserProxy::new().await?;</span>
-<span class="doccomment">//!     let files = proxy</span>
-<span class="doccomment">//!         .open_file(</span>
-<span class="doccomment">//!             &amp;WindowIdentifier::default(),</span>
-<span class="doccomment">//!             &quot;open a file to read&quot;,</span>
-<span class="doccomment">//!             OpenFileOptions::default()</span>
-<span class="doccomment">//!                 .accept_label(&quot;read&quot;)</span>
-<span class="doccomment">//!                 .modal(true)</span>
-<span class="doccomment">//!                 .multiple(true)</span>
-<span class="doccomment">//!                 .add_choice(</span>
-<span class="doccomment">//!                     Choice::new(&quot;encoding&quot;, &quot;Encoding&quot;, &quot;latin15&quot;)</span>
-<span class="doccomment">//!                         .insert(&quot;utf8&quot;, &quot;Unicode (UTF-8)&quot;)</span>
-<span class="doccomment">//!                         .insert(&quot;latin15&quot;, &quot;Western&quot;),</span>
-<span class="doccomment">//!                 )</span>
-<span class="doccomment">//!                 // A trick to have a checkbox</span>
-<span class="doccomment">//!                 .add_choice(Choice::boolean(&quot;re-encode&quot;, &quot;Re-encode&quot;, false))</span>
-<span class="doccomment">//!                 .add_filter(FileFilter::new(&quot;SVG Image&quot;).mimetype(&quot;image/svg+xml&quot;)),</span>
+<span class="doccomment">//!     let files = OpenFileRequest::default()</span>
+<span class="doccomment">//!         .title(&quot;open a file to read&quot;)</span>
+<span class="doccomment">//!         .accept_label(&quot;read&quot;)</span>
+<span class="doccomment">//!         .modal(true)</span>
+<span class="doccomment">//!         .multiple(true)</span>
+<span class="doccomment">//!         .choice(</span>
+<span class="doccomment">//!             Choice::new(&quot;encoding&quot;, &quot;Encoding&quot;, &quot;latin15&quot;)</span>
+<span class="doccomment">//!                 .insert(&quot;utf8&quot;, &quot;Unicode (UTF-8)&quot;)</span>
+<span class="doccomment">//!                 .insert(&quot;latin15&quot;, &quot;Western&quot;),</span>
 <span class="doccomment">//!         )</span>
+<span class="doccomment">//!         // A trick to have a checkbox</span>
+<span class="doccomment">//!         .choice(Choice::boolean(&quot;re-encode&quot;, &quot;Re-encode&quot;, false))</span>
+<span class="doccomment">//!         .filter(FileFilter::new(&quot;SVG Image&quot;).mimetype(&quot;image/svg+xml&quot;))</span>
+<span class="doccomment">//!         .build()</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, files);</span>
@@ -602,26 +698,19 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ## Ask to save a file</span>
+<span class="doccomment">//! #### Ask to save a file</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{</span>
-<span class="doccomment">//!     desktop::file_chooser::{FileChooserProxy, FileFilter, SaveFileOptions},</span>
-<span class="doccomment">//!     WindowIdentifier,</span>
-<span class="doccomment">//! };</span>
+<span class="doccomment">//! use ashpd::desktop::file_chooser::{FileFilter, SaveFileRequest};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = FileChooserProxy::new().await?;</span>
-<span class="doccomment">//!     let files = proxy</span>
-<span class="doccomment">//!         .save_file(</span>
-<span class="doccomment">//!             &amp;WindowIdentifier::default(),</span>
-<span class="doccomment">//!             &quot;open a file to write&quot;,</span>
-<span class="doccomment">//!             SaveFileOptions::default()</span>
-<span class="doccomment">//!                 .accept_label(&quot;write&quot;)</span>
-<span class="doccomment">//!                 .current_name(&quot;image.jpg&quot;)</span>
-<span class="doccomment">//!                 .modal(true)</span>
-<span class="doccomment">//!                 .add_filter(FileFilter::new(&quot;JPEG Image&quot;).glob(&quot;*.jpg&quot;)),</span>
-<span class="doccomment">//!         )</span>
+<span class="doccomment">//!     let files = SaveFileRequest::default()</span>
+<span class="doccomment">//!         .title(&quot;open a file to write&quot;)</span>
+<span class="doccomment">//!         .accept_label(&quot;write&quot;)</span>
+<span class="doccomment">//!         .current_name(&quot;image.jpg&quot;)</span>
+<span class="doccomment">//!         .modal(true)</span>
+<span class="doccomment">//!         .filter(FileFilter::new(&quot;JPEG Image&quot;).glob(&quot;*.jpg&quot;))</span>
+<span class="doccomment">//!         .build()</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, files);</span>
@@ -630,26 +719,19 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ## Ask to save multiple files</span>
+<span class="doccomment">//! #### Ask to save multiple files</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{</span>
-<span class="doccomment">//!     desktop::file_chooser::{FileChooserProxy, SaveFilesOptions},</span>
-<span class="doccomment">//!     WindowIdentifier,</span>
-<span class="doccomment">//! };</span>
+<span class="doccomment">//! use ashpd::desktop::file_chooser::SaveFilesRequest;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = FileChooserProxy::new().await?;</span>
-<span class="doccomment">//!     let files = proxy</span>
-<span class="doccomment">//!         .save_files(</span>
-<span class="doccomment">//!             &amp;WindowIdentifier::default(),</span>
-<span class="doccomment">//!             &quot;open files to write&quot;,</span>
-<span class="doccomment">//!             SaveFilesOptions::default()</span>
-<span class="doccomment">//!                 .accept_label(&quot;write files&quot;)</span>
-<span class="doccomment">//!                 .modal(true)</span>
-<span class="doccomment">//!                 .current_folder(&quot;/home/bilelmoussaoui/Pictures&quot;)</span>
-<span class="doccomment">//!                 .files(&amp;[&quot;test.jpg&quot;, &quot;awesome.png&quot;]),</span>
-<span class="doccomment">//!         )</span>
+<span class="doccomment">//!     let files = SaveFilesRequest::default()</span>
+<span class="doccomment">//!         .title(&quot;open files to write&quot;)</span>
+<span class="doccomment">//!         .accept_label(&quot;write files&quot;)</span>
+<span class="doccomment">//!         .modal(true)</span>
+<span class="doccomment">//!         .current_folder(&quot;/home/bilelmoussaoui/Pictures&quot;)</span>
+<span class="doccomment">//!         .files(&amp;[&quot;test.jpg&quot;, &quot;awesome.png&quot;])</span>
+<span class="doccomment">//!         .build()</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, files);</span>
@@ -661,7 +743,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ffi::CString</span>, <span class="ident">os::unix::ffi::OsStrExt</span>, <span class="ident">path::Path</span>};
 
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
+<span class="kw">use</span> <span class="ident">serde_repr::Serialize_repr</span>;
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
@@ -670,12 +752,12 @@
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// A file filter, to limit the available file choices to a mimetype or a glob</span>
 <span class="doccomment">/// pattern.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileFilter</span>(<span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">FilterType</span>, <span class="ident">String</span>)<span class="op">&gt;</span>);
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize_repr</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
 <span class="kw">enum</span> <span class="ident">FilterType</span> {
     <span class="ident">GlobPattern</span> <span class="op">=</span> <span class="number">0</span>,
@@ -707,7 +789,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Presents the user with a choice to select from or as a checkbox.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Choice</span>(<span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span>, <span class="ident">String</span>);
 
@@ -762,235 +844,47 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`FileChooserProxy::open_file`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
+<span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether the dialog should be modal.</span>
     <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether multiple files can be selected or not.</span>
     <span class="ident">multiple</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether to select for folders instead of files.</span>
     <span class="ident">directory</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// List of serialized file filters.</span>
     <span class="ident">filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Request that this filter be set by default at dialog creation.</span>
     <span class="ident">current_filter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// List of serialized combo boxes to add to the file chooser</span>
     <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Choice</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">OpenFileOptions</span> {
-    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets whether to allow multiple files selection.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">multiple</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">multiple</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">multiple</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets whether to select directories or not.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">directory</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">directory</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">directory</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">directory</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Adds a files filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">filters</span>.<span class="ident">push</span>(<span class="ident">filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Specifies the default filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">current_filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Adds a choice.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
-        <span class="self">self</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`FileChooserProxy::save_file`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFileOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
+<span class="kw">struct</span> <span class="ident">SaveFileOptions</span> {
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether the dialog should be modal.</span>
     <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Suggested filename.</span>
     <span class="ident">current_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Suggested folder to save the file in.</span>
     <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The current file (when saving an existing file).</span>
     <span class="ident">current_file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// List of serialized file filters.</span>
     <span class="ident">filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Request that this filter be set by default at dialog creation.</span>
     <span class="ident">current_filter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// List of serialized combo boxes to add to the file chooser</span>
     <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Choice</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">SaveFileOptions</span> {
-    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets the current file name.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">current_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_name</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets the current folder.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_folder</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets the absolute path of the file.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_file</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_file</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_file</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`current_file` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.<span class="ident">current_file</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Adds a files filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">filters</span>.<span class="ident">push</span>(<span class="ident">filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets the default filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">current_filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Adds a choice.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
-        <span class="self">self</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`FileChooserProxy::save_files`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFilesOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
+<span class="kw">struct</span> <span class="ident">SaveFilesOptions</span> {
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.</span>
     <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether the dialog should be modal.</span>
     <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// List of serialized combo boxes to add to the file chooser</span>
     <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Choice</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Suggested folder to save the file in.</span>
     <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// An array of file names to be saved.</span>
     <span class="ident">files</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">SaveFilesOptions</span> {
-    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Adds a choice.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Specifies the current folder path.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_folder</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets a list of files to save.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">files</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">files</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">files</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
-            <span class="ident">files</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
-                    <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-                        .<span class="ident">expect</span>(<span class="string">&quot;`files` should not be null terminated&quot;</span>);
-                    <span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>()
-                })
-                .<span class="ident">collect</span>(),
-        );
-        <span class="self">self</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">SerializeDict</span>, <span class="ident">Clone</span>, <span class="ident">DeserializeDict</span>)]</span>
-<span class="doccomment">/// A response to a</span>
-<span class="doccomment">/// [`FileChooserProxy::open_file`]/[`FileChooserProxy::save_file`]/</span>
-<span class="doccomment">/// [`FileChooserProxy::save_files`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">DeserializeDict</span>)]</span>
+<span class="doccomment">/// A response of [`OpenFileRequest`], [`SaveFileRequest`] or</span>
+<span class="doccomment">/// [`SaveFilesRequest`].</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectedFiles</span> {
     <span class="ident">uris</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">url::Url</span><span class="op">&gt;</span>,
@@ -1009,14 +903,8 @@
     }
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications ask the user for access to files</span>
-<span class="doccomment">/// outside the sandbox. The portal backend will present the user with a file</span>
-<span class="doccomment">/// chooser dialog.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.FileChooser`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.FileChooser).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="kw">struct</span> <span class="ident">FileChooserProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FileChooserProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new instance of [`FileChooserProxy`].</span>
@@ -1036,19 +924,6 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
     }
 
-    <span class="doccomment">/// Asks to open one or more files.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `title` - Title for the file chooser dialog.</span>
-    <span class="doccomment">/// * `options` - [`OpenFileOptions`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`OpenFile`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileChooser.OpenFile).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenFile&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_file&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
@@ -1064,19 +939,6 @@
         .<span class="kw">await</span>
     }
 
-    <span class="doccomment">/// Asks for a location to save a file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `title` - Title for the file chooser dialog.</span>
-    <span class="doccomment">/// * `options` - [`SaveFileOptions`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`SaveFile`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileChooser.SaveFile).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SaveFile&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_save_file&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_file</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
@@ -1092,24 +954,6 @@
         .<span class="kw">await</span>
     }
 
-    <span class="doccomment">/// Asks for a folder as a location to save one or more files.</span>
-    <span class="doccomment">/// The names of the files will be used as-is and appended to the</span>
-    <span class="doccomment">/// selected folder&#39;s path in the list of returned files.</span>
-    <span class="doccomment">/// If the selected folder already contains a file with one of the given</span>
-    <span class="doccomment">/// names, the portal may prompt or take some other action to</span>
-    <span class="doccomment">/// construct a unique file name and return that instead.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `title` - Title for the file chooser dialog.</span>
-    <span class="doccomment">/// * `options` - [`SaveFilesOptions`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`SaveFiles`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileChooser.SaveFiles).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SaveFiles&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_save_files&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_files</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
@@ -1125,6 +969,355 @@
         .<span class="kw">await</span>
     }
 }
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_file&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenFileRequest</span> {
+    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+    <span class="ident">title</span>: <span class="ident">String</span>,
+    <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">OpenFileRequest</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Sets a window identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    }
+
+    <span class="doccomment">/// Sets a title for the file chooser dialog.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_title</span>(<span class="ident">title</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">to_owned</span>();
+    }
+
+    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_accept_label</span>(<span class="ident">accept_label</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_accept_label</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
+    }
+
+    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_modal</span>(<span class="ident">modal</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
+    }
+
+    <span class="doccomment">/// Sets whether to allow multiple files selection.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">multiple</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_multiple</span>(<span class="ident">multiple</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_multiple</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">multiple</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">multiple</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">multiple</span>);
+    }
+
+    <span class="doccomment">/// Sets whether to select directories or not.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">directory</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">directory</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_directory</span>(<span class="ident">directory</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_directory</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">directory</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">directory</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">directory</span>);
+    }
+
+    <span class="doccomment">/// Adds a files filter.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span>.<span class="ident">push</span>(<span class="ident">filter</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_filters</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">filters</span>: <span class="kw-2">&amp;</span>[<span class="ident">FileFilter</span>]) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span> <span class="op">=</span> <span class="ident">filters</span>.<span class="ident">to_vec</span>();
+    }
+
+    <span class="doccomment">/// Specifies the default filter.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_filter</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Adds a choice.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_choices</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">choices</span>: <span class="kw-2">&amp;</span>[<span class="ident">Choice</span>]) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span> <span class="op">=</span> <span class="ident">choices</span>.<span class="ident">to_vec</span>();
+    }
+
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">FileChooserProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>
+            .<span class="ident">open_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">title</span>, <span class="self">self</span>.<span class="ident">options</span>)
+            .<span class="kw">await</span>
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_save_files&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFilesRequest</span> {
+    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+    <span class="ident">title</span>: <span class="ident">String</span>,
+    <span class="ident">options</span>: <span class="ident">SaveFilesOptions</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">SaveFilesRequest</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Sets a window identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    }
+
+    <span class="doccomment">/// Sets a title for the file chooser dialog.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_title</span>(<span class="ident">title</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">to_owned</span>();
+    }
+
+    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_accept_label</span>(<span class="ident">accept_label</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_accept_label</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
+    }
+
+    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_modal</span>(<span class="ident">modal</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
+    }
+
+    <span class="doccomment">/// Adds a choice.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_choices</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">choices</span>: <span class="kw-2">&amp;</span>[<span class="ident">Choice</span>]) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span> <span class="op">=</span> <span class="ident">choices</span>.<span class="ident">to_vec</span>();
+    }
+
+    <span class="doccomment">/// Specifies the current folder path.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_current_folder</span>(<span class="ident">current_folder</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_folder</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) {
+        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_folder</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
+    }
+
+    <span class="doccomment">/// Sets a list of files to save.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">files</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">files</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>]) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_files</span>(<span class="ident">files</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_files</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">files</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>]) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">files</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
+            <span class="ident">files</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+                    <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
+                        .<span class="ident">expect</span>(<span class="string">&quot;`files` should not be null terminated&quot;</span>);
+                    <span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>()
+                })
+                .<span class="ident">collect</span>(),
+        );
+    }
+
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">FileChooserProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>
+            .<span class="ident">save_files</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">title</span>, <span class="self">self</span>.<span class="ident">options</span>)
+            .<span class="kw">await</span>
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_save_file&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFileRequest</span> {
+    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+    <span class="ident">title</span>: <span class="ident">String</span>,
+    <span class="ident">options</span>: <span class="ident">SaveFileOptions</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">SaveFileRequest</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Sets a window identifier.</span>
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    }
+
+    <span class="doccomment">/// Sets a title for the file chooser dialog.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_title</span>(<span class="ident">title</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">to_owned</span>();
+    }
+
+    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_accept_label</span>(<span class="ident">accept_label</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_accept_label</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
+    }
+
+    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_modal</span>(<span class="ident">modal</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
+    }
+
+    <span class="doccomment">/// Sets the current file name.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_current_name</span>(<span class="ident">current_name</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_name</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_name</span>.<span class="ident">to_owned</span>());
+    }
+
+    <span class="doccomment">/// Sets the current folder.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_current_folder</span>(<span class="ident">current_folder</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_folder</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) {
+        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_folder</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
+    }
+
+    <span class="doccomment">/// Sets the absolute path of the file.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_file</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_file</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_current_file</span>(<span class="ident">current_file</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_file</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_file</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) {
+        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_file</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;`current_file` should not be null terminated&quot;</span>);
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_file</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
+    }
+
+    <span class="doccomment">/// Adds a files filter.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span>.<span class="ident">push</span>(<span class="ident">filter</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_filters</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">filters</span>: <span class="kw-2">&amp;</span>[<span class="ident">FileFilter</span>]) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span> <span class="op">=</span> <span class="ident">filters</span>.<span class="ident">to_vec</span>();
+    }
+
+    <span class="doccomment">/// Sets the default filter.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_current_filter</span>(<span class="ident">current_filter</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_filter</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_filter</span>);
+    }
+
+    <span class="doccomment">/// Adds a choice.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_choices</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">choices</span>: <span class="kw-2">&amp;</span>[<span class="ident">Choice</span>]) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span> <span class="op">=</span> <span class="ident">choices</span>.<span class="ident">to_vec</span>();
+    }
+
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">FileChooserProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>
+            .<span class="ident">save_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">title</span>, <span class="self">self</span>.<span class="ident">options</span>)
+            .<span class="kw">await</span>
+    }
+}
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.1 (e092d0b6b 2022-07-16)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

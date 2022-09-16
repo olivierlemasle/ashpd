@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["SetOn","Where to set the wallpaper on."]],"fn":[["set_from_file","A handy wrapper around [`WallpaperProxy::set_wallpaper_file`]."],["set_from_uri","A handy wrapper around [`WallpaperProxy::set_wallpaper_uri`]."]],"struct":[["WallpaperProxy","The interface lets sandboxed applications set the user’s desktop background picture."]]});
+window.SIDEBAR_ITEMS = {"enum":[["SetOn","Where to set the wallpaper on."]],"struct":[["WallpaperRequest","A builder-pattern type to set the wallpaper."]]};

@@ -1,11 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/documents/file_transfer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_transfer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/documents/file_transfer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_transfer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
-                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -218,10 +219,10 @@
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use std::fs::File;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::documents::FileTransferProxy;</span>
+<span class="doccomment">//! use ashpd::documents::FileTransfer;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = FileTransferProxy::new().await?;</span>
+<span class="doccomment">//!     let proxy = FileTransfer::new().await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let key = proxy.start_transfer(true, true).await?;</span>
 <span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
@@ -239,7 +240,7 @@
 
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
 
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
+<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -247,14 +248,14 @@
     <span class="ident">Error</span>,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`FileTransferProxy::start_transfer`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specified options for a [`FileTransfer::start_transfer`] request.</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">TransferOptions</span> {
     <span class="doccomment">/// Whether to allow the chosen application to write to the files.</span>
     <span class="ident">writeable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Whether to stop the transfer automatically after the first</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] call.</span>
     <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;autostop&quot;</span>)]</span>
     <span class="ident">auto_stop</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
@@ -268,7 +269,7 @@
     }
 
     <span class="doccomment">/// Whether to stop the transfer automatically after the first</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] call.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">auto_stop</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">auto_stop</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">auto_stop</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">auto_stop</span>);
@@ -293,11 +294,11 @@
 <span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.FileTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.FileTransfer).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.FileTransfer&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileTransferProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileTransfer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FileTransferProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`FileTransferProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FileTransferProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FileTransfer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new instance of [`FileTransfer`].</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FileTransfer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
             .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.FileTransfer&quot;</span>)<span class="question-mark">?</span>
@@ -320,7 +321,7 @@
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `key` - A key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
     <span class="doccomment">/// * `fds` - A list of file descriptors of the files to register.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
@@ -336,14 +337,14 @@
     }
 
     <span class="doccomment">/// Retrieves files that were previously added to the session with</span>
-    <span class="doccomment">/// [`add_files()`][`FileTransferProxy::add_files`]. The files will be</span>
+    <span class="doccomment">/// [`add_files()`][`FileTransfer::add_files`]. The files will be</span>
     <span class="doccomment">/// exported in the document portal as-needed for the caller, and they</span>
     <span class="doccomment">/// will be writable if the owner of the session allowed it.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `key` - A key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
@@ -362,7 +363,7 @@
     }
 
     <span class="doccomment">/// Starts a session for a file transfer.</span>
-    <span class="doccomment">/// The caller should call [`add_files()`][`FileTransferProxy::add_files`]</span>
+    <span class="doccomment">/// The caller should call [`add_files()`][`FileTransfer::add_files`]</span>
     <span class="doccomment">/// at least once, to add files to this session.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
@@ -370,12 +371,12 @@
     <span class="doccomment">/// * `writeable` - Sets whether the chosen application can write to the</span>
     <span class="doccomment">///   files or not.</span>
     <span class="doccomment">/// * `auto_stop` - Whether to stop the transfer automatically after the</span>
-    <span class="doccomment">///   first [`retrieve_files()`][`FileTransferProxy::retrieve_files`] call.</span>
+    <span class="doccomment">///   first [`retrieve_files()`][`FileTransfer::retrieve_files`] call.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Key that can be passed to</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] to obtain the</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] to obtain the</span>
     <span class="doccomment">/// files.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
@@ -389,14 +390,14 @@
     }
 
     <span class="doccomment">/// Ends the transfer.</span>
-    <span class="doccomment">/// Further calls to [`add_files()`][`FileTransferProxy::add_files`] or</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransferProxy::retrieve_files`] for this key</span>
+    <span class="doccomment">/// Further calls to [`add_files()`][`FileTransfer::add_files`] or</span>
+    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] for this key</span>
     <span class="doccomment">/// will return an error.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * `key` - A key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
@@ -411,7 +412,7 @@
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// * The key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransferProxy::start_transfer`].</span>
+    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
@@ -422,5 +423,5 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.1 (e092d0b6b 2022-07-16)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

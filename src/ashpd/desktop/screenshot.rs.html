@@ -1,11 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/screenshot.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>screenshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/screenshot.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>screenshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
-                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -291,30 +292,37 @@
 <span id="284">284</span>
 <span id="285">285</span>
 <span id="286">286</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Take a screenshot or pick a color.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Wrapper of the DBus interface: [`org.freedesktop.portal.Screenshot`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Screenshot).</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Taking a screenshot</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{desktop::screenshot, WindowIdentifier};</span>
+<span class="doccomment">//! use ashpd::desktop::screenshot::ScreenshotRequest;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let uri = screenshot::take(&amp;WindowIdentifier::default(), true, true).await?;</span>
-<span class="doccomment">//!     println!(&quot;URI: {}&quot;, uri);</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Or by using the Proxy directly</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{desktop::screenshot::ScreenshotProxy, WindowIdentifier};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = ScreenshotProxy::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let uri = proxy</span>
-<span class="doccomment">//!         .screenshot(&amp;WindowIdentifier::default(), true, true)</span>
+<span class="doccomment">//!     let uri = ScreenshotRequest::default()</span>
+<span class="doccomment">//!         .interactive(true)</span>
+<span class="doccomment">//!         .modal(true)</span>
+<span class="doccomment">//!         .build()</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!     println!(&quot;URI: {}&quot;, uri);</span>
 <span class="doccomment">//!     Ok(())</span>
@@ -324,33 +332,18 @@
 <span class="doccomment">//! ## Picking a color</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{desktop::screenshot, WindowIdentifier};</span>
+<span class="doccomment">//! use ashpd::desktop::screenshot::ColorResponse;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let color = screenshot::pick_color(&amp;WindowIdentifier::default()).await?;</span>
+<span class="doccomment">//!     let color = ColorResponse::builder().build().await?;</span>
 <span class="doccomment">//!     println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Or by using the Proxy directly</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{desktop::screenshot::ScreenshotProxy, WindowIdentifier};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = ScreenshotProxy::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let color = proxy.pick_color(&amp;WindowIdentifier::default()).await?;</span>
-<span class="doccomment">//!     println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-
 <span class="kw">use</span> <span class="ident">std::fmt::Debug</span>;
 
+<span class="kw">use</span> <span class="ident">url::Url</span>;
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
@@ -359,67 +352,42 @@
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`ScreenshotProxy::screenshot`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">ScreenshotOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Whether the dialog should be modal.</span>
     <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Hint whether the dialog should offer customization before taking a</span>
-    <span class="doccomment">/// screenshot.</span>
     <span class="ident">interactive</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">ScreenshotOptions</span> {
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Sets whether the dialog should offer customization before a screenshot</span>
-    <span class="doccomment">/// or not.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interactive</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interactive</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">interactive</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">interactive</span>);
-        <span class="self">self</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Clone</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// A response to a [`ScreenshotProxy::screenshot`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">Screenshot</span> {
-    <span class="doccomment">/// The screenshot uri.</span>
+<span class="kw">struct</span> <span class="ident">ScreenshotResponse</span> {
     <span class="ident">uri</span>: <span class="ident">url::Url</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Screenshot</span> {
+<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">ScreenshotResponse</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">uri</span>.<span class="ident">as_str</span>())
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`ScreenshotProxy::pick_color`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">PickColorOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
+<span class="kw">struct</span> <span class="ident">ColorOptions</span> {
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// A response to a [`ScreenshotProxy::pick_color`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Type</span>)]</span>
+<span class="doccomment">/// The response of a [`ColorRequest`] request.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// **Note** the values are normalized.</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Color</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColorResponse</span> {
     <span class="ident">color</span>: [<span class="ident">f64</span>; <span class="number">3</span>],
 }
 
-<span class="kw">impl</span> <span class="ident">Color</span> {
+<span class="kw">impl</span> <span class="ident">ColorResponse</span> {
     <span class="doccomment">/// Red.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">red</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">color</span>[<span class="number">0</span>]
@@ -434,18 +402,26 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">color</span>[<span class="number">2</span>]
     }
+
+    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct</span>
+    <span class="doccomment">/// [`ColorResponse`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method returns an instance of [`ColorRequest`].</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">ColorRequest</span> {
+        <span class="ident">ColorRequest::default</span>()
+    }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">gtk3::gdk::RGBA</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Color</span>) -&gt; <span class="self">Self</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ColorResponse</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">gtk3::gdk::RGBA</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">ColorResponse</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">gtk3::gdk::RGBA::new</span>(<span class="ident">color</span>.<span class="ident">red</span>(), <span class="ident">color</span>.<span class="ident">green</span>(), <span class="ident">color</span>.<span class="ident">blue</span>(), <span class="number">1.0</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">gtk4::gdk::RGBA</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Color</span>) -&gt; <span class="self">Self</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ColorResponse</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">gtk4::gdk::RGBA</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">ColorResponse</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">gtk4::gdk::RGBA::builder</span>()
             .<span class="ident">red</span>(<span class="ident">color</span>.<span class="ident">red</span>() <span class="kw">as</span> <span class="ident">f32</span>)
             .<span class="ident">green</span>(<span class="ident">color</span>.<span class="ident">green</span>() <span class="kw">as</span> <span class="ident">f32</span>)
@@ -454,9 +430,9 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">Color</span> {
+<span class="kw">impl</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">ColorResponse</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Color&quot;</span>)
+        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;ColorResponse&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;red&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">red</span>())
             .<span class="ident">field</span>(<span class="string">&quot;green&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">green</span>())
             .<span class="ident">field</span>(<span class="string">&quot;blue&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">blue</span>())
@@ -464,7 +440,7 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">Color</span> {
+<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">ColorResponse</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
             <span class="string">&quot;({}, {}, {})&quot;</span>,
@@ -475,12 +451,9 @@
     }
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications request a screenshot.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Screenshot`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Screenshot).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Screenshot&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ScreenshotProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="kw">struct</span> <span class="ident">ScreenshotProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ScreenshotProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new instance of [`ScreenshotProxy`].</span>
@@ -511,8 +484,11 @@
     <span class="doccomment">/// See also [`PickColor`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Screenshot.PickColor).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;PickColor&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_pick_color&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pick_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Color</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">PickColorOptions::default</span>();
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pick_color</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
+        <span class="ident">options</span>: <span class="ident">ColorOptions</span>,
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ColorResponse</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">call_request_method</span>(
             <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
@@ -543,13 +519,9 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">screenshot</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">interactive</span>: <span class="ident">bool</span>,
-        <span class="ident">modal</span>: <span class="ident">bool</span>,
+        <span class="ident">options</span>: <span class="ident">ScreenshotOptions</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">url::Url</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">ScreenshotOptions::default</span>()
-            .<span class="ident">interactive</span>(<span class="ident">interactive</span>)
-            .<span class="ident">modal</span>(<span class="ident">modal</span>);
-        <span class="kw">let</span> <span class="ident">response</span>: <span class="ident">Screenshot</span> <span class="op">=</span> <span class="ident">call_request_method</span>(
+        <span class="kw">let</span> <span class="ident">response</span>: <span class="ident">ScreenshotResponse</span> <span class="op">=</span> <span class="ident">call_request_method</span>(
             <span class="self">self</span>.<span class="ident">inner</span>(),
             <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
             <span class="string">&quot;Screenshot&quot;</span>,
@@ -560,23 +532,82 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_pick_color&quot;</span>)]</span>
-<span class="doccomment">/// A handy wrapper around [`ScreenshotProxy::pick_color`].</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pick_color</span>(<span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Color</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">ScreenshotProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="ident">proxy</span>.<span class="ident">pick_color</span>(<span class="ident">identifier</span>).<span class="kw">await</span>
+<span class="doccomment">/// A [builder-pattern] type to construct [`ColorResponse`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColorRequest</span> {
+    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+    <span class="ident">options</span>: <span class="ident">ColorOptions</span>,
 }
 
+<span class="kw">impl</span> <span class="ident">ColorRequest</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Sets a window identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Build the [`ColorResponse`].</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ColorResponse</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">ScreenshotProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>.<span class="ident">pick_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="self">self</span>.<span class="ident">options</span>).<span class="kw">await</span>
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_take_screenshot&quot;</span>)]</span>
-<span class="doccomment">/// A handy wrapper around [`ScreenshotProxy::screenshot`].</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">take</span>(
-    <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-    <span class="ident">interactive</span>: <span class="ident">bool</span>,
-    <span class="ident">modal</span>: <span class="ident">bool</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">url::Url</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">ScreenshotProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="ident">proxy</span>.<span class="ident">screenshot</span>(<span class="ident">identifier</span>, <span class="ident">interactive</span>, <span class="ident">modal</span>).<span class="kw">await</span>
+<span class="doccomment">/// A [builder-pattern] type to construct a screenshot [`Url`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ScreenshotRequest</span> {
+    <span class="ident">options</span>: <span class="ident">ScreenshotOptions</span>,
+    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">ScreenshotRequest</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="doccomment">/// Sets a window identifier.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
+        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    }
+
+    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_modal</span>(<span class="ident">modal</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
+    }
+
+    <span class="doccomment">/// Sets whether the dialog should offer customization before a screenshot</span>
+    <span class="doccomment">/// or not.</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interactive</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interactive</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">set_interactive</span>(<span class="ident">interactive</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_interactive</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">interactive</span>: <span class="ident">bool</span>) {
+        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">interactive</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">interactive</span>);
+    }
+
+    <span class="doccomment">/// Build the [`Url`].</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Url</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">ScreenshotProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">proxy</span>.<span class="ident">screenshot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="self">self</span>.<span class="ident">options</span>).<span class="kw">await</span>
+    }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.1 (e092d0b6b 2022-07-16)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

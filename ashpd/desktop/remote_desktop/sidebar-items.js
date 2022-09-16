@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Axis","The available axis."],["DeviceType","A bit flag for the available devices."],["KeyState","The keyboard key state."]],"struct":[["RemoteDesktopProxy","The interface lets sandboxed applications create remote desktop sessions."]]});
+window.SIDEBAR_ITEMS = {"enum":[["Axis","The available axis."],["DeviceType","A bit flag for the available devices."],["KeyState","The keyboard key state."]],"struct":[["RemoteDesktop","The interface lets sandboxed applications create remote desktop sessions."]]};

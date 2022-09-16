@@ -1,11 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/remote_desktop.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>remote_desktop.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/remote_desktop.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>remote_desktop.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div>
         </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
-                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+                        <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -654,26 +655,17 @@
 <span id="647">647</span>
 <span id="648">648</span>
 <span id="649">649</span>
-<span id="650">650</span>
-<span id="651">651</span>
-<span id="652">652</span>
-<span id="653">653</span>
-<span id="654">654</span>
-<span id="655">655</span>
-<span id="656">656</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::{</span>
-<span class="doccomment">//!     desktop::remote_desktop::{DeviceType, KeyState, RemoteDesktopProxy},</span>
+<span class="doccomment">//!     desktop::remote_desktop::{DeviceType, KeyState, RemoteDesktop},</span>
 <span class="doccomment">//!     WindowIdentifier,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = RemoteDesktopProxy::new().await?;</span>
-<span class="doccomment">//!</span>
+<span class="doccomment">//!     let proxy = RemoteDesktop::new().await?;</span>
 <span class="doccomment">//!     let session = proxy.create_session().await?;</span>
-<span class="doccomment">//!</span>
 <span class="doccomment">//!     proxy</span>
 <span class="doccomment">//!         .select_devices(&amp;session, DeviceType::Keyboard | DeviceType::Pointer)</span>
 <span class="doccomment">//!         .await?;</span>
@@ -692,33 +684,32 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! You can also use the Remote Desktop portal with the ScreenCast one. In order</span>
 <span class="doccomment">//! to do so, you need to call</span>
-<span class="doccomment">//! [`ScreenCastProxy::select_sources()`][select_sources]</span>
+<span class="doccomment">//! [`Screencast::select_sources()`][select_sources]</span>
 <span class="doccomment">//! on the session created with</span>
-<span class="doccomment">//! [`RemoteDesktopProxy::create_session()`][create_session]</span>
+<span class="doccomment">//! [`RemoteDesktop::create_session()`][create_session]</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use ashpd::{</span>
 <span class="doccomment">//!     desktop::{</span>
-<span class="doccomment">//!         remote_desktop::{DeviceType, KeyState, RemoteDesktopProxy},</span>
-<span class="doccomment">//!         screencast::{CursorMode, PersistMode, ScreenCastProxy, SourceType},</span>
+<span class="doccomment">//!         remote_desktop::{DeviceType, KeyState, RemoteDesktop},</span>
+<span class="doccomment">//!         screencast::{CursorMode, PersistMode, Screencast, SourceType},</span>
 <span class="doccomment">//!     },</span>
 <span class="doccomment">//!     WindowIdentifier,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = RemoteDesktopProxy::new().await?;</span>
-<span class="doccomment">//!     let screencast = ScreenCastProxy::new().await?;</span>
+<span class="doccomment">//!     let remote_desktop = RemoteDesktop::new().await?;</span>
+<span class="doccomment">//!     let screencast = Screencast::new().await?;</span>
 <span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
+<span class="doccomment">//!     let session = remote_desktop.create_session().await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let session = proxy.create_session().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy</span>
+<span class="doccomment">//!     remote_desktop</span>
 <span class="doccomment">//!         .select_devices(&amp;session, DeviceType::Keyboard | DeviceType::Pointer)</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!     screencast</span>
 <span class="doccomment">//!         .select_sources(</span>
 <span class="doccomment">//!             &amp;session,</span>
-<span class="doccomment">//!             CursorMode::Metadata.into(),</span>
+<span class="doccomment">//!             CursorMode::Metadata,</span>
 <span class="doccomment">//!             SourceType::Monitor | SourceType::Window,</span>
 <span class="doccomment">//!             true,</span>
 <span class="doccomment">//!             None,</span>
@@ -726,20 +717,20 @@
 <span class="doccomment">//!         )</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let (devices, streams) = proxy.start(&amp;session, &amp;identifier).await?;</span>
+<span class="doccomment">//!     let (devices, streams) = remote_desktop.start(&amp;session, &amp;identifier).await?;</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, devices);</span>
 <span class="doccomment">//!     println!(&quot;{:#?}&quot;, streams);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     // 13 for Enter key code</span>
-<span class="doccomment">//!     proxy</span>
+<span class="doccomment">//!     remote_desktop</span>
 <span class="doccomment">//!         .notify_keyboard_keycode(&amp;session, 13, KeyState::Pressed)</span>
 <span class="doccomment">//!         .await?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     Ok(())</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! [select_sources]: crate::desktop::screencast::ScreenCastProxy::select_sources</span>
-<span class="doccomment">//! [create_session]: crate::desktop::remote_desktop::RemoteDesktopProxy::create_session</span>
+<span class="doccomment">//! [select_sources]: crate::desktop::screencast::Screencast::select_sources</span>
+<span class="doccomment">//! [create_session]: crate::desktop::remote_desktop::RemoteDesktop::create_session</span>
 
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
 
@@ -748,7 +739,7 @@
 <span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">screencast::Stream</span>, <span class="ident">HandleToken</span>, <span class="ident">SessionProxy</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">screencast::Stream</span>, <span class="ident">HandleToken</span>, <span class="ident">Session</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">call_request_method</span>, <span class="ident">session_connection</span>},
     <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
@@ -797,8 +788,8 @@
     <span class="ident">Horizontal</span> <span class="op">=</span> <span class="number">1</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`RemoteDesktopProxy::create_session`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specified options for a [`RemoteDesktop::create_session`] request.</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">CreateRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
@@ -807,8 +798,8 @@
     <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A response to a [`RemoteDesktopProxy::create_session`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
+<span class="doccomment">/// A response to a [`RemoteDesktop::create_session`] request.</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">CreateSession</span> {
     <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath</span>
@@ -817,8 +808,8 @@
     <span class="ident">session_handle</span>: <span class="ident">String</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`RemoteDesktopProxy::select_devices`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specified options for a [`RemoteDesktop::select_devices`] request.</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">SelectDevicesOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
@@ -835,16 +826,16 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`RemoteDesktopProxy::start`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Specified options for a [`RemoteDesktop::start`] request.</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">StartRemoteOptions</span> {
     <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
     <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// A response to a [`RemoteDesktopProxy::select_devices`] request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// A response to a [`RemoteDesktop::select_devices`] request.</span>
 <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
 <span class="kw">struct</span> <span class="ident">SelectedDevices</span> {
     <span class="doccomment">/// The selected devices.</span>
@@ -858,11 +849,11 @@
 <span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.RemoteDesktop`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.RemoteDesktop).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.RemoteDesktop&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RemoteDesktopProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RemoteDesktop</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">RemoteDesktopProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`RemoteDesktopProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RemoteDesktopProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">RemoteDesktop</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new instance of [`RemoteDesktop`].</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RemoteDesktop</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
             .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.RemoteDesktop&quot;</span>)<span class="question-mark">?</span>
@@ -887,7 +878,7 @@
     <span class="doccomment">/// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.CreateSession).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateSession&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_create_remote_desktop_session&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CreateRemoteOptions::default</span>();
         <span class="kw">let</span> (<span class="ident">session</span>, <span class="ident">proxy</span>) <span class="op">=</span> <span class="macro">futures_util::try_join!</span>(
             <span class="ident">call_request_method</span>::<span class="op">&lt;</span><span class="ident">CreateSession</span>, <span class="kw">_</span><span class="op">&gt;</span>(
@@ -897,7 +888,7 @@
                 <span class="kw-2">&amp;</span><span class="ident">options</span>
             )
             .<span class="ident">into_future</span>(),
-            <span class="ident">SessionProxy::from_unique_name</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>).<span class="ident">into_future</span>()
+            <span class="ident">Session::from_unique_name</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>).<span class="ident">into_future</span>()
         )<span class="question-mark">?</span>;
         <span class="macro">assert_eq!</span>(<span class="ident">proxy</span>.<span class="ident">inner</span>().<span class="ident">path</span>().<span class="ident">as_str</span>(), <span class="kw-2">&amp;</span><span class="ident">session</span>.<span class="ident">session_handle</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">proxy</span>)
@@ -907,8 +898,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `types` - The device types to request remote controlling of.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
@@ -917,7 +908,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SelectDevices&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">select_devices</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">types</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">SelectDevicesOptions::default</span>().<span class="ident">types</span>(<span class="ident">types</span>);
@@ -938,8 +929,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `identifier` - The application window identifier.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
@@ -948,7 +939,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Start&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DeviceType</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">StartRemoteOptions::default</span>();
@@ -969,8 +960,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `keycode` - Keyboard code that was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
@@ -980,7 +971,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyKeyboardKeycode&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_keyboard_keycode</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">keycode</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1002,8 +993,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `keysym` - Keyboard symbol that was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
@@ -1013,7 +1004,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyKeyboardKeysym&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_keyboard_keysym</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">keysym</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1035,19 +1026,15 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`NotifyTouchUp`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-RemoteDesktop.NotifyTouchUp).</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchUp&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_touch_up</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">slot</span>: <span class="ident">u32</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_touch_up</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">slot</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// The `notify` methods don&#39;t take any options for now</span>
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723</span>
         <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
@@ -1063,8 +1050,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">/// * `x` - Touch down x coordinate.</span>
@@ -1076,7 +1063,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchDown&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_touch_down</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
         <span class="ident">x</span>: <span class="ident">f64</span>,
@@ -1102,8 +1089,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `slot` - Touch slot where touch point appeared.</span>
     <span class="doccomment">/// * `x` - Touch motion x coordinate.</span>
@@ -1115,7 +1102,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyTouchMotion&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_touch_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">slot</span>: <span class="ident">u32</span>,
         <span class="ident">x</span>: <span class="ident">f64</span>,
@@ -1138,8 +1125,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `stream` - The PipeWire stream node the coordinate is relative to.</span>
     <span class="doccomment">/// * `x` - Pointer motion x coordinate.</span>
     <span class="doccomment">/// * `y` - Pointer motion y coordinate.</span>
@@ -1150,7 +1137,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerMotionAbsolute&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_motion_absolute</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">stream</span>: <span class="ident">u32</span>,
         <span class="ident">x</span>: <span class="ident">f64</span>,
         <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -1172,8 +1159,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `dx` - Relative movement on the x axis.</span>
     <span class="doccomment">/// * `dy` - Relative movement on the y axis.</span>
     <span class="doccomment">///</span>
@@ -1183,7 +1170,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerMotion&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_motion</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">dx</span>: <span class="ident">f64</span>,
         <span class="ident">dy</span>: <span class="ident">f64</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1207,8 +1194,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `button` - The pointer button was pressed or released.</span>
     <span class="doccomment">/// * `state` - The new state of the keyboard code.</span>
     <span class="doccomment">///</span>
@@ -1218,7 +1205,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerButton&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_button</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">button</span>: <span class="ident">i32</span>,
         <span class="ident">state</span>: <span class="ident">KeyState</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1240,8 +1227,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `axis` - The axis that was scrolled.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Specifications</span>
@@ -1250,7 +1237,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerAxisDiscrete&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_axis_discrete</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">axis</span>: <span class="ident">Axis</span>,
         <span class="ident">steps</span>: <span class="ident">i32</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -1276,8 +1263,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Arguments</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`SessionProxy`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`RemoteDesktopProxy::create_session`].</span>
+    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
+    <span class="doccomment">///   [`create_session()`][`RemoteDesktop::create_session`].</span>
     <span class="doccomment">/// * `dx` - Relative axis movement on the x axis.</span>
     <span class="doccomment">/// * `dy` - Relative axis movement on the y axis.</span>
     <span class="doccomment">/// * `finish` - Whether it is the last axis event.</span>
@@ -1288,7 +1275,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;NotifyPointerAxis&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">notify_pointer_axis</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">SessionProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
+        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
         <span class="ident">dx</span>: <span class="ident">f64</span>,
         <span class="ident">dy</span>: <span class="ident">f64</span>,
         <span class="ident">finish</span>: <span class="ident">bool</span>,
@@ -1318,5 +1305,5 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.1 (e092d0b6b 2022-07-16)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
 </body></html>

@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["request","A handy wrapper around [`BackgroundProxy::request_background`]."]],"struct":[["Background","The response of a [`BackgroundProxy::request_background`] request."],["BackgroundProxy","The interface lets sandboxed applications request that the application is allowed to run in the background or started automatically when the user logs in."]]});
+window.SIDEBAR_ITEMS = {"struct":[["BackgroundRequest","A builder-pattern type to construct [`BackgroundResponse`]."],["BackgroundResponse","The response of a [`BackgroundRequest`] request."]]};

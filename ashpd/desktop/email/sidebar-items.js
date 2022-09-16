@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["compose","A handy wrapper around [`EmailProxy::compose_email`]"]],"struct":[["Email","Specified options for a [`EmailProxy::compose_email`] request."],["EmailProxy","The interface lets sandboxed applications request sending an email."]]});
+window.SIDEBAR_ITEMS = {"struct":[["EmailRequest",""]]};
