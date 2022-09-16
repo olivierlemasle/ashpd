@@ -248,6 +248,30 @@
 <span id="240">240</span>
 <span id="241">241</span>
 <span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">collections::HashMap</span>,
     <span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>},
@@ -256,6 +280,7 @@
 
 <span class="kw">use</span> <span class="ident">serde</span>::{
     <span class="ident">de</span>::{<span class="self">self</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SeError</span>, <span class="ident">Visitor</span>},
+    <span class="ident">ser::SerializeTuple</span>,
     <span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>,
 };
 <span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">ObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
@@ -336,6 +361,29 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">Type</span>,
+{
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">serde::Serializer</span>,
+    {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">serializer</span>.<span class="ident">serialize_tuple</span>(<span class="number">2</span>)<span class="question-mark">?</span>;
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident"><span class="self">Self</span>::Err</span>(<span class="ident">err</span>) =&gt; {
+                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="kw-2">&amp;</span><span class="ident">ResponseType::from</span>(<span class="kw-2">*</span><span class="ident">err</span>))<span class="question-mark">?</span>;
+                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="kw-2">&amp;</span><span class="ident">BasicResponse::default</span>())<span class="question-mark">?</span>;
+            }
+            <span class="ident"><span class="self">Self</span>::Ok</span>(<span class="ident">response</span>) =&gt; {
+                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="kw-2">&amp;</span><span class="ident">ResponseType::Success</span>)<span class="question-mark">?</span>;
+                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="ident">response</span>)<span class="question-mark">?</span>;
+            }
+        };
+        <span class="ident">map</span>.<span class="ident">end</span>()
+    }
+}
+
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>(<span class="ident">ResponseType</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
@@ -352,7 +400,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
 <span class="doccomment">/// The most basic response. Used when only the status of the request is what we</span>
 <span class="doccomment">/// receive as a response.</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">BasicResponse</span>(<span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>);
