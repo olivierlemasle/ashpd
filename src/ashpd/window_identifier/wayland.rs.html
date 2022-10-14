@@ -265,10 +265,6 @@
 <span id="263">263</span>
 <span id="264">264</span>
 <span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::fmt</span>;
 
 <span class="kw">use</span> <span class="ident">wayland_backend::sys::client::Backend</span>;
@@ -459,14 +455,12 @@
                 <span class="string">&quot;zxdg_exporter_v1&quot;</span> =&gt; {
                     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
                     <span class="macro">tracing::info!</span>(<span class="string">&quot;Found wayland interface {interface} v{version}&quot;</span>);
-                    <span class="kw">let</span> <span class="ident">exporter</span> <span class="op">=</span> <span class="ident">registry</span>
-                        .<span class="ident">bind</span>::<span class="op">&lt;</span><span class="ident">ZxdgExporterV1</span>, (), <span class="ident">State</span><span class="op">&gt;</span>(
-                            <span class="ident">name</span>,
-                            <span class="ident">version</span>.<span class="ident">min</span>(<span class="ident">ZXDG_EXPORTER_V1</span>),
-                            <span class="ident">qhandle</span>,
-                            (),
-                        )
-                        .<span class="ident">unwrap</span>();
+                    <span class="kw">let</span> <span class="ident">exporter</span> <span class="op">=</span> <span class="ident">registry</span>.<span class="ident">bind</span>::<span class="op">&lt;</span><span class="ident">ZxdgExporterV1</span>, (), <span class="ident">State</span><span class="op">&gt;</span>(
+                        <span class="ident">name</span>,
+                        <span class="ident">version</span>.<span class="ident">min</span>(<span class="ident">ZXDG_EXPORTER_V1</span>),
+                        <span class="ident">qhandle</span>,
+                        (),
+                    );
                     <span class="kw">match</span> <span class="ident">state</span>.<span class="ident">exporter</span> {
                         <span class="prelude-val">Some</span>(<span class="ident">Exporter::V2</span>(<span class="kw">_</span>)) =&gt; (),
                         <span class="kw">_</span> =&gt; <span class="ident">state</span>.<span class="ident">exporter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Exporter::V1</span>(<span class="ident">exporter</span>)),
@@ -475,14 +469,12 @@
                 <span class="string">&quot;zxdg_exporter_v2&quot;</span> =&gt; {
                     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
                     <span class="macro">tracing::info!</span>(<span class="string">&quot;Found wayland interface {interface} v{version}&quot;</span>);
-                    <span class="kw">let</span> <span class="ident">exporter</span> <span class="op">=</span> <span class="ident">registry</span>
-                        .<span class="ident">bind</span>::<span class="op">&lt;</span><span class="ident">ZxdgExporterV2</span>, (), <span class="ident">State</span><span class="op">&gt;</span>(
-                            <span class="ident">name</span>,
-                            <span class="ident">version</span>.<span class="ident">min</span>(<span class="ident">ZXDG_EXPORTER_V2</span>),
-                            <span class="ident">qhandle</span>,
-                            (),
-                        )
-                        .<span class="ident">unwrap</span>();
+                    <span class="kw">let</span> <span class="ident">exporter</span> <span class="op">=</span> <span class="ident">registry</span>.<span class="ident">bind</span>::<span class="op">&lt;</span><span class="ident">ZxdgExporterV2</span>, (), <span class="ident">State</span><span class="op">&gt;</span>(
+                        <span class="ident">name</span>,
+                        <span class="ident">version</span>.<span class="ident">min</span>(<span class="ident">ZXDG_EXPORTER_V2</span>),
+                        <span class="ident">qhandle</span>,
+                        (),
+                    );
                     <span class="ident">state</span>.<span class="ident">exporter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Exporter::V2</span>(<span class="ident">exporter</span>));
                 }
                 <span class="kw">_</span> =&gt; (),
@@ -502,19 +494,19 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">event_queue</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">new_event_queue</span>();
     <span class="kw">let</span> <span class="ident">qhandle</span> <span class="op">=</span> <span class="ident">event_queue</span>.<span class="ident">handle</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State::default</span>();
-    <span class="ident">display</span>.<span class="ident">get_registry</span>(<span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ())<span class="question-mark">?</span>;
+    <span class="ident">display</span>.<span class="ident">get_registry</span>(<span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ());
     <span class="ident">event_queue</span>.<span class="ident">roundtrip</span>(<span class="kw-2">&amp;mut</span> <span class="ident">state</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">exported</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">state</span>.<span class="ident">exporter</span>.<span class="ident">take</span>() {
         <span class="prelude-val">Some</span>(<span class="ident">Exporter::V2</span>(<span class="ident">exporter</span>)) =&gt; {
-            <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">exporter</span>.<span class="ident">export_toplevel</span>(<span class="ident">surface</span>, <span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">exporter</span>.<span class="ident">export_toplevel</span>(<span class="ident">surface</span>, <span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ());
             <span class="ident">event_queue</span>.<span class="ident">roundtrip</span>(<span class="kw-2">&amp;mut</span> <span class="ident">state</span>)<span class="question-mark">?</span>;
             <span class="ident">exporter</span>.<span class="ident">destroy</span>();
 
             <span class="prelude-val">Some</span>(<span class="ident">Exported::V2</span>(<span class="ident">exp</span>))
         }
         <span class="prelude-val">Some</span>(<span class="ident">Exporter::V1</span>(<span class="ident">exporter</span>)) =&gt; {
-            <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">exporter</span>.<span class="ident">export</span>(<span class="ident">surface</span>, <span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">exporter</span>.<span class="ident">export</span>(<span class="ident">surface</span>, <span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ());
             <span class="ident">event_queue</span>.<span class="ident">roundtrip</span>(<span class="kw-2">&amp;mut</span> <span class="ident">state</span>)<span class="question-mark">?</span>;
             <span class="ident">exporter</span>.<span class="ident">destroy</span>();
 
