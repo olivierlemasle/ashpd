@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/window_identifier/wayland.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>wayland.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/window_identifier/wayland.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>wayland.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -265,270 +265,270 @@
 <span id="263">263</span>
 <span id="264">264</span>
 <span id="265">265</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::fmt</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>std::fmt;
 
-<span class="kw">use</span> <span class="ident">wayland_backend::sys::client::Backend</span>;
-<span class="kw">use</span> <span class="ident">wayland_client</span>::{
-    <span class="ident">protocol</span>::{<span class="ident">wl_registry</span>, <span class="ident">wl_surface::WlSurface</span>},
-    <span class="ident">Proxy</span>, <span class="ident">QueueHandle</span>,
+<span class="kw">use </span>wayland_backend::sys::client::Backend;
+<span class="kw">use </span>wayland_client::{
+    protocol::{wl_registry, wl_surface::WlSurface},
+    Proxy, QueueHandle,
 };
-<span class="kw">use</span> <span class="ident">wayland_protocols::xdg::foreign</span>::{
-    <span class="ident">zv1::client</span>::{
-        <span class="ident">zxdg_exported_v1</span>::{<span class="self">self</span>, <span class="ident">ZxdgExportedV1</span>},
-        <span class="ident">zxdg_exporter_v1::ZxdgExporterV1</span>,
+<span class="kw">use </span>wayland_protocols::xdg::foreign::{
+    zv1::client::{
+        zxdg_exported_v1::{<span class="self">self</span>, ZxdgExportedV1},
+        zxdg_exporter_v1::ZxdgExporterV1,
     },
-    <span class="ident">zv2::client</span>::{
-        <span class="ident">zxdg_exported_v2</span>::{<span class="self">self</span>, <span class="ident">ZxdgExportedV2</span>},
-        <span class="ident">zxdg_exporter_v2::ZxdgExporterV2</span>,
+    zv2::client::{
+        zxdg_exported_v2::{<span class="self">self</span>, ZxdgExportedV2},
+        zxdg_exporter_v2::ZxdgExporterV2,
     },
 };
 
-<span class="kw">use</span> <span class="ident"><span class="kw">super</span>::WindowIdentifierType</span>;
+<span class="kw">use </span><span class="kw">super</span>::WindowIdentifierType;
 
-<span class="comment">// Supported versions.</span>
-<span class="kw">const</span> <span class="ident">ZXDG_EXPORTER_V1</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">1</span>;
-<span class="kw">const</span> <span class="ident">ZXDG_EXPORTER_V2</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="comment">// Supported versions.
+</span><span class="kw">const </span>ZXDG_EXPORTER_V1: u32 = <span class="number">1</span>;
+<span class="kw">const </span>ZXDG_EXPORTER_V2: u32 = <span class="number">1</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WaylandWindowIdentifier</span> {
-    <span class="ident">exported</span>: <span class="ident">Exported</span>,
-    <span class="ident">type_</span>: <span class="ident">WindowIdentifierType</span>,
+<span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub struct </span>WaylandWindowIdentifier {
+    exported: Exported,
+    type_: WindowIdentifierType,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">enum</span> <span class="ident">Exported</span> {
-    <span class="ident">V1</span>(<span class="ident">ZxdgExportedV1</span>),
-    <span class="ident">V2</span>(<span class="ident">ZxdgExportedV2</span>),
+<span class="attribute">#[derive(Debug)]
+</span><span class="kw">enum </span>Exported {
+    V1(ZxdgExportedV1),
+    V2(ZxdgExportedV2),
 }
 
-<span class="kw">impl</span> <span class="ident">Exported</span> {
-    <span class="kw">fn</span> <span class="ident">destroy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::V1</span>(<span class="ident">exported</span>) =&gt; <span class="ident">exported</span>.<span class="ident">destroy</span>(),
-            <span class="ident"><span class="self">Self</span>::V2</span>(<span class="ident">exported</span>) =&gt; <span class="ident">exported</span>.<span class="ident">destroy</span>(),
+<span class="kw">impl </span>Exported {
+    <span class="kw">fn </span>destroy(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::V1(exported) =&gt; exported.destroy(),
+            <span class="self">Self</span>::V2(exported) =&gt; exported.destroy(),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">enum</span> <span class="ident">Exporter</span> {
-    <span class="ident">V1</span>(<span class="ident">ZxdgExporterV1</span>),
-    <span class="ident">V2</span>(<span class="ident">ZxdgExporterV2</span>),
+<span class="attribute">#[derive(Debug)]
+</span><span class="kw">enum </span>Exporter {
+    V1(ZxdgExporterV1),
+    V2(ZxdgExporterV2),
 }
 
-<span class="kw">impl</span> <span class="ident">WaylandWindowIdentifier</span> {
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">surface</span>: <span class="kw-2">&amp;</span><span class="ident">WlSurface</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">backend</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">backend</span>().<span class="ident">upgrade</span>()<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">conn</span> <span class="op">=</span> <span class="ident">wayland_client::Connection::from_backend</span>(<span class="ident">backend</span>);
+<span class="kw">impl </span>WaylandWindowIdentifier {
+    <span class="kw">pub async fn </span>new(surface: <span class="kw-2">&amp;</span>WlSurface) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>backend = surface.backend().upgrade()<span class="question-mark">?</span>;
+        <span class="kw">let </span>conn = wayland_client::Connection::from_backend(backend);
 
-        <span class="ident"><span class="self">Self</span>::new_inner</span>(<span class="ident">conn</span>, <span class="ident">surface</span>).<span class="kw">await</span>
-    }
+        <span class="self">Self</span>::new_inner(conn, surface).<span class="kw">await
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(
-        <span class="ident">surface_ptr</span>: <span class="kw-2">*mut</span> <span class="ident">std::ffi::c_void</span>,
-        <span class="ident">display_ptr</span>: <span class="kw-2">*mut</span> <span class="ident">std::ffi::c_void</span>,
-    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">surface_ptr</span>.<span class="ident">is_null</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">display_ptr</span>.<span class="ident">is_null</span>() {
-            <span class="kw">return</span> <span class="prelude-val">None</span>;
+    <span class="kw">pub async unsafe fn </span>from_raw(
+        surface_ptr: <span class="kw-2">*mut </span>std::ffi::c_void,
+        display_ptr: <span class="kw-2">*mut </span>std::ffi::c_void,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">if </span>surface_ptr.is_null() || display_ptr.is_null() {
+            <span class="kw">return </span><span class="prelude-val">None</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">backend</span> <span class="op">=</span> <span class="ident">Backend::from_foreign_display</span>(<span class="ident">display_ptr</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
-        <span class="kw">let</span> <span class="ident">conn</span> <span class="op">=</span> <span class="ident">wayland_client::Connection::from_backend</span>(<span class="ident">backend</span>);
-        <span class="kw">let</span> <span class="ident">obj_id</span> <span class="op">=</span> <span class="ident">wayland_backend::sys::client::ObjectId::from_ptr</span>(
-            <span class="ident">WlSurface::interface</span>(),
-            <span class="ident">surface_ptr</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
+        <span class="kw">let </span>backend = Backend::from_foreign_display(display_ptr <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+        <span class="kw">let </span>conn = wayland_client::Connection::from_backend(backend);
+        <span class="kw">let </span>obj_id = wayland_backend::sys::client::ObjectId::from_ptr(
+            WlSurface::interface(),
+            surface_ptr <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
         )
-        .<span class="ident">ok</span>()<span class="question-mark">?</span>;
+        .ok()<span class="question-mark">?</span>;
 
-        <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">WlSurface::from_id</span>(<span class="kw-2">&amp;</span><span class="ident">conn</span>, <span class="ident">obj_id</span>).<span class="ident">ok</span>()<span class="question-mark">?</span>;
+        <span class="kw">let </span>surface = WlSurface::from_id(<span class="kw-2">&amp;</span>conn, obj_id).ok()<span class="question-mark">?</span>;
 
-        <span class="ident"><span class="self">Self</span>::new_inner</span>(<span class="ident">conn</span>, <span class="kw-2">&amp;</span><span class="ident">surface</span>).<span class="kw">await</span>
-    }
+        <span class="self">Self</span>::new_inner(conn, <span class="kw-2">&amp;</span>surface).<span class="kw">await
+    </span>}
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new_inner</span>(<span class="ident">conn</span>: <span class="ident">wayland_client::Connection</span>, <span class="ident">surface</span>: <span class="kw-2">&amp;</span><span class="ident">WlSurface</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span>
-            <span class="ident">futures_channel::oneshot::channel</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">WaylandWindowIdentifier</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+    <span class="kw">async fn </span>new_inner(conn: wayland_client::Connection, surface: <span class="kw-2">&amp;</span>WlSurface) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>(sender, receiver) =
+            futures_channel::oneshot::channel::&lt;<span class="prelude-ty">Option</span>&lt;WaylandWindowIdentifier&gt;&gt;();
 
-        <span class="comment">// Cheap clone, protocol objects are essentially smart pointers</span>
-        <span class="kw">let</span> <span class="ident">surface</span> <span class="op">=</span> <span class="ident">surface</span>.<span class="ident">clone</span>();
-        <span class="ident">std::thread::spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">wayland_export_handle</span>(<span class="ident">conn</span>, <span class="kw-2">&amp;</span><span class="ident">surface</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">window_handle</span>) =&gt; <span class="ident">sender</span>.<span class="ident">send</span>(<span class="prelude-val">Some</span>(<span class="ident">window_handle</span>)).<span class="ident">unwrap</span>(),
-            <span class="prelude-val">Err</span>(<span class="ident">_err</span>) =&gt; {
-                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
-                <span class="macro">tracing::info!</span>(<span class="string">&quot;Could not get wayland window identifier: {_err}&quot;</span>);
-                <span class="ident">sender</span>.<span class="ident">send</span>(<span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+        <span class="comment">// Cheap clone, protocol objects are essentially smart pointers
+        </span><span class="kw">let </span>surface = surface.clone();
+        std::thread::spawn(<span class="kw">move </span>|| <span class="kw">match </span>wayland_export_handle(conn, <span class="kw-2">&amp;</span>surface) {
+            <span class="prelude-val">Ok</span>(window_handle) =&gt; sender.send(<span class="prelude-val">Some</span>(window_handle)).unwrap(),
+            <span class="prelude-val">Err</span>(_err) =&gt; {
+                <span class="attribute">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+                </span><span class="macro">tracing::info!</span>(<span class="string">&quot;Could not get wayland window identifier: {_err}&quot;</span>);
+                sender.send(<span class="prelude-val">None</span>).unwrap();
             }
         });
 
-        <span class="ident">receiver</span>.<span class="kw">await</span>.<span class="ident">unwrap</span>()
+        receiver.<span class="kw">await</span>.unwrap()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">WaylandWindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">type_</span>))
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>WaylandWindowIdentifier {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.type_))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">WaylandWindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">exported</span>.<span class="ident">destroy</span>();
+<span class="kw">impl </span>Drop <span class="kw">for </span>WaylandWindowIdentifier {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.exported.destroy();
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">struct</span> <span class="ident">State</span> {
-    <span class="ident">handle</span>: <span class="ident">String</span>,
-    <span class="ident">exporter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Exporter</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(Default, Debug)]
+</span><span class="kw">struct </span>State {
+    handle: String,
+    exporter: <span class="prelude-ty">Option</span>&lt;Exporter&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">wayland_client::Dispatch</span><span class="op">&lt;</span><span class="ident">ZxdgExportedV1</span>, ()<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">State</span> {
-    <span class="kw">fn</span> <span class="ident">event</span>(
-        <span class="ident">state</span>: <span class="kw-2">&amp;mut</span> <span class="self">Self</span>,
-        <span class="ident">_proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ZxdgExportedV1</span>,
-        <span class="ident">event</span>: <span class="op">&lt;</span><span class="ident">ZxdgExportedV1</span> <span class="kw">as</span> <span class="ident">Proxy</span><span class="op">&gt;</span><span class="ident">::Event</span>,
-        <span class="ident">_data</span>: <span class="kw-2">&amp;</span>(),
-        <span class="ident">_connhandle</span>: <span class="kw-2">&amp;</span><span class="ident">wayland_client::Connection</span>,
-        <span class="ident">_qhandle</span>: <span class="kw-2">&amp;</span><span class="ident">QueueHandle</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+<span class="kw">impl </span>wayland_client::Dispatch&lt;ZxdgExportedV1, ()&gt; <span class="kw">for </span>State {
+    <span class="kw">fn </span>event(
+        state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>,
+        _proxy: <span class="kw-2">&amp;</span>ZxdgExportedV1,
+        event: &lt;ZxdgExportedV1 <span class="kw">as </span>Proxy&gt;::Event,
+        _data: <span class="kw-2">&amp;</span>(),
+        _connhandle: <span class="kw-2">&amp;</span>wayland_client::Connection,
+        _qhandle: <span class="kw-2">&amp;</span>QueueHandle&lt;<span class="self">Self</span>&gt;,
     ) {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">zxdg_exported_v1::Event::Handle</span> { <span class="ident">handle</span> } <span class="op">=</span> <span class="ident">event</span> {
-            <span class="ident">state</span>.<span class="ident">handle</span> <span class="op">=</span> <span class="ident">handle</span>;
+        <span class="kw">if let </span>zxdg_exported_v1::Event::Handle { handle } = event {
+            state.handle = handle;
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">wayland_client::Dispatch</span><span class="op">&lt;</span><span class="ident">ZxdgExportedV2</span>, ()<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">State</span> {
-    <span class="kw">fn</span> <span class="ident">event</span>(
-        <span class="ident">state</span>: <span class="kw-2">&amp;mut</span> <span class="self">Self</span>,
-        <span class="ident">_proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ZxdgExportedV2</span>,
-        <span class="ident">event</span>: <span class="op">&lt;</span><span class="ident">ZxdgExportedV2</span> <span class="kw">as</span> <span class="ident">Proxy</span><span class="op">&gt;</span><span class="ident">::Event</span>,
-        <span class="ident">_data</span>: <span class="kw-2">&amp;</span>(),
-        <span class="ident">_connhandle</span>: <span class="kw-2">&amp;</span><span class="ident">wayland_client::Connection</span>,
-        <span class="ident">_qhandle</span>: <span class="kw-2">&amp;</span><span class="ident">QueueHandle</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+<span class="kw">impl </span>wayland_client::Dispatch&lt;ZxdgExportedV2, ()&gt; <span class="kw">for </span>State {
+    <span class="kw">fn </span>event(
+        state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>,
+        _proxy: <span class="kw-2">&amp;</span>ZxdgExportedV2,
+        event: &lt;ZxdgExportedV2 <span class="kw">as </span>Proxy&gt;::Event,
+        _data: <span class="kw-2">&amp;</span>(),
+        _connhandle: <span class="kw-2">&amp;</span>wayland_client::Connection,
+        _qhandle: <span class="kw-2">&amp;</span>QueueHandle&lt;<span class="self">Self</span>&gt;,
     ) {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">zxdg_exported_v2::Event::Handle</span> { <span class="ident">handle</span> } <span class="op">=</span> <span class="ident">event</span> {
-            <span class="ident">state</span>.<span class="ident">handle</span> <span class="op">=</span> <span class="ident">handle</span>;
+        <span class="kw">if let </span>zxdg_exported_v2::Event::Handle { handle } = event {
+            state.handle = handle;
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">wayland_client::Dispatch</span><span class="op">&lt;</span><span class="ident">ZxdgExporterV1</span>, ()<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">State</span> {
-    <span class="kw">fn</span> <span class="ident">event</span>(
-        <span class="ident">_state</span>: <span class="kw-2">&amp;mut</span> <span class="self">Self</span>,
-        <span class="ident">_proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ZxdgExporterV1</span>,
-        <span class="ident">_event</span>: <span class="op">&lt;</span><span class="ident">ZxdgExporterV1</span> <span class="kw">as</span> <span class="ident">Proxy</span><span class="op">&gt;</span><span class="ident">::Event</span>,
-        <span class="ident">_data</span>: <span class="kw-2">&amp;</span>(),
-        <span class="ident">_connhandle</span>: <span class="kw-2">&amp;</span><span class="ident">wayland_client::Connection</span>,
-        <span class="ident">_qhandle</span>: <span class="kw-2">&amp;</span><span class="ident">QueueHandle</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+<span class="kw">impl </span>wayland_client::Dispatch&lt;ZxdgExporterV1, ()&gt; <span class="kw">for </span>State {
+    <span class="kw">fn </span>event(
+        _state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>,
+        _proxy: <span class="kw-2">&amp;</span>ZxdgExporterV1,
+        _event: &lt;ZxdgExporterV1 <span class="kw">as </span>Proxy&gt;::Event,
+        _data: <span class="kw-2">&amp;</span>(),
+        _connhandle: <span class="kw-2">&amp;</span>wayland_client::Connection,
+        _qhandle: <span class="kw-2">&amp;</span>QueueHandle&lt;<span class="self">Self</span>&gt;,
     ) {
     }
 }
 
-<span class="kw">impl</span> <span class="ident">wayland_client::Dispatch</span><span class="op">&lt;</span><span class="ident">ZxdgExporterV2</span>, ()<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">State</span> {
-    <span class="kw">fn</span> <span class="ident">event</span>(
-        <span class="ident">_state</span>: <span class="kw-2">&amp;mut</span> <span class="self">Self</span>,
-        <span class="ident">_proxy</span>: <span class="kw-2">&amp;</span><span class="ident">ZxdgExporterV2</span>,
-        <span class="ident">_event</span>: <span class="op">&lt;</span><span class="ident">ZxdgExporterV2</span> <span class="kw">as</span> <span class="ident">Proxy</span><span class="op">&gt;</span><span class="ident">::Event</span>,
-        <span class="ident">_data</span>: <span class="kw-2">&amp;</span>(),
-        <span class="ident">_connhandle</span>: <span class="kw-2">&amp;</span><span class="ident">wayland_client::Connection</span>,
-        <span class="ident">_qhandle</span>: <span class="kw-2">&amp;</span><span class="ident">QueueHandle</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+<span class="kw">impl </span>wayland_client::Dispatch&lt;ZxdgExporterV2, ()&gt; <span class="kw">for </span>State {
+    <span class="kw">fn </span>event(
+        _state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>,
+        _proxy: <span class="kw-2">&amp;</span>ZxdgExporterV2,
+        _event: &lt;ZxdgExporterV2 <span class="kw">as </span>Proxy&gt;::Event,
+        _data: <span class="kw-2">&amp;</span>(),
+        _connhandle: <span class="kw-2">&amp;</span>wayland_client::Connection,
+        _qhandle: <span class="kw-2">&amp;</span>QueueHandle&lt;<span class="self">Self</span>&gt;,
     ) {
     }
 }
 
-<span class="kw">impl</span> <span class="ident">wayland_client::Dispatch</span><span class="op">&lt;</span><span class="ident">wl_registry::WlRegistry</span>, ()<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">State</span> {
-    <span class="kw">fn</span> <span class="ident">event</span>(
-        <span class="ident">state</span>: <span class="kw-2">&amp;mut</span> <span class="self">Self</span>,
-        <span class="ident">registry</span>: <span class="kw-2">&amp;</span><span class="ident">wl_registry::WlRegistry</span>,
-        <span class="ident">event</span>: <span class="ident">wl_registry::Event</span>,
+<span class="kw">impl </span>wayland_client::Dispatch&lt;wl_registry::WlRegistry, ()&gt; <span class="kw">for </span>State {
+    <span class="kw">fn </span>event(
+        state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>,
+        registry: <span class="kw-2">&amp;</span>wl_registry::WlRegistry,
+        event: wl_registry::Event,
         <span class="kw">_</span>: <span class="kw-2">&amp;</span>(),
-        <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">wayland_client::Connection</span>,
-        <span class="ident">qhandle</span>: <span class="kw-2">&amp;</span><span class="ident">QueueHandle</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+        <span class="kw">_</span>: <span class="kw-2">&amp;</span>wayland_client::Connection,
+        qhandle: <span class="kw-2">&amp;</span>QueueHandle&lt;<span class="self">Self</span>&gt;,
     ) {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">wl_registry::Event::Global</span> {
-            <span class="ident">name</span>,
-            <span class="ident">interface</span>,
-            <span class="ident">version</span>,
-        } <span class="op">=</span> <span class="ident">event</span>
+        <span class="kw">if let </span>wl_registry::Event::Global {
+            name,
+            interface,
+            version,
+        } = event
         {
-            <span class="kw">match</span> <span class="ident">interface</span>.<span class="ident">as_str</span>() {
-                <span class="string">&quot;zxdg_exporter_v1&quot;</span> =&gt; {
-                    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
-                    <span class="macro">tracing::info!</span>(<span class="string">&quot;Found wayland interface {interface} v{version}&quot;</span>);
-                    <span class="kw">let</span> <span class="ident">exporter</span> <span class="op">=</span> <span class="ident">registry</span>.<span class="ident">bind</span>::<span class="op">&lt;</span><span class="ident">ZxdgExporterV1</span>, (), <span class="ident">State</span><span class="op">&gt;</span>(
-                        <span class="ident">name</span>,
-                        <span class="ident">version</span>.<span class="ident">min</span>(<span class="ident">ZXDG_EXPORTER_V1</span>),
-                        <span class="ident">qhandle</span>,
+            <span class="kw">match </span>interface.as_str() {
+                <span class="string">&quot;zxdg_exporter_v1&quot; </span>=&gt; {
+                    <span class="attribute">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+                    </span><span class="macro">tracing::info!</span>(<span class="string">&quot;Found wayland interface {interface} v{version}&quot;</span>);
+                    <span class="kw">let </span>exporter = registry.bind::&lt;ZxdgExporterV1, (), State&gt;(
+                        name,
+                        version.min(ZXDG_EXPORTER_V1),
+                        qhandle,
                         (),
                     );
-                    <span class="kw">match</span> <span class="ident">state</span>.<span class="ident">exporter</span> {
-                        <span class="prelude-val">Some</span>(<span class="ident">Exporter::V2</span>(<span class="kw">_</span>)) =&gt; (),
-                        <span class="kw">_</span> =&gt; <span class="ident">state</span>.<span class="ident">exporter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Exporter::V1</span>(<span class="ident">exporter</span>)),
+                    <span class="kw">match </span>state.exporter {
+                        <span class="prelude-val">Some</span>(Exporter::V2(<span class="kw">_</span>)) =&gt; (),
+                        <span class="kw">_ </span>=&gt; state.exporter = <span class="prelude-val">Some</span>(Exporter::V1(exporter)),
                     }
                 }
-                <span class="string">&quot;zxdg_exporter_v2&quot;</span> =&gt; {
-                    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
-                    <span class="macro">tracing::info!</span>(<span class="string">&quot;Found wayland interface {interface} v{version}&quot;</span>);
-                    <span class="kw">let</span> <span class="ident">exporter</span> <span class="op">=</span> <span class="ident">registry</span>.<span class="ident">bind</span>::<span class="op">&lt;</span><span class="ident">ZxdgExporterV2</span>, (), <span class="ident">State</span><span class="op">&gt;</span>(
-                        <span class="ident">name</span>,
-                        <span class="ident">version</span>.<span class="ident">min</span>(<span class="ident">ZXDG_EXPORTER_V2</span>),
-                        <span class="ident">qhandle</span>,
+                <span class="string">&quot;zxdg_exporter_v2&quot; </span>=&gt; {
+                    <span class="attribute">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+                    </span><span class="macro">tracing::info!</span>(<span class="string">&quot;Found wayland interface {interface} v{version}&quot;</span>);
+                    <span class="kw">let </span>exporter = registry.bind::&lt;ZxdgExporterV2, (), State&gt;(
+                        name,
+                        version.min(ZXDG_EXPORTER_V2),
+                        qhandle,
                         (),
                     );
-                    <span class="ident">state</span>.<span class="ident">exporter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Exporter::V2</span>(<span class="ident">exporter</span>));
+                    state.exporter = <span class="prelude-val">Some</span>(Exporter::V2(exporter));
                 }
-                <span class="kw">_</span> =&gt; (),
+                <span class="kw">_ </span>=&gt; (),
             }
         }
     }
 }
 
-<span class="doccomment">/// A helper to export a wayland handle from a surface and a connection</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Needed for converting a RawWindowHandle to a WindowIdentifier.</span>
-<span class="kw">fn</span> <span class="ident">wayland_export_handle</span>(
-    <span class="ident">conn</span>: <span class="ident">wayland_client::Connection</span>,
-    <span class="ident">surface</span>: <span class="kw-2">&amp;</span><span class="ident">WlSurface</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">WaylandWindowIdentifier</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">std::error::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">display</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">display</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">event_queue</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">new_event_queue</span>();
-    <span class="kw">let</span> <span class="ident">qhandle</span> <span class="op">=</span> <span class="ident">event_queue</span>.<span class="ident">handle</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">State::default</span>();
-    <span class="ident">display</span>.<span class="ident">get_registry</span>(<span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ());
-    <span class="ident">event_queue</span>.<span class="ident">roundtrip</span>(<span class="kw-2">&amp;mut</span> <span class="ident">state</span>)<span class="question-mark">?</span>;
+<span class="doccomment">/// A helper to export a wayland handle from a surface and a connection
+///
+/// Needed for converting a RawWindowHandle to a WindowIdentifier.
+</span><span class="kw">fn </span>wayland_export_handle(
+    conn: wayland_client::Connection,
+    surface: <span class="kw-2">&amp;</span>WlSurface,
+) -&gt; <span class="prelude-ty">Result</span>&lt;WaylandWindowIdentifier, Box&lt;<span class="kw">dyn </span>std::error::Error&gt;&gt; {
+    <span class="kw">let </span>display = conn.display();
+    <span class="kw">let </span><span class="kw-2">mut </span>event_queue = conn.new_event_queue();
+    <span class="kw">let </span>qhandle = event_queue.handle();
+    <span class="kw">let </span><span class="kw-2">mut </span>state = State::default();
+    display.get_registry(<span class="kw-2">&amp;</span>qhandle, ());
+    event_queue.roundtrip(<span class="kw-2">&amp;mut </span>state)<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> <span class="ident">exported</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">state</span>.<span class="ident">exporter</span>.<span class="ident">take</span>() {
-        <span class="prelude-val">Some</span>(<span class="ident">Exporter::V2</span>(<span class="ident">exporter</span>)) =&gt; {
-            <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">exporter</span>.<span class="ident">export_toplevel</span>(<span class="ident">surface</span>, <span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ());
-            <span class="ident">event_queue</span>.<span class="ident">roundtrip</span>(<span class="kw-2">&amp;mut</span> <span class="ident">state</span>)<span class="question-mark">?</span>;
-            <span class="ident">exporter</span>.<span class="ident">destroy</span>();
+    <span class="kw">let </span>exported = <span class="kw">match </span>state.exporter.take() {
+        <span class="prelude-val">Some</span>(Exporter::V2(exporter)) =&gt; {
+            <span class="kw">let </span>exp = exporter.export_toplevel(surface, <span class="kw-2">&amp;</span>qhandle, ());
+            event_queue.roundtrip(<span class="kw-2">&amp;mut </span>state)<span class="question-mark">?</span>;
+            exporter.destroy();
 
-            <span class="prelude-val">Some</span>(<span class="ident">Exported::V2</span>(<span class="ident">exp</span>))
+            <span class="prelude-val">Some</span>(Exported::V2(exp))
         }
-        <span class="prelude-val">Some</span>(<span class="ident">Exporter::V1</span>(<span class="ident">exporter</span>)) =&gt; {
-            <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">exporter</span>.<span class="ident">export</span>(<span class="ident">surface</span>, <span class="kw-2">&amp;</span><span class="ident">qhandle</span>, ());
-            <span class="ident">event_queue</span>.<span class="ident">roundtrip</span>(<span class="kw-2">&amp;mut</span> <span class="ident">state</span>)<span class="question-mark">?</span>;
-            <span class="ident">exporter</span>.<span class="ident">destroy</span>();
+        <span class="prelude-val">Some</span>(Exporter::V1(exporter)) =&gt; {
+            <span class="kw">let </span>exp = exporter.export(surface, <span class="kw-2">&amp;</span>qhandle, ());
+            event_queue.roundtrip(<span class="kw-2">&amp;mut </span>state)<span class="question-mark">?</span>;
+            exporter.destroy();
 
-            <span class="prelude-val">Some</span>(<span class="ident">Exported::V1</span>(<span class="ident">exp</span>))
+            <span class="prelude-val">Some</span>(Exported::V1(exp))
         }
-        <span class="prelude-val">None</span> =&gt; {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
-            <span class="macro">tracing::error!</span>(
-                <span class="string">&quot;The compositor does not support the zxdg_exporter_v1 nor zxdg_exporter_v2 protocols&quot;</span>
-            );
-            <span class="prelude-val">None</span>
-        }
+        <span class="prelude-val">None </span>=&gt; {
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+            </span><span class="macro">tracing::error!</span>(
+                <span class="string">&quot;The compositor does not support the zxdg_exporter_v1 nor zxdg_exporter_v2 protocols&quot;
+            </span>);
+            <span class="prelude-val">None
+        </span>}
     };
 
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">exported</span>) <span class="op">=</span> <span class="ident">exported</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">WaylandWindowIdentifier</span> {
-            <span class="ident">exported</span>,
-            <span class="ident">type_</span>: <span class="ident">WindowIdentifierType::Wayland</span>(<span class="ident">state</span>.<span class="ident">handle</span>),
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(exported) = exported {
+        <span class="prelude-val">Ok</span>(WaylandWindowIdentifier {
+            exported,
+            type_: WindowIdentifierType::Wayland(state.handle),
         })
-    } <span class="kw">else</span> {
-        <span class="prelude-val">Err</span>(<span class="ident">Box::new</span>(<span class="ident"><span class="kw">crate</span>::Error::NoResponse</span>))
+    } <span class="kw">else </span>{
+        <span class="prelude-val">Err</span>(Box::new(<span class="kw">crate</span>::Error::NoResponse))
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/notification.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>notification.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/notification.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>notification.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -356,361 +356,361 @@
 <span id="354">354</span>
 <span id="355">355</span>
 <span id="356">356</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::{thread, time};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::desktop::{</span>
-<span class="doccomment">//!     notification::{Action, Button, Notification, NotificationProxy, Priority},</span>
-<span class="doccomment">//!     Icon,</span>
-<span class="doccomment">//! };</span>
-<span class="doccomment">//! use zbus::zvariant::Value;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = NotificationProxy::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let notification_id = &quot;org.gnome.design.Contrast&quot;;</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .add_notification(</span>
-<span class="doccomment">//!             notification_id,</span>
-<span class="doccomment">//!             Notification::new(&quot;Contrast&quot;)</span>
-<span class="doccomment">//!                 .default_action(&quot;open&quot;)</span>
-<span class="doccomment">//!                 .default_action_target(Value::U32(100).into())</span>
-<span class="doccomment">//!                 .body(&quot;color copied to clipboard&quot;)</span>
-<span class="doccomment">//!                 .priority(Priority::High)</span>
-<span class="doccomment">//!                 .icon(Icon::from_names(&amp;[&quot;dialog-question-symbolic&quot;]))</span>
-<span class="doccomment">//!                 .button(Button::new(&quot;Copy&quot;, &quot;copy&quot;).target(Value::U32(32).into()))</span>
-<span class="doccomment">//!                 .button(Button::new(&quot;Delete&quot;, &quot;delete&quot;).target(Value::U32(40).into())),</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let action = proxy.receive_action_invoked().await?;</span>
-<span class="doccomment">//!     match action.name() {</span>
-<span class="doccomment">//!         &quot;copy&quot; =&gt; (),   // Copy something to clipboard</span>
-<span class="doccomment">//!         &quot;delete&quot; =&gt; (), // Delete the file</span>
-<span class="doccomment">//!         _ =&gt; (),</span>
-<span class="doccomment">//!     };</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, action.id());</span>
-<span class="doccomment">//!     println!(</span>
-<span class="doccomment">//!         &quot;{:#?}&quot;,</span>
-<span class="doccomment">//!         action.parameter().get(0).unwrap().downcast_ref::&lt;u32&gt;()</span>
-<span class="doccomment">//!     );</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy.remove_notification(notification_id).await?;</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! ```rust,no_run
+//! use std::{thread, time};
+//!
+//! use ashpd::desktop::{
+//!     notification::{Action, Button, Notification, NotificationProxy, Priority},
+//!     Icon,
+//! };
+//! use zbus::zvariant::Value;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = NotificationProxy::new().await?;
+//!
+//!     let notification_id = &quot;org.gnome.design.Contrast&quot;;
+//!     proxy
+//!         .add_notification(
+//!             notification_id,
+//!             Notification::new(&quot;Contrast&quot;)
+//!                 .default_action(&quot;open&quot;)
+//!                 .default_action_target(Value::U32(100).into())
+//!                 .body(&quot;color copied to clipboard&quot;)
+//!                 .priority(Priority::High)
+//!                 .icon(Icon::from_names(&amp;[&quot;dialog-question-symbolic&quot;]))
+//!                 .button(Button::new(&quot;Copy&quot;, &quot;copy&quot;).target(Value::U32(32).into()))
+//!                 .button(Button::new(&quot;Delete&quot;, &quot;delete&quot;).target(Value::U32(40).into())),
+//!         )
+//!         .await?;
+//!
+//!     let action = proxy.receive_action_invoked().await?;
+//!     match action.name() {
+//!         &quot;copy&quot; =&gt; (),   // Copy something to clipboard
+//!         &quot;delete&quot; =&gt; (), // Delete the file
+//!         _ =&gt; (),
+//!     };
+//!     println!(&quot;{:#?}&quot;, action.id());
+//!     println!(
+//!         &quot;{:#?}&quot;,
+//!         action.parameter().get(0).unwrap().downcast_ref::&lt;u32&gt;()
+//!     );
+//!
+//!     proxy.remove_notification(notification_id).await?;
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">str::FromStr</span>};
+</span><span class="kw">use </span>std::{fmt, str::FromStr};
 
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="self">self</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">OwnedValue</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>serde::{<span class="self">self</span>, Deserialize, Serialize};
+<span class="kw">use </span>zbus::zvariant::{OwnedValue, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Icon</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use super</span>::{Icon, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_method, receive_signal, session_connection},
+    Error,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
-<span class="doccomment">/// The notification priority</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Priority</span> {
-    <span class="doccomment">/// Low.</span>
-    <span class="ident">Low</span>,
-    <span class="doccomment">/// Normal.</span>
-    <span class="ident">Normal</span>,
-    <span class="doccomment">/// High.</span>
-    <span class="ident">High</span>,
-    <span class="doccomment">/// Urgent.</span>
-    <span class="ident">Urgent</span>,
+<span class="attribute">#[derive(Debug, Clone, Serialize, PartialEq, Eq, Type)]
+#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+#[serde(rename_all = <span class="string">&quot;lowercase&quot;</span>)]
+</span><span class="doccomment">/// The notification priority
+</span><span class="kw">pub enum </span>Priority {
+    <span class="doccomment">/// Low.
+    </span>Low,
+    <span class="doccomment">/// Normal.
+    </span>Normal,
+    <span class="doccomment">/// High.
+    </span>High,
+    <span class="doccomment">/// Urgent.
+    </span>Urgent,
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Priority</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Low&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Normal&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;High&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Urgent</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Urgent&quot;</span>),
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Priority {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Low =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Low&quot;</span>),
+            <span class="self">Self</span>::Normal =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Normal&quot;</span>),
+            <span class="self">Self</span>::High =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;High&quot;</span>),
+            <span class="self">Self</span>::Urgent =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Urgent&quot;</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Priority</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Urgent</span> =&gt; <span class="string">&quot;Urgent&quot;</span>,
+<span class="kw">impl </span>AsRef&lt;str&gt; <span class="kw">for </span>Priority {
+    <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Low =&gt; <span class="string">&quot;Low&quot;</span>,
+            <span class="self">Self</span>::Normal =&gt; <span class="string">&quot;Normal&quot;</span>,
+            <span class="self">Self</span>::High =&gt; <span class="string">&quot;High&quot;</span>,
+            <span class="self">Self</span>::Urgent =&gt; <span class="string">&quot;Urgent&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Priority</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">d</span>: <span class="ident">Priority</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">d</span> {
-            <span class="ident">Priority::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
-            <span class="ident">Priority::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
-            <span class="ident">Priority::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
-            <span class="ident">Priority::Urgent</span> =&gt; <span class="string">&quot;Urgent&quot;</span>,
+<span class="kw">impl </span>From&lt;Priority&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="kw">fn </span>from(d: Priority) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>d {
+            Priority::Low =&gt; <span class="string">&quot;Low&quot;</span>,
+            Priority::Normal =&gt; <span class="string">&quot;Normal&quot;</span>,
+            Priority::High =&gt; <span class="string">&quot;High&quot;</span>,
+            Priority::Urgent =&gt; <span class="string">&quot;Urgent&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Priority</span> {
-    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl </span>FromStr <span class="kw">for </span>Priority {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= Error;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">s</span> {
-            <span class="string">&quot;Low&quot;</span> <span class="op">|</span> <span class="string">&quot;low&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::Low</span>),
-            <span class="string">&quot;Normal&quot;</span> <span class="op">|</span> <span class="string">&quot;normal&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::Normal</span>),
-            <span class="string">&quot;High&quot;</span> <span class="op">|</span> <span class="string">&quot;high&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::High</span>),
-            <span class="string">&quot;Urgent&quot;</span> <span class="op">|</span> <span class="string">&quot;urgent&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Priority::Urgent</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(<span class="string">&quot;Failed to parse priority, invalid value&quot;</span>)),
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+        <span class="kw">match </span>s {
+            <span class="string">&quot;Low&quot; </span>| <span class="string">&quot;low&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Priority::Low),
+            <span class="string">&quot;Normal&quot; </span>| <span class="string">&quot;normal&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Priority::Normal),
+            <span class="string">&quot;High&quot; </span>| <span class="string">&quot;high&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Priority::High),
+            <span class="string">&quot;Urgent&quot; </span>| <span class="string">&quot;urgent&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Priority::Urgent),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::ParseError(<span class="string">&quot;Failed to parse priority, invalid value&quot;</span>)),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A notification</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Notification</span> {
-    <span class="doccomment">/// User-visible string to display as the title.</span>
-    <span class="ident">title</span>: <span class="ident">String</span>,
-    <span class="doccomment">/// User-visible string to display as the body.</span>
-    <span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Serialized icon (e.g using gio::Icon::serialize).</span>
-    <span class="ident">icon</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Icon</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The priority for the notification.</span>
-    <span class="ident">priority</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Priority</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Name of an action that is exported by the application.</span>
-    <span class="doccomment">/// This action will be activated when the user clicks on the notification.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;default-action&quot;</span>)]</span>
-    <span class="ident">default_action</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Target parameter to send along when activating the default action.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;default-action-target&quot;</span>)]</span>
-    <span class="ident">default_action_target</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OwnedValue</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Array of buttons to add to the notification.</span>
-    <span class="ident">buttons</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Button</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug)]
+</span><span class="doccomment">/// A notification
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>Notification {
+    <span class="doccomment">/// User-visible string to display as the title.
+    </span>title: String,
+    <span class="doccomment">/// User-visible string to display as the body.
+    </span>body: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Serialized icon (e.g using gio::Icon::serialize).
+    </span>icon: <span class="prelude-ty">Option</span>&lt;Icon&gt;,
+    <span class="doccomment">/// The priority for the notification.
+    </span>priority: <span class="prelude-ty">Option</span>&lt;Priority&gt;,
+    <span class="doccomment">/// Name of an action that is exported by the application.
+    /// This action will be activated when the user clicks on the notification.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;default-action&quot;</span>)]
+    </span>default_action: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Target parameter to send along when activating the default action.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;default-action-target&quot;</span>)]
+    </span>default_action_target: <span class="prelude-ty">Option</span>&lt;OwnedValue&gt;,
+    <span class="doccomment">/// Array of buttons to add to the notification.
+    </span>buttons: <span class="prelude-ty">Option</span>&lt;Vec&lt;Button&gt;&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Notification</span> {
-    <span class="doccomment">/// Create a new notification.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `title` - the notification title.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">title</span>: <span class="ident">title</span>.<span class="ident">to_owned</span>(),
-            <span class="ident">body</span>: <span class="prelude-val">None</span>,
-            <span class="ident">priority</span>: <span class="prelude-val">None</span>,
-            <span class="ident">icon</span>: <span class="prelude-val">None</span>,
-            <span class="ident">default_action</span>: <span class="prelude-val">None</span>,
-            <span class="ident">default_action_target</span>: <span class="prelude-val">None</span>,
-            <span class="ident">buttons</span>: <span class="prelude-val">None</span>,
+<span class="kw">impl </span>Notification {
+    <span class="doccomment">/// Create a new notification.
+    ///
+    /// # Arguments
+    ///
+    /// * `title` - the notification title.
+    </span><span class="kw">pub fn </span>new(title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            title: title.to_owned(),
+            body: <span class="prelude-val">None</span>,
+            priority: <span class="prelude-val">None</span>,
+            icon: <span class="prelude-val">None</span>,
+            default_action: <span class="prelude-val">None</span>,
+            default_action_target: <span class="prelude-val">None</span>,
+            buttons: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="doccomment">/// Sets the notification body.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">body</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">body</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">body</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the notification body.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>body(<span class="kw-2">mut </span><span class="self">self</span>, body: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.body = <span class="prelude-val">Some</span>(body.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets an icon to the notification.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icon</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">icon</span>: <span class="ident">Icon</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">icon</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">icon</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets an icon to the notification.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>icon(<span class="kw-2">mut </span><span class="self">self</span>, icon: Icon) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.icon = <span class="prelude-val">Some</span>(icon);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the notification priority.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">priority</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">priority</span>: <span class="ident">Priority</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">priority</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">priority</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the notification priority.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>priority(<span class="kw-2">mut </span><span class="self">self</span>, priority: Priority) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.priority = <span class="prelude-val">Some</span>(priority);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the default action when the user clicks on the notification.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_action</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">default_action</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">default_action</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">default_action</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the default action when the user clicks on the notification.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>default_action(<span class="kw-2">mut </span><span class="self">self</span>, default_action: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.default_action = <span class="prelude-val">Some</span>(default_action.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets a value to be sent in the `action_invoked` signal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_action_target</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">default_action_target</span>: <span class="ident">OwnedValue</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">default_action_target</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">default_action_target</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets a value to be sent in the `action_invoked` signal.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>default_action_target(<span class="kw-2">mut </span><span class="self">self</span>, default_action_target: OwnedValue) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.default_action_target = <span class="prelude-val">Some</span>(default_action_target);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Adds a new button to the notification.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">button</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">button</span>: <span class="ident">Button</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">buttons</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">buttons</span>) =&gt; <span class="ident">buttons</span>.<span class="ident">push</span>(<span class="ident">button</span>),
-            <span class="prelude-val">None</span> =&gt; {
-                <span class="self">self</span>.<span class="ident">buttons</span>.<span class="ident">replace</span>(<span class="macro">vec!</span>[<span class="ident">button</span>]);
+    <span class="doccomment">/// Adds a new button to the notification.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>button(<span class="kw-2">mut </span><span class="self">self</span>, button: Button) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span><span class="self">self</span>.buttons {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>buttons) =&gt; buttons.push(button),
+            <span class="prelude-val">None </span>=&gt; {
+                <span class="self">self</span>.buttons.replace(<span class="macro">vec!</span>[button]);
             }
         };
-        <span class="self">self</span>
-    }
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A notification button</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Button</span> {
-    <span class="doccomment">/// User-visible label for the button. Mandatory.</span>
-    <span class="ident">label</span>: <span class="ident">String</span>,
-    <span class="doccomment">/// Name of an action that is exported by the application. The action will</span>
-    <span class="doccomment">/// be activated when the user clicks on the button.</span>
-    <span class="ident">action</span>: <span class="ident">String</span>,
-    <span class="doccomment">/// Target parameter to send along when activating the action.</span>
-    <span class="ident">target</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OwnedValue</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug)]
+</span><span class="doccomment">/// A notification button
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>Button {
+    <span class="doccomment">/// User-visible label for the button. Mandatory.
+    </span>label: String,
+    <span class="doccomment">/// Name of an action that is exported by the application. The action will
+    /// be activated when the user clicks on the button.
+    </span>action: String,
+    <span class="doccomment">/// Target parameter to send along when activating the action.
+    </span>target: <span class="prelude-ty">Option</span>&lt;OwnedValue&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Button</span> {
-    <span class="doccomment">/// Create a new notification button.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `label` - the user visible label of the button.</span>
-    <span class="doccomment">/// * `action` - the action name to be invoked when the user clicks on the</span>
-    <span class="doccomment">///   button.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">action</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">label</span>: <span class="ident">label</span>.<span class="ident">to_owned</span>(),
-            <span class="ident">action</span>: <span class="ident">action</span>.<span class="ident">to_owned</span>(),
-            <span class="ident">target</span>: <span class="prelude-val">None</span>,
+<span class="kw">impl </span>Button {
+    <span class="doccomment">/// Create a new notification button.
+    ///
+    /// # Arguments
+    ///
+    /// * `label` - the user visible label of the button.
+    /// * `action` - the action name to be invoked when the user clicks on the
+    ///   button.
+    </span><span class="kw">pub fn </span>new(label: <span class="kw-2">&amp;</span>str, action: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            label: label.to_owned(),
+            action: action.to_owned(),
+            target: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="doccomment">/// The value to send with the action name when the button is clicked.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">target</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">target</span>: <span class="ident">OwnedValue</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">target</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">target</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The value to send with the action name when the button is clicked.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>target(<span class="kw-2">mut </span><span class="self">self</span>, target: OwnedValue) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.target = <span class="prelude-val">Some</span>(target);
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// An invoked action.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Action</span>(<span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OwnedValue</span><span class="op">&gt;</span>);
+<span class="attribute">#[derive(Debug, Deserialize, Type)]
+</span><span class="doccomment">/// An invoked action.
+</span><span class="kw">pub struct </span>Action(String, String, Vec&lt;OwnedValue&gt;);
 
-<span class="kw">impl</span> <span class="ident">Action</span> {
-    <span class="doccomment">/// Notification ID.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+<span class="kw">impl </span>Action {
+    <span class="doccomment">/// Notification ID.
+    </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Action name.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1</span>
-    }
+    <span class="doccomment">/// Action name.
+    </span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1
+    </span>}
 
-    <span class="doccomment">/// The parameters passed to the action.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parameter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OwnedValue</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">2</span>
-    }
+    <span class="doccomment">/// The parameters passed to the action.
+    </span><span class="kw">pub fn </span>parameter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;OwnedValue&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">2
+    </span>}
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications send and withdraw notifications.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// It is not possible for the application to learn if the notification was</span>
-<span class="doccomment">/// actually presented to the user. Not a portal in the strict sense, since</span>
-<span class="doccomment">/// there is no user interaction.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// **Note** in contrast to most other portal requests, notifications are</span>
-<span class="doccomment">/// expected to outlast the running application. If a user clicks on a</span>
-<span class="doccomment">/// notification after the application has exited, it will get activated again.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Notifications can specify actions that can be activated by the user.</span>
-<span class="doccomment">/// Actions whose name starts with &#39;app.&#39; are assumed to be exported and will be</span>
-<span class="doccomment">/// activated via the ActivateAction() method in the org.freedesktop.Application</span>
-<span class="doccomment">/// interface. Other actions are activated by sending the</span>
-<span class="doccomment">///  `#org.freedeskop.portal.Notification::ActionInvoked` signal to the</span>
-<span class="doccomment">/// application.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Notification`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Notification).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NotificationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface lets sandboxed applications send and withdraw notifications.
+///
+/// It is not possible for the application to learn if the notification was
+/// actually presented to the user. Not a portal in the strict sense, since
+/// there is no user interaction.
+///
+/// **Note** in contrast to most other portal requests, notifications are
+/// expected to outlast the running application. If a user clicks on a
+/// notification after the application has exited, it will get activated again.
+///
+/// Notifications can specify actions that can be activated by the user.
+/// Actions whose name starts with &#39;app.&#39; are assumed to be exported and will be
+/// activated via the ActivateAction() method in the org.freedesktop.Application
+/// interface. Other actions are activated by sending the
+///  `#org.freedeskop.portal.Notification::ActionInvoked` signal to the
+/// application.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Notification`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Notification).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>)]
+</span><span class="kw">pub struct </span>NotificationProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">NotificationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`NotificationProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NotificationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; NotificationProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`NotificationProxy`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;NotificationProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Signal emitted when a particular action is invoked.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`ActionInvoked`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Notification.ActionInvoked).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;ActionInvoked&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpPortal::notification-action-invoked&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_action_invoked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Action</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">receive_signal</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;ActionInvoked&quot;</span>).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Signal emitted when a particular action is invoked.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`ActionInvoked`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Notification.ActionInvoked).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;ActionInvoked&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;XdpPortal::notification-action-invoked&quot;</span>)]
+    </span><span class="kw">pub async fn </span>receive_action_invoked(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Action, Error&gt; {
+        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;ActionInvoked&quot;</span>).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Sends a notification.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The ID can be used to later withdraw the notification.</span>
-    <span class="doccomment">/// If the application reuses the same ID without withdrawing, the</span>
-    <span class="doccomment">/// notification is replaced by the new one.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `id` - Application-provided ID for this notification.</span>
-    <span class="doccomment">/// * `notification` - The notification.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AddNotification`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Notification.AddNotification).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddNotification&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_add_notification&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_notification</span>(
+    <span class="doccomment">/// Sends a notification.
+    ///
+    /// The ID can be used to later withdraw the notification.
+    /// If the application reuses the same ID without withdrawing, the
+    /// notification is replaced by the new one.
+    ///
+    /// # Arguments
+    ///
+    /// * `id` - Application-provided ID for this notification.
+    /// * `notification` - The notification.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AddNotification`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Notification.AddNotification).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AddNotification&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_add_notification&quot;</span>)]
+    </span><span class="kw">pub async fn </span>add_notification(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">notification</span>: <span class="ident">Notification</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;AddNotification&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">id</span>, <span class="ident">notification</span>)).<span class="kw">await</span>
-    }
+        id: <span class="kw-2">&amp;</span>str,
+        notification: Notification,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;AddNotification&quot;</span>, <span class="kw-2">&amp;</span>(id, notification)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Withdraws a notification.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `id` - Application-provided ID for this notification.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`RemoveNotification`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Notification.RemoveNotification).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RemoveNotification&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_remove_notification&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">remove_notification</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;RemoveNotification&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">id</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Withdraws a notification.
+    ///
+    /// # Arguments
+    ///
+    /// * `id` - Application-provided ID for this notification.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`RemoveNotification`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Notification.RemoveNotification).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;RemoveNotification&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_remove_notification&quot;</span>)]
+    </span><span class="kw">pub async fn </span>remove_notification(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;RemoveNotification&quot;</span>, <span class="kw-2">&amp;</span>(id)).<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

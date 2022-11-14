@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/documents/file_transfer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_transfer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/documents/file_transfer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_transfer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -208,213 +208,213 @@
 <span id="206">206</span>
 <span id="207">207</span>
 <span id="208">208</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::fs::File;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::documents::FileTransfer;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = FileTransfer::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let key = proxy.start_transfer(true, true).await?;</span>
-<span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
-<span class="doccomment">//!     proxy.add_files(&amp;key, &amp;[&amp;file]).await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     // The files would be retrieved by another process</span>
-<span class="doccomment">//!     let files = proxy.retrieve_files(&amp;key).await?;</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, files);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy.stop_transfer(&amp;key).await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! ```rust,no_run
+//! use std::fs::File;
+//!
+//! use ashpd::documents::FileTransfer;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = FileTransfer::new().await?;
+//!
+//!     let key = proxy.start_transfer(true, true).await?;
+//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();
+//!     proxy.add_files(&amp;key, &amp;[&amp;file]).await?;
+//!
+//!     // The files would be retrieved by another process
+//!     let files = proxy.retrieve_files(&amp;key).await?;
+//!     println!(&quot;{:#?}&quot;, files);
+//!
+//!     proxy.stop_transfer(&amp;key).await?;
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">os::unix::prelude::AsRawFd</span>};
+</span><span class="kw">use </span>std::{collections::HashMap, os::unix::prelude::AsRawFd};
 
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
+<span class="kw">use </span>zbus::zvariant::{Fd, SerializeDict, Type, Value};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use super</span>::{DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_method, receive_signal, session_connection},
+    Error,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`FileTransfer::start_transfer`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">TransferOptions</span> {
-    <span class="doccomment">/// Whether to allow the chosen application to write to the files.</span>
-    <span class="ident">writeable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether to stop the transfer automatically after the first</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] call.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;autostop&quot;</span>)]</span>
-    <span class="ident">auto_stop</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Debug, Type, Default)]
+</span><span class="doccomment">/// Specified options for a [`FileTransfer::start_transfer`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>TransferOptions {
+    <span class="doccomment">/// Whether to allow the chosen application to write to the files.
+    </span>writeable: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="doccomment">/// Whether to stop the transfer automatically after the first
+    /// [`retrieve_files()`][`FileTransfer::retrieve_files`] call.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;autostop&quot;</span>)]
+    </span>auto_stop: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">TransferOptions</span> {
-    <span class="doccomment">/// Sets whether the chosen application can write to the files or not.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">writeable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">writeable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">writeable</span>);
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>TransferOptions {
+    <span class="doccomment">/// Sets whether the chosen application can write to the files or not.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>writeable(<span class="kw-2">mut </span><span class="self">self</span>, writeable: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.writeable = <span class="prelude-val">Some</span>(writeable);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to stop the transfer automatically after the first</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] call.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">auto_stop</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">auto_stop</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">auto_stop</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">auto_stop</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to stop the transfer automatically after the first
+    /// [`retrieve_files()`][`FileTransfer::retrieve_files`] call.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>auto_stop(<span class="kw-2">mut </span><span class="self">self</span>, auto_stop: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.auto_stop = <span class="prelude-val">Some</span>(auto_stop);
+        <span class="self">self
+    </span>}
 }
 
-<span class="doccomment">/// The interface operates as a middle-man between apps when transferring files</span>
-<span class="doccomment">/// via drag-and-drop or copy-paste, taking care of the necessary exporting of</span>
-<span class="doccomment">/// files in the document portal.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Toolkits are expected to use the application/vnd.portal.filetransfer</span>
-<span class="doccomment">/// mimetype when using this mechanism for file exchange via copy-paste or</span>
-<span class="doccomment">/// drag-and-drop.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The data that is transmitted with this mimetype should be the key returned</span>
-<span class="doccomment">/// by the StartTransfer method. Upon receiving this mimetype, the target should</span>
-<span class="doccomment">/// call RetrieveFiles with the key, to obtain the list of files. The portal</span>
-<span class="doccomment">/// will take care of exporting files in the document store as necessary to make</span>
-<span class="doccomment">/// them accessible to the target.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.FileTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.FileTransfer).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.FileTransfer&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileTransfer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface operates as a middle-man between apps when transferring files
+/// via drag-and-drop or copy-paste, taking care of the necessary exporting of
+/// files in the document portal.
+///
+/// Toolkits are expected to use the application/vnd.portal.filetransfer
+/// mimetype when using this mechanism for file exchange via copy-paste or
+/// drag-and-drop.
+///
+/// The data that is transmitted with this mimetype should be the key returned
+/// by the StartTransfer method. Upon receiving this mimetype, the target should
+/// call RetrieveFiles with the key, to obtain the list of files. The portal
+/// will take care of exporting files in the document store as necessary to make
+/// them accessible to the target.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.FileTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.FileTransfer).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.FileTransfer&quot;</span>)]
+</span><span class="kw">pub struct </span>FileTransfer&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FileTransfer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`FileTransfer`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FileTransfer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.FileTransfer&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FileTransfer&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`FileTransfer`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;FileTransfer&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.FileTransfer&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Adds files to a session. This method can be called multiple times on a</span>
-    <span class="doccomment">/// given session. **Note** only regular files (not directories) can be</span>
-    <span class="doccomment">/// added.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
-    <span class="doccomment">/// * `fds` - A list of file descriptors of the files to register.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AddFiles`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.AddFiles).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddFiles&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_files</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">fds</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="kw">let</span> <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">fds</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">Fd::from</span>(<span class="ident">f</span>.<span class="ident">as_raw_fd</span>())).<span class="ident">collect</span>();
+    <span class="doccomment">/// Adds files to a session. This method can be called multiple times on a
+    /// given session. **Note** only regular files (not directories) can be
+    /// added.
+    ///
+    /// # Arguments
+    ///
+    /// * `key` - A key returned by
+    ///   [`start_transfer()`][`FileTransfer::start_transfer`].
+    /// * `fds` - A list of file descriptors of the files to register.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AddFiles`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.AddFiles).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AddFiles&quot;</span>)]
+    </span><span class="kw">pub async fn </span>add_files(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str, fds: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd]) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
+        <span class="kw">let </span>files: Vec&lt;Fd&gt; = fds.iter().map(|f| Fd::from(f.as_raw_fd())).collect();
 
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;AddFiles&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">files</span>, <span class="ident">options</span>)).<span class="kw">await</span>
-    }
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;AddFiles&quot;</span>, <span class="kw-2">&amp;</span>(key, files, options)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Retrieves files that were previously added to the session with</span>
-    <span class="doccomment">/// [`add_files()`][`FileTransfer::add_files`]. The files will be</span>
-    <span class="doccomment">/// exported in the document portal as-needed for the caller, and they</span>
-    <span class="doccomment">/// will be writable if the owner of the session allowed it.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The list of file paths.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`RetrieveFiles`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.RetrieveFiles).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RetrieveFiles&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">retrieve_files</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet</span>
-        <span class="comment">// see https://github.com/GNOME/gtk/blob/master/gdk/filetransferportal.c#L284</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+    <span class="doccomment">/// Retrieves files that were previously added to the session with
+    /// [`add_files()`][`FileTransfer::add_files`]. The files will be
+    /// exported in the document portal as-needed for the caller, and they
+    /// will be writable if the owner of the session allowed it.
+    ///
+    /// # Arguments
+    ///
+    /// * `key` - A key returned by
+    ///   [`start_transfer()`][`FileTransfer::start_transfer`].
+    ///
+    /// # Returns
+    ///
+    /// The list of file paths.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`RetrieveFiles`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.RetrieveFiles).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;RetrieveFiles&quot;</span>)]
+    </span><span class="kw">pub async fn </span>retrieve_files(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;String&gt;, Error&gt; {
+        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet
+        // see https://github.com/GNOME/gtk/blob/master/gdk/filetransferportal.c#L284
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
 
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;RetrieveFiles&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">options</span>)).<span class="kw">await</span>
-    }
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;RetrieveFiles&quot;</span>, <span class="kw-2">&amp;</span>(key, options)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Starts a session for a file transfer.</span>
-    <span class="doccomment">/// The caller should call [`add_files()`][`FileTransfer::add_files`]</span>
-    <span class="doccomment">/// at least once, to add files to this session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `writeable` - Sets whether the chosen application can write to the</span>
-    <span class="doccomment">///   files or not.</span>
-    <span class="doccomment">/// * `auto_stop` - Whether to stop the transfer automatically after the</span>
-    <span class="doccomment">///   first [`retrieve_files()`][`FileTransfer::retrieve_files`] call.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Key that can be passed to</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] to obtain the</span>
-    <span class="doccomment">/// files.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`StartTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.StartTransfer).</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start_transfer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writeable</span>: <span class="ident">bool</span>, <span class="ident">auto_stop</span>: <span class="ident">bool</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">TransferOptions::default</span>()
-            .<span class="ident">writeable</span>(<span class="ident">writeable</span>)
-            .<span class="ident">auto_stop</span>(<span class="ident">auto_stop</span>);
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;StartTransfer&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Starts a session for a file transfer.
+    /// The caller should call [`add_files()`][`FileTransfer::add_files`]
+    /// at least once, to add files to this session.
+    ///
+    /// # Arguments
+    ///
+    /// * `writeable` - Sets whether the chosen application can write to the
+    ///   files or not.
+    /// * `auto_stop` - Whether to stop the transfer automatically after the
+    ///   first [`retrieve_files()`][`FileTransfer::retrieve_files`] call.
+    ///
+    /// # Returns
+    ///
+    /// Key that can be passed to
+    /// [`retrieve_files()`][`FileTransfer::retrieve_files`] to obtain the
+    /// files.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`StartTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.StartTransfer).
+    </span><span class="kw">pub async fn </span>start_transfer(<span class="kw-2">&amp;</span><span class="self">self</span>, writeable: bool, auto_stop: bool) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
+        <span class="kw">let </span>options = TransferOptions::default()
+            .writeable(writeable)
+            .auto_stop(auto_stop);
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;StartTransfer&quot;</span>, <span class="kw-2">&amp;</span>(options)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Ends the transfer.</span>
-    <span class="doccomment">/// Further calls to [`add_files()`][`FileTransfer::add_files`] or</span>
-    <span class="doccomment">/// [`retrieve_files()`][`FileTransfer::retrieve_files`] for this key</span>
-    <span class="doccomment">/// will return an error.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `key` - A key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`StopTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.StopTransfer).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;StopTransfer&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stop_transfer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;StopTransfer&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">key</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Ends the transfer.
+    /// Further calls to [`add_files()`][`FileTransfer::add_files`] or
+    /// [`retrieve_files()`][`FileTransfer::retrieve_files`] for this key
+    /// will return an error.
+    ///
+    /// # Arguments
+    ///
+    /// * `key` - A key returned by
+    ///   [`start_transfer()`][`FileTransfer::start_transfer`].
+    ///
+    /// # Specifications
+    ///
+    /// See also [`StopTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-FileTransfer.StopTransfer).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;StopTransfer&quot;</span>)]
+    </span><span class="kw">pub async fn </span>stop_transfer(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;StopTransfer&quot;</span>, <span class="kw-2">&amp;</span>(key)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Emitted when the transfer is closed.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * The key returned by</span>
-    <span class="doccomment">///   [`start_transfer()`][`FileTransfer::start_transfer`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`TransferClosed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-FileTransfer.TransferClosed).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;TransferClosed&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">transfer_closed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">receive_signal</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;TransferClosed&quot;</span>).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Emitted when the transfer is closed.
+    ///
+    /// # Returns
+    ///
+    /// * The key returned by
+    ///   [`start_transfer()`][`FileTransfer::start_transfer`].
+    ///
+    /// # Specifications
+    ///
+    /// See also [`TransferClosed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-FileTransfer.TransferClosed).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;TransferClosed&quot;</span>)]
+    </span><span class="kw">pub async fn </span>transfer_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
+        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;TransferClosed&quot;</span>).<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

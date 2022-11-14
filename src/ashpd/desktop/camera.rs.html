@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/camera.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>camera.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/camera.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>camera.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -285,290 +285,290 @@
 <span id="283">283</span>
 <span id="284">284</span>
 <span id="285">285</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Check if a camera is available, request access to it and open a PipeWire</span>
-<span class="doccomment">//! remote stream.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::camera::Camera;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! pub async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let camera = Camera::new().await?;</span>
-<span class="doccomment">//!     if camera.is_present().await? {</span>
-<span class="doccomment">//!         camera.request_access().await?;</span>
-<span class="doccomment">//!         let remote_fd = camera.open_pipe_wire_remote().await?;</span>
-<span class="doccomment">//!         // pass the remote fd to GStreamer for example</span>
-<span class="doccomment">//!     }</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Check if a camera is available, request access to it and open a PipeWire
+//! remote stream.
+//!
+//! ### Examples
+//!
+//! ```rust,no_run
+//! use ashpd::desktop::camera::Camera;
+//!
+//! pub async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let camera = Camera::new().await?;
+//!     if camera.is_present().await? {
+//!         camera.request_access().await?;
+//!         let remote_fd = camera.open_pipe_wire_remote().await?;
+//!         // pass the remote fd to GStreamer for example
+//!     }
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">collections::HashMap</span>,
-    <span class="ident">os::unix::prelude</span>::{<span class="ident">IntoRawFd</span>, <span class="ident">RawFd</span>},
+</span><span class="kw">use </span>std::{
+    collections::HashMap,
+    os::unix::prelude::{IntoRawFd, RawFd},
 };
 
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">OwnedFd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
+<span class="kw">use </span>zbus::zvariant::{OwnedFd, SerializeDict, Type, Value};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_basic_response_method, call_method, session_connection},
+    Error,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">CameraAccessOptions</span> {
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>CameraAccessOptions {
+    handle_token: HandleToken,
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications access camera devices, such as web</span>
-<span class="doccomment">/// cams.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Camera`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Camera).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Camera&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Camera</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface lets sandboxed applications access camera devices, such as web
+/// cams.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Camera`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Camera).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Camera&quot;</span>)]
+</span><span class="kw">pub struct </span>Camera&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Camera</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`Camera`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Camera</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Camera&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Camera&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`Camera`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;Camera&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Camera&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Requests an access to the camera.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AccessCamera`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Camera.AccessCamera).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AccessCamera&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_access_camera&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">request_access</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CameraAccessOptions::default</span>();
-        <span class="ident">call_basic_response_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+    <span class="doccomment">/// Requests an access to the camera.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AccessCamera`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Camera.AccessCamera).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AccessCamera&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_access_camera&quot;</span>)]
+    </span><span class="kw">pub async fn </span>request_access(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>options = CameraAccessOptions::default();
+        call_basic_response_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;AccessCamera&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
+        .<span class="kw">await
+    </span>}
+
+    <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the camera nodes are
+    /// available.
+    ///
+    /// # Returns
+    ///
+    /// File descriptor of an open PipeWire remote.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`OpenPipeWireRemote`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Camera.OpenPipeWireRemote).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;OpenPipeWireRemote&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_open_pipewire_remote_for_camera&quot;</span>)]
+    </span><span class="kw">pub async fn </span>open_pipe_wire_remote(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;RawFd, Error&gt; {
+        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet
+        // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/camera.c#L178
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
+        <span class="kw">let </span>fd: OwnedFd = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(options)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(fd.into_raw_fd())
     }
 
-    <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the camera nodes are</span>
-    <span class="doccomment">/// available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// File descriptor of an open PipeWire remote.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`OpenPipeWireRemote`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Camera.OpenPipeWireRemote).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenPipeWireRemote&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_pipewire_remote_for_camera&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_pipe_wire_remote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RawFd</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet</span>
-        <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/camera.c#L178</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="kw">let</span> <span class="ident">fd</span>: <span class="ident">OwnedFd</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">fd</span>.<span class="ident">into_raw_fd</span>())
-    }
-
-    <span class="doccomment">/// A boolean stating whether there is any cameras available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`IsCameraPresent`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-Camera.IsCameraPresent).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;IsCameraPresent&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_is_camera_present&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">is_present</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>()
-            .<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="string">&quot;IsCameraPresent&quot;</span>)
-            .<span class="kw">await</span>
-            .<span class="ident">map_err</span>(<span class="ident">From::from</span>)
-    }
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pipewire&quot;</span>)]</span>
-<span class="kw">fn</span> <span class="ident">foreign_dic_to_map</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">pw::prelude::ReadableDict</span><span class="op">&gt;</span>(<span class="ident">foreign</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) -&gt; <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-    <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">foreign</span>.<span class="ident">iter</span>() {
-        <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>.<span class="ident">to_string</span>());
-    }
-    <span class="ident">map</span>
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pipewire&quot;</span>)]</span>
-<span class="doccomment">/// A PipeWire camera stream returned by [`pipewire_streams`].</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Stream</span> {
-    <span class="ident">node_id</span>: <span class="ident">u32</span>,
-    <span class="ident">properties</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pipewire&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">Stream</span> {
-    <span class="doccomment">/// The id of the PipeWire node.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">node_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
-        <span class="self">self</span>.<span class="ident">node_id</span>
-    }
-
-    <span class="doccomment">/// The node properties.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">properties</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">properties</span>.<span class="ident">clone</span>()
+    <span class="doccomment">/// A boolean stating whether there is any cameras available.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`IsCameraPresent`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-Camera.IsCameraPresent).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;IsCameraPresent&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_is_camera_present&quot;</span>)]
+    </span><span class="kw">pub async fn </span>is_present(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;bool, Error&gt; {
+        <span class="self">self</span>.inner()
+            .get_property::&lt;bool&gt;(<span class="string">&quot;IsCameraPresent&quot;</span>)
+            .<span class="kw">await
+            </span>.map_err(From::from)
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pipewire&quot;</span>)]</span>
-<span class="kw">fn</span> <span class="ident">pipewire_streams_inner</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">Stream</span>) <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>, <span class="ident">G</span>: <span class="ident">FnOnce</span>() <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-    <span class="ident">fd</span>: <span class="ident">RawFd</span>,
-    <span class="ident">callback</span>: <span class="ident">F</span>,
-    <span class="ident">done_callback</span>: <span class="ident">G</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">pw::Error</span><span class="op">&gt;</span> {
-    <span class="kw">use</span> <span class="ident">pw::prelude::ReadableDict</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
+</span><span class="kw">fn </span>foreign_dic_to_map&lt;D: pw::prelude::ReadableDict&gt;(foreign: <span class="kw-2">&amp;</span>D) -&gt; HashMap&lt;String, String&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
+    <span class="kw">for </span>(key, value) <span class="kw">in </span>foreign.iter() {
+        map.insert(key.to_string(), value.to_string());
+    }
+    map
+}
 
-    <span class="kw">let</span> <span class="ident">mainloop</span> <span class="op">=</span> <span class="ident">pw::MainLoop::new</span>()<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">pw::Context::new</span>(<span class="kw-2">&amp;</span><span class="ident">mainloop</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">connect_fd</span>(<span class="ident">fd</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class="ident">registry</span> <span class="op">=</span> <span class="ident">core</span>.<span class="ident">get_registry</span>()<span class="question-mark">?</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
+</span><span class="doccomment">/// A PipeWire camera stream returned by [`pipewire_streams`].
+</span><span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub struct </span>Stream {
+    node_id: u32,
+    properties: HashMap&lt;String, String&gt;,
+}
 
-    <span class="kw">let</span> <span class="ident">pending</span> <span class="op">=</span> <span class="ident">core</span>.<span class="ident">sync</span>(<span class="number">0</span>).<span class="ident">expect</span>(<span class="string">&quot;sync failed&quot;</span>);
+<span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
+</span><span class="kw">impl </span>Stream {
+    <span class="doccomment">/// The id of the PipeWire node.
+    </span><span class="kw">pub fn </span>node_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
+        <span class="self">self</span>.node_id
+    }
 
-    <span class="kw">let</span> <span class="ident">loop_clone</span> <span class="op">=</span> <span class="ident">mainloop</span>.<span class="ident">clone</span>();
-    <span class="kw">let</span> <span class="ident">_listener_reg</span> <span class="op">=</span> <span class="ident">registry</span>
-        .<span class="ident">add_listener_local</span>()
-        .<span class="ident">global</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">global</span><span class="op">|</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">props</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">props</span> {
-                <span class="kw">if</span> <span class="ident">props</span>.<span class="ident">get</span>(<span class="string">&quot;media.role&quot;</span>) <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="string">&quot;Camera&quot;</span>) {
-                    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
-                    <span class="macro">tracing::info!</span>(<span class="string">&quot;found camera: {:#?}&quot;</span>, <span class="ident">props</span>);
+    <span class="doccomment">/// The node properties.
+    </span><span class="kw">pub fn </span>properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;String, String&gt; {
+        <span class="self">self</span>.properties.clone()
+    }
+}
 
-                    <span class="kw">let</span> <span class="ident">properties</span> <span class="op">=</span> <span class="ident">foreign_dic_to_map</span>(<span class="ident">props</span>);
-                    <span class="kw">let</span> <span class="ident">node_id</span> <span class="op">=</span> <span class="ident">global</span>.<span class="ident">id</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
+</span><span class="kw">fn </span>pipewire_streams_inner&lt;F: Fn(Stream) + Clone + <span class="lifetime">&#39;static</span>, G: FnOnce() + Clone + <span class="lifetime">&#39;static</span>&gt;(
+    fd: RawFd,
+    callback: F,
+    done_callback: G,
+) -&gt; <span class="prelude-ty">Result</span>&lt;(), pw::Error&gt; {
+    <span class="kw">use </span>pw::prelude::ReadableDict;
 
-                    <span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">Stream</span> {
-                        <span class="ident">node_id</span>,
-                        <span class="ident">properties</span>,
+    <span class="kw">let </span>mainloop = pw::MainLoop::new()<span class="question-mark">?</span>;
+    <span class="kw">let </span>context = pw::Context::new(<span class="kw-2">&amp;</span>mainloop)<span class="question-mark">?</span>;
+    <span class="kw">let </span>core = context.connect_fd(fd, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
+    <span class="kw">let </span>registry = core.get_registry()<span class="question-mark">?</span>;
+
+    <span class="kw">let </span>pending = core.sync(<span class="number">0</span>).expect(<span class="string">&quot;sync failed&quot;</span>);
+
+    <span class="kw">let </span>loop_clone = mainloop.clone();
+    <span class="kw">let </span>_listener_reg = registry
+        .add_listener_local()
+        .global(<span class="kw">move </span>|global| {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(props) = <span class="kw-2">&amp;</span>global.props {
+                <span class="kw">if </span>props.get(<span class="string">&quot;media.role&quot;</span>) == <span class="prelude-val">Some</span>(<span class="string">&quot;Camera&quot;</span>) {
+                    <span class="attribute">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+                    </span><span class="macro">tracing::info!</span>(<span class="string">&quot;found camera: {:#?}&quot;</span>, props);
+
+                    <span class="kw">let </span>properties = foreign_dic_to_map(props);
+                    <span class="kw">let </span>node_id = global.id;
+
+                    <span class="kw">let </span>stream = Stream {
+                        node_id,
+                        properties,
                     };
-                    <span class="ident">callback</span>.<span class="ident">clone</span>()(<span class="ident">stream</span>);
+                    callback.clone()(stream);
                 }
             }
         })
-        .<span class="ident">register</span>();
-    <span class="kw">let</span> <span class="ident">_listener_core</span> <span class="op">=</span> <span class="ident">core</span>
-        .<span class="ident">add_listener_local</span>()
-        .<span class="ident">done</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">id</span>, <span class="ident">seq</span><span class="op">|</span> {
-            <span class="kw">if</span> <span class="ident">id</span> <span class="op">==</span> <span class="ident">pw::PW_ID_CORE</span> <span class="op">&amp;&amp;</span> <span class="ident">seq</span> <span class="op">==</span> <span class="ident">pending</span> {
-                <span class="ident">loop_clone</span>.<span class="ident">quit</span>();
-                <span class="ident">done_callback</span>.<span class="ident">clone</span>()();
+        .register();
+    <span class="kw">let </span>_listener_core = core
+        .add_listener_local()
+        .done(<span class="kw">move </span>|id, seq| {
+            <span class="kw">if </span>id == pw::PW_ID_CORE &amp;&amp; seq == pending {
+                loop_clone.quit();
+                done_callback.clone()();
             }
         })
-        .<span class="ident">register</span>();
+        .register();
 
-    <span class="ident">mainloop</span>.<span class="ident">run</span>();
+    mainloop.run();
 
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="doccomment">/// A helper to get a list of PipeWire streams to use with the camera file</span>
-<span class="doccomment">/// descriptor returned by [`Camera::open_pipe_wire_remote`].</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Currently, the camera portal only gives us a file descriptor. Not passing a</span>
-<span class="doccomment">/// node id may cause the media session controller to auto-connect the client to</span>
-<span class="doccomment">/// an incorrect node.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The method looks for the available output streams of a `media.role` type of</span>
-<span class="doccomment">/// `Camera` and return a list of `Stream`s.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// *Note* The socket referenced by `fd` must not be used while this function is</span>
-<span class="doccomment">/// running.</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pipewire&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">pipewire_streams</span>(<span class="ident">fd</span>: <span class="ident">RawFd</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>, <span class="ident">pw::Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">fd</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc::fcntl</span>(<span class="ident">fd</span>, <span class="ident">libc::F_DUPFD_CLOEXEC</span>, <span class="number">3</span>) };
+<span class="doccomment">/// A helper to get a list of PipeWire streams to use with the camera file
+/// descriptor returned by [`Camera::open_pipe_wire_remote`].
+///
+/// Currently, the camera portal only gives us a file descriptor. Not passing a
+/// node id may cause the media session controller to auto-connect the client to
+/// an incorrect node.
+///
+/// The method looks for the available output streams of a `media.role` type of
+/// `Camera` and return a list of `Stream`s.
+///
+/// *Note* The socket referenced by `fd` must not be used while this function is
+/// running.
+</span><span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
+</span><span class="kw">pub async fn </span>pipewire_streams(fd: RawFd) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Stream&gt;, pw::Error&gt; {
+    <span class="kw">let </span>fd = <span class="kw">unsafe </span>{ libc::fcntl(fd, libc::F_DUPFD_CLOEXEC, <span class="number">3</span>) };
 
-    <span class="kw">if</span> <span class="ident">fd</span> <span class="op">==</span> <span class="op">-</span><span class="number">1</span> {
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">pw::Error::CreationFailed</span>);
+    <span class="kw">if </span>fd == -<span class="number">1 </span>{
+        <span class="kw">return </span><span class="prelude-val">Err</span>(pw::Error::CreationFailed);
     }
 
-    <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures_channel::oneshot::channel</span>();
-    <span class="kw">let</span> (<span class="ident">streams_sender</span>, <span class="kw-2">mut</span> <span class="ident">streams_receiver</span>) <span class="op">=</span> <span class="ident">futures_channel::mpsc::unbounded</span>();
+    <span class="kw">let </span>(sender, receiver) = futures_channel::oneshot::channel();
+    <span class="kw">let </span>(streams_sender, <span class="kw-2">mut </span>streams_receiver) = futures_channel::mpsc::unbounded();
 
-    <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">std::sync::Arc::new</span>(<span class="ident">std::sync::Mutex::new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
-    <span class="kw">let</span> <span class="ident">streams_sender</span> <span class="op">=</span> <span class="ident">std::sync::Arc::new</span>(<span class="ident">std::sync::Mutex::new</span>(<span class="ident">streams_sender</span>));
+    <span class="kw">let </span>sender = std::sync::Arc::new(std::sync::Mutex::new(<span class="prelude-val">Some</span>(sender)));
+    <span class="kw">let </span>streams_sender = std::sync::Arc::new(std::sync::Mutex::new(streams_sender));
 
-    <span class="ident">std::thread::spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-        <span class="kw">let</span> <span class="ident">inner_sender</span> <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">clone</span>();
+    std::thread::spawn(<span class="kw">move </span>|| {
+        <span class="kw">let </span>inner_sender = sender.clone();
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">pipewire_streams_inner</span>(
-            <span class="ident">fd</span>,
-            <span class="kw">move</span> <span class="op">|</span><span class="ident">stream</span><span class="op">|</span> {
-                <span class="kw">let</span> <span class="ident">inner_streams_sender</span> <span class="op">=</span> <span class="ident">streams_sender</span>.<span class="ident">clone</span>();
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">sender</span>) <span class="op">=</span> <span class="ident">inner_streams_sender</span>.<span class="ident">lock</span>() {
-                    <span class="kw">let</span> <span class="ident">_result</span> <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">start_send</span>(<span class="ident">stream</span>);
+        <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = pipewire_streams_inner(
+            fd,
+            <span class="kw">move </span>|stream| {
+                <span class="kw">let </span>inner_streams_sender = streams_sender.clone();
+                <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>sender) = inner_streams_sender.lock() {
+                    <span class="kw">let </span>_result = sender.start_send(stream);
                 };
             },
-            <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">guard</span>) <span class="op">=</span> <span class="ident">inner_sender</span>.<span class="ident">lock</span>() {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inner_sender</span>) <span class="op">=</span> <span class="ident">guard</span>.<span class="ident">take</span>() {
-                        <span class="kw">let</span> <span class="ident">_result</span> <span class="op">=</span> <span class="ident">inner_sender</span>.<span class="ident">send</span>(<span class="prelude-val">Ok</span>(()));
+            <span class="kw">move </span>|| {
+                <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>guard) = inner_sender.lock() {
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(inner_sender) = guard.take() {
+                        <span class="kw">let </span>_result = inner_sender.send(<span class="prelude-val">Ok</span>(()));
                     }
                 }
             },
         ) {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
-            <span class="macro">tracing::error!</span>(<span class="string">&quot;Failed to get pipewire streams {:#?}&quot;</span>, <span class="ident">err</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">guard</span> <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">sender</span>) <span class="op">=</span> <span class="ident">guard</span>.<span class="ident">take</span>() {
-                <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">send</span>(<span class="prelude-val">Err</span>(<span class="ident">err</span>));
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+            </span><span class="macro">tracing::error!</span>(<span class="string">&quot;Failed to get pipewire streams {:#?}&quot;</span>, err);
+            <span class="kw">let </span><span class="kw-2">mut </span>guard = sender.lock().unwrap();
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = guard.take() {
+                <span class="kw">let _ </span>= sender.send(<span class="prelude-val">Err</span>(err));
             }
         }
     });
 
-    <span class="ident">receiver</span>.<span class="kw">await</span>.<span class="ident">unwrap</span>()<span class="question-mark">?</span>;
+    receiver.<span class="kw">await</span>.unwrap()<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">streams</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-    <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">stream</span>)) <span class="op">=</span> <span class="ident">streams_receiver</span>.<span class="ident">try_next</span>() {
-        <span class="ident">streams</span>.<span class="ident">push</span>(<span class="ident">stream</span>);
+    <span class="kw">let </span><span class="kw-2">mut </span>streams = <span class="macro">vec!</span>[];
+    <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(stream)) = streams_receiver.try_next() {
+        streams.push(stream);
     }
 
-    <span class="prelude-val">Ok</span>(<span class="ident">streams</span>)
+    <span class="prelude-val">Ok</span>(streams)
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pipewire&quot;</span>))]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">request</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">Camera::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="ident">proxy</span>.<span class="ident">request_access</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">if</span> <span class="ident">proxy</span>.<span class="ident">is_present</span>().<span class="kw">await</span><span class="question-mark">?</span> {
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">proxy</span>.<span class="ident">open_pipe_wire_remote</span>().<span class="kw">await</span><span class="question-mark">?</span>))
-    } <span class="kw">else</span> {
+<span class="attribute">#[cfg(not(feature = <span class="string">&quot;pipewire&quot;</span>))]
+</span><span class="kw">pub async fn </span>request() -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;RawFd&gt;, Error&gt; {
+    <span class="kw">let </span>proxy = Camera::new().<span class="kw">await</span><span class="question-mark">?</span>;
+    proxy.request_access().<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">if </span>proxy.is_present().<span class="kw">await</span><span class="question-mark">? </span>{
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(proxy.open_pipe_wire_remote().<span class="kw">await</span><span class="question-mark">?</span>))
+    } <span class="kw">else </span>{
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pipewire&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">request</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">RawFd</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>)<span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">Camera::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="ident">proxy</span>.<span class="ident">request_access</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">if</span> <span class="ident">proxy</span>.<span class="ident">is_present</span>().<span class="kw">await</span><span class="question-mark">?</span> {
-        <span class="kw">let</span> <span class="ident">fd</span> <span class="op">=</span> <span class="ident">proxy</span>.<span class="ident">open_pipe_wire_remote</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">streams</span> <span class="op">=</span> <span class="ident">pipewire_streams</span>(<span class="ident">fd</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>((<span class="ident">fd</span>, <span class="ident">streams</span>)))
-    } <span class="kw">else</span> {
+<span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
+</span><span class="kw">pub async fn </span>request() -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;(RawFd, Vec&lt;Stream&gt;)&gt;, Error&gt; {
+    <span class="kw">let </span>proxy = Camera::new().<span class="kw">await</span><span class="question-mark">?</span>;
+    proxy.request_access().<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="kw">if </span>proxy.is_present().<span class="kw">await</span><span class="question-mark">? </span>{
+        <span class="kw">let </span>fd = proxy.open_pipe_wire_remote().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>streams = pipewire_streams(fd).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>((fd, streams)))
+    } <span class="kw">else </span>{
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

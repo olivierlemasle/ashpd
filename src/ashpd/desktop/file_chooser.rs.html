@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/file_chooser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/file_chooser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -656,661 +656,661 @@
 <span id="654">654</span>
 <span id="655">655</span>
 <span id="656">656</span>
-</pre><pre class="rust"><code><span class="doccomment">//! The interface lets sandboxed applications ask the user for access to files</span>
-<span class="doccomment">//! outside the sandbox. The portal backend will present the user with a file</span>
-<span class="doccomment">//! chooser dialog.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Wrapper of the DBus interface: [`org.freedesktop.portal.FileChooser`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.FileChooser).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! #### Opening a file</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::file_chooser::{Choice, FileFilter, OpenFileRequest};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let files = OpenFileRequest::default()</span>
-<span class="doccomment">//!         .title(&quot;open a file to read&quot;)</span>
-<span class="doccomment">//!         .accept_label(&quot;read&quot;)</span>
-<span class="doccomment">//!         .modal(true)</span>
-<span class="doccomment">//!         .multiple(true)</span>
-<span class="doccomment">//!         .choice(</span>
-<span class="doccomment">//!             Choice::new(&quot;encoding&quot;, &quot;Encoding&quot;, &quot;latin15&quot;)</span>
-<span class="doccomment">//!                 .insert(&quot;utf8&quot;, &quot;Unicode (UTF-8)&quot;)</span>
-<span class="doccomment">//!                 .insert(&quot;latin15&quot;, &quot;Western&quot;),</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         // A trick to have a checkbox</span>
-<span class="doccomment">//!         .choice(Choice::boolean(&quot;re-encode&quot;, &quot;Re-encode&quot;, false))</span>
-<span class="doccomment">//!         .filter(FileFilter::new(&quot;SVG Image&quot;).mimetype(&quot;image/svg+xml&quot;))</span>
-<span class="doccomment">//!         .build()</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, files);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! #### Ask to save a file</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::file_chooser::{FileFilter, SaveFileRequest};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let files = SaveFileRequest::default()</span>
-<span class="doccomment">//!         .title(&quot;open a file to write&quot;)</span>
-<span class="doccomment">//!         .accept_label(&quot;write&quot;)</span>
-<span class="doccomment">//!         .current_name(&quot;image.jpg&quot;)</span>
-<span class="doccomment">//!         .modal(true)</span>
-<span class="doccomment">//!         .filter(FileFilter::new(&quot;JPEG Image&quot;).glob(&quot;*.jpg&quot;))</span>
-<span class="doccomment">//!         .build()</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, files);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! #### Ask to save multiple files</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::file_chooser::SaveFilesRequest;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let files = SaveFilesRequest::default()</span>
-<span class="doccomment">//!         .title(&quot;open files to write&quot;)</span>
-<span class="doccomment">//!         .accept_label(&quot;write files&quot;)</span>
-<span class="doccomment">//!         .modal(true)</span>
-<span class="doccomment">//!         .current_folder(&quot;/home/bilelmoussaoui/Pictures&quot;)</span>
-<span class="doccomment">//!         .files(&amp;[&quot;test.jpg&quot;, &quot;awesome.png&quot;])</span>
-<span class="doccomment">//!         .build()</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, files);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! The interface lets sandboxed applications ask the user for access to files
+//! outside the sandbox. The portal backend will present the user with a file
+//! chooser dialog.
+//!
+//! Wrapper of the DBus interface: [`org.freedesktop.portal.FileChooser`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.FileChooser).
+//!
+//! ### Examples
+//!
+//! #### Opening a file
+//!
+//! ```rust,no_run
+//! use ashpd::desktop::file_chooser::{Choice, FileFilter, OpenFileRequest};
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let files = OpenFileRequest::default()
+//!         .title(&quot;open a file to read&quot;)
+//!         .accept_label(&quot;read&quot;)
+//!         .modal(true)
+//!         .multiple(true)
+//!         .choice(
+//!             Choice::new(&quot;encoding&quot;, &quot;Encoding&quot;, &quot;latin15&quot;)
+//!                 .insert(&quot;utf8&quot;, &quot;Unicode (UTF-8)&quot;)
+//!                 .insert(&quot;latin15&quot;, &quot;Western&quot;),
+//!         )
+//!         // A trick to have a checkbox
+//!         .choice(Choice::boolean(&quot;re-encode&quot;, &quot;Re-encode&quot;, false))
+//!         .filter(FileFilter::new(&quot;SVG Image&quot;).mimetype(&quot;image/svg+xml&quot;))
+//!         .build()
+//!         .await?;
+//!
+//!     println!(&quot;{:#?}&quot;, files);
+//!
+//!     Ok(())
+//! }
+//! ```
+//!
+//! #### Ask to save a file
+//!
+//! ```rust,no_run
+//! use ashpd::desktop::file_chooser::{FileFilter, SaveFileRequest};
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let files = SaveFileRequest::default()
+//!         .title(&quot;open a file to write&quot;)
+//!         .accept_label(&quot;write&quot;)
+//!         .current_name(&quot;image.jpg&quot;)
+//!         .modal(true)
+//!         .filter(FileFilter::new(&quot;JPEG Image&quot;).glob(&quot;*.jpg&quot;))
+//!         .build()
+//!         .await?;
+//!
+//!     println!(&quot;{:#?}&quot;, files);
+//!
+//!     Ok(())
+//! }
+//! ```
+//!
+//! #### Ask to save multiple files
+//!
+//! ```rust,no_run
+//! use ashpd::desktop::file_chooser::SaveFilesRequest;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let files = SaveFilesRequest::default()
+//!         .title(&quot;open files to write&quot;)
+//!         .accept_label(&quot;write files&quot;)
+//!         .modal(true)
+//!         .current_folder(&quot;/home/bilelmoussaoui/Pictures&quot;)
+//!         .files(&amp;[&quot;test.jpg&quot;, &quot;awesome.png&quot;])
+//!         .build()
+//!         .await?;
+//!
+//!     println!(&quot;{:#?}&quot;, files);
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ffi::CString</span>, <span class="ident">os::unix::ffi::OsStrExt</span>, <span class="ident">path::Path</span>};
+</span><span class="kw">use </span>std::{ffi::CString, os::unix::ffi::OsStrExt, path::Path};
 
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">serde_repr::Serialize_repr</span>;
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>serde_repr::Serialize_repr;
+<span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_request_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_request_method, session_connection},
+    Error, WindowIdentifier,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A file filter, to limit the available file choices to a mimetype or a glob</span>
-<span class="doccomment">/// pattern.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileFilter</span>(<span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">FilterType</span>, <span class="ident">String</span>)<span class="op">&gt;</span>);
+<span class="attribute">#[derive(Clone, Serialize, Type, Debug)]
+</span><span class="doccomment">/// A file filter, to limit the available file choices to a mimetype or a glob
+/// pattern.
+</span><span class="kw">pub struct </span>FileFilter(String, Vec&lt;(FilterType, String)&gt;);
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize_repr</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="kw">enum</span> <span class="ident">FilterType</span> {
-    <span class="ident">GlobPattern</span> <span class="op">=</span> <span class="number">0</span>,
-    <span class="ident">MimeType</span> <span class="op">=</span> <span class="number">1</span>,
+<span class="attribute">#[derive(Clone, Serialize_repr, Debug, Type)]
+#[repr(u32)]
+</span><span class="kw">enum </span>FilterType {
+    GlobPattern = <span class="number">0</span>,
+    MimeType = <span class="number">1</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">FileFilter</span> {
-    <span class="doccomment">/// Create a new file filter</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `label` - user-visible name of the file filter.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span>(<span class="ident">label</span>.<span class="ident">to_owned</span>(), <span class="macro">vec!</span>[])
+<span class="kw">impl </span>FileFilter {
+    <span class="doccomment">/// Create a new file filter
+    ///
+    /// # Arguments
+    ///
+    /// * `label` - user-visible name of the file filter.
+    </span><span class="kw">pub fn </span>new(label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>(label.to_owned(), <span class="macro">vec!</span>[])
     }
 
-    <span class="doccomment">/// Adds a mime type to the file filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mimetype</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mimetype</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">push</span>((<span class="ident">FilterType::MimeType</span>, <span class="ident">mimetype</span>.<span class="ident">to_owned</span>()));
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Adds a mime type to the file filter.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>mimetype(<span class="kw-2">mut </span><span class="self">self</span>, mimetype: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">1</span>.push((FilterType::MimeType, mimetype.to_owned()));
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Adds a glob pattern to the file filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">glob</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pattern</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">push</span>((<span class="ident">FilterType::GlobPattern</span>, <span class="ident">pattern</span>.<span class="ident">to_owned</span>()));
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Adds a glob pattern to the file filter.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>glob(<span class="kw-2">mut </span><span class="self">self</span>, pattern: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">1</span>.push((FilterType::GlobPattern, pattern.to_owned()));
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// Presents the user with a choice to select from or as a checkbox.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Choice</span>(<span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span>, <span class="ident">String</span>);
+<span class="attribute">#[derive(Clone, Serialize, Deserialize, Type, Debug)]
+</span><span class="doccomment">/// Presents the user with a choice to select from or as a checkbox.
+</span><span class="kw">pub struct </span>Choice(String, String, Vec&lt;(String, String)&gt;, String);
 
-<span class="kw">impl</span> <span class="ident">Choice</span> {
-    <span class="doccomment">/// Creates a checkbox choice.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `id` - A unique identifier of the choice.</span>
-    <span class="doccomment">/// * `label` - user-visible name of the choice.</span>
-    <span class="doccomment">/// * `state` - the initial state value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">boolean</span>(<span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">state</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">id</span>, <span class="ident">label</span>, <span class="kw-2">&amp;</span><span class="ident">state</span>.<span class="ident">to_string</span>())
+<span class="kw">impl </span>Choice {
+    <span class="doccomment">/// Creates a checkbox choice.
+    ///
+    /// # Arguments
+    ///
+    /// * `id` - A unique identifier of the choice.
+    /// * `label` - user-visible name of the choice.
+    /// * `state` - the initial state value.
+    </span><span class="kw">pub fn </span>boolean(id: <span class="kw-2">&amp;</span>str, label: <span class="kw-2">&amp;</span>str, state: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new(id, label, <span class="kw-2">&amp;</span>state.to_string())
     }
 
-    <span class="doccomment">/// Creates a new choice.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `id` - A unique identifier of the choice.</span>
-    <span class="doccomment">/// * `label` - user-visible name of the choice.</span>
-    <span class="doccomment">/// * `initial_selection` - the initially selected value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">initial_selection</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+    <span class="doccomment">/// Creates a new choice.
+    ///
+    /// # Arguments
+    ///
+    /// * `id` - A unique identifier of the choice.
+    /// * `label` - user-visible name of the choice.
+    /// * `initial_selection` - the initially selected value.
+    </span><span class="kw">pub fn </span>new(id: <span class="kw-2">&amp;</span>str, label: <span class="kw-2">&amp;</span>str, initial_selection: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>(
-            <span class="ident">id</span>.<span class="ident">to_owned</span>(),
-            <span class="ident">label</span>.<span class="ident">to_owned</span>(),
+            id.to_owned(),
+            label.to_owned(),
             <span class="macro">vec!</span>[],
-            <span class="ident">initial_selection</span>.<span class="ident">to_owned</span>(),
+            initial_selection.to_owned(),
         )
     }
 
-    <span class="doccomment">/// Adds a (key, value) as a choice.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="number">2</span>.<span class="ident">push</span>((<span class="ident">key</span>.<span class="ident">to_owned</span>(), <span class="ident">value</span>.<span class="ident">to_owned</span>()));
-        <span class="self">self</span>
+    <span class="doccomment">/// Adds a (key, value) as a choice.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>insert(<span class="kw-2">mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">2</span>.push((key.to_owned(), value.to_owned()));
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// The choice&#39;s unique id
+    </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
+
+    <span class="doccomment">/// The user visible label of the choice.
+    </span><span class="kw">pub fn </span>label(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1
+    </span>}
+
+    <span class="doccomment">/// The initially selected value.
+    </span><span class="kw">pub fn </span>initial_selection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">3
+    </span>}
+}
+
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>OpenFileOptions {
+    handle_token: HandleToken,
+    accept_label: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    multiple: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    directory: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    filters: Vec&lt;FileFilter&gt;,
+    current_filter: <span class="prelude-ty">Option</span>&lt;FileFilter&gt;,
+    choices: Vec&lt;Choice&gt;,
+}
+
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>SaveFileOptions {
+    handle_token: HandleToken,
+    accept_label: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    current_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    current_folder: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
+    current_file: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
+    filters: Vec&lt;FileFilter&gt;,
+    current_filter: <span class="prelude-ty">Option</span>&lt;FileFilter&gt;,
+    choices: Vec&lt;Choice&gt;,
+}
+
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>SaveFilesOptions {
+    handle_token: HandleToken,
+    accept_label: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    choices: Vec&lt;Choice&gt;,
+    current_folder: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
+    files: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;,
+}
+
+<span class="attribute">#[derive(Debug, Type, DeserializeDict)]
+</span><span class="doccomment">/// A response of [`OpenFileRequest`], [`SaveFileRequest`] or
+/// [`SaveFilesRequest`].
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>SelectedFiles {
+    uris: Vec&lt;url::Url&gt;,
+    choices: <span class="prelude-ty">Option</span>&lt;Vec&lt;(String, String)&gt;&gt;,
+}
+
+<span class="kw">impl </span>SelectedFiles {
+    <span class="doccomment">/// The selected files uris.
+    </span><span class="kw">pub fn </span>uris(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[url::Url] {
+        <span class="self">self</span>.uris.as_slice()
     }
 
-    <span class="doccomment">/// The choice&#39;s unique id</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
-
-    <span class="doccomment">/// The user visible label of the choice.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">label</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1</span>
-    }
-
-    <span class="doccomment">/// The initially selected value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initial_selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">3</span>
+    <span class="doccomment">/// The selected value of each choice as a tuple of (key, value)
+    </span><span class="kw">pub fn </span>choices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[(String, String)] {
+        <span class="self">self</span>.choices.as_deref().unwrap_or_default()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">OpenFileOptions</span> {
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">multiple</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">directory</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="ident">current_filter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Choice</span><span class="op">&gt;</span>,
-}
+<span class="attribute">#[doc(alias = <span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>)]
+</span><span class="kw">struct </span>FileChooserProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">SaveFileOptions</span> {
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">current_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">current_file</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="ident">current_filter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Choice</span><span class="op">&gt;</span>,
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">SaveFilesOptions</span> {
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">choices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Choice</span><span class="op">&gt;</span>,
-    <span class="ident">current_folder</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">files</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Type</span>, <span class="ident">DeserializeDict</span>)]</span>
-<span class="doccomment">/// A response of [`OpenFileRequest`], [`SaveFileRequest`] or</span>
-<span class="doccomment">/// [`SaveFilesRequest`].</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SelectedFiles</span> {
-    <span class="ident">uris</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">url::Url</span><span class="op">&gt;</span>,
-    <span class="ident">choices</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">SelectedFiles</span> {
-    <span class="doccomment">/// The selected files uris.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uris</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">url::Url</span>] {
-        <span class="self">self</span>.<span class="ident">uris</span>.<span class="ident">as_slice</span>()
-    }
-
-    <span class="doccomment">/// The selected value of each choice as a tuple of (key, value)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[(<span class="ident">String</span>, <span class="ident">String</span>)] {
-        <span class="self">self</span>.<span class="ident">choices</span>.<span class="ident">as_deref</span>().<span class="ident">unwrap_or_default</span>()
-    }
-}
-
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">FileChooserProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FileChooserProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`FileChooserProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FileChooserProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FileChooserProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`FileChooserProxy`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;FileChooserProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_file</span>(
+    <span class="kw">pub async fn </span>open_file(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_request_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+        title: <span class="kw-2">&amp;</span>str,
+        options: OpenFileOptions,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+        call_request_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;OpenFile&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_file</span>(
+    <span class="kw">pub async fn </span>save_file(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">options</span>: <span class="ident">SaveFileOptions</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_request_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+        title: <span class="kw-2">&amp;</span>str,
+        options: SaveFileOptions,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+        call_request_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;SaveFile&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">save_files</span>(
+    <span class="kw">pub async fn </span>save_files(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">options</span>: <span class="ident">SaveFilesOptions</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_request_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+        title: <span class="kw-2">&amp;</span>str,
+        options: SaveFilesOptions,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+        call_request_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;SaveFiles&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_open_file&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OpenFileRequest</span> {
-    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
-    <span class="ident">title</span>: <span class="ident">String</span>,
-    <span class="ident">options</span>: <span class="ident">OpenFileOptions</span>,
+<span class="attribute">#[derive(Debug, Default)]
+#[doc(alias = <span class="string">&quot;xdp_portal_open_file&quot;</span>)]
+</span><span class="kw">pub struct </span>OpenFileRequest {
+    identifier: WindowIdentifier,
+    title: String,
+    options: OpenFileOptions,
 }
 
-<span class="kw">impl</span> <span class="ident">OpenFileRequest</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="doccomment">/// Sets a window identifier.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
-        <span class="self">self</span>
+<span class="kw">impl </span>OpenFileRequest {
+    <span class="attribute">#[must_use]
+    </span><span class="doccomment">/// Sets a window identifier.
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_identifier(identifier);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
+        <span class="self">self</span>.identifier = identifier;
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
-        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    <span class="doccomment">/// Sets a title for the file chooser dialog.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_title(title);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_title(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.title = title.to_owned();
     }
 
-    <span class="doccomment">/// Sets a title for the file chooser dialog.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_title</span>(<span class="ident">title</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_accept_label(accept_label);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_accept_label(<span class="kw-2">&amp;mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.accept_label = <span class="prelude-val">Some</span>(accept_label.to_owned());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">to_owned</span>();
+    <span class="doccomment">/// Sets whether the dialog should be a modal.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_modal(modal);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_modal(<span class="kw-2">&amp;mut </span><span class="self">self</span>, modal: bool) {
+        <span class="self">self</span>.options.modal = <span class="prelude-val">Some</span>(modal);
     }
 
-    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_accept_label</span>(<span class="ident">accept_label</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets whether to allow multiple files selection.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>multiple(<span class="kw-2">mut </span><span class="self">self</span>, multiple: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_multiple(multiple);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_multiple(<span class="kw-2">&amp;mut </span><span class="self">self</span>, multiple: bool) {
+        <span class="self">self</span>.options.multiple = <span class="prelude-val">Some</span>(multiple);
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_accept_label</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
+    <span class="doccomment">/// Sets whether to select directories or not.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>directory(<span class="kw-2">mut </span><span class="self">self</span>, directory: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_directory(directory);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_directory(<span class="kw-2">&amp;mut </span><span class="self">self</span>, directory: bool) {
+        <span class="self">self</span>.options.directory = <span class="prelude-val">Some</span>(directory);
     }
 
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_modal</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Adds a files filter.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>filter(<span class="kw-2">mut </span><span class="self">self</span>, filter: FileFilter) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.filters.push(filter);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_filters(<span class="kw-2">&amp;mut </span><span class="self">self</span>, filters: <span class="kw-2">&amp;</span>[FileFilter]) {
+        <span class="self">self</span>.options.filters = filters.to_vec();
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
+    <span class="doccomment">/// Specifies the default filter.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>current_filter(<span class="kw-2">mut </span><span class="self">self</span>, current_filter: FileFilter) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.current_filter = <span class="prelude-val">Some</span>(current_filter);
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Adds a choice.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>choice(<span class="kw-2">mut </span><span class="self">self</span>, choice: Choice) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.choices.push(choice);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_choices(<span class="kw-2">&amp;mut </span><span class="self">self</span>, choices: <span class="kw-2">&amp;</span>[Choice]) {
+        <span class="self">self</span>.options.choices = choices.to_vec();
     }
 
-    <span class="doccomment">/// Sets whether to allow multiple files selection.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">multiple</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_multiple</span>(<span class="ident">multiple</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_multiple</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">multiple</span>: <span class="ident">bool</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">multiple</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">multiple</span>);
-    }
-
-    <span class="doccomment">/// Sets whether to select directories or not.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">directory</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">directory</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_directory</span>(<span class="ident">directory</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_directory</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">directory</span>: <span class="ident">bool</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">directory</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">directory</span>);
-    }
-
-    <span class="doccomment">/// Adds a files filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span>.<span class="ident">push</span>(<span class="ident">filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_filters</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">filters</span>: <span class="kw-2">&amp;</span>[<span class="ident">FileFilter</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span> <span class="op">=</span> <span class="ident">filters</span>.<span class="ident">to_vec</span>();
-    }
-
-    <span class="doccomment">/// Specifies the default filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="doccomment">/// Adds a choice.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_choices</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">choices</span>: <span class="kw-2">&amp;</span>[<span class="ident">Choice</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span> <span class="op">=</span> <span class="ident">choices</span>.<span class="ident">to_vec</span>();
-    }
-
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">FileChooserProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">proxy</span>
-            .<span class="ident">open_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">title</span>, <span class="self">self</span>.<span class="ident">options</span>)
-            .<span class="kw">await</span>
-    }
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+        <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
+        proxy
+            .open_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)
+            .<span class="kw">await
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_save_files&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFilesRequest</span> {
-    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
-    <span class="ident">title</span>: <span class="ident">String</span>,
-    <span class="ident">options</span>: <span class="ident">SaveFilesOptions</span>,
+<span class="attribute">#[derive(Debug, Default)]
+#[doc(alias = <span class="string">&quot;xdp_portal_save_files&quot;</span>)]
+</span><span class="kw">pub struct </span>SaveFilesRequest {
+    identifier: WindowIdentifier,
+    title: String,
+    options: SaveFilesOptions,
 }
 
-<span class="kw">impl</span> <span class="ident">SaveFilesRequest</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="doccomment">/// Sets a window identifier.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
-        <span class="self">self</span>
+<span class="kw">impl </span>SaveFilesRequest {
+    <span class="attribute">#[must_use]
+    </span><span class="doccomment">/// Sets a window identifier.
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_identifier(identifier);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
+        <span class="self">self</span>.identifier = identifier;
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
-        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    <span class="doccomment">/// Sets a title for the file chooser dialog.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_title(title);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_title(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.title = title.to_owned();
     }
 
-    <span class="doccomment">/// Sets a title for the file chooser dialog.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_title</span>(<span class="ident">title</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_accept_label(accept_label);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_accept_label(<span class="kw-2">&amp;mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.accept_label = <span class="prelude-val">Some</span>(accept_label.to_owned());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">to_owned</span>();
+    <span class="doccomment">/// Sets whether the dialog should be a modal.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_modal(modal);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_modal(<span class="kw-2">&amp;mut </span><span class="self">self</span>, modal: bool) {
+        <span class="self">self</span>.options.modal = <span class="prelude-val">Some</span>(modal);
     }
 
-    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_accept_label</span>(<span class="ident">accept_label</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Adds a choice.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>choice(<span class="kw-2">mut </span><span class="self">self</span>, choice: Choice) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.choices.push(choice);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_choices(<span class="kw-2">&amp;mut </span><span class="self">self</span>, choices: <span class="kw-2">&amp;</span>[Choice]) {
+        <span class="self">self</span>.options.choices = choices.to_vec();
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_accept_label</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
+    <span class="doccomment">/// Specifies the current folder path.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>current_folder(<span class="kw-2">mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_current_folder(current_folder);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_current_folder(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) {
+        <span class="kw">let </span>cstr = CString::new(current_folder.as_ref().as_os_str().as_bytes())
+            .expect(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
+        <span class="self">self</span>.options.current_folder = <span class="prelude-val">Some</span>(cstr.into_bytes_with_nul());
     }
 
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_modal</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets a list of files to save.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>files(<span class="kw-2">mut </span><span class="self">self</span>, files: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;Path&gt;]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_files(files);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-    }
-
-    <span class="doccomment">/// Adds a choice.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_choices</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">choices</span>: <span class="kw-2">&amp;</span>[<span class="ident">Choice</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span> <span class="op">=</span> <span class="ident">choices</span>.<span class="ident">to_vec</span>();
-    }
-
-    <span class="doccomment">/// Specifies the current folder path.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_current_folder</span>(<span class="ident">current_folder</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_folder</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_folder</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
-    }
-
-    <span class="doccomment">/// Sets a list of files to save.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">files</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">files</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_files</span>(<span class="ident">files</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_files</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">files</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">files</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
-            <span class="ident">files</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
-                    <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-                        .<span class="ident">expect</span>(<span class="string">&quot;`files` should not be null terminated&quot;</span>);
-                    <span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>()
+    <span class="kw">pub fn </span>set_files(<span class="kw-2">&amp;mut </span><span class="self">self</span>, files: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;Path&gt;]) {
+        <span class="self">self</span>.options.files = <span class="prelude-val">Some</span>(
+            files
+                .iter()
+                .map(|s| {
+                    <span class="kw">let </span>cstr = CString::new(s.as_ref().as_os_str().as_bytes())
+                        .expect(<span class="string">&quot;`files` should not be null terminated&quot;</span>);
+                    cstr.into_bytes_with_nul()
                 })
-                .<span class="ident">collect</span>(),
+                .collect(),
         );
     }
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">FileChooserProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">proxy</span>
-            .<span class="ident">save_files</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">title</span>, <span class="self">self</span>.<span class="ident">options</span>)
-            .<span class="kw">await</span>
-    }
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+        <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
+        proxy
+            .save_files(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)
+            .<span class="kw">await
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_save_file&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SaveFileRequest</span> {
-    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
-    <span class="ident">title</span>: <span class="ident">String</span>,
-    <span class="ident">options</span>: <span class="ident">SaveFileOptions</span>,
+<span class="attribute">#[derive(Debug, Default)]
+#[doc(alias = <span class="string">&quot;xdp_portal_save_file&quot;</span>)]
+</span><span class="kw">pub struct </span>SaveFileRequest {
+    identifier: WindowIdentifier,
+    title: String,
+    options: SaveFileOptions,
 }
 
-<span class="kw">impl</span> <span class="ident">SaveFileRequest</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="doccomment">/// Sets a window identifier.</span>
+<span class="kw">impl </span>SaveFileRequest {
+    <span class="attribute">#[must_use]
+    </span><span class="doccomment">/// Sets a window identifier.
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
-        <span class="self">self</span>
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_identifier(identifier);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
+        <span class="self">self</span>.identifier = identifier;
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
-        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
+    <span class="doccomment">/// Sets a title for the file chooser dialog.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_title(title);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_title(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.title = title.to_owned();
     }
 
-    <span class="doccomment">/// Sets a title for the file chooser dialog.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_title</span>(<span class="ident">title</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_accept_label(accept_label);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_accept_label(<span class="kw-2">&amp;mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.accept_label = <span class="prelude-val">Some</span>(accept_label.to_owned());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">to_owned</span>();
+    <span class="doccomment">/// Sets whether the dialog should be a modal.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_modal(modal);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_modal(<span class="kw-2">&amp;mut </span><span class="self">self</span>, modal: bool) {
+        <span class="self">self</span>.options.modal = <span class="prelude-val">Some</span>(modal);
     }
 
-    <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_accept_label</span>(<span class="ident">accept_label</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets the current file name.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>current_name(<span class="kw-2">mut </span><span class="self">self</span>, current_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_current_name(current_name);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_current_name(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_name: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.current_name = <span class="prelude-val">Some</span>(current_name.to_owned());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_accept_label</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_owned</span>());
+    <span class="doccomment">/// Sets the current folder.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>current_folder(<span class="kw-2">mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_current_folder(current_folder);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_current_folder(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) {
+        <span class="kw">let </span>cstr = CString::new(current_folder.as_ref().as_os_str().as_bytes())
+            .expect(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
+        <span class="self">self</span>.options.current_folder = <span class="prelude-val">Some</span>(cstr.into_bytes_with_nul());
     }
 
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_modal</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets the absolute path of the file.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>current_file(<span class="kw-2">mut </span><span class="self">self</span>, current_file: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_current_file(current_file);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_current_file(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_file: <span class="kw">impl </span>AsRef&lt;Path&gt;) {
+        <span class="kw">let </span>cstr = CString::new(current_file.as_ref().as_os_str().as_bytes())
+            .expect(<span class="string">&quot;`current_file` should not be null terminated&quot;</span>);
+        <span class="self">self</span>.options.current_file = <span class="prelude-val">Some</span>(cstr.into_bytes_with_nul());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
+    <span class="doccomment">/// Adds a files filter.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>filter(<span class="kw-2">mut </span><span class="self">self</span>, filter: FileFilter) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.filters.push(filter);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_filters(<span class="kw-2">&amp;mut </span><span class="self">self</span>, filters: <span class="kw-2">&amp;</span>[FileFilter]) {
+        <span class="self">self</span>.options.filters = filters.to_vec();
     }
 
-    <span class="doccomment">/// Sets the current file name.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_current_name</span>(<span class="ident">current_name</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets the default filter.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>current_filter(<span class="kw-2">mut </span><span class="self">self</span>, current_filter: FileFilter) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_current_filter(current_filter);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_current_filter(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_filter: FileFilter) {
+        <span class="self">self</span>.options.current_filter = <span class="prelude-val">Some</span>(current_filter);
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_name</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_name</span>.<span class="ident">to_owned</span>());
+    <span class="doccomment">/// Adds a choice.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>choice(<span class="kw-2">mut </span><span class="self">self</span>, choice: Choice) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.choices.push(choice);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_choices(<span class="kw-2">&amp;mut </span><span class="self">self</span>, choices: <span class="kw-2">&amp;</span>[Choice]) {
+        <span class="self">self</span>.options.choices = choices.to_vec();
     }
 
-    <span class="doccomment">/// Sets the current folder.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_folder</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_current_folder</span>(<span class="ident">current_folder</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_folder</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_folder</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_folder</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_folder</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
-    }
-
-    <span class="doccomment">/// Sets the absolute path of the file.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_file</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_file</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_current_file</span>(<span class="ident">current_file</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_file</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_file</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">current_file</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`current_file` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_file</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cstr</span>.<span class="ident">into_bytes_with_nul</span>());
-    }
-
-    <span class="doccomment">/// Adds a files filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span>.<span class="ident">push</span>(<span class="ident">filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_filters</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">filters</span>: <span class="kw-2">&amp;</span>[<span class="ident">FileFilter</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">filters</span> <span class="op">=</span> <span class="ident">filters</span>.<span class="ident">to_vec</span>();
-    }
-
-    <span class="doccomment">/// Sets the default filter.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_current_filter</span>(<span class="ident">current_filter</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_current_filter</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">current_filter</span>: <span class="ident">FileFilter</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">current_filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">current_filter</span>);
-    }
-
-    <span class="doccomment">/// Adds a choice.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">choice</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">choice</span>: <span class="ident">Choice</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span>.<span class="ident">push</span>(<span class="ident">choice</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_choices</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">choices</span>: <span class="kw-2">&amp;</span>[<span class="ident">Choice</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">choices</span> <span class="op">=</span> <span class="ident">choices</span>.<span class="ident">to_vec</span>();
-    }
-
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SelectedFiles</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">FileChooserProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">proxy</span>
-            .<span class="ident">save_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">title</span>, <span class="self">self</span>.<span class="ident">options</span>)
-            .<span class="kw">await</span>
-    }
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+        <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
+        proxy
+            .save_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)
+            .<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

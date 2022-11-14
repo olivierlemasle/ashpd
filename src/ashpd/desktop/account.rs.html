@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/account.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>account.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/account.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>account.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -145,150 +145,150 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Access to the current logged user information such as the id, name</span>
-<span class="doccomment">//! or their avatar uri.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Wrapper of the DBus interface: [`org.freedesktop.portal.Account`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Account).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ### Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust, no_run</span>
-<span class="doccomment">//! use ashpd::desktop::account::UserInformationRequest;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let response = UserInformationRequest::default()</span>
-<span class="doccomment">//!         .reason(&quot;App would like to access user information&quot;)</span>
-<span class="doccomment">//!         .build()</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;Name: {}&quot;, response.name());</span>
-<span class="doccomment">//!     println!(&quot;ID: {}&quot;, response.id());</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Access to the current logged user information such as the id, name
+//! or their avatar uri.
+//!
+//! Wrapper of the DBus interface: [`org.freedesktop.portal.Account`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Account).
+//!
+//! ### Examples
+//!
+//! ```rust, no_run
+//! use ashpd::desktop::account::UserInformationRequest;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let response = UserInformationRequest::default()
+//!         .reason(&quot;App would like to access user information&quot;)
+//!         .build()
+//!         .await?;
+//!
+//!     println!(&quot;Name: {}&quot;, response.name());
+//!     println!(&quot;ID: {}&quot;, response.id());
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+</span><span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_request_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_request_method, session_connection},
+    Error, WindowIdentifier,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">UserInformationOptions</span> {
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>UserInformationOptions {
+    handle_token: HandleToken,
+    reason: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// The response of a [`UserInformationRequest`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UserInformationResponse</span> {
-    <span class="ident">id</span>: <span class="ident">String</span>,
-    <span class="ident">name</span>: <span class="ident">String</span>,
-    <span class="ident">image</span>: <span class="ident">url::Url</span>,
+<span class="attribute">#[derive(Debug, DeserializeDict, Type)]
+</span><span class="doccomment">/// The response of a [`UserInformationRequest`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>UserInformationResponse {
+    id: String,
+    name: String,
+    image: url::Url,
 }
 
-<span class="kw">impl</span> <span class="ident">UserInformationResponse</span> {
-    <span class="doccomment">/// User identifier.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">id</span>
+<span class="kw">impl </span>UserInformationResponse {
+    <span class="doccomment">/// User identifier.
+    </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.id
     }
 
-    <span class="doccomment">/// User name.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name</span>
+    <span class="doccomment">/// User name.
+    </span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.name
     }
 
-    <span class="doccomment">/// User image uri.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">image</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">url::Url</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">image</span>
+    <span class="doccomment">/// User image uri.
+    </span><span class="kw">pub fn </span>image(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>url::Url {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.image
     }
 
-    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct</span>
-    <span class="doccomment">/// [`UserInformationResponse`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method returns an instance of [`UserInformationRequest`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">UserInformationRequest</span> {
-        <span class="ident">UserInformationRequest::default</span>()
+    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct
+    /// [`UserInformationResponse`].
+    ///
+    /// This method returns an instance of [`UserInformationRequest`].
+    </span><span class="kw">pub fn </span>builder() -&gt; UserInformationRequest {
+        UserInformationRequest::default()
     }
 }
 
-<span class="kw">struct</span> <span class="ident">AccountProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="kw">struct </span>AccountProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AccountProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AccountProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AccountProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;AccountProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">user_information</span>(
+    <span class="kw">pub async fn </span>user_information(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">options</span>: <span class="ident">UserInformationOptions</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UserInformationResponse</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_request_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+        options: UserInformationOptions,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;UserInformationResponse, Error&gt; {
+        call_request_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;GetUserInformation&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_get_user_information&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// A [builder-pattern] type to construct [`UserInformationResponse`].</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UserInformationRequest</span> {
-    <span class="ident">options</span>: <span class="ident">UserInformationOptions</span>,
-    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
+<span class="attribute">#[doc(alias = <span class="string">&quot;xdp_portal_get_user_information&quot;</span>)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)]
+#[derive(Debug, Default)]
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`UserInformationResponse`].
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+</span><span class="kw">pub struct </span>UserInformationRequest {
+    options: UserInformationOptions,
+    identifier: WindowIdentifier,
 }
 
-<span class="kw">impl</span> <span class="ident">UserInformationRequest</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="doccomment">/// Sets a user-visible reason for the request.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reason</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_reason</span>(<span class="ident">reason</span>);
-        <span class="self">self</span>
+<span class="kw">impl </span>UserInformationRequest {
+    <span class="attribute">#[must_use]
+    </span><span class="doccomment">/// Sets a user-visible reason for the request.
+    </span><span class="kw">pub fn </span>reason(<span class="kw-2">mut </span><span class="self">self</span>, reason: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_reason(reason);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_reason(<span class="kw-2">&amp;mut </span><span class="self">self</span>, reason: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.reason = <span class="prelude-val">Some</span>(reason.to_owned());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_reason</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">reason</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reason</span>.<span class="ident">to_owned</span>());
+    <span class="attribute">#[must_use]
+    </span><span class="doccomment">/// Sets a window identifier.
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_identifier(identifier);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
+        <span class="self">self</span>.identifier = identifier;
     }
 
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="doccomment">/// Sets a window identifier.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_identifier</span>(<span class="ident">identifier</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifier</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) {
-        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
-    }
-
-    <span class="doccomment">/// Build the [`UserInformationResponse`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UserInformationResponse</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">AccountProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">proxy</span>.<span class="ident">user_information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="self">self</span>.<span class="ident">options</span>).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Build the [`UserInformationResponse`].
+    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;UserInformationResponse, Error&gt; {
+        <span class="kw">let </span>proxy = AccountProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
+        proxy.user_information(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

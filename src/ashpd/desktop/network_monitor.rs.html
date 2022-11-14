@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/network_monitor.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>network_monitor.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/network_monitor.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>network_monitor.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -186,191 +186,191 @@
 <span id="184">184</span>
 <span id="185">185</span>
 <span id="186">186</span>
-</pre><pre class="rust"><code><span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.</span>
-<span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::network_monitor::NetworkMonitor;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = NetworkMonitor::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;{}&quot;, proxy.can_reach(&quot;www.google.com&quot;, 80).await?);</span>
-<span class="doccomment">//!     println!(&quot;{}&quot;, proxy.is_available().await?);</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.connectivity().await?);</span>
-<span class="doccomment">//!     println!(&quot;{}&quot;, proxy.is_metered().await?);</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.status().await?);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.
+//! # Examples
+//!
+//! ```rust,no_run
+//! use ashpd::desktop::network_monitor::NetworkMonitor;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = NetworkMonitor::new().await?;
+//!
+//!     println!(&quot;{}&quot;, proxy.can_reach(&quot;www.google.com&quot;, 80).await?);
+//!     println!(&quot;{}&quot;, proxy.is_available().await?);
+//!     println!(&quot;{:#?}&quot;, proxy.connectivity().await?);
+//!     println!(&quot;{}&quot;, proxy.is_metered().await?);
+//!     println!(&quot;{:#?}&quot;, proxy.status().await?);
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
+</span><span class="kw">use </span>std::fmt;
 
-<span class="kw">use</span> <span class="ident">serde_repr::Deserialize_repr</span>;
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>serde_repr::Deserialize_repr;
+<span class="kw">use </span>zbus::zvariant::{DeserializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use super</span>::{DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_method, receive_signal, session_connection},
+    Error,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// The network status, composed of the availability, metered &amp; connectivity</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NetworkStatus</span> {
-    <span class="doccomment">/// Whether the network is considered available.</span>
-    <span class="ident">available</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Whether the network is considered metered.</span>
-    <span class="ident">metered</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// More detailed information about the host&#39;s network connectivity</span>
-    <span class="ident">connectivity</span>: <span class="ident">Connectivity</span>,
+<span class="attribute">#[derive(DeserializeDict, Type, Debug)]
+</span><span class="doccomment">/// The network status, composed of the availability, metered &amp; connectivity
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>NetworkStatus {
+    <span class="doccomment">/// Whether the network is considered available.
+    </span>available: bool,
+    <span class="doccomment">/// Whether the network is considered metered.
+    </span>metered: bool,
+    <span class="doccomment">/// More detailed information about the host&#39;s network connectivity
+    </span>connectivity: Connectivity,
 }
 
-<span class="kw">impl</span> <span class="ident">NetworkStatus</span> {
-    <span class="doccomment">/// Returns whether the network is considered available.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_available</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">available</span>
+<span class="kw">impl </span>NetworkStatus {
+    <span class="doccomment">/// Returns whether the network is considered available.
+    </span><span class="kw">pub fn </span>is_available(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.available
     }
 
-    <span class="doccomment">/// Returns whether the network is considered metered.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_metered</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">metered</span>
+    <span class="doccomment">/// Returns whether the network is considered metered.
+    </span><span class="kw">pub fn </span>is_metered(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.metered
     }
 
-    <span class="doccomment">/// Returns more detailed information about the host&#39;s network connectivity.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connectivity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Connectivity</span> {
-        <span class="self">self</span>.<span class="ident">connectivity</span>
+    <span class="doccomment">/// Returns more detailed information about the host&#39;s network connectivity.
+    </span><span class="kw">pub fn </span>connectivity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Connectivity {
+        <span class="self">self</span>.connectivity
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="doccomment">/// Host&#39;s network activity</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Connectivity</span> {
-    <span class="doccomment">/// The host is not configured with a route to the internet.</span>
-    <span class="ident">Local</span> <span class="op">=</span> <span class="number">1</span>,
-    <span class="doccomment">/// The host is connected to a network, but can&#39;t reach the full internet.</span>
-    <span class="ident">Limited</span> <span class="op">=</span> <span class="number">2</span>,
-    <span class="doccomment">/// The host is behind a captive portal and cannot reach the full internet.</span>
-    <span class="ident">CaptivePortal</span> <span class="op">=</span> <span class="number">3</span>,
-    <span class="doccomment">/// The host connected to a network, and can reach the full internet.</span>
-    <span class="ident">FullNetwork</span> <span class="op">=</span> <span class="number">4</span>,
+<span class="attribute">#[derive(Deserialize_repr, PartialEq, Eq, Debug, Clone, Copy, Type)]
+#[repr(u32)]
+</span><span class="doccomment">/// Host&#39;s network activity
+</span><span class="kw">pub enum </span>Connectivity {
+    <span class="doccomment">/// The host is not configured with a route to the internet.
+    </span>Local = <span class="number">1</span>,
+    <span class="doccomment">/// The host is connected to a network, but can&#39;t reach the full internet.
+    </span>Limited = <span class="number">2</span>,
+    <span class="doccomment">/// The host is behind a captive portal and cannot reach the full internet.
+    </span>CaptivePortal = <span class="number">3</span>,
+    <span class="doccomment">/// The host connected to a network, and can reach the full internet.
+    </span>FullNetwork = <span class="number">4</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Connectivity</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">let</span> <span class="ident">connectivity</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Local</span> =&gt; <span class="string">&quot;local&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Limited</span> =&gt; <span class="string">&quot;limited&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::CaptivePortal</span> =&gt; <span class="string">&quot;captive portal&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::FullNetwork</span> =&gt; <span class="string">&quot;full network&quot;</span>,
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Connectivity {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">let </span>connectivity = <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Local =&gt; <span class="string">&quot;local&quot;</span>,
+            <span class="self">Self</span>::Limited =&gt; <span class="string">&quot;limited&quot;</span>,
+            <span class="self">Self</span>::CaptivePortal =&gt; <span class="string">&quot;captive portal&quot;</span>,
+            <span class="self">Self</span>::FullNetwork =&gt; <span class="string">&quot;full network&quot;</span>,
         };
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="ident">connectivity</span>)
+        f.write_str(connectivity)
     }
 }
 
-<span class="doccomment">/// The interface provides network status information to sandboxed applications.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// It is not a portal in the strict sense, since it does not involve user</span>
-<span class="doccomment">/// interaction. Applications are expected to use this interface indirectly,</span>
-<span class="doccomment">/// via a library API such as the GLib [`gio::NetworkMonitor`](https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.NetworkMonitor.html) interface.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.NetworkMonitor`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.NetworkMonitor).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.NetworkMonitor&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NetworkMonitor</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface provides network status information to sandboxed applications.
+///
+/// It is not a portal in the strict sense, since it does not involve user
+/// interaction. Applications are expected to use this interface indirectly,
+/// via a library API such as the GLib [`gio::NetworkMonitor`](https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.NetworkMonitor.html) interface.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.NetworkMonitor`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.NetworkMonitor).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.NetworkMonitor&quot;</span>)]
+</span><span class="kw">pub struct </span>NetworkMonitor&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">NetworkMonitor</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`NetworkMonitor`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NetworkMonitor</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.NetworkMonitor&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; NetworkMonitor&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`NetworkMonitor`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;NetworkMonitor&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.NetworkMonitor&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Returns whether the given hostname is believed to be reachable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `hostname` - The hostname to reach.</span>
-    <span class="doccomment">/// * `port` - The port to reach.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`CanReach`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.CanReach).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CanReach&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">can_reach</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hostname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">port</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;CanReach&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">hostname</span>, <span class="ident">port</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Returns whether the given hostname is believed to be reachable.
+    ///
+    /// # Arguments
+    ///
+    /// * `hostname` - The hostname to reach.
+    /// * `port` - The port to reach.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`CanReach`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.CanReach).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;CanReach&quot;</span>)]
+    </span><span class="kw">pub async fn </span>can_reach(<span class="kw-2">&amp;</span><span class="self">self</span>, hostname: <span class="kw-2">&amp;</span>str, port: u32) -&gt; <span class="prelude-ty">Result</span>&lt;bool, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;CanReach&quot;</span>, <span class="kw-2">&amp;</span>(hostname, port)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Returns whether the network is considered available.</span>
-    <span class="doccomment">/// That is, whether the system as a default route for at least one of IPv4</span>
-    <span class="doccomment">/// or IPv6.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GetAvailable`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetAvailable).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetAvailable&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_available&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">is_available</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;GetAvailable&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Returns whether the network is considered available.
+    /// That is, whether the system as a default route for at least one of IPv4
+    /// or IPv6.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`GetAvailable`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetAvailable).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetAvailable&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_available&quot;</span>)]
+    </span><span class="kw">pub async fn </span>is_available(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;bool, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetAvailable&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Returns more detailed information about the host&#39;s network connectivity.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GetConnectivity`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetConnectivity).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetConnectivity&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_connectivity&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">connectivity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Connectivity</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;GetConnectivity&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Returns more detailed information about the host&#39;s network connectivity.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`GetConnectivity`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetConnectivity).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetConnectivity&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_connectivity&quot;</span>)]
+    </span><span class="kw">pub async fn </span>connectivity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Connectivity, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetConnectivity&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Returns whether the network is considered metered.</span>
-    <span class="doccomment">/// That is, whether the system as traffic flowing through the default</span>
-    <span class="doccomment">/// connection that is subject to limitations by service providers.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GetMetered`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetMetered).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetMetered&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_metered&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">is_metered</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;GetMetered&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Returns whether the network is considered metered.
+    /// That is, whether the system as traffic flowing through the default
+    /// connection that is subject to limitations by service providers.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`GetMetered`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetMetered).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetMetered&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_metered&quot;</span>)]
+    </span><span class="kw">pub async fn </span>is_metered(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;bool, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetMetered&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Returns the three values all at once.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GetStatus`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetStatus).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetStatus&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_status&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NetworkStatus</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;GetStatus&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Returns the three values all at once.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`GetStatus`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-NetworkMonitor.GetStatus).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetStatus&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_status&quot;</span>)]
+    </span><span class="kw">pub async fn </span>status(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;NetworkStatus, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetStatus&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Emitted when the network configuration changes.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`changed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-NetworkMonitor.changed).</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_changed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">receive_signal</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;changed&quot;</span>).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Emitted when the network configuration changes.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`changed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-NetworkMonitor.changed).
+    </span><span class="kw">pub async fn </span>receive_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;changed&quot;</span>).<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

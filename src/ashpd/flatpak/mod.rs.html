@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/flatpak/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/flatpak/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -406,411 +406,411 @@
 <span id="404">404</span>
 <span id="405">405</span>
 <span id="406">406</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Spawn a process outside of the sandbox, only works in a Flatpak.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::collections::HashMap;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::flatpak::{Flatpak, SpawnFlags, SpawnOptions};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = Flatpak::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .spawn(</span>
-<span class="doccomment">//!             &quot;/&quot;,</span>
-<span class="doccomment">//!             &amp;[&quot;contrast&quot;],</span>
-<span class="doccomment">//!             HashMap::new(),</span>
-<span class="doccomment">//!             HashMap::new(),</span>
-<span class="doccomment">//!             SpawnFlags::ClearEnv | SpawnFlags::NoNetwork,</span>
-<span class="doccomment">//!             SpawnOptions::default(),</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! Spawn a process outside of the sandbox, only works in a Flatpak.
+//!
+//! ```rust,no_run
+//! use std::collections::HashMap;
+//!
+//! use ashpd::flatpak::{Flatpak, SpawnFlags, SpawnOptions};
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = Flatpak::new().await?;
+//!
+//!     proxy
+//!         .spawn(
+//!             &quot;/&quot;,
+//!             &amp;[&quot;contrast&quot;],
+//!             HashMap::new(),
+//!             HashMap::new(),
+//!             SpawnFlags::ClearEnv | SpawnFlags::NoNetwork,
+//!             SpawnOptions::default(),
+//!         )
+//!         .await?;
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">DESTINATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/Flatpak&quot;</span>;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span>str = <span class="string">&quot;/org/freedesktop/portal/Flatpak&quot;</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">collections::HashMap</span>,
-    <span class="ident">ffi::CString</span>,
-    <span class="ident">fmt::Debug</span>,
-    <span class="ident">os::unix</span>::{
-        <span class="ident">ffi::OsStrExt</span>,
-        <span class="ident">prelude</span>::{<span class="ident">AsRawFd</span>, <span class="ident">RawFd</span>},
+<span class="kw">use </span>std::{
+    collections::HashMap,
+    ffi::CString,
+    fmt::Debug,
+    os::unix::{
+        ffi::OsStrExt,
+        prelude::{AsRawFd, RawFd},
     },
-    <span class="ident">path::Path</span>,
+    path::Path,
 };
 
-<span class="kw">use</span> <span class="ident">enumflags2</span>::{<span class="ident">bitflags</span>, <span class="ident">BitFlags</span>};
-<span class="kw">use</span> <span class="ident">serde::Serialize</span>;
-<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>enumflags2::{bitflags, BitFlags};
+<span class="kw">use </span>serde::Serialize;
+<span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
+<span class="kw">use </span>zbus::zvariant::{Fd, OwnedObjectPath, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use crate</span>::{
+    helpers::{call_method, receive_signal, session_connection},
+    Error,
 };
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="doccomment">/// A bitmask representing the &quot;permissions&quot; of a newly created sandbox.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SandboxFlags</span> {
-    <span class="doccomment">/// Share the display access (X11, Wayland) with the caller.</span>
-    <span class="ident">DisplayAccess</span>,
-    <span class="doccomment">/// Share the sound access (PulseAudio) with the caller.</span>
-    <span class="ident">SoundAccess</span>,
-    <span class="doccomment">/// Share the gpu access with the caller.</span>
-    <span class="ident">GpuAccess</span>,
-    <span class="doccomment">/// Allow sandbox access to (filtered) session bus.</span>
-    <span class="ident">SessionBusAccess</span>,
-    <span class="doccomment">/// Allow sandbox access to accessibility bus.</span>
-    <span class="ident">AccessibilityBusAccess</span>,
+<span class="attribute">#[bitflags]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
+#[repr(u32)]
+</span><span class="doccomment">/// A bitmask representing the &quot;permissions&quot; of a newly created sandbox.
+</span><span class="kw">pub enum </span>SandboxFlags {
+    <span class="doccomment">/// Share the display access (X11, Wayland) with the caller.
+    </span>DisplayAccess,
+    <span class="doccomment">/// Share the sound access (PulseAudio) with the caller.
+    </span>SoundAccess,
+    <span class="doccomment">/// Share the gpu access with the caller.
+    </span>GpuAccess,
+    <span class="doccomment">/// Allow sandbox access to (filtered) session bus.
+    </span>SessionBusAccess,
+    <span class="doccomment">/// Allow sandbox access to accessibility bus.
+    </span>AccessibilityBusAccess,
 }
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpSpawnFlags&quot;</span>)]</span>
-<span class="doccomment">/// Flags affecting the created sandbox.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SpawnFlags</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_SPAWN_FLAG_CLEARENV&quot;</span>)]</span>
-    <span class="doccomment">/// Clear the environment.</span>
-    <span class="ident">ClearEnv</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_SPAWN_FLAG_LATEST&quot;</span>)]</span>
-    <span class="doccomment">/// Spawn the latest version of the app.</span>
-    <span class="ident">LatestVersion</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_SPAWN_FLAG_SANDBOX&quot;</span>)]</span>
-    <span class="doccomment">/// Spawn in a sandbox (equivalent of the sandbox option of `flatpak run`).</span>
-    <span class="ident">Sandbox</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_SPAWN_FLAG_NO_NETWORK&quot;</span>)]</span>
-    <span class="doccomment">/// Spawn without network (equivalent of the `unshare=network` option of</span>
-    <span class="doccomment">/// `flatpak run`).</span>
-    <span class="ident">NoNetwork</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_SPAWN_FLAG_WATCH&quot;</span>)]</span>
-    <span class="doccomment">/// Kill the sandbox when the caller disappears from the session bus.</span>
-    <span class="ident">WatchBus</span>,
-    <span class="doccomment">/// Expose the sandbox pids in the callers sandbox, only supported if using</span>
-    <span class="doccomment">/// user namespaces for containers (not setuid), see the support property.</span>
-    <span class="ident">ExposePids</span>,
-    <span class="doccomment">/// Emit a SpawnStarted signal once the sandboxed process has been fully</span>
-    <span class="doccomment">/// started.</span>
-    <span class="ident">NotifyStart</span>,
-    <span class="doccomment">/// Expose the sandbox process IDs in the caller&#39;s sandbox and the caller&#39;s</span>
-    <span class="doccomment">/// process IDs in the new sandbox.</span>
-    <span class="ident">SharePids</span>,
-    <span class="doccomment">/// Don&#39;t provide app files at `/app` in the new sandbox.</span>
-    <span class="ident">EmptyApp</span>,
+<span class="attribute">#[bitflags]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
+#[repr(u32)]
+#[doc(alias = <span class="string">&quot;XdpSpawnFlags&quot;</span>)]
+</span><span class="doccomment">/// Flags affecting the created sandbox.
+</span><span class="kw">pub enum </span>SpawnFlags {
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_SPAWN_FLAG_CLEARENV&quot;</span>)]
+    </span><span class="doccomment">/// Clear the environment.
+    </span>ClearEnv,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_SPAWN_FLAG_LATEST&quot;</span>)]
+    </span><span class="doccomment">/// Spawn the latest version of the app.
+    </span>LatestVersion,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_SPAWN_FLAG_SANDBOX&quot;</span>)]
+    </span><span class="doccomment">/// Spawn in a sandbox (equivalent of the sandbox option of `flatpak run`).
+    </span>Sandbox,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_SPAWN_FLAG_NO_NETWORK&quot;</span>)]
+    </span><span class="doccomment">/// Spawn without network (equivalent of the `unshare=network` option of
+    /// `flatpak run`).
+    </span>NoNetwork,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_SPAWN_FLAG_WATCH&quot;</span>)]
+    </span><span class="doccomment">/// Kill the sandbox when the caller disappears from the session bus.
+    </span>WatchBus,
+    <span class="doccomment">/// Expose the sandbox pids in the callers sandbox, only supported if using
+    /// user namespaces for containers (not setuid), see the support property.
+    </span>ExposePids,
+    <span class="doccomment">/// Emit a SpawnStarted signal once the sandboxed process has been fully
+    /// started.
+    </span>NotifyStart,
+    <span class="doccomment">/// Expose the sandbox process IDs in the caller&#39;s sandbox and the caller&#39;s
+    /// process IDs in the new sandbox.
+    </span>SharePids,
+    <span class="doccomment">/// Don&#39;t provide app files at `/app` in the new sandbox.
+    </span>EmptyApp,
 }
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="doccomment">/// Flags marking what optional features are available.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SupportsFlags</span> {
-    <span class="doccomment">/// Supports the expose sandbox pids flag of Spawn.</span>
-    <span class="ident">ExposePids</span>,
+<span class="attribute">#[bitflags]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
+#[repr(u32)]
+</span><span class="doccomment">/// Flags marking what optional features are available.
+</span><span class="kw">pub enum </span>SupportsFlags {
+    <span class="doccomment">/// Supports the expose sandbox pids flag of Spawn.
+    </span>ExposePids,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`Flatpak::spawn`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpawnOptions</span> {
-    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to</span>
-    <span class="doccomment">/// the new sandbox, for reading and writing.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sandbox-expose&quot;</span>)]</span>
-    <span class="ident">sandbox_expose</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to</span>
-    <span class="doccomment">/// the new sandbox, read-only.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sandbox-expose-ro&quot;</span>)]</span>
-    <span class="ident">sandbox_expose_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be</span>
-    <span class="doccomment">/// exposed to the new sandbox, for reading and writing.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sandbox-expose-fd&quot;</span>)]</span>
-    <span class="ident">sandbox_expose_fd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be</span>
-    <span class="doccomment">/// exposed to the new sandbox, read-only.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sandbox-expose-fd-ro&quot;</span>)]</span>
-    <span class="ident">sandbox_expose_fd_ro</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Flags affecting the created sandbox.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sandbox-flags&quot;</span>)]</span>
-    <span class="ident">sandbox_flags</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of environment variables to remove.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;unset-env&quot;</span>)]</span>
-    <span class="ident">unset_env</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A file descriptor of the directory that  will be used as `/usr` in the</span>
-    <span class="doccomment">/// new sandbox.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;usr-fd&quot;</span>)]</span>
-    <span class="ident">usr_fd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A file descriptor of the directory that  will be used as `/app` in the</span>
-    <span class="doccomment">/// new sandbox.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;app-fd&quot;</span>)]</span>
-    <span class="ident">app_fd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RawFd</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`Flatpak::spawn`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>SpawnOptions {
+    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to
+    /// the new sandbox, for reading and writing.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;sandbox-expose&quot;</span>)]
+    </span>sandbox_expose: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+    <span class="doccomment">/// A list of filenames for files inside the sandbox that will be exposed to
+    /// the new sandbox, read-only.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;sandbox-expose-ro&quot;</span>)]
+    </span>sandbox_expose_ro: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be
+    /// exposed to the new sandbox, for reading and writing.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;sandbox-expose-fd&quot;</span>)]
+    </span>sandbox_expose_fd: <span class="prelude-ty">Option</span>&lt;Vec&lt;Fd&gt;&gt;,
+    <span class="doccomment">/// A list of file descriptor for files inside the sandbox that will be
+    /// exposed to the new sandbox, read-only.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;sandbox-expose-fd-ro&quot;</span>)]
+    </span>sandbox_expose_fd_ro: <span class="prelude-ty">Option</span>&lt;Vec&lt;Fd&gt;&gt;,
+    <span class="doccomment">/// Flags affecting the created sandbox.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;sandbox-flags&quot;</span>)]
+    </span>sandbox_flags: <span class="prelude-ty">Option</span>&lt;BitFlags&lt;SandboxFlags&gt;&gt;,
+    <span class="doccomment">/// A list of environment variables to remove.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;unset-env&quot;</span>)]
+    </span>unset_env: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+    <span class="doccomment">/// A file descriptor of the directory that  will be used as `/usr` in the
+    /// new sandbox.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;usr-fd&quot;</span>)]
+    </span>usr_fd: <span class="prelude-ty">Option</span>&lt;RawFd&gt;,
+    <span class="doccomment">/// A file descriptor of the directory that  will be used as `/app` in the
+    /// new sandbox.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;app-fd&quot;</span>)]
+    </span>app_fd: <span class="prelude-ty">Option</span>&lt;RawFd&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">SpawnOptions</span> {
-    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox.</span>
-    <span class="doccomment">/// **Note** absolute paths or subdirectories are not allowed.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
-            <span class="ident">sandbox_expose</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>())
-                .<span class="ident">collect</span>(),
+<span class="kw">impl </span>SpawnOptions {
+    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox.
+    /// **Note** absolute paths or subdirectories are not allowed.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>sandbox_expose(<span class="kw-2">mut </span><span class="self">self</span>, sandbox_expose: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.sandbox_expose = <span class="prelude-val">Some</span>(
+            sandbox_expose
+                .iter()
+                .map(|s| s.as_ref().to_owned())
+                .collect(),
         );
-        <span class="self">self</span>
-    }
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox,</span>
-    <span class="doccomment">/// read-only.</span>
-    <span class="doccomment">/// **Note** absolute paths or subdirectories are not allowed.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_ro</span>(
-        <span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">sandbox_expose_ro</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>],
-    ) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
-            <span class="ident">sandbox_expose_ro</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>())
-                .<span class="ident">collect</span>(),
+    <span class="doccomment">/// Sets the list of filenames for files to expose the new sandbox,
+    /// read-only.
+    /// **Note** absolute paths or subdirectories are not allowed.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>sandbox_expose_ro(
+        <span class="kw-2">mut </span><span class="self">self</span>,
+        sandbox_expose_ro: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize],
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.sandbox_expose_ro = <span class="prelude-val">Some</span>(
+            sandbox_expose_ro
+                .iter()
+                .map(|s| s.as_ref().to_owned())
+                .collect(),
         );
-        <span class="self">self</span>
-    }
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose_fd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
-            <span class="ident">sandbox_expose_fd</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">Fd::from</span>(<span class="ident">f</span>.<span class="ident">as_raw_fd</span>()))
-                .<span class="ident">collect</span>(),
+    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>sandbox_expose_fd(<span class="kw-2">mut </span><span class="self">self</span>, sandbox_expose_fd: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.sandbox_expose_fd = <span class="prelude-val">Some</span>(
+            sandbox_expose_fd
+                .iter()
+                .map(|f| Fd::from(f.as_raw_fd()))
+                .collect(),
         );
-        <span class="self">self</span>
-    }
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox,</span>
-    <span class="doccomment">/// read-only.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_expose_fd_ro</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_expose_fd_ro</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_expose_fd_ro</span> <span class="op">=</span> <span class="prelude-val">Some</span>(
-            <span class="ident">sandbox_expose_fd_ro</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">Fd::from</span>(<span class="ident">f</span>.<span class="ident">as_raw_fd</span>()))
-                .<span class="ident">collect</span>(),
+    <span class="doccomment">/// Sets the list of file descriptors of files to expose the new sandbox,
+    /// read-only.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>sandbox_expose_fd_ro(<span class="kw-2">mut </span><span class="self">self</span>, sandbox_expose_fd_ro: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.sandbox_expose_fd_ro = <span class="prelude-val">Some</span>(
+            sandbox_expose_fd_ro
+                .iter()
+                .map(|f| Fd::from(f.as_raw_fd()))
+                .collect(),
         );
-        <span class="self">self</span>
-    }
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the created sandbox flags.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sandbox_flags</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sandbox_flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SandboxFlags</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sandbox_flags</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sandbox_flags</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the created sandbox flags.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>sandbox_flags(<span class="kw-2">mut </span><span class="self">self</span>, sandbox_flags: BitFlags&lt;SandboxFlags&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.sandbox_flags = <span class="prelude-val">Some</span>(sandbox_flags);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Env variables to unset.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unset_env</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">env</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">unset_env</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">env</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">to_owned</span>().<span class="ident">to_owned</span>()).<span class="ident">collect</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Env variables to unset.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>unset_env(<span class="kw-2">mut </span><span class="self">self</span>, env: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.unset_env = <span class="prelude-val">Some</span>(env.iter().map(|e| e.to_owned().to_owned()).collect());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set a file descriptor of the directory that  will be used as `/usr` in</span>
-    <span class="doccomment">/// the new sandbox.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">usr_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">fd</span>: <span class="kw">impl</span> <span class="ident">AsRawFd</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">usr_fd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">fd</span>.<span class="ident">as_raw_fd</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set a file descriptor of the directory that  will be used as `/usr` in
+    /// the new sandbox.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>usr_fd(<span class="kw-2">mut </span><span class="self">self</span>, fd: <span class="kw">impl </span>AsRawFd) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.usr_fd = <span class="prelude-val">Some</span>(fd.as_raw_fd());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set a file descriptor of the directory that  will be used as `/app` in</span>
-    <span class="doccomment">/// the new sandbox.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">app_fd</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">fd</span>: <span class="kw">impl</span> <span class="ident">AsRawFd</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">app_fd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">fd</span>.<span class="ident">as_raw_fd</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set a file descriptor of the directory that  will be used as `/app` in
+    /// the new sandbox.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>app_fd(<span class="kw-2">mut </span><span class="self">self</span>, fd: <span class="kw">impl </span>AsRawFd) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.app_fd = <span class="prelude-val">Some</span>(fd.as_raw_fd());
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`Flatpak::create_update_monitor`] request.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Currently there are no possible options yet.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">CreateMonitorOptions</span> {}
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`Flatpak::create_update_monitor`] request.
+///
+/// Currently there are no possible options yet.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>CreateMonitorOptions {}
 
-<span class="doccomment">/// The interface exposes some interactions with Flatpak on the host to the</span>
-<span class="doccomment">/// sandbox. For example, it allows you to restart the applications or start a</span>
-<span class="doccomment">/// more sandboxed instance.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Flatpak`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Flatpak).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Flatpak</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface exposes some interactions with Flatpak on the host to the
+/// sandbox. For example, it allows you to restart the applications or start a
+/// more sandboxed instance.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Flatpak`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Flatpak).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>)]
+</span><span class="kw">pub struct </span>Flatpak&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Flatpak</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`Flatpak`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Flatpak</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Flatpak&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`Flatpak`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;Flatpak&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Creates an update monitor object that will emit signals</span>
-    <span class="doccomment">/// when an update for the caller becomes available, and can be used to</span>
-    <span class="doccomment">/// install it.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`CreateUpdateMonitor`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Flatpak.CreateUpdateMonitor).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateUpdateMonitor&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_update_monitor_start&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_update_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UpdateMonitor</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CreateMonitorOptions::default</span>();
-        <span class="kw">let</span> <span class="ident">path</span>: <span class="ident">OwnedObjectPath</span> <span class="op">=</span>
-            <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;CreateUpdateMonitor&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">options</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="doccomment">/// Creates an update monitor object that will emit signals
+    /// when an update for the caller becomes available, and can be used to
+    /// install it.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`CreateUpdateMonitor`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Flatpak.CreateUpdateMonitor).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;CreateUpdateMonitor&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_update_monitor_start&quot;</span>)]
+    </span><span class="kw">pub async fn </span>create_update_monitor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;UpdateMonitor&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>options = CreateMonitorOptions::default();
+        <span class="kw">let </span>path: OwnedObjectPath =
+            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;CreateUpdateMonitor&quot;</span>, <span class="kw-2">&amp;</span>(options)).<span class="kw">await</span><span class="question-mark">?</span>;
 
-        <span class="ident">UpdateMonitor::new</span>(<span class="ident">path</span>.<span class="ident">into_inner</span>()).<span class="kw">await</span>
-    }
+        UpdateMonitor::new(path.into_inner()).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Emitted when a process starts by [`spawn()`][`Flatpak::spawn`].</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SpawnStarted&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_spawn_started</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">u32</span>, <span class="ident">u32</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">receive_signal</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;SpawnStarted&quot;</span>).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Emitted when a process starts by [`spawn()`][`Flatpak::spawn`].
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;SpawnStarted&quot;</span>)]
+    </span><span class="kw">pub async fn </span>receive_spawn_started(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(u32, u32), Error&gt; {
+        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;SpawnStarted&quot;</span>).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Emitted when a process started by [`spawn()`][`Flatpak::spawn`]</span>
-    <span class="doccomment">/// exits.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`SpawnExited`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Flatpak.SpawnExited).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SpawnExited&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpPortal::spawn-exited&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_spawn_existed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">u32</span>, <span class="ident">u32</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">receive_signal</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;SpawnExited&quot;</span>).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Emitted when a process started by [`spawn()`][`Flatpak::spawn`]
+    /// exits.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`SpawnExited`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Flatpak.SpawnExited).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;SpawnExited&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;XdpPortal::spawn-exited&quot;</span>)]
+    </span><span class="kw">pub async fn </span>receive_spawn_existed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(u32, u32), Error&gt; {
+        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;SpawnExited&quot;</span>).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// This methods let you start a new instance of your application,</span>
-    <span class="doccomment">/// optionally enabling a tighter sandbox.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `cwd_path` - The working directory for the new process.</span>
-    <span class="doccomment">/// * `arvg` - The argv for the new process, starting with the executable to</span>
-    <span class="doccomment">///   launch.</span>
-    <span class="doccomment">/// * `fds` - Array of file descriptors to pass to the new process.</span>
-    <span class="doccomment">/// * `envs` - Array of variable/value pairs for the environment of the new</span>
-    <span class="doccomment">///   process.</span>
-    <span class="doccomment">/// * `flags`</span>
-    <span class="doccomment">/// * `options` - A [`SpawnOptions`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The PID of the new process.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Spawn`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Flatpak.Spawn).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Spawn&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_spawn&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">spawn</span>(
+    <span class="doccomment">/// This methods let you start a new instance of your application,
+    /// optionally enabling a tighter sandbox.
+    ///
+    /// # Arguments
+    ///
+    /// * `cwd_path` - The working directory for the new process.
+    /// * `arvg` - The argv for the new process, starting with the executable to
+    ///   launch.
+    /// * `fds` - Array of file descriptors to pass to the new process.
+    /// * `envs` - Array of variable/value pairs for the environment of the new
+    ///   process.
+    /// * `flags`
+    /// * `options` - A [`SpawnOptions`].
+    ///
+    /// # Returns
+    ///
+    /// The PID of the new process.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Spawn`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Flatpak.Spawn).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Spawn&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_spawn&quot;</span>)]
+    </span><span class="kw">pub async fn </span>spawn(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">cwd_path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>,
-        <span class="ident">argv</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>],
-        <span class="ident">fds</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">Fd</span><span class="op">&gt;</span>,
-        <span class="ident">envs</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SpawnFlags</span><span class="op">&gt;</span>,
-        <span class="ident">options</span>: <span class="ident">SpawnOptions</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cwd_path</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">cwd_path</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;The `cwd_path` should not contain a trailing 0 bytes&quot;</span>);
-        <span class="kw">let</span> <span class="ident">argv</span> <span class="op">=</span> <span class="ident">argv</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
-                <span class="ident">CString::new</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-                    .<span class="ident">expect</span>(<span class="string">&quot;The `argv` should not contain a trailing 0 bytes&quot;</span>)
+        cwd_path: <span class="kw">impl </span>AsRef&lt;Path&gt;,
+        argv: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;Path&gt;],
+        fds: HashMap&lt;u32, Fd&gt;,
+        envs: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt;,
+        flags: BitFlags&lt;SpawnFlags&gt;,
+        options: SpawnOptions,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
+        <span class="kw">let </span>cwd_path = CString::new(cwd_path.as_ref().as_os_str().as_bytes())
+            .expect(<span class="string">&quot;The `cwd_path` should not contain a trailing 0 bytes&quot;</span>);
+        <span class="kw">let </span>argv = argv
+            .iter()
+            .map(|s| {
+                CString::new(s.as_ref().as_os_str().as_bytes())
+                    .expect(<span class="string">&quot;The `argv` should not contain a trailing 0 bytes&quot;</span>)
             })
-            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+            .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;Spawn&quot;</span>,
             <span class="kw-2">&amp;</span>(
-                <span class="ident">cwd_path</span>.<span class="ident">as_bytes_with_nul</span>(),
-                <span class="ident">argv</span>.<span class="ident">iter</span>()
-                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">as_bytes_with_nul</span>())
-                    .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>(),
-                <span class="ident">fds</span>,
-                <span class="ident">envs</span>,
-                <span class="ident">flags</span>,
-                <span class="ident">options</span>,
+                cwd_path.as_bytes_with_nul(),
+                argv.iter()
+                    .map(|c| c.as_bytes_with_nul())
+                    .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
+                fds,
+                envs,
+                flags,
+                options,
             ),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// This methods let you send a Unix signal to a process that was started</span>
-    <span class="doccomment">/// [`spawn()`][`Flatpak::spawn`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `pid` - The PID of the process to send the signal to.</span>
-    <span class="doccomment">/// * `signal` - The signal to send.</span>
-    <span class="doccomment">/// * `to_process_group` - Whether to send the signal to the process group.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`SpawnSignal`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Flatpak.SpawnSignal).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SpawnSignal&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_spawn_signal&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">spawn_signal</span>(
+    <span class="doccomment">/// This methods let you send a Unix signal to a process that was started
+    /// [`spawn()`][`Flatpak::spawn`].
+    ///
+    /// # Arguments
+    ///
+    /// * `pid` - The PID of the process to send the signal to.
+    /// * `signal` - The signal to send.
+    /// * `to_process_group` - Whether to send the signal to the process group.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`SpawnSignal`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Flatpak.SpawnSignal).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;SpawnSignal&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_spawn_signal&quot;</span>)]
+    </span><span class="kw">pub async fn </span>spawn_signal(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">pid</span>: <span class="ident">u32</span>,
-        <span class="ident">signal</span>: <span class="ident">u32</span>,
-        <span class="ident">to_process_group</span>: <span class="ident">bool</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        pid: u32,
+        signal: u32,
+        to_process_group: bool,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;SpawnSignal&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">pid</span>, <span class="ident">signal</span>, <span class="ident">to_process_group</span>),
+            <span class="kw-2">&amp;</span>(pid, signal, to_process_group),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Flags marking what optional features are available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`supports`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-Flatpak.supports).</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">supports</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SupportsFlags</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>()
-            .<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SupportsFlags</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="string">&quot;supports&quot;</span>)
-            .<span class="kw">await</span>
-            .<span class="ident">map_err</span>(<span class="ident">From::from</span>)
+    <span class="doccomment">/// Flags marking what optional features are available.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`supports`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-Flatpak.supports).
+    </span><span class="kw">pub async fn </span>supports(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BitFlags&lt;SupportsFlags&gt;, Error&gt; {
+        <span class="self">self</span>.inner()
+            .get_property::&lt;BitFlags&lt;SupportsFlags&gt;&gt;(<span class="string">&quot;supports&quot;</span>)
+            .<span class="kw">await
+            </span>.map_err(From::from)
     }
 }
 
-<span class="doccomment">/// Monitor if there&#39;s an update it and install it.</span>
-<span class="kw">mod</span> <span class="ident">update_monitor</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">update_monitor</span>::{<span class="ident">UpdateInfo</span>, <span class="ident">UpdateMonitor</span>, <span class="ident">UpdateProgress</span>, <span class="ident">UpdateStatus</span>};
+<span class="doccomment">/// Monitor if there&#39;s an update it and install it.
+</span><span class="kw">mod </span>update_monitor;
+<span class="kw">pub use </span>update_monitor::{UpdateInfo, UpdateMonitor, UpdateProgress, UpdateStatus};
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

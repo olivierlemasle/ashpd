@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/documents/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/documents/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -538,543 +538,543 @@
 <span id="536">536</span>
 <span id="537">537</span>
 <span id="538">538</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::documents::{Documents, Permission};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = Documents::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.mount_point().await?);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     for (doc_id, host_path) in proxy.list(&quot;org.mozilla.firefox&quot;).await? {</span>
-<span class="doccomment">//!         if doc_id == &quot;f2ee988d&quot; {</span>
-<span class="doccomment">//!             let info = proxy.info(&amp;doc_id).await?;</span>
-<span class="doccomment">//!             println!(&quot;{:#?}&quot;, info);</span>
-<span class="doccomment">//!         }</span>
-<span class="doccomment">//!     }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .grant_permissions(</span>
-<span class="doccomment">//!             &quot;f2ee988d&quot;,</span>
-<span class="doccomment">//!             &quot;org.mozilla.firefox&quot;,</span>
-<span class="doccomment">//!             &amp;[Permission::GrantPermissions],</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .revoke_permissions(&quot;f2ee988d&quot;, &quot;org.mozilla.firefox&quot;, &amp;[Permission::Write])</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy.delete(&quot;f2ee988d&quot;).await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! ```rust,no_run
+//! use ashpd::documents::{Documents, Permission};
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = Documents::new().await?;
+//!
+//!     println!(&quot;{:#?}&quot;, proxy.mount_point().await?);
+//!
+//!     for (doc_id, host_path) in proxy.list(&quot;org.mozilla.firefox&quot;).await? {
+//!         if doc_id == &quot;f2ee988d&quot; {
+//!             let info = proxy.info(&amp;doc_id).await?;
+//!             println!(&quot;{:#?}&quot;, info);
+//!         }
+//!     }
+//!
+//!     proxy
+//!         .grant_permissions(
+//!             &quot;f2ee988d&quot;,
+//!             &quot;org.mozilla.firefox&quot;,
+//!             &amp;[Permission::GrantPermissions],
+//!         )
+//!         .await?;
+//!     proxy
+//!         .revoke_permissions(&quot;f2ee988d&quot;, &quot;org.mozilla.firefox&quot;, &amp;[Permission::Write])
+//!         .await?;
+//!
+//!     proxy.delete(&quot;f2ee988d&quot;).await?;
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">DESTINATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span>str = <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">collections::HashMap</span>,
-    <span class="ident">ffi::CString</span>,
-    <span class="ident">fmt</span>,
-    <span class="ident">os::unix</span>::{<span class="ident">ffi::OsStrExt</span>, <span class="ident">prelude::AsRawFd</span>},
-    <span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>},
-    <span class="ident">str::FromStr</span>,
+<span class="kw">use </span>std::{
+    collections::HashMap,
+    ffi::CString,
+    fmt,
+    os::unix::{ffi::OsStrExt, prelude::AsRawFd},
+    path::{Path, PathBuf},
+    str::FromStr,
 };
 
-<span class="kw">use</span> <span class="ident">enumflags2</span>::{<span class="ident">bitflags</span>, <span class="ident">BitFlags</span>};
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">OwnedValue</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>enumflags2::{bitflags, BitFlags};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
+<span class="kw">use </span>zbus::zvariant::{Fd, OwnedValue, Type};
 
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">path_from_null_terminated</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use crate</span>::{
+    helpers::{call_method, path_from_null_terminated, session_connection},
+    Error,
 };
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="doccomment">///</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DocumentFlags</span> {
-    <span class="doccomment">/// Reuse the existing document store entry for the file.</span>
-    <span class="ident">ReuseExisting</span>,
-    <span class="doccomment">/// Persistent file.</span>
-    <span class="ident">Persistent</span>,
-    <span class="doccomment">/// Depends on the application needs.</span>
-    <span class="ident">AsNeededByApp</span>,
-    <span class="doccomment">/// Export a directory.</span>
-    <span class="ident">ExportDirectory</span>,
+<span class="attribute">#[bitflags]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
+#[repr(u32)]
+</span><span class="doccomment">///
+</span><span class="kw">pub enum </span>DocumentFlags {
+    <span class="doccomment">/// Reuse the existing document store entry for the file.
+    </span>ReuseExisting,
+    <span class="doccomment">/// Persistent file.
+    </span>Persistent,
+    <span class="doccomment">/// Depends on the application needs.
+    </span>AsNeededByApp,
+    <span class="doccomment">/// Export a directory.
+    </span>ExportDirectory,
 }
 
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>;
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">OwnedDocumentID</span> <span class="op">=</span> <span class="ident">String</span>;
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>;
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">OwnedApplicationID</span> <span class="op">=</span> <span class="ident">String</span>;
+<span class="kw">pub type </span>DocumentID&lt;<span class="lifetime">&#39;a</span>&gt; = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str;
+<span class="kw">pub type </span>OwnedDocumentID = String;
+<span class="kw">pub type </span>ApplicationID&lt;<span class="lifetime">&#39;a</span>&gt; = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str;
+<span class="kw">pub type </span>OwnedApplicationID = String;
 
-<span class="doccomment">/// A [`HashMap`] mapping application IDs to the permissions for that</span>
-<span class="doccomment">/// application</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Permissions</span> <span class="op">=</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">OwnedApplicationID</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Permission</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+<span class="doccomment">/// A [`HashMap`] mapping application IDs to the permissions for that
+/// application
+</span><span class="kw">pub type </span>Permissions = HashMap&lt;OwnedApplicationID, Vec&lt;Permission&gt;&gt;;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;kebab-case&quot;</span>)]</span>
-<span class="doccomment">/// The possible permissions to grant to a specific application for a specific</span>
-<span class="doccomment">/// document.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Permission</span> {
-    <span class="doccomment">/// Read access.</span>
-    <span class="ident">Read</span>,
-    <span class="doccomment">/// Write access.</span>
-    <span class="ident">Write</span>,
-    <span class="doccomment">/// The possibility to grant new permissions to the file.</span>
-    <span class="ident">GrantPermissions</span>,
-    <span class="doccomment">/// Delete access.</span>
-    <span class="ident">Delete</span>,
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Eq, Type)]
+#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+#[serde(rename_all = <span class="string">&quot;kebab-case&quot;</span>)]
+</span><span class="doccomment">/// The possible permissions to grant to a specific application for a specific
+/// document.
+</span><span class="kw">pub enum </span>Permission {
+    <span class="doccomment">/// Read access.
+    </span>Read,
+    <span class="doccomment">/// Write access.
+    </span>Write,
+    <span class="doccomment">/// The possibility to grant new permissions to the file.
+    </span>GrantPermissions,
+    <span class="doccomment">/// Delete access.
+    </span>Delete,
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Permission</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Read</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Read&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Write</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Write&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::GrantPermissions</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Grant Permissions&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Delete</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Delete&quot;</span>),
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Permission {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Read =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Read&quot;</span>),
+            <span class="self">Self</span>::Write =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Write&quot;</span>),
+            <span class="self">Self</span>::GrantPermissions =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Grant Permissions&quot;</span>),
+            <span class="self">Self</span>::Delete =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Delete&quot;</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Permission</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Read</span> =&gt; <span class="string">&quot;Read&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Write</span> =&gt; <span class="string">&quot;Write&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::GrantPermissions</span> =&gt; <span class="string">&quot;Grant Permissions&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Delete</span> =&gt; <span class="string">&quot;Delete&quot;</span>,
+<span class="kw">impl </span>AsRef&lt;str&gt; <span class="kw">for </span>Permission {
+    <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Read =&gt; <span class="string">&quot;Read&quot;</span>,
+            <span class="self">Self</span>::Write =&gt; <span class="string">&quot;Write&quot;</span>,
+            <span class="self">Self</span>::GrantPermissions =&gt; <span class="string">&quot;Grant Permissions&quot;</span>,
+            <span class="self">Self</span>::Delete =&gt; <span class="string">&quot;Delete&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Permission</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">p</span>: <span class="ident">Permission</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">p</span> {
-            <span class="ident">Permission::Read</span> =&gt; <span class="string">&quot;Read&quot;</span>,
-            <span class="ident">Permission::Write</span> =&gt; <span class="string">&quot;Write&quot;</span>,
-            <span class="ident">Permission::GrantPermissions</span> =&gt; <span class="string">&quot;Grant Permissions&quot;</span>,
-            <span class="ident">Permission::Delete</span> =&gt; <span class="string">&quot;Delete&quot;</span>,
+<span class="kw">impl </span>From&lt;Permission&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="kw">fn </span>from(p: Permission) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>p {
+            Permission::Read =&gt; <span class="string">&quot;Read&quot;</span>,
+            Permission::Write =&gt; <span class="string">&quot;Write&quot;</span>,
+            Permission::GrantPermissions =&gt; <span class="string">&quot;Grant Permissions&quot;</span>,
+            Permission::Delete =&gt; <span class="string">&quot;Delete&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Permission</span> {
-    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl </span>FromStr <span class="kw">for </span>Permission {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= Error;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">s</span> {
-            <span class="string">&quot;Read&quot;</span> <span class="op">|</span> <span class="string">&quot;read&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Permission::Read</span>),
-            <span class="string">&quot;Write&quot;</span> <span class="op">|</span> <span class="string">&quot;write&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Permission::Write</span>),
-            <span class="string">&quot;GrantPermissions&quot;</span> <span class="op">|</span> <span class="string">&quot;grant-permissions&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Permission::GrantPermissions</span>),
-            <span class="string">&quot;Delete&quot;</span> <span class="op">|</span> <span class="string">&quot;delete&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Permission::Delete</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(<span class="string">&quot;Failed to parse priority, invalid value&quot;</span>)),
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+        <span class="kw">match </span>s {
+            <span class="string">&quot;Read&quot; </span>| <span class="string">&quot;read&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Permission::Read),
+            <span class="string">&quot;Write&quot; </span>| <span class="string">&quot;write&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Permission::Write),
+            <span class="string">&quot;GrantPermissions&quot; </span>| <span class="string">&quot;grant-permissions&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Permission::GrantPermissions),
+            <span class="string">&quot;Delete&quot; </span>| <span class="string">&quot;delete&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Permission::Delete),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::ParseError(<span class="string">&quot;Failed to parse priority, invalid value&quot;</span>)),
         }
     }
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications make files from the outside world</span>
-<span class="doccomment">/// available to sandboxed applications in a controlled way.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Exported files will be made accessible to the application via a fuse</span>
-<span class="doccomment">/// filesystem that gets mounted at `/run/user/$UID/doc/`. The filesystem gets</span>
-<span class="doccomment">/// mounted both outside and inside the sandbox, but the view inside the sandbox</span>
-<span class="doccomment">/// is restricted to just those files that the application is allowed to access.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Individual files will appear at `/run/user/$UID/doc/$DOC_ID/filename`,</span>
-<span class="doccomment">/// where `$DOC_ID` is the ID of the file in the document store.</span>
-<span class="doccomment">/// It is returned by the [`Documents::add`] and</span>
-<span class="doccomment">/// [`Documents::add_named`] calls.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The permissions that the application has for a document store entry (see</span>
-<span class="doccomment">/// [`Documents::grant_permissions`]) are reflected in the POSIX mode bits</span>
-<span class="doccomment">/// in the fuse filesystem.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Documents`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Documents).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Documents</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface lets sandboxed applications make files from the outside world
+/// available to sandboxed applications in a controlled way.
+///
+/// Exported files will be made accessible to the application via a fuse
+/// filesystem that gets mounted at `/run/user/$UID/doc/`. The filesystem gets
+/// mounted both outside and inside the sandbox, but the view inside the sandbox
+/// is restricted to just those files that the application is allowed to access.
+///
+/// Individual files will appear at `/run/user/$UID/doc/$DOC_ID/filename`,
+/// where `$DOC_ID` is the ID of the file in the document store.
+/// It is returned by the [`Documents::add`] and
+/// [`Documents::add_named`] calls.
+///
+/// The permissions that the application has for a document store entry (see
+/// [`Documents::grant_permissions`]) are reflected in the POSIX mode bits
+/// in the fuse filesystem.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Documents`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Documents).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)]
+</span><span class="kw">pub struct </span>Documents&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Documents</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`Documents`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Documents</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Documents&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`Documents`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;Documents&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Adds a file to the document store.</span>
-    <span class="doccomment">/// The file is passed in the form of an open file descriptor</span>
-    <span class="doccomment">/// to prove that the caller has access to the file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_fd` - Open file descriptor for the file to add.</span>
-    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry</span>
-    <span class="doccomment">///   for the file.</span>
-    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or</span>
-    <span class="doccomment">///   permanently.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The ID of the file in the document store.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Add`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Add).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Add&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add</span>(
+    <span class="doccomment">/// Adds a file to the document store.
+    /// The file is passed in the form of an open file descriptor
+    /// to prove that the caller has access to the file.
+    ///
+    /// # Arguments
+    ///
+    /// * `o_path_fd` - Open file descriptor for the file to add.
+    /// * `reuse_existing` - Whether to reuse an existing document store entry
+    ///   for the file.
+    /// * `persistent` - Whether to add the file only for this session or
+    ///   permanently.
+    ///
+    /// # Returns
+    ///
+    /// The ID of the file in the document store.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Add`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Add).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Add&quot;</span>)]
+    </span><span class="kw">pub async fn </span>add(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">o_path_fd</span>: <span class="kw-2">&amp;</span>(<span class="kw">impl</span> <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>),
-        <span class="ident">reuse_existing</span>: <span class="ident">bool</span>,
-        <span class="ident">persistent</span>: <span class="ident">bool</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        o_path_fd: <span class="kw-2">&amp;</span>(<span class="kw">impl </span>AsRawFd + fmt::Debug),
+        reuse_existing: bool,
+        persistent: bool,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedDocumentID, Error&gt; {
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;Add&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">Fd::from</span>(<span class="ident">o_path_fd</span>.<span class="ident">as_raw_fd</span>()), <span class="ident">reuse_existing</span>, <span class="ident">persistent</span>),
+            <span class="kw-2">&amp;</span>(Fd::from(o_path_fd.as_raw_fd()), reuse_existing, persistent),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Adds multiple files to the document store.</span>
-    <span class="doccomment">/// The files are passed in the form of an open file descriptor</span>
-    <span class="doccomment">/// to prove that the caller has access to the file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_fds` - Open file descriptors for the files to export.</span>
-    <span class="doccomment">/// * `flags` - A [`DocumentFlags`].</span>
-    <span class="doccomment">/// * `app_id` - An application ID, or empty string.</span>
-    <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The IDs of the files in the document store along with other extra info.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AddFull`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.AddFull).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddFull&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_full</span>(
+    <span class="doccomment">/// Adds multiple files to the document store.
+    /// The files are passed in the form of an open file descriptor
+    /// to prove that the caller has access to the file.
+    ///
+    /// # Arguments
+    ///
+    /// * `o_path_fds` - Open file descriptors for the files to export.
+    /// * `flags` - A [`DocumentFlags`].
+    /// * `app_id` - An application ID, or empty string.
+    /// * `permissions` - The permissions to grant.
+    ///
+    /// # Returns
+    ///
+    /// The IDs of the files in the document store along with other extra info.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AddFull`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.AddFull).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AddFull&quot;</span>)]
+    </span><span class="kw">pub async fn </span>add_full(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">o_path_fds</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>],
-        <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DocumentFlags</span><span class="op">&gt;</span>,
-        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span><span class="op">&gt;</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">o_path</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">o_path_fds</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">Fd::from</span>(<span class="ident">f</span>.<span class="ident">as_raw_fd</span>())).<span class="ident">collect</span>();
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        o_path_fds: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd],
+        flags: BitFlags&lt;DocumentFlags&gt;,
+        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        permissions: <span class="kw-2">&amp;</span>[Permission],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;OwnedDocumentID&gt;, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
+        <span class="kw">let </span>o_path: Vec&lt;Fd&gt; = o_path_fds.iter().map(|f| Fd::from(f.as_raw_fd())).collect();
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;AddFull&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">o_path</span>, <span class="ident">flags</span>, <span class="ident">app_id</span>, <span class="ident">permissions</span>),
+            <span class="kw-2">&amp;</span>(o_path, flags, app_id, permissions),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Creates an entry in the document store for writing a new file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_parent_fd` - Open file descriptor for the parent directory.</span>
-    <span class="doccomment">/// * `filename` - The basename for the file.</span>
-    <span class="doccomment">/// * `reuse_existing` - Whether to reuse an existing document store entry</span>
-    <span class="doccomment">///   for the file.</span>
-    <span class="doccomment">/// * `persistent` - Whether to add the file only for this session or</span>
-    <span class="doccomment">///   permanently.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The ID of the file in the document store.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AddNamed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.AddNamed).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddNamed&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_named</span>(
+    <span class="doccomment">/// Creates an entry in the document store for writing a new file.
+    ///
+    /// # Arguments
+    ///
+    /// * `o_path_parent_fd` - Open file descriptor for the parent directory.
+    /// * `filename` - The basename for the file.
+    /// * `reuse_existing` - Whether to reuse an existing document store entry
+    ///   for the file.
+    /// * `persistent` - Whether to add the file only for this session or
+    ///   permanently.
+    ///
+    /// # Returns
+    ///
+    /// The ID of the file in the document store.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AddNamed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.AddNamed).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AddNamed&quot;</span>)]
+    </span><span class="kw">pub async fn </span>add_named(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">o_path_parent_fd</span>: <span class="kw-2">&amp;</span>(<span class="kw">impl</span> <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>),
-        <span class="ident">filename</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>,
-        <span class="ident">reuse_existing</span>: <span class="ident">bool</span>,
-        <span class="ident">persistent</span>: <span class="ident">bool</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        o_path_parent_fd: <span class="kw-2">&amp;</span>(<span class="kw">impl </span>AsRawFd + fmt::Debug),
+        filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
+        reuse_existing: bool,
+        persistent: bool,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedDocumentID, Error&gt; {
+        <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
+            .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;AddNamed&quot;</span>,
             <span class="kw-2">&amp;</span>(
-                <span class="ident">Fd::from</span>(<span class="ident">o_path_parent_fd</span>.<span class="ident">as_raw_fd</span>()),
-                <span class="ident">cstr</span>.<span class="ident">as_bytes_with_nul</span>(),
-                <span class="ident">reuse_existing</span>,
-                <span class="ident">persistent</span>,
+                Fd::from(o_path_parent_fd.as_raw_fd()),
+                cstr.as_bytes_with_nul(),
+                reuse_existing,
+                persistent,
             ),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Adds multiple files to the document store.</span>
-    <span class="doccomment">/// The files are passed in the form of an open file descriptor</span>
-    <span class="doccomment">/// to prove that the caller has access to the file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `o_path_fd` - Open file descriptor for the parent directory.</span>
-    <span class="doccomment">/// * `filename` - The basename for the file.</span>
-    <span class="doccomment">/// * `flags` - A [`DocumentFlags`].</span>
-    <span class="doccomment">/// * `app_id` - An application ID, or empty string.</span>
-    <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The ID of the file in the document store along with other extra info.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AddNamedFull`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.AddNamedFull).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AddNamedFull&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_named_full</span>(
+    <span class="doccomment">/// Adds multiple files to the document store.
+    /// The files are passed in the form of an open file descriptor
+    /// to prove that the caller has access to the file.
+    ///
+    /// # Arguments
+    ///
+    /// * `o_path_fd` - Open file descriptor for the parent directory.
+    /// * `filename` - The basename for the file.
+    /// * `flags` - A [`DocumentFlags`].
+    /// * `app_id` - An application ID, or empty string.
+    /// * `permissions` - The permissions to grant.
+    ///
+    /// # Returns
+    ///
+    /// The ID of the file in the document store along with other extra info.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AddNamedFull`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.AddNamedFull).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AddNamedFull&quot;</span>)]
+    </span><span class="kw">pub async fn </span>add_named_full(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">o_path_fd</span>: <span class="kw-2">&amp;</span>(<span class="kw">impl</span> <span class="ident">AsRawFd</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>),
-        <span class="ident">filename</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>,
-        <span class="ident">flags</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">DocumentFlags</span><span class="op">&gt;</span>,
-        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">OwnedDocumentID</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        o_path_fd: <span class="kw-2">&amp;</span>(<span class="kw">impl </span>AsRawFd + fmt::Debug),
+        filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
+        flags: BitFlags&lt;DocumentFlags&gt;,
+        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        permissions: <span class="kw-2">&amp;</span>[Permission],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(OwnedDocumentID, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
+        <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
+            .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;AddNamedFull&quot;</span>,
             <span class="kw-2">&amp;</span>(
-                <span class="ident">Fd::from</span>(<span class="ident">o_path_fd</span>.<span class="ident">as_raw_fd</span>()),
-                <span class="ident">cstr</span>.<span class="ident">as_bytes_with_nul</span>(),
-                <span class="ident">flags</span>,
-                <span class="ident">app_id</span>,
-                <span class="ident">permissions</span>,
+                Fd::from(o_path_fd.as_raw_fd()),
+                cstr.as_bytes_with_nul(),
+                flags,
+                app_id,
+                permissions,
             ),
         )
-        .<span class="kw">await</span>
+        .<span class="kw">await
+    </span>}
+
+    <span class="doccomment">/// Removes an entry from the document store. The file itself is not
+    /// deleted.
+    ///
+    /// **Note** This call is available inside the sandbox if the
+    /// application has the [`Permission::Delete`] for the document.
+    ///
+    /// # Arguments
+    ///
+    /// * `doc_id` - The ID of the file in the document store.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Delete`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Delete).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Delete&quot;</span>)]
+    </span><span class="kw">pub async fn </span>delete(<span class="kw-2">&amp;</span><span class="self">self</span>, doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Delete&quot;</span>, <span class="kw-2">&amp;</span>(doc_id)).<span class="kw">await
+    </span>}
+
+    <span class="doccomment">/// Returns the path at which the document store fuse filesystem is mounted.
+    /// This will typically be `/run/user/$UID/doc/`.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`GetMountPoint`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.GetMountPoint).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetMountPoint&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_mount_point&quot;</span>)]
+    </span><span class="kw">pub async fn </span>mount_point(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;PathBuf, Error&gt; {
+        <span class="kw">let </span>bytes: Vec&lt;u8&gt; = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(path_from_null_terminated(bytes))
     }
 
-    <span class="doccomment">/// Removes an entry from the document store. The file itself is not</span>
-    <span class="doccomment">/// deleted.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** This call is available inside the sandbox if the</span>
-    <span class="doccomment">/// application has the [`Permission::Delete`] for the document.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Delete`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Delete).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Delete&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;Delete&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>)).<span class="kw">await</span>
-    }
-
-    <span class="doccomment">/// Returns the path at which the document store fuse filesystem is mounted.</span>
-    <span class="doccomment">/// This will typically be `/run/user/$UID/doc/`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GetMountPoint`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.GetMountPoint).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetMountPoint&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_mount_point&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">mount_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PathBuf</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">path_from_null_terminated</span>(<span class="ident">bytes</span>))
-    }
-
-    <span class="doccomment">/// Grants access permissions for a file in the document store to an</span>
-    <span class="doccomment">/// application.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** This call is available inside the sandbox if the</span>
-    <span class="doccomment">/// application has the [`Permission::GrantPermissions`] for the document.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
-    <span class="doccomment">/// * `app_id` - The ID of the application to which permissions are granted.</span>
-    <span class="doccomment">/// * `permissions` - The permissions to grant.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GrantPermissions`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.GrantPermissions).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GrantPermissions&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">grant_permissions</span>(
+    <span class="doccomment">/// Grants access permissions for a file in the document store to an
+    /// application.
+    ///
+    /// **Note** This call is available inside the sandbox if the
+    /// application has the [`Permission::GrantPermissions`] for the document.
+    ///
+    /// # Arguments
+    ///
+    /// * `doc_id` - The ID of the file in the document store.
+    /// * `app_id` - The ID of the application to which permissions are granted.
+    /// * `permissions` - The permissions to grant.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`GrantPermissions`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.GrantPermissions).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GrantPermissions&quot;</span>)]
+    </span><span class="kw">pub async fn </span>grant_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        permissions: <span class="kw-2">&amp;</span>[Permission],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;GrantPermissions&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>, <span class="ident">app_id</span>, <span class="ident">permissions</span>),
+            <span class="kw-2">&amp;</span>(doc_id, app_id, permissions),
         )
-        .<span class="kw">await</span>
+        .<span class="kw">await
+    </span>}
+
+    <span class="doccomment">/// Gets the filesystem path and application permissions for a document
+    /// store entry.
+    ///
+    /// **Note** This call is not available inside the sandbox.
+    ///
+    /// # Arguments
+    ///
+    /// * `doc_id` - The ID of the file in the document store.
+    ///
+    /// # Returns
+    ///
+    /// The path of the file in the host filesystem along with the
+    /// [`Permissions`].
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Info`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Info).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Info&quot;</span>)]
+    </span><span class="kw">pub async fn </span>info(<span class="kw-2">&amp;</span><span class="self">self</span>, doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(PathBuf, Permissions), Error&gt; {
+        <span class="kw">let </span>(bytes, permissions): (Vec&lt;u8&gt;, Permissions) =
+            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(doc_id)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>((path_from_null_terminated(bytes), permissions))
     }
 
-    <span class="doccomment">/// Gets the filesystem path and application permissions for a document</span>
-    <span class="doccomment">/// store entry.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** This call is not available inside the sandbox.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The path of the file in the host filesystem along with the</span>
-    <span class="doccomment">/// [`Permissions`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Info`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Info).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Info&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">PathBuf</span>, <span class="ident">Permissions</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> (<span class="ident">bytes</span>, <span class="ident">permissions</span>): (<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Permissions</span>) <span class="op">=</span>
-            <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>((<span class="ident">path_from_null_terminated</span>(<span class="ident">bytes</span>), <span class="ident">permissions</span>))
-    }
-
-    <span class="doccomment">/// Lists documents in the document store for an application (or for all</span>
-    <span class="doccomment">/// applications).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** This call is not available inside the sandbox.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `app-id` - The application ID, or &#39;&#39; to list all documents.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`HashMap`] mapping document IDs to their filesystem path on the host</span>
-    <span class="doccomment">/// system.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`List`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.List).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;List&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">list</span>(
+    <span class="doccomment">/// Lists documents in the document store for an application (or for all
+    /// applications).
+    ///
+    /// **Note** This call is not available inside the sandbox.
+    ///
+    /// # Arguments
+    ///
+    /// * `app-id` - The application ID, or &#39;&#39; to list all documents.
+    ///
+    /// # Returns
+    ///
+    /// [`HashMap`] mapping document IDs to their filesystem path on the host
+    /// system.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`List`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.List).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;List&quot;</span>)]
+    </span><span class="kw">pub async fn </span>list(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span>, <span class="ident">PathBuf</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">response</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span>
-            <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">app_id</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;OwnedDocumentID, PathBuf&gt;, Error&gt; {
+        <span class="kw">let </span>response: HashMap&lt;String, Vec&lt;u8&gt;&gt; =
+            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id)).<span class="kw">await</span><span class="question-mark">?</span>;
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_response</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">PathBuf</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">bytes</span>) <span class="kw">in</span> <span class="ident">response</span> {
-            <span class="ident">new_response</span>.<span class="ident">insert</span>(<span class="ident">key</span>, <span class="ident">path_from_null_terminated</span>(<span class="ident">bytes</span>));
+        <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;String, PathBuf&gt; = HashMap::new();
+        <span class="kw">for </span>(key, bytes) <span class="kw">in </span>response {
+            new_response.insert(key, path_from_null_terminated(bytes));
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">new_response</span>)
+        <span class="prelude-val">Ok</span>(new_response)
     }
 
-    <span class="doccomment">/// Looks up the document ID for a file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** This call is not available inside the sandbox.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `filename` - A path in the host filesystem.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The ID of the file in the document store, or [`None`] if the file is not</span>
-    <span class="doccomment">/// in the document store.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Lookup`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Lookup).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Lookup&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">lookup</span>(
+    <span class="doccomment">/// Looks up the document ID for a file.
+    ///
+    /// **Note** This call is not available inside the sandbox.
+    ///
+    /// # Arguments
+    ///
+    /// * `filename` - A path in the host filesystem.
+    ///
+    /// # Returns
+    ///
+    /// The ID of the file in the document store, or [`None`] if the file is not
+    /// in the document store.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Lookup`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Lookup).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Lookup&quot;</span>)]
+    </span><span class="kw">pub async fn </span>lookup(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">filename</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OwnedDocumentID</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cstr</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">as_os_str</span>().<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
-        <span class="kw">let</span> <span class="ident">doc_id</span>: <span class="ident">String</span> <span class="op">=</span>
-            <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">cstr</span>.<span class="ident">as_bytes_with_nul</span>())).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">if</span> <span class="ident">doc_id</span>.<span class="ident">is_empty</span>() {
+        filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;OwnedDocumentID&gt;, Error&gt; {
+        <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
+            .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
+        <span class="kw">let </span>doc_id: String =
+            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(cstr.as_bytes_with_nul())).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">if </span>doc_id.is_empty() {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">doc_id</span>))
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(doc_id))
         }
     }
 
-    <span class="doccomment">/// Revokes access permissions for a file in the document store from an</span>
-    <span class="doccomment">/// application.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** This call is available inside the sandbox if the</span>
-    <span class="doccomment">/// application has the [`Permission::GrantPermissions`] for the document.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `doc_id` - The ID of the file in the document store.</span>
-    <span class="doccomment">/// * `app_id` - The ID of the application from which the permissions are</span>
-    <span class="doccomment">///   revoked.</span>
-    <span class="doccomment">/// * `permissions` - The permissions to revoke.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`RevokePermissions`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.RevokePermissions).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RevokePermissions&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">revoke_permissions</span>(
+    <span class="doccomment">/// Revokes access permissions for a file in the document store from an
+    /// application.
+    ///
+    /// **Note** This call is available inside the sandbox if the
+    /// application has the [`Permission::GrantPermissions`] for the document.
+    ///
+    /// # Arguments
+    ///
+    /// * `doc_id` - The ID of the file in the document store.
+    /// * `app_id` - The ID of the application from which the permissions are
+    ///   revoked.
+    /// * `permissions` - The permissions to revoke.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`RevokePermissions`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.RevokePermissions).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;RevokePermissions&quot;</span>)]
+    </span><span class="kw">pub async fn </span>revoke_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">doc_id</span>: <span class="ident">DocumentID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">app_id</span>: <span class="ident">ApplicationID</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">permissions</span>: <span class="kw-2">&amp;</span>[<span class="ident">Permission</span>],
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        permissions: <span class="kw-2">&amp;</span>[Permission],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;RevokePermissions&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">doc_id</span>, <span class="ident">app_id</span>, <span class="ident">permissions</span>),
+            <span class="kw-2">&amp;</span>(doc_id, app_id, permissions),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 }
 
-<span class="doccomment">/// Interact with `org.freedesktop.portal.FileTransfer` interface.</span>
-<span class="kw">mod</span> <span class="ident">file_transfer</span>;
+<span class="doccomment">/// Interact with `org.freedesktop.portal.FileTransfer` interface.
+</span><span class="kw">mod </span>file_transfer;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">file_transfer::FileTransfer</span>;
+<span class="kw">pub use </span>file_transfer::FileTransfer;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::documents::Permission</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span><span class="kw">crate</span>::documents::Permission;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">serialize_deserialize</span>() {
-        <span class="kw">let</span> <span class="ident">permission</span> <span class="op">=</span> <span class="ident">Permission::GrantPermissions</span>;
-        <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">serde_json::to_string</span>(<span class="kw-2">&amp;</span><span class="ident">permission</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">string</span>, <span class="string">&quot;\&quot;grant-permissions\&quot;&quot;</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>serialize_deserialize() {
+        <span class="kw">let </span>permission = Permission::GrantPermissions;
+        <span class="kw">let </span>string = serde_json::to_string(<span class="kw-2">&amp;</span>permission).unwrap();
+        <span class="macro">assert_eq!</span>(string, <span class="string">&quot;\&quot;grant-permissions\&quot;&quot;</span>);
 
-        <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">string</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">permission</span>, <span class="ident">decoded</span>);
+        <span class="kw">let </span>decoded = serde_json::from_str(<span class="kw-2">&amp;</span>string).unwrap();
+        <span class="macro">assert_eq!</span>(permission, decoded);
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/window_identifier/gtk3.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gtk3.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/window_identifier/gtk3.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gtk3.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -182,187 +182,187 @@
 <span id="180">180</span>
 <span id="181">181</span>
 <span id="182">182</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">sync::Arc</span>};
+</pre><pre class="rust"><code><span class="kw">use </span>std::{fmt, sync::Arc};
 
-<span class="kw">use</span> <span class="ident">futures_util::lock::Mutex</span>;
-<span class="kw">use</span> <span class="ident">gdk::Backend</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">glib::translate::ToGlibPtr</span>;
-<span class="kw">use</span> <span class="ident">gtk3</span>::{
-    <span class="ident">gdk</span>,
-    <span class="ident">glib</span>::{<span class="self">self</span>, <span class="ident">clone</span>},
-    <span class="ident">prelude</span>::<span class="kw-2">*</span>,
+<span class="kw">use </span>futures_util::lock::Mutex;
+<span class="kw">use </span>gdk::Backend;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;raw_handle&quot;</span>)]
+</span><span class="kw">use </span>glib::translate::ToGlibPtr;
+<span class="kw">use </span>gtk3::{
+    gdk,
+    glib::{<span class="self">self</span>, clone},
+    prelude::<span class="kw-2">*</span>,
 };
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">raw_window_handle</span>::{
-    <span class="ident">RawDisplayHandle</span>, <span class="ident">RawWindowHandle</span>, <span class="ident">WaylandDisplayHandle</span>, <span class="ident">WaylandWindowHandle</span>,
-    <span class="ident">XlibDisplayHandle</span>, <span class="ident">XlibWindowHandle</span>,
+<span class="attribute">#[cfg(feature = <span class="string">&quot;raw_handle&quot;</span>)]
+</span><span class="kw">use </span>raw_window_handle::{
+    RawDisplayHandle, RawWindowHandle, WaylandDisplayHandle, WaylandWindowHandle,
+    XlibDisplayHandle, XlibWindowHandle,
 };
 
-<span class="kw">use</span> <span class="ident"><span class="kw">super</span>::WindowIdentifierType</span>;
+<span class="kw">use </span><span class="kw">super</span>::WindowIdentifierType;
 
-<span class="kw">static</span> <span class="ident">WINDOW_HANDLE_KEY</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;ashpd-wayland-gtk3-window-handle&quot;</span>;
+<span class="kw">static </span>WINDOW_HANDLE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">&quot;ashpd-wayland-gtk3-window-handle&quot;</span>;
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Gtk3WindowIdentifier</span> {
-    <span class="ident">window</span>: <span class="ident">gdk::Window</span>,
-    <span class="ident">type_</span>: <span class="ident">WindowIdentifierType</span>,
-    <span class="ident">exported</span>: <span class="ident">bool</span>,
+<span class="kw">pub struct </span>Gtk3WindowIdentifier {
+    window: gdk::Window,
+    type_: WindowIdentifierType,
+    exported: bool,
 }
 
-<span class="kw">impl</span> <span class="ident">Gtk3WindowIdentifier</span> {
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">glib::IsA</span><span class="op">&lt;</span><span class="ident">gdk::Window</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">window</span>.<span class="ident">as_ref</span>().<span class="ident">display</span>().<span class="ident">backend</span>() {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3_wayland&quot;</span>)]</span>
-            <span class="ident">Backend::Wayland</span> =&gt; {
-                <span class="kw">let</span> <span class="ident">wayland_win</span> <span class="op">=</span> <span class="ident">window</span>
-                    .<span class="ident">as_ref</span>()
-                    .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3wayland::WaylandWindow</span><span class="op">&gt;</span>()
-                    .<span class="ident">unwrap</span>();
-                <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">handle</span>) <span class="op">=</span> <span class="ident">wayland_win</span>.<span class="ident">data</span>(<span class="ident">WINDOW_HANDLE_KEY</span>) {
-                        <span class="kw">let</span> (<span class="ident">handle</span>, <span class="ident">ref_count</span>): <span class="kw-2">&amp;mut</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">u8</span>) <span class="op">=</span> <span class="ident">handle</span>.<span class="ident">as_mut</span>();
-                        <span class="kw-2">*</span><span class="ident">ref_count</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                        <span class="ident">handle</span>.<span class="ident">clone</span>()
-                    } <span class="kw">else</span> {
-                        <span class="kw">let</span> (<span class="ident">sender</span>, <span class="ident">receiver</span>) <span class="op">=</span> <span class="ident">futures_channel::oneshot::channel</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>();
-                        <span class="kw">let</span> <span class="ident">sender</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="prelude-val">Some</span>(<span class="ident">sender</span>)));
+<span class="kw">impl </span>Gtk3WindowIdentifier {
+    <span class="kw">pub async fn </span>new(window: <span class="kw-2">&amp;</span><span class="kw">impl </span>glib::IsA&lt;gdk::Window&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">match </span>window.as_ref().display().backend() {
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3_wayland&quot;</span>)]
+            </span>Backend::Wayland =&gt; {
+                <span class="kw">let </span>wayland_win = window
+                    .as_ref()
+                    .downcast_ref::&lt;gdk3wayland::WaylandWindow&gt;()
+                    .unwrap();
+                <span class="kw">let </span>handle = <span class="kw">unsafe </span>{
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>handle) = wayland_win.data(WINDOW_HANDLE_KEY) {
+                        <span class="kw">let </span>(handle, ref_count): <span class="kw-2">&amp;mut </span>(<span class="prelude-ty">Option</span>&lt;String&gt;, u8) = handle.as_mut();
+                        <span class="kw-2">*</span>ref_count += <span class="number">1</span>;
+                        handle.clone()
+                    } <span class="kw">else </span>{
+                        <span class="kw">let </span>(sender, receiver) = futures_channel::oneshot::channel::&lt;String&gt;();
+                        <span class="kw">let </span>sender = Arc::new(Mutex::new(<span class="prelude-val">Some</span>(sender)));
 
-                        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">wayland_win</span>.<span class="ident">export_handle</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span> =&gt; <span class="kw">move</span> <span class="op">|</span><span class="kw">_</span>, <span class="ident">handle</span><span class="op">|</span> {
-                            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">glib::MainContext::default</span>();
-                            <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">handle</span>.<span class="ident">to_owned</span>();
-                            <span class="ident">ctx</span>.<span class="ident">spawn_local</span>(<span class="macro">clone!</span>(@<span class="ident">strong</span> <span class="ident">sender</span>, @<span class="ident">strong</span> <span class="ident">handle</span> =&gt; <span class="kw">async</span> <span class="kw">move</span> {
-                                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span> <span class="ident">sender</span>.<span class="ident">lock</span>().<span class="kw">await</span>.<span class="ident">take</span>() {
-                                    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">send</span>(<span class="ident">handle</span>);
+                        <span class="kw">let </span>result = wayland_win.export_handle(<span class="macro">clone!</span>(@strong sender =&gt; <span class="kw">move </span>|<span class="kw">_</span>, handle| {
+                            <span class="kw">let </span>ctx = glib::MainContext::default();
+                            <span class="kw">let </span>handle = handle.to_owned();
+                            ctx.spawn_local(<span class="macro">clone!</span>(@strong sender, @strong handle =&gt; <span class="kw">async move </span>{
+                                <span class="kw">if let </span><span class="prelude-val">Some</span>(m) = sender.lock().<span class="kw">await</span>.take() {
+                                    <span class="kw">let _ </span>= m.send(handle);
                                 }
                             }));
                         }));
-                        <span class="kw">if</span> <span class="op">!</span><span class="ident">result</span> {
-                            <span class="kw">return</span> <span class="prelude-val">None</span>;
+                        <span class="kw">if </span>!result {
+                            <span class="kw">return </span><span class="prelude-val">None</span>;
                         }
 
-                        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">receiver</span>.<span class="kw">await</span>.<span class="ident">ok</span>();
-                        <span class="ident">wayland_win</span>.<span class="ident">set_data</span>(<span class="ident">WINDOW_HANDLE_KEY</span>, (<span class="ident">handle</span>.<span class="ident">clone</span>(), <span class="number">1</span>));
-                        <span class="ident">handle</span>
+                        <span class="kw">let </span>handle = receiver.<span class="kw">await</span>.ok();
+                        wayland_win.set_data(WINDOW_HANDLE_KEY, (handle.clone(), <span class="number">1</span>));
+                        handle
                     }
                 };
-                <span class="prelude-val">Some</span>(<span class="self">Self</span> {
-                    <span class="ident">window</span>: <span class="ident">window</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>(),
-                    <span class="ident">exported</span>: <span class="ident">handle</span>.<span class="ident">is_some</span>(),
-                    <span class="ident">type_</span>: <span class="ident">WindowIdentifierType::Wayland</span>(<span class="ident">handle</span>.<span class="ident">unwrap_or_default</span>()),
+                <span class="prelude-val">Some</span>(<span class="self">Self </span>{
+                    window: window.clone().upcast(),
+                    exported: handle.is_some(),
+                    type_: WindowIdentifierType::Wayland(handle.unwrap_or_default()),
                 })
             }
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3_x11&quot;</span>)]</span>
-            <span class="ident">Backend::X11</span> =&gt; {
-                <span class="kw">let</span> <span class="ident">xid</span> <span class="op">=</span> <span class="ident">window</span>
-                    .<span class="ident">as_ref</span>()
-                    .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3x11::X11Window</span><span class="op">&gt;</span>()
-                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="ident">w</span>.<span class="ident">xid</span>())<span class="question-mark">?</span>;
-                <span class="prelude-val">Some</span>(<span class="self">Self</span> {
-                    <span class="ident">window</span>: <span class="ident">window</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>(),
-                    <span class="ident">exported</span>: <span class="bool-val">false</span>,
-                    <span class="ident">type_</span>: <span class="ident">WindowIdentifierType::X11</span>(<span class="ident">xid</span>),
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3_x11&quot;</span>)]
+            </span>Backend::X11 =&gt; {
+                <span class="kw">let </span>xid = window
+                    .as_ref()
+                    .downcast_ref::&lt;gdk3x11::X11Window&gt;()
+                    .map(|w| w.xid())<span class="question-mark">?</span>;
+                <span class="prelude-val">Some</span>(<span class="self">Self </span>{
+                    window: window.clone().upcast(),
+                    exported: <span class="bool-val">false</span>,
+                    type_: WindowIdentifierType::X11(xid),
                 })
             }
-            <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">RawWindowHandle</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">type_</span> {
-                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3_wayland&quot;</span>)]</span>
-                <span class="ident">WindowIdentifierType::Wayland</span>(<span class="kw">_</span>) =&gt; {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wayland_handle</span> <span class="op">=</span> <span class="ident">WaylandWindowHandle::empty</span>();
-                    <span class="ident">wayland_handle</span>.<span class="ident">surface</span> <span class="op">=</span> <span class="ident">gdk3wayland::ffi::gdk_wayland_window_get_wl_surface</span>(
-                        <span class="self">self</span>.<span class="ident">window</span>
-                            .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3wayland::WaylandWindow</span><span class="op">&gt;</span>()
-                            .<span class="ident">unwrap</span>()
-                            .<span class="ident">to_glib_none</span>()
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;raw_handle&quot;</span>)]
+    </span><span class="kw">pub fn </span>as_raw_window_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawWindowHandle {
+        <span class="kw">unsafe </span>{
+            <span class="kw">match </span><span class="self">self</span>.type_ {
+                <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3_wayland&quot;</span>)]
+                </span>WindowIdentifierType::Wayland(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">let </span><span class="kw-2">mut </span>wayland_handle = WaylandWindowHandle::empty();
+                    wayland_handle.surface = gdk3wayland::ffi::gdk_wayland_window_get_wl_surface(
+                        <span class="self">self</span>.window
+                            .downcast_ref::&lt;gdk3wayland::WaylandWindow&gt;()
+                            .unwrap()
+                            .to_glib_none()
                             .<span class="number">0</span>,
                     );
 
-                    <span class="ident">RawWindowHandle::Wayland</span>(<span class="ident">wayland_handle</span>)
+                    RawWindowHandle::Wayland(wayland_handle)
                 }
-                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3_x11&quot;</span>)]</span>
-                <span class="ident">WindowIdentifierType::X11</span>(<span class="ident">xid</span>) =&gt; {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x11_window_handle</span> <span class="op">=</span> <span class="ident">XlibWindowHandle::empty</span>();
-                    <span class="ident">x11_window_handle</span>.<span class="ident">window</span> <span class="op">=</span> <span class="ident">xid</span>;
+                <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3_x11&quot;</span>)]
+                </span>WindowIdentifierType::X11(xid) =&gt; {
+                    <span class="kw">let </span><span class="kw-2">mut </span>x11_window_handle = XlibWindowHandle::empty();
+                    x11_window_handle.window = xid;
 
-                    <span class="ident">RawWindowHandle::Xlib</span>(<span class="ident">x11_window_handle</span>)
+                    RawWindowHandle::Xlib(x11_window_handle)
                 }
             }
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw_display_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">RawDisplayHandle</span> {
-        <span class="kw">let</span> <span class="ident">display</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">display</span>();
-        <span class="kw">unsafe</span> {
-            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">type_</span> {
-                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3_wayland&quot;</span>)]</span>
-                <span class="ident">WindowIdentifierType::Wayland</span>(<span class="kw">_</span>) =&gt; {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">wayland_handle</span> <span class="op">=</span> <span class="ident">WaylandDisplayHandle::empty</span>();
-                    <span class="ident">wayland_handle</span>.<span class="ident">display</span> <span class="op">=</span> <span class="ident">gdk3wayland::ffi::gdk_wayland_display_get_wl_display</span>(
-                        <span class="ident">display</span>
-                            .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3wayland::WaylandDisplay</span><span class="op">&gt;</span>()
-                            .<span class="ident">unwrap</span>()
-                            .<span class="ident">to_glib_none</span>()
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;raw_handle&quot;</span>)]
+    </span><span class="kw">pub fn </span>as_raw_display_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawDisplayHandle {
+        <span class="kw">let </span>display = <span class="self">self</span>.window.display();
+        <span class="kw">unsafe </span>{
+            <span class="kw">match </span><span class="self">self</span>.type_ {
+                <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3_wayland&quot;</span>)]
+                </span>WindowIdentifierType::Wayland(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">let </span><span class="kw-2">mut </span>wayland_handle = WaylandDisplayHandle::empty();
+                    wayland_handle.display = gdk3wayland::ffi::gdk_wayland_display_get_wl_display(
+                        display
+                            .downcast_ref::&lt;gdk3wayland::WaylandDisplay&gt;()
+                            .unwrap()
+                            .to_glib_none()
                             .<span class="number">0</span>,
                     );
 
-                    <span class="ident">RawDisplayHandle::Wayland</span>(<span class="ident">wayland_handle</span>)
+                    RawDisplayHandle::Wayland(wayland_handle)
                 }
-                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3_x11&quot;</span>)]</span>
-                <span class="ident">WindowIdentifierType::X11</span>(<span class="ident">_xid</span>) =&gt; {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x11_display_handle</span> <span class="op">=</span> <span class="ident">XlibDisplayHandle::empty</span>();
+                <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3_x11&quot;</span>)]
+                </span>WindowIdentifierType::X11(_xid) =&gt; {
+                    <span class="kw">let </span><span class="kw-2">mut </span>x11_display_handle = XlibDisplayHandle::empty();
 
-                    <span class="ident">x11_display_handle</span>.<span class="ident">display</span> <span class="op">=</span> <span class="ident">gdk3x11::ffi::gdk_x11_display_get_xdisplay</span>(
-                        <span class="ident">display</span>
-                            .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3x11::X11Display</span><span class="op">&gt;</span>()
-                            .<span class="ident">unwrap</span>()
-                            .<span class="ident">to_glib_none</span>()
+                    x11_display_handle.display = gdk3x11::ffi::gdk_x11_display_get_xdisplay(
+                        display
+                            .downcast_ref::&lt;gdk3x11::X11Display&gt;()
+                            .unwrap()
+                            .to_glib_none()
                             .<span class="number">0</span>,
-                    ) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
+                    ) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
 
-                    <span class="ident">RawDisplayHandle::Xlib</span>(<span class="ident">x11_display_handle</span>)
+                    RawDisplayHandle::Xlib(x11_display_handle)
                 }
             }
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Gtk3WindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">type_</span>))
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Gtk3WindowIdentifier {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.type_))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Gtk3WindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">exported</span> {
+<span class="kw">impl </span>Drop <span class="kw">for </span>Gtk3WindowIdentifier {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">if </span>!<span class="self">self</span>.exported {
             <span class="kw">return</span>;
         }
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">type_</span> {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3_wayland&quot;</span>)]</span>
-            <span class="ident">WindowIdentifierType::Wayland</span>(<span class="kw">_</span>) =&gt; <span class="kw">unsafe</span> {
-                <span class="kw">let</span> <span class="ident">wayland_win</span> <span class="op">=</span> <span class="self">self</span>
-                    .<span class="ident">window</span>
-                    .<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">gdk3wayland::WaylandWindow</span><span class="op">&gt;</span>()
-                    .<span class="ident">unwrap</span>();
+        <span class="kw">match </span><span class="self">self</span>.type_ {
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3_wayland&quot;</span>)]
+            </span>WindowIdentifierType::Wayland(<span class="kw">_</span>) =&gt; <span class="kw">unsafe </span>{
+                <span class="kw">let </span>wayland_win = <span class="self">self
+                    </span>.window
+                    .downcast_ref::&lt;gdk3wayland::WaylandWindow&gt;()
+                    .unwrap();
 
-                <span class="kw">let</span> (<span class="ident">_handle</span>, <span class="ident">ref_count</span>): <span class="kw-2">&amp;mut</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">u8</span>) <span class="op">=</span>
-                    <span class="ident">wayland_win</span>.<span class="ident">data</span>(<span class="ident">WINDOW_HANDLE_KEY</span>).<span class="ident">unwrap</span>().<span class="ident">as_mut</span>();
-                <span class="kw">if</span> <span class="ident">ref_count</span> <span class="op">&gt;</span> <span class="kw-2">&amp;mut</span> <span class="number">1</span> {
-                    <span class="kw-2">*</span><span class="ident">ref_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="kw">let </span>(_handle, ref_count): <span class="kw-2">&amp;mut </span>(<span class="prelude-ty">Option</span>&lt;String&gt;, u8) =
+                    wayland_win.data(WINDOW_HANDLE_KEY).unwrap().as_mut();
+                <span class="kw">if </span>ref_count &gt; <span class="kw-2">&amp;mut </span><span class="number">1 </span>{
+                    <span class="kw-2">*</span>ref_count -= <span class="number">1</span>;
                     <span class="kw">return</span>;
                 }
-                <span class="ident">wayland_win</span>.<span class="ident">unexport_handle</span>();
-                <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">wayland_win</span>.<span class="ident">steal_data</span>::<span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">u8</span>)<span class="op">&gt;</span>(<span class="ident">WINDOW_HANDLE_KEY</span>);
+                wayland_win.unexport_handle();
+                <span class="kw">let _ </span>= wayland_win.steal_data::&lt;(<span class="prelude-ty">Option</span>&lt;String&gt;, u8)&gt;(WINDOW_HANDLE_KEY);
             },
-            <span class="kw">_</span> =&gt; (),
+            <span class="kw">_ </span>=&gt; (),
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

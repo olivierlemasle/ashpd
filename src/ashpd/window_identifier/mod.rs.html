@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/window_identifier/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/window_identifier/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -400,405 +400,405 @@
 <span id="398">398</span>
 <span id="399">399</span>
 <span id="400">400</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">str::FromStr</span>};
+</pre><pre class="rust"><code><span class="kw">use </span>std::{fmt, str::FromStr};
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)))]</span>
-<span class="kw">use</span> <span class="ident">raw_window_handle</span>::{
-    <span class="ident">HasRawDisplayHandle</span>, <span class="ident">HasRawWindowHandle</span>, <span class="ident">RawDisplayHandle</span>, <span class="ident">RawWindowHandle</span>,
+<span class="attribute">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, any(feature = <span class="string">&quot;gtk3&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>)))]
+</span><span class="kw">use </span>raw_window_handle::{
+    HasRawDisplayHandle, HasRawWindowHandle, RawDisplayHandle, RawWindowHandle,
 };
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">ser::Serializer</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant::Type</span>;
-<span class="doccomment">/// Most portals interact with the user by showing dialogs.</span>
-<span class="doccomment">/// These dialogs should generally be placed on top of the application window</span>
-<span class="doccomment">/// that triggered them. To arrange this, the compositor needs to know about the</span>
-<span class="doccomment">/// application window. Many portal requests expect a [`WindowIdentifier`] for</span>
-<span class="doccomment">/// this reason.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Under X11, the [`WindowIdentifier`] should have the form `x11:XID`, where</span>
-<span class="doccomment">/// XID is the XID of the application window in hexadecimal. Under Wayland, it</span>
-<span class="doccomment">/// should have the form `wayland:HANDLE`, where HANDLE is a surface handle</span>
-<span class="doccomment">/// obtained with the [xdg-foreign](https://github.com/wayland-project/wayland-protocols/blob/master/unstable/xdg-foreign/xdg-foreign-unstable-v2.xml) protocol.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// See also [Parent window identifiers](https://flatpak.github.io/xdg-desktop-portal/index.html#parent_window).</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Usage</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ## From an X11 XID</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust,ignore</span>
-<span class="doccomment">/// let identifier = WindowIdentifier::from_xid(212321);</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// /// Open some portals</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ## From a Wayland Surface</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The `wayland` feature must be enabled. The exported surface handle will be</span>
-<span class="doccomment">/// unexported on `Drop`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```text</span>
-<span class="doccomment">/// // let wl_surface = some_surface;</span>
-<span class="doccomment">/// // let identifier = WindowIdentifier::from_wayland(wl_surface).await;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// /// Open some portals</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Or using a raw `wl_surface` pointer</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```text</span>
-<span class="doccomment">/// // let wl_surface_ptr = some_surface;</span>
-<span class="doccomment">/// // let wl_display_ptr = corresponding_display;</span>
-<span class="doccomment">/// // let identifier = WindowIdentifier::from_wayland_raw(wl_surface_ptr, wl_display_ptr).await;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// /// Open some portals</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ## With GTK 4</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The feature `gtk4` must be enabled. You can get a</span>
-<span class="doccomment">/// [`WindowIdentifier`] from a [`IsA&lt;gtk4::Native&gt;`](https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Native.html) using `WindowIdentifier::from_native`</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust, ignore</span>
-<span class="doccomment">/// let widget = gtk4::Button::new();</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// let ctx = glib::MainContext::default();</span>
-<span class="doccomment">/// ctx.spawn_async(async move {</span>
-<span class="doccomment">///     let identifier = WindowIdentifier::from_native(&amp;widget.native().unwrap()).await;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     /// Open some portals</span>
-<span class="doccomment">/// });</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// The constructor should return a valid identifier under both X11 and Wayland</span>
-<span class="doccomment">/// and fallback to the [`Default`] implementation otherwise.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ## With GTK 3</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The feature `gtk3` must be enabled. You can get a</span>
-<span class="doccomment">/// [`WindowIdentifier`] from a [`IsA&lt;gdk3::Window&gt;`](https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.Window.html) using</span>
-<span class="doccomment">/// `WindowIdentifier::from_window`</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust, ignore</span>
-<span class="doccomment">/// let widget = gtk4::Button::new();</span>
-<span class="doccomment">/// let ctx = glib::MainContext::default();</span>
-<span class="doccomment">/// ctx.spawn_async(async move {</span>
-<span class="doccomment">///     let identifier = WindowIdentifier::from_window(&amp;widget.window().unwrap()).await;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     /// Open some portals</span>
-<span class="doccomment">/// });</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// The constructor should return a valid identifier under both X11 and Wayland</span>
-<span class="doccomment">/// and fallback to the [`Default`] implementation otherwise.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ## Other Toolkits</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// If you have access to `RawWindowHandle` you can convert it to a</span>
-<span class="doccomment">/// [`WindowIdentifier`] with</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust, ignore</span>
-<span class="doccomment">/// let handle = RawWindowHandle::Xlib(XlibHandle::empty());</span>
-<span class="doccomment">/// let identifier = WindowIdentifier::from_raw_handle(handle, None);</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// /// Open some portals</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// In case you don&#39;t have access to a WindowIdentifier:</span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// use ashpd::WindowIdentifier;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpParent&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">WindowIdentifier</span> {
-    <span class="doccomment">/// Gtk 4 Window Identifier</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">Gtk4</span>(<span class="ident">Gtk4WindowIdentifier</span>),
-    <span class="doccomment">/// GTK 3 Window Identifier</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">Gtk3</span>(<span class="ident">Gtk3WindowIdentifier</span>),
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;wayland&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">Wayland</span>(<span class="ident">WaylandWindowIdentifier</span>),
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">X11</span>(<span class="ident">WindowIdentifierType</span>),
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="prelude-val">None</span>,
+<span class="kw">use </span>serde::{ser::Serializer, Deserialize, Serialize};
+<span class="kw">use </span>zbus::zvariant::Type;
+<span class="doccomment">/// Most portals interact with the user by showing dialogs.
+/// These dialogs should generally be placed on top of the application window
+/// that triggered them. To arrange this, the compositor needs to know about the
+/// application window. Many portal requests expect a [`WindowIdentifier`] for
+/// this reason.
+///
+/// Under X11, the [`WindowIdentifier`] should have the form `x11:XID`, where
+/// XID is the XID of the application window in hexadecimal. Under Wayland, it
+/// should have the form `wayland:HANDLE`, where HANDLE is a surface handle
+/// obtained with the [xdg-foreign](https://github.com/wayland-project/wayland-protocols/blob/master/unstable/xdg-foreign/xdg-foreign-unstable-v2.xml) protocol.
+///
+/// See also [Parent window identifiers](https://flatpak.github.io/xdg-desktop-portal/index.html#parent_window).
+///
+/// # Usage
+///
+/// ## From an X11 XID
+///
+/// ```rust,ignore
+/// let identifier = WindowIdentifier::from_xid(212321);
+///
+/// /// Open some portals
+/// ```
+///
+/// ## From a Wayland Surface
+///
+/// The `wayland` feature must be enabled. The exported surface handle will be
+/// unexported on `Drop`.
+///
+/// ```text
+/// // let wl_surface = some_surface;
+/// // let identifier = WindowIdentifier::from_wayland(wl_surface).await;
+///
+/// /// Open some portals
+/// ```
+///
+/// Or using a raw `wl_surface` pointer
+///
+/// ```text
+/// // let wl_surface_ptr = some_surface;
+/// // let wl_display_ptr = corresponding_display;
+/// // let identifier = WindowIdentifier::from_wayland_raw(wl_surface_ptr, wl_display_ptr).await;
+///
+/// /// Open some portals
+/// ```
+///
+/// ## With GTK 4
+///
+/// The feature `gtk4` must be enabled. You can get a
+/// [`WindowIdentifier`] from a [`IsA&lt;gtk4::Native&gt;`](https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Native.html) using `WindowIdentifier::from_native`
+///
+/// ```rust, ignore
+/// let widget = gtk4::Button::new();
+///
+/// let ctx = glib::MainContext::default();
+/// ctx.spawn_async(async move {
+///     let identifier = WindowIdentifier::from_native(&amp;widget.native().unwrap()).await;
+///
+///     /// Open some portals
+/// });
+/// ```
+/// The constructor should return a valid identifier under both X11 and Wayland
+/// and fallback to the [`Default`] implementation otherwise.
+///
+/// ## With GTK 3
+///
+/// The feature `gtk3` must be enabled. You can get a
+/// [`WindowIdentifier`] from a [`IsA&lt;gdk3::Window&gt;`](https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.Window.html) using
+/// `WindowIdentifier::from_window`
+///
+/// ```rust, ignore
+/// let widget = gtk4::Button::new();
+/// let ctx = glib::MainContext::default();
+/// ctx.spawn_async(async move {
+///     let identifier = WindowIdentifier::from_window(&amp;widget.window().unwrap()).await;
+///
+///     /// Open some portals
+/// });
+/// ```
+/// The constructor should return a valid identifier under both X11 and Wayland
+/// and fallback to the [`Default`] implementation otherwise.
+///
+/// ## Other Toolkits
+///
+/// If you have access to `RawWindowHandle` you can convert it to a
+/// [`WindowIdentifier`] with
+///
+/// ```rust, ignore
+/// let handle = RawWindowHandle::Xlib(XlibHandle::empty());
+/// let identifier = WindowIdentifier::from_raw_handle(handle, None);
+///
+/// /// Open some portals
+/// ```
+///
+/// In case you don&#39;t have access to a WindowIdentifier:
+/// ```rust
+/// use ashpd::WindowIdentifier;
+///
+/// let identifier = WindowIdentifier::default();
+/// ```
+</span><span class="attribute">#[derive(Type)]
+#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+#[doc(alias = <span class="string">&quot;XdpParent&quot;</span>)]
+</span><span class="kw">pub enum </span>WindowIdentifier {
+    <span class="doccomment">/// Gtk 4 Window Identifier
+    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
+    #[doc(hidden)]
+    </span>Gtk4(Gtk4WindowIdentifier),
+    <span class="doccomment">/// GTK 3 Window Identifier
+    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
+    #[doc(hidden)]
+    </span>Gtk3(Gtk3WindowIdentifier),
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[doc(hidden)]
+    </span>Wayland(WaylandWindowIdentifier),
+    <span class="attribute">#[doc(hidden)]
+    </span>X11(WindowIdentifierType),
+    <span class="attribute">#[doc(hidden)]
+    </span><span class="prelude-val">None</span>,
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {}
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {}
+<span class="kw">unsafe impl </span>Send <span class="kw">for </span>WindowIdentifier {}
+<span class="kw">unsafe impl </span>Sync <span class="kw">for </span>WindowIdentifier {}
 
-<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">S</span>: <span class="ident">Serializer</span>,
+<span class="kw">impl </span>Serialize <span class="kw">for </span>WindowIdentifier {
+    <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
+    <span class="kw">where
+        </span>S: Serializer,
     {
-        <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_string</span>())
+        serializer.serialize_str(<span class="kw-2">&amp;</span><span class="self">self</span>.to_string())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-            <span class="ident"><span class="self">Self</span>::Gtk4</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">identifier</span>)),
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-            <span class="ident"><span class="self">Self</span>::Gtk3</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">identifier</span>)),
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;wayland&quot;</span>)]</span>
-            <span class="ident"><span class="self">Self</span>::Wayland</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">identifier</span>)),
-            <span class="ident"><span class="self">Self</span>::X11</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">identifier</span>)),
-            <span class="ident"><span class="self">Self</span>::None</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;&quot;</span>),
+<span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>WindowIdentifier {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
+            </span><span class="self">Self</span>::Gtk4(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, identifier)),
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
+            </span><span class="self">Self</span>::Gtk3(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, identifier)),
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+            </span><span class="self">Self</span>::Wayland(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, identifier)),
+            <span class="self">Self</span>::X11(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, identifier)),
+            <span class="self">Self</span>::None =&gt; f.write_str(<span class="string">&quot;&quot;</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;WindowIdentifier&quot;</span>)
-            .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>WindowIdentifier {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        f.debug_tuple(<span class="string">&quot;WindowIdentifier&quot;</span>)
+            .field(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::None</span>
+<span class="kw">impl </span>Default <span class="kw">for </span>WindowIdentifier {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::None
     }
 }
 
-<span class="kw">impl</span> <span class="ident">WindowIdentifier</span> {
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-    <span class="doccomment">/// Creates a [`WindowIdentifier`] from a [`gtk4::Native`](https://docs.gtk.org/gtk4/class.Native.html).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The constructor returns a valid handle under both Wayland &amp; x11.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
-    <span class="doccomment">/// API is async as well.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_parent_new_gtk&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_native</span>(<span class="ident">native</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">::gtk4::glib::IsA</span><span class="op">&lt;</span><span class="ident">::gtk4::Native</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">Gtk4WindowIdentifier::new</span>(<span class="ident">native</span>).<span class="kw">await</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">identifier</span>) =&gt; <span class="ident"><span class="self">Self</span>::Gtk4</span>(<span class="ident">identifier</span>),
-            <span class="prelude-val">None</span> =&gt; <span class="ident"><span class="self">Self</span>::default</span>(),
+<span class="kw">impl </span>WindowIdentifier {
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
+    </span><span class="doccomment">/// Creates a [`WindowIdentifier`] from a [`gtk4::Native`](https://docs.gtk.org/gtk4/class.Native.html).
+    ///
+    /// The constructor returns a valid handle under both Wayland &amp; x11.
+    ///
+    /// **Note** the function has to be async as the Wayland handle retrieval
+    /// API is async as well.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;xdp_parent_new_gtk&quot;</span>)]
+    </span><span class="kw">pub async fn </span>from_native(native: <span class="kw-2">&amp;</span><span class="kw">impl </span>::gtk4::glib::IsA&lt;::gtk4::Native&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>Gtk4WindowIdentifier::new(native).<span class="kw">await </span>{
+            <span class="prelude-val">Some</span>(identifier) =&gt; <span class="self">Self</span>::Gtk4(identifier),
+            <span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::default(),
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_parent_new_gtk&quot;</span>)]</span>
-    <span class="doccomment">/// Creates a [`WindowIdentifier`] from a [`gdk::Window`](https://developer.gnome.org/gdk3/stable/gdk3-Windows.html).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The constructor returns a valid handle under both Wayland &amp; x11.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the function has to be async as the Wayland handle retrieval</span>
-    <span class="doccomment">/// API is async as well.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_window</span>(<span class="ident">win</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">::gtk3::glib::IsA</span><span class="op">&lt;</span><span class="ident">::gtk3::gdk::Window</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">Gtk3WindowIdentifier::new</span>(<span class="ident">win</span>).<span class="kw">await</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">identifier</span>) =&gt; <span class="ident"><span class="self">Self</span>::Gtk3</span>(<span class="ident">identifier</span>),
-            <span class="prelude-val">None</span> =&gt; <span class="ident"><span class="self">Self</span>::default</span>(),
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_parent_new_gtk&quot;</span>)]
+    </span><span class="doccomment">/// Creates a [`WindowIdentifier`] from a [`gdk::Window`](https://developer.gnome.org/gdk3/stable/gdk3-Windows.html).
+    ///
+    /// The constructor returns a valid handle under both Wayland &amp; x11.
+    ///
+    /// **Note** the function has to be async as the Wayland handle retrieval
+    /// API is async as well.
+    </span><span class="kw">pub async fn </span>from_window(win: <span class="kw-2">&amp;</span><span class="kw">impl </span>::gtk3::glib::IsA&lt;::gtk3::gdk::Window&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>Gtk3WindowIdentifier::new(win).<span class="kw">await </span>{
+            <span class="prelude-val">Some</span>(identifier) =&gt; <span class="self">Self</span>::Gtk3(identifier),
+            <span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::default(),
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>)]</span>
-    <span class="doccomment">/// Create an instance of [`WindowIdentifier`] from a</span>
-    <span class="doccomment">/// [`RawWindowHandle`](raw_window_handle::RawWindowHandle).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The constructor returns a valid handle under both Wayland &amp; X11.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method is only async and requires a `RawDisplayHandle` only for</span>
-    <span class="doccomment">/// Wayland handles.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_raw_handle</span>(
-        <span class="ident">window_handle</span>: <span class="kw-2">&amp;</span><span class="ident">raw_window_handle::RawWindowHandle</span>,
-        <span class="ident">display_handle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">raw_window_handle::RawDisplayHandle</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="self">Self</span> {
-        <span class="kw">use</span> <span class="ident">raw_window_handle</span>::{
-            <span class="ident">RawDisplayHandle::Wayland</span> <span class="kw">as</span> <span class="ident">DisplayHandle</span>,
-            <span class="ident">RawWindowHandle</span>::{<span class="ident">Wayland</span>, <span class="ident">Xcb</span>, <span class="ident">Xlib</span>},
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;raw_handle&quot;</span>)]
+    </span><span class="doccomment">/// Create an instance of [`WindowIdentifier`] from a
+    /// [`RawWindowHandle`](raw_window_handle::RawWindowHandle).
+    ///
+    /// The constructor returns a valid handle under both Wayland &amp; X11.
+    ///
+    /// This method is only async and requires a `RawDisplayHandle` only for
+    /// Wayland handles.
+    </span><span class="kw">pub async fn </span>from_raw_handle(
+        window_handle: <span class="kw-2">&amp;</span>raw_window_handle::RawWindowHandle,
+        display_handle: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>raw_window_handle::RawDisplayHandle&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="kw">use </span>raw_window_handle::{
+            RawDisplayHandle::Wayland <span class="kw">as </span>DisplayHandle,
+            RawWindowHandle::{Wayland, Xcb, Xlib},
         };
-        <span class="kw">match</span> (<span class="ident">window_handle</span>, <span class="ident">display_handle</span>) {
-            (<span class="ident">Wayland</span>(<span class="ident">wl_handle</span>), <span class="prelude-val">Some</span>(<span class="ident">DisplayHandle</span>(<span class="ident">wl_display</span>))) =&gt; <span class="kw">unsafe</span> {
-                <span class="ident"><span class="self">Self</span>::from_wayland_raw</span>(<span class="ident">wl_handle</span>.<span class="ident">surface</span>, <span class="ident">wl_display</span>.<span class="ident">display</span>).<span class="kw">await</span>
-            },
-            (<span class="ident">Xlib</span>(<span class="ident">x_handle</span>), <span class="kw">_</span>) =&gt; <span class="ident"><span class="self">Self</span>::from_xid</span>(<span class="ident">x_handle</span>.<span class="ident">window</span>),
-            (<span class="ident">Xcb</span>(<span class="ident">x_handle</span>), <span class="kw">_</span>) =&gt; <span class="ident"><span class="self">Self</span>::from_xid</span>(<span class="ident">x_handle</span>.<span class="ident">window</span>.<span class="ident">into</span>()),
-            <span class="kw">_</span> =&gt; <span class="ident"><span class="self">Self</span>::default</span>(), <span class="comment">// Fallback to default</span>
+        <span class="kw">match </span>(window_handle, display_handle) {
+            (Wayland(wl_handle), <span class="prelude-val">Some</span>(DisplayHandle(wl_display))) =&gt; <span class="kw">unsafe </span>{
+                <span class="self">Self</span>::from_wayland_raw(wl_handle.surface, wl_display.display).<span class="kw">await
+            </span>},
+            (Xlib(x_handle), <span class="kw">_</span>) =&gt; <span class="self">Self</span>::from_xid(x_handle.window),
+            (Xcb(x_handle), <span class="kw">_</span>) =&gt; <span class="self">Self</span>::from_xid(x_handle.window.into()),
+            <span class="kw">_ </span>=&gt; <span class="self">Self</span>::default(), <span class="comment">// Fallback to default
+        </span>}
+    }
+
+    <span class="doccomment">/// Create an instance of [`WindowIdentifier`] from an X11 window&#39;s XID.
+    </span><span class="kw">pub fn </span>from_xid(xid: std::os::raw::c_ulong) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::X11(WindowIdentifierType::X11(xid))
+    }
+
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    </span><span class="doccomment">/// Create an instance of [`WindowIdentifier`] from a Wayland surface.
+    ///
+    /// # Safety
+    ///
+    /// Both pointers have to be valid surface and display pointers. You must
+    /// ensure the `display_ptr` lives longer than the returned
+    /// `WindowIdentifier`.
+    </span><span class="kw">pub async unsafe fn </span>from_wayland_raw(
+        surface_ptr: <span class="kw-2">*mut </span>std::ffi::c_void,
+        display_ptr: <span class="kw-2">*mut </span>std::ffi::c_void,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>WaylandWindowIdentifier::from_raw(surface_ptr, display_ptr).<span class="kw">await </span>{
+            <span class="prelude-val">Some</span>(identifier) =&gt; <span class="self">Self</span>::Wayland(identifier),
+            <span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::default(),
         }
     }
 
-    <span class="doccomment">/// Create an instance of [`WindowIdentifier`] from an X11 window&#39;s XID.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xid</span>(<span class="ident">xid</span>: <span class="ident">std::os::raw::c_ulong</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::X11</span>(<span class="ident">WindowIdentifierType::X11</span>(<span class="ident">xid</span>))
-    }
-
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;wayland&quot;</span>)]</span>
-    <span class="doccomment">/// Create an instance of [`WindowIdentifier`] from a Wayland surface.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Safety</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Both pointers have to be valid surface and display pointers. You must</span>
-    <span class="doccomment">/// ensure the `display_ptr` lives longer than the returned</span>
-    <span class="doccomment">/// `WindowIdentifier`.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_wayland_raw</span>(
-        <span class="ident">surface_ptr</span>: <span class="kw-2">*mut</span> <span class="ident">std::ffi::c_void</span>,
-        <span class="ident">display_ptr</span>: <span class="kw-2">*mut</span> <span class="ident">std::ffi::c_void</span>,
-    ) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">WaylandWindowIdentifier::from_raw</span>(<span class="ident">surface_ptr</span>, <span class="ident">display_ptr</span>).<span class="kw">await</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">identifier</span>) =&gt; <span class="ident"><span class="self">Self</span>::Wayland</span>(<span class="ident">identifier</span>),
-            <span class="prelude-val">None</span> =&gt; <span class="ident"><span class="self">Self</span>::default</span>(),
-        }
-    }
-
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;wayland&quot;</span>)]</span>
-    <span class="doccomment">/// Create an instance of [`WindowIdentifier`] from a Wayland surface.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_wayland</span>(<span class="ident">surface</span>: <span class="kw-2">&amp;</span><span class="ident">wayland_client::protocol::wl_surface::WlSurface</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">WaylandWindowIdentifier::new</span>(<span class="ident">surface</span>).<span class="kw">await</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">identifier</span>) =&gt; <span class="ident"><span class="self">Self</span>::Wayland</span>(<span class="ident">identifier</span>),
-            <span class="prelude-val">None</span> =&gt; <span class="ident"><span class="self">Self</span>::default</span>(),
-        }
-    }
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)))]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">HasRawDisplayHandle</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
-    <span class="doccomment">/// Convert a [`WindowIdentifier`] to</span>
-    <span class="doccomment">/// [`RawDisplayHandle`](raw_window_handle::RawDisplayHandle`).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If you attempt to convert a [`WindowIdentifier`] created from a</span>
-    <span class="doccomment">/// [`RawDisplayHandle`](raw_window_handle::RawDisplayHandle`) instead of</span>
-    <span class="doccomment">/// the gtk3 / gtk4 constructors.</span>
-    <span class="kw">fn</span> <span class="ident">raw_display_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">RawDisplayHandle</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-            <span class="ident"><span class="self">Self</span>::Gtk4</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">identifier</span>.<span class="ident">as_raw_display_handle</span>(),
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-            <span class="ident"><span class="self">Self</span>::Gtk3</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">identifier</span>.<span class="ident">as_raw_display_handle</span>(),
-            <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(),
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    </span><span class="doccomment">/// Create an instance of [`WindowIdentifier`] from a Wayland surface.
+    </span><span class="kw">pub async fn </span>from_wayland(surface: <span class="kw-2">&amp;</span>wayland_client::protocol::wl_surface::WlSurface) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>WaylandWindowIdentifier::new(surface).<span class="kw">await </span>{
+            <span class="prelude-val">Some</span>(identifier) =&gt; <span class="self">Self</span>::Wayland(identifier),
+            <span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::default(),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;raw_handle&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)))]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">HasRawWindowHandle</span> <span class="kw">for</span> <span class="ident">WindowIdentifier</span> {
-    <span class="doccomment">/// Convert a [`WindowIdentifier`] to</span>
-    <span class="doccomment">/// [`RawWindowHandle`](raw_window_handle::RawWindowHandle`).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If you attempt to convert a [`WindowIdentifier`] created from a</span>
-    <span class="doccomment">/// [`RawWindowHandle`](raw_window_handle::RawWindowHandle`) instead of</span>
-    <span class="doccomment">/// the gtk3 / gtk4 constructors.</span>
-    <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">RawWindowHandle</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-            <span class="ident"><span class="self">Self</span>::Gtk4</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">identifier</span>.<span class="ident">as_raw_window_handle</span>(),
-            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-            <span class="ident"><span class="self">Self</span>::Gtk3</span>(<span class="ident">identifier</span>) =&gt; <span class="ident">identifier</span>.<span class="ident">as_raw_window_handle</span>(),
-            <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(),
+<span class="attribute">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, any(feature = <span class="string">&quot;gtk3&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>)))]
+</span><span class="kw">unsafe impl </span>HasRawDisplayHandle <span class="kw">for </span>WindowIdentifier {
+    <span class="doccomment">/// Convert a [`WindowIdentifier`] to
+    /// [`RawDisplayHandle`](raw_window_handle::RawDisplayHandle`).
+    ///
+    /// # Panics
+    ///
+    /// If you attempt to convert a [`WindowIdentifier`] created from a
+    /// [`RawDisplayHandle`](raw_window_handle::RawDisplayHandle`) instead of
+    /// the gtk3 / gtk4 constructors.
+    </span><span class="kw">fn </span>raw_display_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawDisplayHandle {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
+            </span><span class="self">Self</span>::Gtk4(identifier) =&gt; identifier.as_raw_display_handle(),
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
+            </span><span class="self">Self</span>::Gtk3(identifier) =&gt; identifier.as_raw_display_handle(),
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
         }
     }
 }
 
-<span class="doccomment">/// Supported WindowIdentifier kinds</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">WindowIdentifierType</span> {
-    <span class="ident">X11</span>(<span class="ident">std::os::raw::c_ulong</span>),
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="ident">Wayland</span>(<span class="ident">String</span>),
-}
-
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">WindowIdentifierType</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::X11</span>(<span class="ident">xid</span>) =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;x11:0x{:x}&quot;</span>, <span class="ident">xid</span>)),
-            <span class="ident"><span class="self">Self</span>::Wayland</span>(<span class="ident">handle</span>) =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;wayland:{}&quot;</span>, <span class="ident">handle</span>)),
+<span class="attribute">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, any(feature = <span class="string">&quot;gtk3&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>)))]
+</span><span class="kw">unsafe impl </span>HasRawWindowHandle <span class="kw">for </span>WindowIdentifier {
+    <span class="doccomment">/// Convert a [`WindowIdentifier`] to
+    /// [`RawWindowHandle`](raw_window_handle::RawWindowHandle`).
+    ///
+    /// # Panics
+    ///
+    /// If you attempt to convert a [`WindowIdentifier`] created from a
+    /// [`RawWindowHandle`](raw_window_handle::RawWindowHandle`) instead of
+    /// the gtk3 / gtk4 constructors.
+    </span><span class="kw">fn </span>raw_window_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawWindowHandle {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
+            </span><span class="self">Self</span>::Gtk4(identifier) =&gt; identifier.as_raw_window_handle(),
+            <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
+            </span><span class="self">Self</span>::Gtk3(identifier) =&gt; identifier.as_raw_window_handle(),
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">WindowIdentifierType</span> {
-    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">PortalError</span>;
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> (<span class="ident">kind</span>, <span class="ident">handle</span>) <span class="op">=</span> <span class="ident">s</span>
-            .<span class="ident">split_once</span>(<span class="string">&#39;:&#39;</span>)
-            .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">PortalError::InvalidArgument</span>(<span class="string">&quot;Invalid Window Identifier&quot;</span>.<span class="ident">to_owned</span>()))<span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">kind</span> {
-            <span class="string">&quot;x11&quot;</span> =&gt; {
-                <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">handle</span>.<span class="ident">trim_start_matches</span>(<span class="string">&quot;0x&quot;</span>);
-                <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::X11</span>(
-                    <span class="ident">std::os::raw::c_ulong::from_str_radix</span>(<span class="ident">handle</span>, <span class="number">16</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                        <span class="ident">PortalError::InvalidArgument</span>(<span class="macro">format!</span>(<span class="string">&quot;Wrong XID {}&quot;</span>, <span class="ident">handle</span>))
+<span class="doccomment">/// Supported WindowIdentifier kinds
+</span><span class="attribute">#[derive(Debug, Clone, PartialEq, Eq, Type)]
+#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+</span><span class="kw">pub enum </span>WindowIdentifierType {
+    X11(std::os::raw::c_ulong),
+    <span class="attribute">#[allow(dead_code)]
+    </span>Wayland(String),
+}
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>WindowIdentifierType {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::X11(xid) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;x11:0x{:x}&quot;</span>, xid)),
+            <span class="self">Self</span>::Wayland(handle) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;wayland:{}&quot;</span>, handle)),
+        }
+    }
+}
+
+<span class="kw">impl </span>FromStr <span class="kw">for </span>WindowIdentifierType {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= PortalError;
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+        <span class="kw">let </span>(kind, handle) = s
+            .split_once(<span class="string">&#39;:&#39;</span>)
+            .ok_or_else(|| PortalError::InvalidArgument(<span class="string">&quot;Invalid Window Identifier&quot;</span>.to_owned()))<span class="question-mark">?</span>;
+        <span class="kw">match </span>kind {
+            <span class="string">&quot;x11&quot; </span>=&gt; {
+                <span class="kw">let </span>handle = handle.trim_start_matches(<span class="string">&quot;0x&quot;</span>);
+                <span class="prelude-val">Ok</span>(<span class="self">Self</span>::X11(
+                    std::os::raw::c_ulong::from_str_radix(handle, <span class="number">16</span>).map_err(|<span class="kw">_</span>| {
+                        PortalError::InvalidArgument(<span class="macro">format!</span>(<span class="string">&quot;Wrong XID {}&quot;</span>, handle))
                     })<span class="question-mark">?</span>,
                 ))
             }
-            <span class="string">&quot;wayland&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::Wayland</span>(<span class="ident">handle</span>.<span class="ident">to_owned</span>())),
-            <span class="ident">t</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">PortalError::InvalidArgument</span>(<span class="macro">format!</span>(
+            <span class="string">&quot;wayland&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Wayland(handle.to_owned())),
+            t =&gt; <span class="prelude-val">Err</span>(PortalError::InvalidArgument(<span class="macro">format!</span>(
                 <span class="string">&quot;Invalid Window Identifier type {}&quot;</span>,
-                <span class="ident">t</span>
+                t
             ))),
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WindowIdentifierType</span> {
-    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D::Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">D</span>: <span class="ident">serde::Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>WindowIdentifierType {
+    <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
+    <span class="kw">where
+        </span>D: serde::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
     {
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">String::deserialize</span>(<span class="ident">deserializer</span>)<span class="question-mark">?</span>;
-        <span class="ident"><span class="self">Self</span>::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">handle</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">serde::de::Error::custom</span>(<span class="macro">format!</span>(<span class="string">&quot;Invalid Window identifier {}&quot;</span>, <span class="ident">e</span>)))
+        <span class="kw">let </span>handle = String::deserialize(deserializer)<span class="question-mark">?</span>;
+        <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>handle)
+            .map_err(|e| serde::de::Error::custom(<span class="macro">format!</span>(<span class="string">&quot;Invalid Window identifier {}&quot;</span>, e)))
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">gtk4</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
+</span><span class="kw">mod </span>gtk4;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::gtk4::Gtk4WindowIdentifier</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::PortalError</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
+</span><span class="kw">pub use </span><span class="self">self</span>::gtk4::Gtk4WindowIdentifier;
+<span class="kw">use </span><span class="kw">crate</span>::PortalError;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">gtk3</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
+</span><span class="kw">mod </span>gtk3;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::gtk3::Gtk3WindowIdentifier</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
+</span><span class="kw">pub use </span><span class="self">self</span>::gtk3::Gtk3WindowIdentifier;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;wayland&quot;</span>))]</span>
-<span class="kw">mod</span> <span class="ident">wayland</span>;
+<span class="attribute">#[cfg(any(feature = <span class="string">&quot;wayland&quot;</span>))]
+</span><span class="kw">mod </span>wayland;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;wayland&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::wayland::WaylandWindowIdentifier</span>;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+</span><span class="kw">pub use </span><span class="self">self</span>::wayland::WaylandWindowIdentifier;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>std::str::FromStr;
 
-    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::WindowIdentifier</span>;
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::window_identifier::WindowIdentifierType</span>;
+    <span class="kw">use </span><span class="kw">super</span>::WindowIdentifier;
+    <span class="kw">use </span><span class="kw">crate</span>::window_identifier::WindowIdentifierType;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_serialize</span>() {
-        <span class="kw">let</span> <span class="ident">x11</span> <span class="op">=</span> <span class="ident">WindowIdentifier::from_xid</span>(<span class="number">1024</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">x11</span>.<span class="ident">to_string</span>(), <span class="string">&quot;x11:0x400&quot;</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_serialize() {
+        <span class="kw">let </span>x11 = WindowIdentifier::from_xid(<span class="number">1024</span>);
+        <span class="macro">assert_eq!</span>(x11.to_string(), <span class="string">&quot;x11:0x400&quot;</span>);
 
-        <span class="macro">assert_eq!</span>(<span class="ident">WindowIdentifier::default</span>().<span class="ident">to_string</span>(), <span class="string">&quot;&quot;</span>);
+        <span class="macro">assert_eq!</span>(WindowIdentifier::default().to_string(), <span class="string">&quot;&quot;</span>);
 
         <span class="macro">assert_eq!</span>(
-            <span class="ident">WindowIdentifierType::from_str</span>(<span class="string">&quot;x11:0x11432&quot;</span>).<span class="ident">unwrap</span>(),
-            <span class="ident">WindowIdentifierType::X11</span>(<span class="number">70706</span>)
+            WindowIdentifierType::from_str(<span class="string">&quot;x11:0x11432&quot;</span>).unwrap(),
+            WindowIdentifierType::X11(<span class="number">70706</span>)
         );
 
         <span class="macro">assert_eq!</span>(
-            <span class="ident">WindowIdentifierType::from_str</span>(<span class="string">&quot;wayland:Somerandomchars&quot;</span>).<span class="ident">unwrap</span>(),
-            <span class="ident">WindowIdentifierType::Wayland</span>(<span class="string">&quot;Somerandomchars&quot;</span>.<span class="ident">to_owned</span>())
+            WindowIdentifierType::from_str(<span class="string">&quot;wayland:Somerandomchars&quot;</span>).unwrap(),
+            WindowIdentifierType::Wayland(<span class="string">&quot;Somerandomchars&quot;</span>.to_owned())
         );
-        <span class="macro">assert!</span>(<span class="ident">WindowIdentifierType::from_str</span>(<span class="string">&quot;some_handle&quot;</span>).<span class="ident">is_err</span>());
-        <span class="macro">assert!</span>(<span class="ident">WindowIdentifierType::from_str</span>(<span class="string">&quot;some_type:some_handle&quot;</span>).<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(WindowIdentifierType::from_str(<span class="string">&quot;some_handle&quot;</span>).is_err());
+        <span class="macro">assert!</span>(WindowIdentifierType::from_str(<span class="string">&quot;some_type:some_handle&quot;</span>).is_err());
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

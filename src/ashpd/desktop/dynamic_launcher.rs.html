@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/dynamic_launcher.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dynamic_launcher.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/dynamic_launcher.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dynamic_launcher.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -286,291 +286,291 @@
 <span id="284">284</span>
 <span id="285">285</span>
 <span id="286">286</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{</span>
-<span class="doccomment">//!     desktop::{</span>
-<span class="doccomment">//!         dynamic_launcher::{DynamicLauncherProxy, LauncherType, PrepareInstallOptions},</span>
-<span class="doccomment">//!         Icon,</span>
-<span class="doccomment">//!     },</span>
-<span class="doccomment">//!     WindowIdentifier,</span>
-<span class="doccomment">//! };</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = DynamicLauncherProxy::new().await?;</span>
-<span class="doccomment">//!     let (name, token) = proxy</span>
-<span class="doccomment">//!         .prepare_install(</span>
-<span class="doccomment">//!             &amp;WindowIdentifier::default(),</span>
-<span class="doccomment">//!             &quot;My App&quot;,</span>
-<span class="doccomment">//!             Icon::from_names(&amp;[&quot;dialog-symbolic&quot;]),</span>
-<span class="doccomment">//!             PrepareInstallOptions::default(),</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     // Name and Icon will be overwritten from what we provided above</span>
-<span class="doccomment">//!     // Exec will be overridden to call `flatpak run our-app` if the application is sandboxed</span>
-<span class="doccomment">//!     let desktop_entry = r#&quot;</span>
-<span class="doccomment">//!         [Desktop Entry]</span>
-<span class="doccomment">//!         Comment=My Web App</span>
-<span class="doccomment">//!         Type=Application</span>
-<span class="doccomment">//!     &quot;#;</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .install(&amp;token, &quot;some_file.desktop&quot;, desktop_entry)</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     proxy.uninstall(&quot;some_file.desktop&quot;).await?;</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! ```rust,no_run
+//! use ashpd::{
+//!     desktop::{
+//!         dynamic_launcher::{DynamicLauncherProxy, LauncherType, PrepareInstallOptions},
+//!         Icon,
+//!     },
+//!     WindowIdentifier,
+//! };
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = DynamicLauncherProxy::new().await?;
+//!     let (name, token) = proxy
+//!         .prepare_install(
+//!             &amp;WindowIdentifier::default(),
+//!             &quot;My App&quot;,
+//!             Icon::from_names(&amp;[&quot;dialog-symbolic&quot;]),
+//!             PrepareInstallOptions::default(),
+//!         )
+//!         .await?;
+//!
+//!     // Name and Icon will be overwritten from what we provided above
+//!     // Exec will be overridden to call `flatpak run our-app` if the application is sandboxed
+//!     let desktop_entry = r#&quot;
+//!         [Desktop Entry]
+//!         Comment=My Web App
+//!         Type=Application
+//!     &quot;#;
+//!     proxy
+//!         .install(&amp;token, &quot;some_file.desktop&quot;, desktop_entry)
+//!         .await?;
+//!
+//!     proxy.uninstall(&quot;some_file.desktop&quot;).await?;
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+</span><span class="kw">use </span>std::collections::HashMap;
 
-<span class="kw">use</span> <span class="ident">enumflags2</span>::{<span class="ident">bitflags</span>, <span class="ident">BitFlags</span>};
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="self">self</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>enumflags2::{bitflags, BitFlags};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
+<span class="kw">use </span>zbus::zvariant::{<span class="self">self</span>, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">Icon</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">call_request_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+<span class="kw">use super</span>::{HandleToken, Icon, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_method, call_request_method, session_connection},
+    Error, WindowIdentifier,
 };
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpLauncherType&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LauncherType</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LAUNCHER_APPLICATION&quot;</span>)]</span>
-    <span class="doccomment">/// A launcher that represents an application</span>
-    <span class="ident">Application</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LAUNCHER_WEBAPP&quot;</span>)]</span>
-    <span class="doccomment">/// A launcher that represents a web application</span>
-    <span class="ident">WebApplication</span>,
+<span class="attribute">#[bitflags]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
+#[repr(u32)]
+#[doc(alias = <span class="string">&quot;XdpLauncherType&quot;</span>)]
+</span><span class="kw">pub enum </span>LauncherType {
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LAUNCHER_APPLICATION&quot;</span>)]
+    </span><span class="doccomment">/// A launcher that represents an application
+    </span>Application,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LAUNCHER_WEBAPP&quot;</span>)]
+    </span><span class="doccomment">/// A launcher that represents a web application
+    </span>WebApplication,
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">LauncherType</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::Application</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">IconType</span> {
-    <span class="ident">Png</span>,
-    <span class="ident">Jpeg</span>,
-    <span class="ident">Svg</span>,
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;(vsu)&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LauncherIcon</span>(<span class="ident">Icon</span>, <span class="ident">IconType</span>, <span class="ident">u32</span>);
-
-<span class="kw">impl</span> <span class="ident">LauncherIcon</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">icon</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Icon</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">type_</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">IconType</span> {
-        <span class="self">self</span>.<span class="number">1</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
-        <span class="self">self</span>.<span class="number">2</span>
+<span class="kw">impl </span>Default <span class="kw">for </span>LauncherType {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::Application
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PrepareInstallOptions</span> {
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">launcher_type</span>: <span class="ident">LauncherType</span>,
-    <span class="ident">target</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">editable_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">editable_icon</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Type)]
+#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+#[serde(rename_all = <span class="string">&quot;lowercase&quot;</span>)]
+</span><span class="kw">pub enum </span>IconType {
+    Png,
+    Jpeg,
+    Svg,
 }
 
-<span class="kw">impl</span> <span class="ident">PrepareInstallOptions</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
+<span class="attribute">#[derive(Deserialize, Type)]
+#[zvariant(signature = <span class="string">&quot;(vsu)&quot;</span>)]
+</span><span class="kw">pub struct </span>LauncherIcon(Icon, IconType, u32);
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">launcher_type</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">launcher_type</span>: <span class="ident">LauncherType</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">launcher_type</span> <span class="op">=</span> <span class="ident">launcher_type</span>;
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>LauncherIcon {
+    <span class="kw">pub fn </span>icon(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Icon {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">target</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">target</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">target</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>type_(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; IconType {
+        <span class="self">self</span>.<span class="number">1
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">editable_name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">editable_name</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">editable_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">editable_name</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">editable_icon</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">editable_icon</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">editable_icon</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">editable_icon</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
+        <span class="self">self</span>.<span class="number">2
+    </span>}
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications install launchers like Web</span>
-<span class="doccomment">/// Application from your browser or Steam.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.DynamicLauncher`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.DynamicLauncher).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.DynamicLauncher&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DynamicLauncherProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="attribute">#[derive(Debug, Default, SerializeDict, Type)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>PrepareInstallOptions {
+    handle_token: HandleToken,
+    modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    launcher_type: LauncherType,
+    target: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    editable_name: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    editable_icon: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DynamicLauncherProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`DynamicLauncherProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">DynamicLauncherProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.DynamicLauncher&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl </span>PrepareInstallOptions {
+    <span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.modal = <span class="prelude-val">Some</span>(modal);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>launcher_type(<span class="kw-2">mut </span><span class="self">self</span>, launcher_type: LauncherType) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.launcher_type = launcher_type;
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>target(<span class="kw-2">mut </span><span class="self">self</span>, target: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.target = <span class="prelude-val">Some</span>(target.to_owned());
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>editable_name(<span class="kw-2">mut </span><span class="self">self</span>, editable_name: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.editable_name = <span class="prelude-val">Some</span>(editable_name);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>editable_icon(<span class="kw-2">mut </span><span class="self">self</span>, editable_icon: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.editable_icon = <span class="prelude-val">Some</span>(editable_icon);
+        <span class="self">self
+    </span>}
+}
+
+<span class="doccomment">/// The interface lets sandboxed applications install launchers like Web
+/// Application from your browser or Steam.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.DynamicLauncher`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.DynamicLauncher).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.DynamicLauncher&quot;</span>)]
+</span><span class="kw">pub struct </span>DynamicLauncherProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; DynamicLauncherProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`DynamicLauncherProxy`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;DynamicLauncherProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.DynamicLauncher&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`PrepareInstall`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.PrepareInstall).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;PrepareInstall&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_prepare_install&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_prepare_install_finish&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">prepare_install</span>(
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`PrepareInstall`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.PrepareInstall).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;PrepareInstall&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_prepare_install&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_prepare_install_finish&quot;</span>)]
+    </span><span class="kw">pub async fn </span>prepare_install(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">parent_window</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">icon</span>: <span class="ident">Icon</span>,
-        <span class="ident">options</span>: <span class="ident">PrepareInstallOptions</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">call_request_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        parent_window: <span class="kw-2">&amp;</span>WindowIdentifier,
+        name: <span class="kw-2">&amp;</span>str,
+        icon: Icon,
+        options: PrepareInstallOptions,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(String, String), Error&gt; {
+        <span class="kw">let </span>response = call_request_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;PrepareInstall&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">parent_window</span>, <span class="ident">name</span>, <span class="ident">icon</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(parent_window, name, icon, <span class="kw-2">&amp;</span>options),
         )
         .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">response</span>)
+        <span class="prelude-val">Ok</span>(response)
     }
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`RequestInstallToken`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.RequestInstallToken).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RequestInstallToken&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_request_install_token&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">request_install_token</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">icon</span>: <span class="ident">Icon</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// No supported options for now</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant::Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="kw">let</span> <span class="ident">token</span> <span class="op">=</span>
-            <span class="ident">call_method</span>::<span class="op">&lt;</span><span class="ident">String</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;RequestInstallToken&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">name</span>, <span class="ident">icon</span>, <span class="ident">options</span>))
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`RequestInstallToken`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.RequestInstallToken).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;RequestInstallToken&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_request_install_token&quot;</span>)]
+    </span><span class="kw">pub async fn </span>request_install_token(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str, icon: Icon) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
+        <span class="comment">// No supported options for now
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
+        <span class="kw">let </span>token =
+            call_method::&lt;String, <span class="kw">_</span>&gt;(<span class="self">self</span>.inner(), <span class="string">&quot;RequestInstallToken&quot;</span>, <span class="kw-2">&amp;</span>(name, icon, options))
                 .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">token</span>)
+        <span class="prelude-val">Ok</span>(token)
     }
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Install`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.Install).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Install&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_install&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">install</span>(
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`Install`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.Install).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Install&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_install&quot;</span>)]
+    </span><span class="kw">pub async fn </span>install(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">desktop_file_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">desktop_entry</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// No supported options for now</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant::Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        token: <span class="kw-2">&amp;</span>str,
+        desktop_file_id: <span class="kw-2">&amp;</span>str,
+        desktop_entry: <span class="kw-2">&amp;</span>str,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="comment">// No supported options for now
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;Install&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">token</span>, <span class="ident">desktop_file_id</span>, <span class="ident">desktop_entry</span>, <span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(token, desktop_file_id, desktop_entry, options),
         )
         .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Uninstall`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.Uninstall).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Uninstall&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_uninstall&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">uninstall</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">desktop_file_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// No supported options for now</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant::Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;Uninstall&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">desktop_file_id</span>, <span class="ident">options</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`Uninstall`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.Uninstall).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Uninstall&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_uninstall&quot;</span>)]
+    </span><span class="kw">pub async fn </span>uninstall(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="comment">// No supported options for now
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Uninstall&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id, options)).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GetDesktopEntry`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.GetDesktopEntry).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetDesktopEntry&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_get_desktop_entry&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">desktop_entry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">desktop_file_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;GetDesktopEntry&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">desktop_file_id</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`GetDesktopEntry`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.GetDesktopEntry).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetDesktopEntry&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_get_desktop_entry&quot;</span>)]
+    </span><span class="kw">pub async fn </span>desktop_entry(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetDesktopEntry&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`GetIcon`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.GetIcon).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GetIcon&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_get_icon&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">icon</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">desktop_file_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">LauncherIcon</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;GetIcon&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">desktop_file_id</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`GetIcon`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.GetIcon).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetIcon&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_get_icon&quot;</span>)]
+    </span><span class="kw">pub async fn </span>icon(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;LauncherIcon, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetIcon&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Launch`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.Launch).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Launch&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_dynamic_launcher_launch&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">launch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">desktop_file_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// TODO: handle activation_token</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">zvariant::Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;Launch&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">desktop_file_id</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`Launch`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-DynamicLauncher.Launch).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Launch&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_launch&quot;</span>)]
+    </span><span class="kw">pub async fn </span>launch(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="comment">// TODO: handle activation_token
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Launch&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id, <span class="kw-2">&amp;</span>options)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`SupportedLauncherTypes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-DynamicLauncher.SupportedLauncherTypes).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SupportedLauncherTypes&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">supported_launcher_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">LauncherType</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>()
-            .<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">LauncherType</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="string">&quot;SupportedLauncherTypes&quot;</span>)
-            .<span class="kw">await</span>
-            .<span class="ident">map_err</span>(<span class="ident">From::from</span>)
+    <span class="doccomment">/// # Specifications
+    ///
+    /// See also [`SupportedLauncherTypes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-DynamicLauncher.SupportedLauncherTypes).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;SupportedLauncherTypes&quot;</span>)]
+    </span><span class="kw">pub async fn </span>supported_launcher_types(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BitFlags&lt;LauncherType&gt;, Error&gt; {
+        <span class="self">self</span>.inner()
+            .get_property::&lt;BitFlags&lt;LauncherType&gt;&gt;(<span class="string">&quot;SupportedLauncherTypes&quot;</span>)
+            .<span class="kw">await
+            </span>.map_err(From::from)
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>test {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_icon_signature</span>() {
-        <span class="kw">let</span> <span class="ident">signature</span> <span class="op">=</span> <span class="ident">LauncherIcon::signature</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">signature</span>.<span class="ident">as_str</span>(), <span class="string">&quot;(vsu)&quot;</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_icon_signature() {
+        <span class="kw">let </span>signature = LauncherIcon::signature();
+        <span class="macro">assert_eq!</span>(signature.as_str(), <span class="string">&quot;(vsu)&quot;</span>);
 
-        <span class="kw">let</span> <span class="ident">icon</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">IconType::Png</span>];
-        <span class="macro">assert_eq!</span>(<span class="ident">serde_json::to_string</span>(<span class="kw-2">&amp;</span><span class="ident">icon</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;[\&quot;png\&quot;]&quot;</span>);
+        <span class="kw">let </span>icon = <span class="macro">vec!</span>[IconType::Png];
+        <span class="macro">assert_eq!</span>(serde_json::to_string(<span class="kw-2">&amp;</span>icon).unwrap(), <span class="string">&quot;[\&quot;png\&quot;]&quot;</span>);
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

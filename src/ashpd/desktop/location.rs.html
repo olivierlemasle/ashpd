@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/location.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>location.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/location.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>location.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -297,302 +297,302 @@
 <span id="295">295</span>
 <span id="296">296</span>
 <span id="297">297</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{</span>
-<span class="doccomment">//!     desktop::location::{Accuracy, LocationProxy},</span>
-<span class="doccomment">//!     WindowIdentifier,</span>
-<span class="doccomment">//! };</span>
-<span class="doccomment">//! use futures_util::TryFutureExt;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = LocationProxy::new().await?;</span>
-<span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let session = proxy</span>
-<span class="doccomment">//!         .create_session(None, None, Some(Accuracy::Street))</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let (_, location) = futures_util::try_join!(</span>
-<span class="doccomment">//!         proxy.start(&amp;session, &amp;identifier).into_future(),</span>
-<span class="doccomment">//!         proxy.receive_location_updated().into_future()</span>
-<span class="doccomment">//!     )?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;{}&quot;, location.accuracy());</span>
-<span class="doccomment">//!     println!(&quot;{}&quot;, location.longitude());</span>
-<span class="doccomment">//!     println!(&quot;{}&quot;, location.latitude());</span>
-<span class="doccomment">//!     session.close().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! ```rust,no_run
+//! use ashpd::{
+//!     desktop::location::{Accuracy, LocationProxy},
+//!     WindowIdentifier,
+//! };
+//! use futures_util::TryFutureExt;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = LocationProxy::new().await?;
+//!     let identifier = WindowIdentifier::default();
+//!
+//!     let session = proxy
+//!         .create_session(None, None, Some(Accuracy::Street))
+//!         .await?;
+//!
+//!     let (_, location) = futures_util::try_join!(
+//!         proxy.start(&amp;session, &amp;identifier).into_future(),
+//!         proxy.receive_location_updated().into_future()
+//!     )?;
+//!
+//!     println!(&quot;{}&quot;, location.accuracy());
+//!     println!(&quot;{}&quot;, location.longitude());
+//!     println!(&quot;{}&quot;, location.latitude());
+//!     session.close().await?;
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std::fmt::Debug</span>;
+</span><span class="kw">use </span>std::fmt::Debug;
 
-<span class="kw">use</span> <span class="ident">futures_util::TryFutureExt</span>;
-<span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
-<span class="kw">use</span> <span class="ident">serde_repr::Serialize_repr</span>;
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">OwnedObjectPath</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>futures_util::TryFutureExt;
+<span class="kw">use </span>serde::Deserialize;
+<span class="kw">use </span>serde_repr::Serialize_repr;
+<span class="kw">use </span>zbus::zvariant::{DeserializeDict, OwnedObjectPath, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">Session</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">receive_signal</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+<span class="kw">use super</span>::{HandleToken, Session, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_basic_response_method, call_method, receive_signal, session_connection},
+    Error, WindowIdentifier,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpLocationAccuracy&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="doccomment">/// The accuracy of the location.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Accuracy</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOCATION_ACCURACY_NONE&quot;</span>)]</span>
-    <span class="doccomment">/// None.</span>
-    <span class="prelude-val">None</span> <span class="op">=</span> <span class="number">0</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOCATION_ACCURACY_COUNTRY&quot;</span>)]</span>
-    <span class="doccomment">/// Country.</span>
-    <span class="ident">Country</span> <span class="op">=</span> <span class="number">1</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOCATION_ACCURACY_CITY&quot;</span>)]</span>
-    <span class="doccomment">/// City.</span>
-    <span class="ident">City</span> <span class="op">=</span> <span class="number">2</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOCATION_ACCURACY_NEIGHBORHOOD&quot;</span>)]</span>
-    <span class="doccomment">/// Neighborhood.</span>
-    <span class="ident">Neighborhood</span> <span class="op">=</span> <span class="number">3</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOCATION_ACCURACY_STREET&quot;</span>)]</span>
-    <span class="doccomment">/// Street.</span>
-    <span class="ident">Street</span> <span class="op">=</span> <span class="number">4</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_LOCATION_ACCURACY_EXACT&quot;</span>)]</span>
-    <span class="doccomment">/// The exact location.</span>
-    <span class="ident">Exact</span> <span class="op">=</span> <span class="number">5</span>,
+<span class="attribute">#[derive(Serialize_repr, PartialEq, Eq, Clone, Copy, Debug, Type)]
+#[doc(alias = <span class="string">&quot;XdpLocationAccuracy&quot;</span>)]
+#[repr(u32)]
+</span><span class="doccomment">/// The accuracy of the location.
+</span><span class="kw">pub enum </span>Accuracy {
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LOCATION_ACCURACY_NONE&quot;</span>)]
+    </span><span class="doccomment">/// None.
+    </span><span class="prelude-val">None </span>= <span class="number">0</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LOCATION_ACCURACY_COUNTRY&quot;</span>)]
+    </span><span class="doccomment">/// Country.
+    </span>Country = <span class="number">1</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LOCATION_ACCURACY_CITY&quot;</span>)]
+    </span><span class="doccomment">/// City.
+    </span>City = <span class="number">2</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LOCATION_ACCURACY_NEIGHBORHOOD&quot;</span>)]
+    </span><span class="doccomment">/// Neighborhood.
+    </span>Neighborhood = <span class="number">3</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LOCATION_ACCURACY_STREET&quot;</span>)]
+    </span><span class="doccomment">/// Street.
+    </span>Street = <span class="number">4</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LOCATION_ACCURACY_EXACT&quot;</span>)]
+    </span><span class="doccomment">/// The exact location.
+    </span>Exact = <span class="number">5</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`LocationProxy::create_session`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">CreateSessionOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Distance threshold in meters. Default is 0.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;distance-threshold&quot;</span>)]</span>
-    <span class="ident">distance_threshold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Time threshold in seconds. Default is 0.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;time-threshold&quot;</span>)]</span>
-    <span class="ident">time_threshold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Requested accuracy. Default is `Accuracy::Exact`.</span>
-    <span class="ident">accuracy</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Accuracy</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`LocationProxy::create_session`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>CreateSessionOptions {
+    <span class="doccomment">/// A string that will be used as the last element of the session handle.
+    </span>session_handle_token: HandleToken,
+    <span class="doccomment">/// Distance threshold in meters. Default is 0.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;distance-threshold&quot;</span>)]
+    </span>distance_threshold: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+    <span class="doccomment">/// Time threshold in seconds. Default is 0.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;time-threshold&quot;</span>)]
+    </span>time_threshold: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+    <span class="doccomment">/// Requested accuracy. Default is `Accuracy::Exact`.
+    </span>accuracy: <span class="prelude-ty">Option</span>&lt;Accuracy&gt;,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`LocationProxy::start`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">SessionStartOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`LocationProxy::start`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>SessionStartOptions {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.
+    </span>handle_token: HandleToken,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// The response received on a `location_updated` signal.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Location</span>(<span class="ident">OwnedObjectPath</span>, <span class="ident">LocationInner</span>);
+<span class="attribute">#[derive(Deserialize, Type)]
+</span><span class="doccomment">/// The response received on a `location_updated` signal.
+</span><span class="kw">pub struct </span>Location(OwnedObjectPath, LocationInner);
 
-<span class="kw">impl</span> <span class="ident">Location</span> {
-    <span class="doccomment">/// The accuracy, in meters.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accuracy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">accuracy</span>
+<span class="kw">impl </span>Location {
+    <span class="doccomment">/// The accuracy, in meters.
+    </span><span class="kw">pub fn </span>accuracy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.<span class="number">1</span>.accuracy
     }
 
-    <span class="doccomment">/// The altitude, in meters.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">altitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">1</span>.<span class="ident">altitude</span> <span class="op">==</span> <span class="op">-</span><span class="ident">f64::MAX</span> {
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">1</span>.<span class="ident">altitude</span>)
+    <span class="doccomment">/// The altitude, in meters.
+    </span><span class="kw">pub fn </span>altitude(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="kw">if </span><span class="self">self</span>.<span class="number">1</span>.altitude == -f64::MAX {
+            <span class="prelude-val">None
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">1</span>.altitude)
         }
     }
 
-    <span class="doccomment">/// The speed, in meters per second.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">speed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">1</span>.<span class="ident">speed</span> <span class="op">==</span> <span class="op">-</span><span class="number">1f64</span> {
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">1</span>.<span class="ident">speed</span>)
+    <span class="doccomment">/// The speed, in meters per second.
+    </span><span class="kw">pub fn </span>speed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="kw">if </span><span class="self">self</span>.<span class="number">1</span>.speed == -<span class="number">1f64 </span>{
+            <span class="prelude-val">None
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">1</span>.speed)
         }
     }
 
-    <span class="doccomment">/// The heading, in degrees, going clockwise. North 0, East 90, South 180,</span>
-    <span class="doccomment">/// West 270.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">heading</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">1</span>.<span class="ident">heading</span> <span class="op">==</span> <span class="op">-</span><span class="number">1f64</span> {
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">1</span>.<span class="ident">heading</span>)
+    <span class="doccomment">/// The heading, in degrees, going clockwise. North 0, East 90, South 180,
+    /// West 270.
+    </span><span class="kw">pub fn </span>heading(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="kw">if </span><span class="self">self</span>.<span class="number">1</span>.heading == -<span class="number">1f64 </span>{
+            <span class="prelude-val">None
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">1</span>.heading)
         }
     }
 
-    <span class="doccomment">/// The location description.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="number">1</span>.<span class="ident">description</span>.<span class="ident">is_empty</span>() {
-            <span class="prelude-val">None</span>
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1</span>.<span class="ident">description</span>)
+    <span class="doccomment">/// The location description.
+    </span><span class="kw">pub fn </span>description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="kw">if </span><span class="self">self</span>.<span class="number">1</span>.description.is_empty() {
+            <span class="prelude-val">None
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1</span>.description)
         }
     }
 
-    <span class="doccomment">/// The latitude, in degrees.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">latitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">latitude</span>
+    <span class="doccomment">/// The latitude, in degrees.
+    </span><span class="kw">pub fn </span>latitude(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.<span class="number">1</span>.latitude
     }
 
-    <span class="doccomment">/// The longitude, in degrees.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">longitude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">longitude</span>
+    <span class="doccomment">/// The longitude, in degrees.
+    </span><span class="kw">pub fn </span>longitude(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.<span class="number">1</span>.longitude
     }
 
-    <span class="doccomment">/// The timestamp when the location was retrieved.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timestamp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">std::time::Duration</span> {
-        <span class="ident">std::time::Duration::from_secs</span>(<span class="self">self</span>.<span class="number">1</span>.<span class="ident">timestamp</span>.<span class="number">0</span>)
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Location</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Location&quot;</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;accuracy&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">accuracy</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;altitude&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">altitude</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;speed&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">speed</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;heading&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">heading</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;description&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">description</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;latitude&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">latitude</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;longitude&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">longitude</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;timestamp&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">timestamp</span>())
-            .<span class="ident">finish</span>()
+    <span class="doccomment">/// The timestamp when the location was retrieved.
+    </span><span class="kw">pub fn </span>timestamp(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; std::time::Duration {
+        std::time::Duration::from_secs(<span class="self">self</span>.<span class="number">1</span>.timestamp.<span class="number">0</span>)
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">LocationInner</span> {
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Accuracy&quot;</span>)]</span>
-    <span class="ident">accuracy</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Altitude&quot;</span>)]</span>
-    <span class="ident">altitude</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Speed&quot;</span>)]</span>
-    <span class="ident">speed</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Heading&quot;</span>)]</span>
-    <span class="ident">heading</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Description&quot;</span>)]</span>
-    <span class="ident">description</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Latitude&quot;</span>)]</span>
-    <span class="ident">latitude</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Longitude&quot;</span>)]</span>
-    <span class="ident">longitude</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Timestamp&quot;</span>)]</span>
-    <span class="ident">timestamp</span>: (<span class="ident">u64</span>, <span class="ident">u64</span>),
+<span class="kw">impl </span>Debug <span class="kw">for </span>Location {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        f.debug_struct(<span class="string">&quot;Location&quot;</span>)
+            .field(<span class="string">&quot;accuracy&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.accuracy())
+            .field(<span class="string">&quot;altitude&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.altitude())
+            .field(<span class="string">&quot;speed&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.speed())
+            .field(<span class="string">&quot;heading&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.heading())
+            .field(<span class="string">&quot;description&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.description())
+            .field(<span class="string">&quot;latitude&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.latitude())
+            .field(<span class="string">&quot;longitude&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.longitude())
+            .field(<span class="string">&quot;timestamp&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.timestamp())
+            .finish()
+    }
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications query basic information about the</span>
-<span class="doccomment">/// location.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Location`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Location).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Location&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LocationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="attribute">#[derive(Debug, SerializeDict, DeserializeDict, Type)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>LocationInner {
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Accuracy&quot;</span>)]
+    </span>accuracy: f64,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Altitude&quot;</span>)]
+    </span>altitude: f64,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Speed&quot;</span>)]
+    </span>speed: f64,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Heading&quot;</span>)]
+    </span>heading: f64,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Description&quot;</span>)]
+    </span>description: String,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Latitude&quot;</span>)]
+    </span>latitude: f64,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Longitude&quot;</span>)]
+    </span>longitude: f64,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;Timestamp&quot;</span>)]
+    </span>timestamp: (u64, u64),
+}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">LocationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`LocationProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">LocationProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Location&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="doccomment">/// The interface lets sandboxed applications query basic information about the
+/// location.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Location`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Location).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Location&quot;</span>)]
+</span><span class="kw">pub struct </span>LocationProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; LocationProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`LocationProxy`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;LocationProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Location&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Signal emitted when the user location is updated.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`LocationUpdated`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Location.LocationUpdated).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;LocationUpdated&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpPortal::location-updated&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_location_updated</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Location</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">receive_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;LocationUpdated&quot;</span>).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Signal emitted when the user location is updated.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`LocationUpdated`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Location.LocationUpdated).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;LocationUpdated&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;XdpPortal::location-updated&quot;</span>)]
+    </span><span class="kw">pub async fn </span>receive_location_updated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Location, Error&gt; {
+        receive_signal(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;LocationUpdated&quot;</span>).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Create a location session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `distance_threshold` - Sets the distance threshold in meters, default</span>
-    <span class="doccomment">///   to `0`.</span>
-    <span class="doccomment">/// * `time_threshold` - Sets the time threshold in seconds, default to `0`.</span>
-    <span class="doccomment">/// * `accuracy` - Sets the location accuracy, default to</span>
-    <span class="doccomment">///   [`Accuracy::Exact`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Location.CreateSession).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateSession&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_session</span>(
+    <span class="doccomment">/// Create a location session.
+    ///
+    /// # Arguments
+    ///
+    /// * `distance_threshold` - Sets the distance threshold in meters, default
+    ///   to `0`.
+    /// * `time_threshold` - Sets the time threshold in seconds, default to `0`.
+    /// * `accuracy` - Sets the location accuracy, default to
+    ///   [`Accuracy::Exact`].
+    ///
+    /// # Specifications
+    ///
+    /// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Location.CreateSession).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;CreateSession&quot;</span>)]
+    </span><span class="kw">pub async fn </span>create_session(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">distance_threshold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-        <span class="ident">time_threshold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-        <span class="ident">accuracy</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Accuracy</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CreateSessionOptions</span> {
-            <span class="ident">distance_threshold</span>,
-            <span class="ident">time_threshold</span>,
-            <span class="ident">accuracy</span>,
-            ..<span class="ident">Default::default</span>()
+        distance_threshold: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+        time_threshold: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+        accuracy: <span class="prelude-ty">Option</span>&lt;Accuracy&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Session&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>options = CreateSessionOptions {
+            distance_threshold,
+            time_threshold,
+            accuracy,
+            ..Default::default()
         };
-        <span class="kw">let</span> (<span class="ident">path</span>, <span class="ident">proxy</span>) <span class="op">=</span> <span class="macro">futures_util::try_join!</span>(
-            <span class="ident">call_method</span>::<span class="op">&lt;</span><span class="ident">OwnedObjectPath</span>, <span class="ident">CreateSessionOptions</span><span class="op">&gt;</span>(
+        <span class="kw">let </span>(path, proxy) = <span class="macro">futures_util::try_join!</span>(
+            call_method::&lt;OwnedObjectPath, CreateSessionOptions&gt;(
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
                 <span class="string">&quot;CreateSession&quot;</span>,
-                <span class="kw-2">&amp;</span>(<span class="ident">options</span>)
+                <span class="kw-2">&amp;</span>(options)
             )
-            .<span class="ident">into_future</span>(),
-            <span class="ident">Session::from_unique_name</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>).<span class="ident">into_future</span>(),
+            .into_future(),
+            Session::from_unique_name(<span class="kw-2">&amp;</span>options.session_handle_token).into_future(),
         )<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">proxy</span>.<span class="ident">inner</span>().<span class="ident">path</span>(), <span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">into_inner</span>());
-        <span class="prelude-val">Ok</span>(<span class="ident">proxy</span>)
+        <span class="macro">assert_eq!</span>(proxy.inner().path(), <span class="kw-2">&amp;</span>path.into_inner());
+        <span class="prelude-val">Ok</span>(proxy)
     }
 
-    <span class="doccomment">/// Start the location session.</span>
-    <span class="doccomment">/// An application can only attempt start a session once.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`LocationProxy::create_session`].</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Location.Start).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Start&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_location_monitor_start&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start</span>(
+    <span class="doccomment">/// Start the location session.
+    /// An application can only attempt start a session once.
+    ///
+    /// # Arguments
+    ///
+    /// * `session` - A [`Session`], created with
+    ///   [`create_session()`][`LocationProxy::create_session`].
+    /// * `identifier` - Identifier for the application window.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Location.Start).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Start&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_location_monitor_start&quot;</span>)]
+    </span><span class="kw">pub async fn </span>start(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">SessionStartOptions::default</span>();
-        <span class="ident">call_basic_response_method</span>(
+        session: <span class="kw-2">&amp;</span>Session&lt;<span class="lifetime">&#39;_</span>&gt;,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>options = SessionStartOptions::default();
+        call_basic_response_method(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;Start&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

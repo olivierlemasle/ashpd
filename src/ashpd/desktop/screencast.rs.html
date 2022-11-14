@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/screencast.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>screencast.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/screencast.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>screencast.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -447,452 +447,452 @@
 <span id="445">445</span>
 <span id="446">446</span>
 <span id="447">447</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Start a screencast session and get the PipeWire remote of it.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! How to create a screen cast session &amp; start it.</span>
-<span class="doccomment">//! The portal is currently useless without PipeWire &amp; Rust support.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::{</span>
-<span class="doccomment">//!     desktop::screencast::{CursorMode, PersistMode, Screencast, SourceType},</span>
-<span class="doccomment">//!     WindowIdentifier,</span>
-<span class="doccomment">//! };</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = Screencast::new().await?;</span>
-<span class="doccomment">//!     let session = proxy.create_session().await?;</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .select_sources(</span>
-<span class="doccomment">//!             &amp;session,</span>
-<span class="doccomment">//!             CursorMode::Metadata,</span>
-<span class="doccomment">//!             SourceType::Monitor | SourceType::Window,</span>
-<span class="doccomment">//!             true,</span>
-<span class="doccomment">//!             None,</span>
-<span class="doccomment">//!             PersistMode::DoNot,</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let (streams, token) = proxy.start(&amp;session, &amp;WindowIdentifier::default()).await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     streams.iter().for_each(|stream| {</span>
-<span class="doccomment">//!         println!(&quot;node id: {}&quot;, stream.pipe_wire_node_id());</span>
-<span class="doccomment">//!         println!(&quot;size: {:?}&quot;, stream.size());</span>
-<span class="doccomment">//!         println!(&quot;position: {:?}&quot;, stream.position());</span>
-<span class="doccomment">//!     });</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Start a screencast session and get the PipeWire remote of it.
+//!
+//! # Examples
+//!
+//! How to create a screen cast session &amp; start it.
+//! The portal is currently useless without PipeWire &amp; Rust support.
+//!
+//! ```rust,no_run
+//! use ashpd::{
+//!     desktop::screencast::{CursorMode, PersistMode, Screencast, SourceType},
+//!     WindowIdentifier,
+//! };
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = Screencast::new().await?;
+//!     let session = proxy.create_session().await?;
+//!     proxy
+//!         .select_sources(
+//!             &amp;session,
+//!             CursorMode::Metadata,
+//!             SourceType::Monitor | SourceType::Window,
+//!             true,
+//!             None,
+//!             PersistMode::DoNot,
+//!         )
+//!         .await?;
+//!
+//!     let (streams, token) = proxy.start(&amp;session, &amp;WindowIdentifier::default()).await?;
+//!
+//!     streams.iter().for_each(|stream| {
+//!         println!(&quot;node id: {}&quot;, stream.pipe_wire_node_id());
+//!         println!(&quot;size: {:?}&quot;, stream.size());
+//!         println!(&quot;position: {:?}&quot;, stream.position());
+//!     });
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">collections::HashMap</span>,
-    <span class="ident">fmt::Debug</span>,
-    <span class="ident">os::unix::prelude</span>::{<span class="ident">IntoRawFd</span>, <span class="ident">RawFd</span>},
+</span><span class="kw">use </span>std::{
+    collections::HashMap,
+    fmt::Debug,
+    os::unix::prelude::{IntoRawFd, RawFd},
 };
 
-<span class="kw">use</span> <span class="ident">enumflags2</span>::{<span class="ident">bitflags</span>, <span class="ident">BitFlags</span>};
-<span class="kw">use</span> <span class="ident">futures_util::TryFutureExt</span>;
-<span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
-<span class="kw">use</span> <span class="ident">serde_repr</span>::{<span class="ident">Deserialize_repr</span>, <span class="ident">Serialize_repr</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">OwnedFd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Value</span>};
+<span class="kw">use </span>enumflags2::{bitflags, BitFlags};
+<span class="kw">use </span>futures_util::TryFutureExt;
+<span class="kw">use </span>serde::Deserialize;
+<span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
+<span class="kw">use </span>zbus::zvariant::{DeserializeDict, OwnedFd, SerializeDict, Type, Value};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">Session</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_method</span>, <span class="ident">call_request_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+<span class="kw">use super</span>::{HandleToken, Session, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_basic_response_method, call_method, call_request_method, session_connection},
+    Error, WindowIdentifier,
 };
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpOutputType&quot;</span>)]</span>
-<span class="doccomment">/// A bit flag for the available sources to record.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SourceType</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_OUTPUT_MONITOR&quot;</span>)]</span>
-    <span class="doccomment">/// A monitor.</span>
-    <span class="ident">Monitor</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_OUTPUT_WINDOW&quot;</span>)]</span>
-    <span class="doccomment">/// A specific window</span>
-    <span class="ident">Window</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_OUTPUT_VIRTUAL&quot;</span>)]</span>
-    <span class="doccomment">/// Virtual</span>
-    <span class="ident">Virtual</span>,
+<span class="attribute">#[bitflags]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
+#[repr(u32)]
+#[doc(alias = <span class="string">&quot;XdpOutputType&quot;</span>)]
+</span><span class="doccomment">/// A bit flag for the available sources to record.
+</span><span class="kw">pub enum </span>SourceType {
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_OUTPUT_MONITOR&quot;</span>)]
+    </span><span class="doccomment">/// A monitor.
+    </span>Monitor,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_OUTPUT_WINDOW&quot;</span>)]
+    </span><span class="doccomment">/// A specific window
+    </span>Window,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_OUTPUT_VIRTUAL&quot;</span>)]
+    </span><span class="doccomment">/// Virtual
+    </span>Virtual,
 }
 
-<span class="attribute">#[<span class="ident">bitflags</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpCursorMode&quot;</span>)]</span>
-<span class="doccomment">/// A bit flag for the possible cursor modes.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">CursorMode</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_CURSOR_MODE_HIDDEN&quot;</span>)]</span>
-    <span class="doccomment">/// The cursor is not part of the screen cast stream.</span>
-    <span class="ident">Hidden</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_CURSOR_MODE_EMBEDDED&quot;</span>)]</span>
-    <span class="doccomment">/// The cursor is embedded as part of the stream buffers.</span>
-    <span class="ident">Embedded</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_CURSOR_MODE_METADATA&quot;</span>)]</span>
-    <span class="doccomment">/// The cursor is not part of the screen cast stream, but sent as PipeWire</span>
-    <span class="doccomment">/// stream metadata.</span>
-    <span class="ident">Metadata</span>,
+<span class="attribute">#[bitflags]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
+#[repr(u32)]
+#[doc(alias = <span class="string">&quot;XdpCursorMode&quot;</span>)]
+</span><span class="doccomment">/// A bit flag for the possible cursor modes.
+</span><span class="kw">pub enum </span>CursorMode {
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_CURSOR_MODE_HIDDEN&quot;</span>)]
+    </span><span class="doccomment">/// The cursor is not part of the screen cast stream.
+    </span>Hidden,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_CURSOR_MODE_EMBEDDED&quot;</span>)]
+    </span><span class="doccomment">/// The cursor is embedded as part of the stream buffers.
+    </span>Embedded,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_CURSOR_MODE_METADATA&quot;</span>)]
+    </span><span class="doccomment">/// The cursor is not part of the screen cast stream, but sent as PipeWire
+    /// stream metadata.
+    </span>Metadata,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XdpPersistMode&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PersistMode</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_PERSIST_MODE_NONE&quot;</span>)]</span>
-    <span class="doccomment">/// Do not persist.</span>
-    <span class="ident">DoNot</span> <span class="op">=</span> <span class="number">0</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_PERSIST_MODE_TRANSIENT&quot;</span>)]</span>
-    <span class="doccomment">/// Persist while the application is running.</span>
-    <span class="ident">Application</span> <span class="op">=</span> <span class="number">1</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;XDP_PERSIST_MODE_PERSISTENT&quot;</span>)]</span>
-    <span class="doccomment">/// Persist until explicitly revoked.</span>
-    <span class="ident">ExplicitlyRevoked</span> <span class="op">=</span> <span class="number">2</span>,
+<span class="attribute">#[derive(Serialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
+#[doc(alias = <span class="string">&quot;XdpPersistMode&quot;</span>)]
+#[repr(u32)]
+</span><span class="kw">pub enum </span>PersistMode {
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_PERSIST_MODE_NONE&quot;</span>)]
+    </span><span class="doccomment">/// Do not persist.
+    </span>DoNot = <span class="number">0</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_PERSIST_MODE_TRANSIENT&quot;</span>)]
+    </span><span class="doccomment">/// Persist while the application is running.
+    </span>Application = <span class="number">1</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_PERSIST_MODE_PERSISTENT&quot;</span>)]
+    </span><span class="doccomment">/// Persist until explicitly revoked.
+    </span>ExplicitlyRevoked = <span class="number">2</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">PersistMode</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::DoNot</span>
+<span class="kw">impl </span>Default <span class="kw">for </span>PersistMode {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::DoNot
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`Screencast::create_session`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">CreateSessionOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="ident">session_handle_token</span>: <span class="ident">HandleToken</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`Screencast::create_session`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>CreateSessionOptions {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.
+    </span>handle_token: HandleToken,
+    <span class="doccomment">/// A string that will be used as the last element of the session handle.
+    </span>session_handle_token: HandleToken,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`Screencast::select_sources`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">SelectSourcesOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// What types of content to record.</span>
-    <span class="ident">types</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether to allow selecting multiple sources.</span>
-    <span class="ident">multiple</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Determines how the cursor will be drawn in the screen cast stream.</span>
-    <span class="ident">cursor_mode</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CursorMode</span><span class="op">&gt;</span>,
-    <span class="ident">restore_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">persist_mode</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PersistMode</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`Screencast::select_sources`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>SelectSourcesOptions {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.
+    </span>handle_token: HandleToken,
+    <span class="doccomment">/// What types of content to record.
+    </span>types: <span class="prelude-ty">Option</span>&lt;BitFlags&lt;SourceType&gt;&gt;,
+    <span class="doccomment">/// Whether to allow selecting multiple sources.
+    </span>multiple: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="doccomment">/// Determines how the cursor will be drawn in the screen cast stream.
+    </span>cursor_mode: <span class="prelude-ty">Option</span>&lt;CursorMode&gt;,
+    restore_token: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    persist_mode: <span class="prelude-ty">Option</span>&lt;PersistMode&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">SelectSourcesOptions</span> {
-    <span class="doccomment">/// Sets whether to allow selecting multiple sources.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">multiple</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">multiple</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">multiple</span>);
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>SelectSourcesOptions {
+    <span class="doccomment">/// Sets whether to allow selecting multiple sources.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>multiple(<span class="kw-2">mut </span><span class="self">self</span>, multiple: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.multiple = <span class="prelude-val">Some</span>(multiple);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets how the cursor will be drawn on the screen cast stream.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cursor_mode</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cursor_mode</span>: <span class="ident">CursorMode</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">cursor_mode</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cursor_mode</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets how the cursor will be drawn on the screen cast stream.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>cursor_mode(<span class="kw-2">mut </span><span class="self">self</span>, cursor_mode: CursorMode) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.cursor_mode = <span class="prelude-val">Some</span>(cursor_mode);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the types of content to record.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">types</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">types</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">types</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the types of content to record.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>types(<span class="kw-2">mut </span><span class="self">self</span>, types: BitFlags&lt;SourceType&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.types = <span class="prelude-val">Some</span>(types);
+        <span class="self">self
+    </span>}
 
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">persist_mode</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">persist_mode</span>: <span class="ident">PersistMode</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">persist_mode</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">persist_mode</span>);
-        <span class="self">self</span>
-    }
+    <span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>persist_mode(<span class="kw-2">mut </span><span class="self">self</span>, persist_mode: PersistMode) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.persist_mode = <span class="prelude-val">Some</span>(persist_mode);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_restore_token</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">restore_token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">token</span>.<span class="ident">to_owned</span>());
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`Screencast::start`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">StartCastOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A response to a [`Screencast::create_session`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">CreateSession</span> {
-    <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath</span>
-    <span class="comment">// replace with an ObjectPath once https://github.com/flatpak/xdg-desktop-portal/pull/609&#39;s merged</span>
-    <span class="doccomment">/// A string that will be used as the last element of the session handle.</span>
-    <span class="ident">session_handle</span>: <span class="ident">String</span>,
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// A response to a [`Screencast::start`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">Streams</span> {
-    <span class="ident">streams</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>,
-    <span class="ident">restore_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Streams</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;Streams&quot;</span>)
-            .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">restore_token</span>)
-            .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">streams</span>)
-            .<span class="ident">finish</span>()
+    <span class="kw">pub fn </span>set_restore_token(<span class="kw-2">&amp;mut </span><span class="self">self</span>, token: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.restore_token = <span class="prelude-val">Some</span>(token.to_owned());
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// A PipeWire stream.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Stream</span>(<span class="ident">u32</span>, <span class="ident">StreamProperties</span>);
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`Screencast::start`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>StartCastOptions {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.
+    </span>handle_token: HandleToken,
+}
 
-<span class="kw">impl</span> <span class="ident">Stream</span> {
-    <span class="doccomment">/// The PipeWire stream Node ID</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pipe_wire_node_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
-        <span class="self">self</span>.<span class="number">0</span>
-    }
+<span class="attribute">#[derive(DeserializeDict, Type, Debug)]
+</span><span class="doccomment">/// A response to a [`Screencast::create_session`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>CreateSession {
+    <span class="comment">// TODO: investigate why this doesn&#39;t return an ObjectPath
+    // replace with an ObjectPath once https://github.com/flatpak/xdg-desktop-portal/pull/609&#39;s merged
+    </span><span class="doccomment">/// A string that will be used as the last element of the session handle.
+    </span>session_handle: String,
+}
 
-    <span class="doccomment">/// A tuple consisting of the position (x, y) in the compositor coordinate</span>
-    <span class="doccomment">/// space.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the position may not be equivalent to a position in a pixel</span>
-    <span class="doccomment">/// coordinate space. Only available for monitor streams.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">position</span>
-    }
+<span class="attribute">#[derive(DeserializeDict, Type)]
+</span><span class="doccomment">/// A response to a [`Screencast::start`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>Streams {
+    streams: Vec&lt;Stream&gt;,
+    restore_token: <span class="prelude-ty">Option</span>&lt;String&gt;,
+}
 
-    <span class="doccomment">/// A tuple consisting of (width, height).</span>
-    <span class="doccomment">/// The size represents the size of the stream as it is displayed in the</span>
-    <span class="doccomment">/// compositor coordinate space.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the size may not be equivalent to a size in a pixel coordinate</span>
-    <span class="doccomment">/// space. The size may differ from the size of the stream.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">size</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">source_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">source_type</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="number">1</span>.<span class="ident">id</span>.<span class="ident">as_deref</span>()
+<span class="kw">impl </span>Debug <span class="kw">for </span>Streams {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        f.debug_tuple(<span class="string">&quot;Streams&quot;</span>)
+            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.restore_token)
+            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.streams)
+            .finish()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Stream</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Stream&quot;</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;pipewire_node_id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">pipe_wire_node_id</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;position&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">position</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;size&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">size</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;source_type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">source_type</span>())
-            .<span class="ident">field</span>(<span class="string">&quot;id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">id</span>())
-            .<span class="ident">finish</span>()
+<span class="attribute">#[derive(Clone, Deserialize, Type)]
+</span><span class="doccomment">/// A PipeWire stream.
+</span><span class="kw">pub struct </span>Stream(u32, StreamProperties);
+
+<span class="kw">impl </span>Stream {
+    <span class="doccomment">/// The PipeWire stream Node ID
+    </span><span class="kw">pub fn </span>pipe_wire_node_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
+        <span class="self">self</span>.<span class="number">0
+    </span>}
+
+    <span class="doccomment">/// A tuple consisting of the position (x, y) in the compositor coordinate
+    /// space.
+    ///
+    /// **Note** the position may not be equivalent to a position in a pixel
+    /// coordinate space. Only available for monitor streams.
+    </span><span class="kw">pub fn </span>position(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(i32, i32)&gt; {
+        <span class="self">self</span>.<span class="number">1</span>.position
+    }
+
+    <span class="doccomment">/// A tuple consisting of (width, height).
+    /// The size represents the size of the stream as it is displayed in the
+    /// compositor coordinate space.
+    ///
+    /// **Note** the size may not be equivalent to a size in a pixel coordinate
+    /// space. The size may differ from the size of the stream.
+    </span><span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(i32, i32)&gt; {
+        <span class="self">self</span>.<span class="number">1</span>.size
+    }
+
+    <span class="kw">pub fn </span>source_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SourceType&gt; {
+        <span class="self">self</span>.<span class="number">1</span>.source_type
+    }
+
+    <span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.<span class="number">1</span>.id.as_deref()
     }
 }
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// The stream properties.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">StreamProperties</span> {
-    <span class="ident">id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">position</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>,
-    <span class="ident">size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>,
-    <span class="ident">source_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span>,
+
+<span class="kw">impl </span>Debug <span class="kw">for </span>Stream {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        f.debug_struct(<span class="string">&quot;Stream&quot;</span>)
+            .field(<span class="string">&quot;pipewire_node_id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pipe_wire_node_id())
+            .field(<span class="string">&quot;position&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.position())
+            .field(<span class="string">&quot;size&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.size())
+            .field(<span class="string">&quot;source_type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.source_type())
+            .field(<span class="string">&quot;id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.id())
+            .finish()
+    }
+}
+<span class="attribute">#[derive(Clone, DeserializeDict, Type, Debug)]
+</span><span class="doccomment">/// The stream properties.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>StreamProperties {
+    id: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    position: <span class="prelude-ty">Option</span>&lt;(i32, i32)&gt;,
+    size: <span class="prelude-ty">Option</span>&lt;(i32, i32)&gt;,
+    source_type: <span class="prelude-ty">Option</span>&lt;SourceType&gt;,
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications create screen cast sessions.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.ScreenCast`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.ScreenCast).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.ScreenCast&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Screencast</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface lets sandboxed applications create screen cast sessions.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.ScreenCast`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.ScreenCast).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.ScreenCast&quot;</span>)]
+</span><span class="kw">pub struct </span>Screencast&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Screencast</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`Screencast`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Screencast</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.ScreenCast&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Screencast&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`Screencast`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;Screencast&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.ScreenCast&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Create a screen cast session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.CreateSession).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;CreateSession&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_create_screencast_session&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">create_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">CreateSessionOptions::default</span>();
-        <span class="kw">let</span> (<span class="ident">session</span>, <span class="ident">proxy</span>) <span class="op">=</span> <span class="macro">futures_util::try_join!</span>(
-            <span class="ident">call_request_method</span>::<span class="op">&lt;</span><span class="ident">CreateSession</span>, <span class="kw">_</span><span class="op">&gt;</span>(
-                <span class="self">self</span>.<span class="ident">inner</span>(),
-                <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+    <span class="doccomment">/// Create a screen cast session.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`CreateSession`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.CreateSession).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;CreateSession&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_create_screencast_session&quot;</span>)]
+    </span><span class="kw">pub async fn </span>create_session(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Session&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>options = CreateSessionOptions::default();
+        <span class="kw">let </span>(session, proxy) = <span class="macro">futures_util::try_join!</span>(
+            call_request_method::&lt;CreateSession, <span class="kw">_</span>&gt;(
+                <span class="self">self</span>.inner(),
+                <span class="kw-2">&amp;</span>options.handle_token,
                 <span class="string">&quot;CreateSession&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="ident">options</span>
+                <span class="kw-2">&amp;</span>options
             )
-            .<span class="ident">into_future</span>(),
-            <span class="ident">Session::from_unique_name</span>(<span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">session_handle_token</span>).<span class="ident">into_future</span>(),
+            .into_future(),
+            Session::from_unique_name(<span class="kw-2">&amp;</span>options.session_handle_token).into_future(),
         )<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">proxy</span>.<span class="ident">inner</span>().<span class="ident">path</span>().<span class="ident">as_str</span>(), <span class="kw-2">&amp;</span><span class="ident">session</span>.<span class="ident">session_handle</span>);
-        <span class="prelude-val">Ok</span>(<span class="ident">proxy</span>)
+        <span class="macro">assert_eq!</span>(proxy.inner().path().as_str(), <span class="kw-2">&amp;</span>session.session_handle);
+        <span class="prelude-val">Ok</span>(proxy)
     }
 
-    <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the screen cast</span>
-    <span class="doccomment">/// streams are available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`Screencast::create_session`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// File descriptor of an open PipeWire remote.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`OpenPipeWireRemote`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.OpenPipeWireRemote).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;OpenPipeWireRemote&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">open_pipe_wire_remote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RawFd</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet</span>
-        <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/screen-cast.c#L812</span>
-        <span class="kw">let</span> <span class="ident">options</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="kw">let</span> <span class="ident">fd</span>: <span class="ident">OwnedFd</span> <span class="op">=</span>
-            <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="ident">options</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">fd</span>.<span class="ident">into_raw_fd</span>())
+    <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the screen cast
+    /// streams are available.
+    ///
+    /// # Arguments
+    ///
+    /// * `session` - A [`Session`], created with
+    ///   [`create_session()`][`Screencast::create_session`].
+    ///
+    /// # Returns
+    ///
+    /// File descriptor of an open PipeWire remote.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`OpenPipeWireRemote`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.OpenPipeWireRemote).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;OpenPipeWireRemote&quot;</span>)]
+    </span><span class="kw">pub async fn </span>open_pipe_wire_remote(<span class="kw-2">&amp;</span><span class="self">self</span>, session: <span class="kw-2">&amp;</span>Session&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;RawFd, Error&gt; {
+        <span class="comment">// `options` parameter doesn&#39;t seems to be used yet
+        // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/screen-cast.c#L812
+        </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
+        <span class="kw">let </span>fd: OwnedFd =
+            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(session, options)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(fd.into_raw_fd())
     }
 
-    <span class="doccomment">/// Configure what the screen cast session should record.</span>
-    <span class="doccomment">/// This method must be called before starting the session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Passing invalid input to this method will cause the session to be</span>
-    <span class="doccomment">/// closed. An application may only attempt to select sources once per</span>
-    <span class="doccomment">/// session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`Screencast::create_session`].</span>
-    <span class="doccomment">/// * `cursor_mode` - Sets how the cursor will be drawn on the screen cast</span>
-    <span class="doccomment">///   stream.</span>
-    <span class="doccomment">/// * `types` - Sets the types of content to record.</span>
-    <span class="doccomment">/// * `multiple`- Sets whether to allow selecting multiple sources.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`SelectSources`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.SelectSources).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;SelectSources&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">select_sources</span>(
+    <span class="doccomment">/// Configure what the screen cast session should record.
+    /// This method must be called before starting the session.
+    ///
+    /// Passing invalid input to this method will cause the session to be
+    /// closed. An application may only attempt to select sources once per
+    /// session.
+    ///
+    /// # Arguments
+    ///
+    /// * `session` - A [`Session`], created with
+    ///   [`create_session()`][`Screencast::create_session`].
+    /// * `cursor_mode` - Sets how the cursor will be drawn on the screen cast
+    ///   stream.
+    /// * `types` - Sets the types of content to record.
+    /// * `multiple`- Sets whether to allow selecting multiple sources.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`SelectSources`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.SelectSources).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;SelectSources&quot;</span>)]
+    </span><span class="kw">pub async fn </span>select_sources(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">cursor_mode</span>: <span class="ident">CursorMode</span>,
-        <span class="ident">types</span>: <span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span>,
-        <span class="ident">multiple</span>: <span class="ident">bool</span>,
-        <span class="ident">restore_token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">persist_mode</span>: <span class="ident">PersistMode</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">SelectSourcesOptions::default</span>()
-            .<span class="ident">cursor_mode</span>(<span class="ident">cursor_mode</span>)
-            .<span class="ident">multiple</span>(<span class="ident">multiple</span>)
-            .<span class="ident">types</span>(<span class="ident">types</span>)
-            .<span class="ident">persist_mode</span>(<span class="ident">persist_mode</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">token</span>) <span class="op">=</span> <span class="ident">restore_token</span> {
-            <span class="ident">options</span>.<span class="ident">set_restore_token</span>(<span class="ident">token</span>);
+        session: <span class="kw-2">&amp;</span>Session&lt;<span class="lifetime">&#39;_</span>&gt;,
+        cursor_mode: CursorMode,
+        types: BitFlags&lt;SourceType&gt;,
+        multiple: bool,
+        restore_token: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+        persist_mode: PersistMode,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>options = SelectSourcesOptions::default()
+            .cursor_mode(cursor_mode)
+            .multiple(multiple)
+            .types(types)
+            .persist_mode(persist_mode);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(token) = restore_token {
+            options.set_restore_token(token);
         }
-        <span class="ident">call_basic_response_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        call_basic_response_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;SelectSources&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Start the screen cast session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This will typically result the portal presenting a dialog letting the</span>
-    <span class="doccomment">/// user do the selection set up by `select_sources`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// An application can only attempt start a session once.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `session` - A [`Session`], created with</span>
-    <span class="doccomment">///   [`create_session()`][`Screencast::create_session`].</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Return</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A list of [`Stream`] and an optional restore token.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.Start).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Start&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">start</span>(
+    <span class="doccomment">/// Start the screen cast session.
+    ///
+    /// This will typically result the portal presenting a dialog letting the
+    /// user do the selection set up by `select_sources`.
+    ///
+    /// An application can only attempt start a session once.
+    ///
+    /// # Arguments
+    ///
+    /// * `session` - A [`Session`], created with
+    ///   [`create_session()`][`Screencast::create_session`].
+    /// * `identifier` - Identifier for the application window.
+    ///
+    /// # Return
+    ///
+    /// A list of [`Stream`] and an optional restore token.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Start`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-ScreenCast.Start).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Start&quot;</span>)]
+    </span><span class="kw">pub async fn </span>start(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">session</span>: <span class="kw-2">&amp;</span><span class="ident">Session</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">StartCastOptions::default</span>();
-        <span class="kw">let</span> <span class="ident">streams</span>: <span class="ident">Streams</span> <span class="op">=</span> <span class="ident">call_request_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        session: <span class="kw-2">&amp;</span>Session&lt;<span class="lifetime">&#39;_</span>&gt;,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;Stream&gt;, <span class="prelude-ty">Option</span>&lt;String&gt;), Error&gt; {
+        <span class="kw">let </span>options = StartCastOptions::default();
+        <span class="kw">let </span>streams: Streams = call_request_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;Start&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="ident">session</span>, <span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
         )
         .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>((<span class="ident">streams</span>.<span class="ident">streams</span>.<span class="ident">to_vec</span>(), <span class="ident">streams</span>.<span class="ident">restore_token</span>))
+        <span class="prelude-val">Ok</span>((streams.streams.to_vec(), streams.restore_token))
     }
 
-    <span class="doccomment">/// Available cursor mode.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AvailableCursorModes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-ScreenCast.AvailableCursorModes).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AvailableCursorModes&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">available_cursor_modes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">CursorMode</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>()
-            .<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">CursorMode</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="string">&quot;AvailableCursorModes&quot;</span>)
-            .<span class="kw">await</span>
-            .<span class="ident">map_err</span>(<span class="ident">From::from</span>)
+    <span class="doccomment">/// Available cursor mode.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AvailableCursorModes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-ScreenCast.AvailableCursorModes).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AvailableCursorModes&quot;</span>)]
+    </span><span class="kw">pub async fn </span>available_cursor_modes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BitFlags&lt;CursorMode&gt;, Error&gt; {
+        <span class="self">self</span>.inner()
+            .get_property::&lt;BitFlags&lt;CursorMode&gt;&gt;(<span class="string">&quot;AvailableCursorModes&quot;</span>)
+            .<span class="kw">await
+            </span>.map_err(From::from)
     }
 
-    <span class="doccomment">/// Available source types.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`AvailableSourceTypes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-ScreenCast.AvailableSourceTypes).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;AvailableSourceTypes&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">available_source_types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>()
-            .<span class="ident">get_property</span>::<span class="op">&lt;</span><span class="ident">BitFlags</span><span class="op">&lt;</span><span class="ident">SourceType</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="string">&quot;AvailableSourceTypes&quot;</span>)
-            .<span class="kw">await</span>
-            .<span class="ident">map_err</span>(<span class="ident">From::from</span>)
+    <span class="doccomment">/// Available source types.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`AvailableSourceTypes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-ScreenCast.AvailableSourceTypes).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;AvailableSourceTypes&quot;</span>)]
+    </span><span class="kw">pub async fn </span>available_source_types(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BitFlags&lt;SourceType&gt;, Error&gt; {
+        <span class="self">self</span>.inner()
+            .get_property::&lt;BitFlags&lt;SourceType&gt;&gt;(<span class="string">&quot;AvailableSourceTypes&quot;</span>)
+            .<span class="kw">await
+            </span>.map_err(From::from)
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

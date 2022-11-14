@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/email.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>email.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/email.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>email.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -204,209 +204,209 @@
 <span id="202">202</span>
 <span id="203">203</span>
 <span id="204">204</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Compose an email.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Wrapper of the DBus interface: [`org.freedesktop.portal.Email`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Email).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Compose an email</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::fs::File;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::desktop::email::EmailRequest;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();</span>
-<span class="doccomment">//!     EmailRequest::default()</span>
-<span class="doccomment">//!         .address(&quot;test@gmail.com&quot;)</span>
-<span class="doccomment">//!         .subject(&quot;email subject&quot;)</span>
-<span class="doccomment">//!         .body(&quot;the pre-filled email body&quot;)</span>
-<span class="doccomment">//!         .attach(&amp;file)</span>
-<span class="doccomment">//!         .build()</span>
-<span class="doccomment">//!         .await;</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Compose an email.
+//!
+//! Wrapper of the DBus interface: [`org.freedesktop.portal.Email`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Email).
+//!
+//! # Examples
+//!
+//! Compose an email
+//!
+//! ```rust,no_run
+//! use std::fs::File;
+//!
+//! use ashpd::desktop::email::EmailRequest;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let file = File::open(&quot;/home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();
+//!     EmailRequest::default()
+//!         .address(&quot;test@gmail.com&quot;)
+//!         .subject(&quot;email subject&quot;)
+//!         .body(&quot;the pre-filled email body&quot;)
+//!         .attach(&amp;file)
+//!         .build()
+//!         .await;
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std::os::unix::prelude::AsRawFd</span>;
+</span><span class="kw">use </span>std::os::unix::prelude::AsRawFd;
 
-<span class="kw">use</span> <span class="ident">serde::Serialize</span>;
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>serde::Serialize;
+<span class="kw">use </span>zbus::zvariant::{Fd, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_basic_response_method, session_connection},
+    Error, WindowIdentifier,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">EmailOptions</span> {
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="ident">address</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">addresses</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">cc</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">bcc</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">subject</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">attachment_fds</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Fd</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>EmailOptions {
+    handle_token: HandleToken,
+    address: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    addresses: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+    cc: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+    bcc: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+    subject: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    body: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    attachment_fds: <span class="prelude-ty">Option</span>&lt;Vec&lt;Fd&gt;&gt;,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">EmailProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)]
+</span><span class="kw">struct </span>EmailProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">EmailProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`EmailProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EmailProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; EmailProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`EmailProxy`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;EmailProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Presents a window that lets the user compose an email.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note** the default email client for the host will need to support</span>
-    <span class="doccomment">/// `mailto:` URIs following RFC 2368.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `options` - An [`EmailOptions`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`ComposeEmail`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Email.ComposeEmail).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;ComposeEmail&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">compose</span>(
+    <span class="doccomment">/// Presents a window that lets the user compose an email.
+    ///
+    /// **Note** the default email client for the host will need to support
+    /// `mailto:` URIs following RFC 2368.
+    ///
+    /// # Arguments
+    ///
+    /// * `identifier` - Identifier for the application window.
+    /// * `options` - An [`EmailOptions`].
+    ///
+    /// # Specifications
+    ///
+    /// See also [`ComposeEmail`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Email.ComposeEmail).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;ComposeEmail&quot;</span>)]
+    </span><span class="kw">pub async fn </span>compose(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">options</span>: <span class="ident">EmailOptions</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_basic_response_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+        options: EmailOptions,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_basic_response_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;ComposeEmail&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_compose_email&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EmailRequest</span> {
-    <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>,
-    <span class="ident">options</span>: <span class="ident">EmailOptions</span>,
+<span class="attribute">#[derive(Debug, Default)]
+#[doc(alias = <span class="string">&quot;xdp_portal_compose_email&quot;</span>)]
+</span><span class="kw">pub struct </span>EmailRequest {
+    identifier: WindowIdentifier,
+    options: EmailOptions,
 }
 
-<span class="kw">impl</span> <span class="ident">EmailRequest</span> {
-    <span class="doccomment">/// Sets a window identifier.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifier</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifier</span>: <span class="ident">WindowIdentifier</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">identifier</span> <span class="op">=</span> <span class="ident">identifier</span>;
-        <span class="self">self</span>
+<span class="kw">impl </span>EmailRequest {
+    <span class="doccomment">/// Sets a window identifier.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier;
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Sets the email address to send the email to.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>address(<span class="kw-2">mut </span><span class="self">self</span>, address: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_address(address);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_address(<span class="kw-2">&amp;mut </span><span class="self">self</span>, address: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.address = <span class="prelude-val">Some</span>(address.to_owned());
     }
 
-    <span class="doccomment">/// Sets the email address to send the email to.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">address</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">address</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_address</span>(<span class="ident">address</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets a list of email addresses to send the email to.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>addresses(<span class="kw-2">mut </span><span class="self">self</span>, addresses: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_addresses(addresses);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_addresses(<span class="kw-2">&amp;mut </span><span class="self">self</span>, addresses: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) {
+        <span class="self">self</span>.options.addresses = <span class="prelude-val">Some</span>(addresses.iter().map(|s| s.as_ref().to_owned()).collect());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_address</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">address</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">address</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">address</span>.<span class="ident">to_owned</span>());
+    <span class="doccomment">/// Sets a list of email addresses to BCC.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>bcc(<span class="kw-2">mut </span><span class="self">self</span>, bcc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_bcc(bcc);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_bcc(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bcc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) {
+        <span class="self">self</span>.options.bcc = <span class="prelude-val">Some</span>(bcc.iter().map(|s| s.as_ref().to_owned()).collect());
     }
 
-    <span class="doccomment">/// Sets a list of email addresses to send the email to.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">addresses</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">addresses</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_addresses</span>(<span class="ident">addresses</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets a list of email addresses to CC.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>cc(<span class="kw-2">mut </span><span class="self">self</span>, cc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_cc(cc);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_cc(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) {
+        <span class="self">self</span>.options.cc = <span class="prelude-val">Some</span>(cc.iter().map(|s| s.as_ref().to_owned()).collect());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_addresses</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">addresses</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">addresses</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">addresses</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()).<span class="ident">collect</span>());
+    <span class="doccomment">/// Sets the email subject.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>subject(<span class="kw-2">mut </span><span class="self">self</span>, subject: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_subject(subject);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_subject(<span class="kw-2">&amp;mut </span><span class="self">self</span>, subject: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.subject = <span class="prelude-val">Some</span>(subject.to_owned());
     }
 
-    <span class="doccomment">/// Sets a list of email addresses to BCC.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bcc</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bcc</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_bcc</span>(<span class="ident">bcc</span>);
-        <span class="self">self</span>
+    <span class="doccomment">/// Sets the email body.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>body(<span class="kw-2">mut </span><span class="self">self</span>, body: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.set_body(body);
+        <span class="self">self
+    </span>}
+
+    <span class="kw">pub fn </span>set_body(<span class="kw-2">&amp;mut </span><span class="self">self</span>, body: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.options.body = <span class="prelude-val">Some</span>(body.to_owned());
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_bcc</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">bcc</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">bcc</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">bcc</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()).<span class="ident">collect</span>());
-    }
+    <span class="doccomment">/// Attaches a file to the email.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>attach(<span class="kw-2">mut </span><span class="self">self</span>, attachment: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.add_attachment(attachment);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets a list of email addresses to CC.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cc</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cc</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_cc</span>(<span class="ident">cc</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cc</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">cc</span>: <span class="kw-2">&amp;</span>[<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Serialize</span>]) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">cc</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cc</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>()).<span class="ident">collect</span>());
-    }
-
-    <span class="doccomment">/// Sets the email subject.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subject</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">subject</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_subject</span>(<span class="ident">subject</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_subject</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">subject</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">subject</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">subject</span>.<span class="ident">to_owned</span>());
-    }
-
-    <span class="doccomment">/// Sets the email body.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">body</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">set_body</span>(<span class="ident">body</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_body</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">body</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">body</span>.<span class="ident">to_owned</span>());
-    }
-
-    <span class="doccomment">/// Attaches a file to the email.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attach</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attachment</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">add_attachment</span>(<span class="ident">attachment</span>);
-        <span class="self">self</span>
-    }
-
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_attachment</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">attachment</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>) {
-        <span class="kw">let</span> <span class="ident">attachment</span> <span class="op">=</span> <span class="ident">Fd::from</span>(<span class="ident">attachment</span>.<span class="ident">as_raw_fd</span>());
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">attachment_fds</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">attachments</span>) =&gt; <span class="ident">attachments</span>.<span class="ident">push</span>(<span class="ident">attachment</span>),
-            <span class="prelude-val">None</span> =&gt; {
-                <span class="self">self</span>.<span class="ident">options</span>.<span class="ident">attachment_fds</span>.<span class="ident">replace</span>(<span class="macro">vec!</span>[<span class="ident">attachment</span>]);
+    <span class="kw">pub fn </span>add_attachment(<span class="kw-2">&amp;mut </span><span class="self">self</span>, attachment: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) {
+        <span class="kw">let </span>attachment = Fd::from(attachment.as_raw_fd());
+        <span class="kw">match </span><span class="self">self</span>.options.attachment_fds {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>attachments) =&gt; attachments.push(attachment),
+            <span class="prelude-val">None </span>=&gt; {
+                <span class="self">self</span>.options.attachment_fds.replace(<span class="macro">vec!</span>[attachment]);
             }
         };
     }
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">EmailProxy::new</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">proxy</span>.<span class="ident">compose</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifier</span>, <span class="self">self</span>.<span class="ident">options</span>).<span class="kw">await</span>
-    }
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>proxy = EmailProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
+        proxy.compose(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

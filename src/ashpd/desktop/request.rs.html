@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/request.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>request.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/request.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>request.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -266,271 +266,271 @@
 <span id="264">264</span>
 <span id="265">265</span>
 <span id="266">266</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">collections::HashMap</span>,
-    <span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>},
-    <span class="ident">marker::PhantomData</span>,
+</pre><pre class="rust"><code><span class="kw">use </span>std::{
+    collections::HashMap,
+    fmt::{<span class="self">self</span>, Debug},
+    marker::PhantomData,
 };
 
-<span class="kw">use</span> <span class="ident">serde</span>::{
-    <span class="ident">de</span>::{<span class="self">self</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">SeError</span>, <span class="ident">Visitor</span>},
-    <span class="ident">ser::SerializeTuple</span>,
-    <span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>,
+<span class="kw">use </span>serde::{
+    de::{<span class="self">self</span>, Error <span class="kw">as </span>SeError, Visitor},
+    ser::SerializeTuple,
+    Deserialize, Deserializer, Serialize,
 };
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">ObjectPath</span>, <span class="ident">OwnedValue</span>, <span class="ident">Signature</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>zbus::zvariant::{ObjectPath, OwnedValue, Signature, Type};
 
-<span class="kw">use</span> <span class="ident"><span class="kw">super</span>::DESTINATION</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">desktop::HandleToken</span>,
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">receive_signal</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use </span><span class="kw">super</span>::DESTINATION;
+<span class="kw">use crate</span>::{
+    desktop::HandleToken,
+    helpers::{call_method, receive_signal, session_connection},
+    Error,
 };
 
-<span class="doccomment">/// A typical response returned by the [`Request::receive_response`] signal</span>
-<span class="doccomment">/// of a [`Request`].</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span>,
+<span class="doccomment">/// A typical response returned by the [`Request::receive_response`] signal
+/// of a [`Request`].
+</span><span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>Response&lt;T&gt;
+<span class="kw">where
+    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type,
 {
-    <span class="doccomment">/// Success, the request is carried out.</span>
-    <span class="prelude-val">Ok</span>(<span class="ident">T</span>),
-    <span class="doccomment">/// The user cancelled the request or something else happened.</span>
-    <span class="prelude-val">Err</span>(<span class="ident">ResponseError</span>),
+    <span class="doccomment">/// Success, the request is carried out.
+    </span><span class="prelude-val">Ok</span>(T),
+    <span class="doccomment">/// The user cancelled the request or something else happened.
+    </span><span class="prelude-val">Err</span>(ResponseError),
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Type</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span>,
+<span class="kw">impl</span>&lt;T&gt; Type <span class="kw">for </span>Response&lt;T&gt;
+<span class="kw">where
+    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type,
 {
-    <span class="kw">fn</span> <span class="ident">signature</span>() -&gt; <span class="ident">Signature</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
-        <span class="op">&lt;</span>(<span class="ident">ResponseType</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>)<span class="op">&gt;</span><span class="ident">::signature</span>()
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+        &lt;(ResponseType, HashMap&lt;<span class="kw-2">&amp;</span>str, OwnedValue&gt;)&gt;::signature()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, T&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Response&lt;T&gt;
+<span class="kw">where
+    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;d</span>&gt; Deserialize&lt;<span class="lifetime">&#39;d</span>&gt; + Type,
 {
-    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D::Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
+    <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
+    <span class="kw">where
+        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
     {
-        <span class="kw">struct</span> <span class="ident">ResponseVisitor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw">fn</span>() -&gt; (<span class="ident">ResponseType</span>, <span class="ident">T</span>)<span class="op">&gt;</span>);
+        <span class="kw">struct </span>ResponseVisitor&lt;T&gt;(PhantomData&lt;<span class="kw">fn</span>() -&gt; (ResponseType, T)&gt;);
 
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ResponseVisitor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-        <span class="kw">where</span>
-            <span class="ident">T</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
+        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, T&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ResponseVisitor&lt;T&gt;
+        <span class="kw">where
+            </span>T: Deserialize&lt;<span class="lifetime">&#39;de</span>&gt;,
         {
-            <span class="kw">type</span> <span class="ident">Value</span> <span class="op">=</span> (<span class="ident">ResponseType</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+            <span class="kw">type </span>Value = (ResponseType, <span class="prelude-ty">Option</span>&lt;T&gt;);
 
-            <span class="kw">fn</span> <span class="ident">expecting</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
+            <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
                 <span class="macro">write!</span>(
-                    <span class="ident">formatter</span>,
-                    <span class="string">&quot;a tuple composed of the response status along with the response&quot;</span>
-                )
+                    formatter,
+                    <span class="string">&quot;a tuple composed of the response status along with the response&quot;
+                </span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
-            <span class="kw">where</span>
-                <span class="ident">A</span>: <span class="ident">de::SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
+            <span class="kw">fn </span>visit_seq&lt;A&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>seq: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt;
+            <span class="kw">where
+                </span>A: de::SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
             {
-                <span class="kw">let</span> <span class="ident">type_</span>: <span class="ident">ResponseType</span> <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>()<span class="question-mark">?</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">A::Error::custom</span>(
+                <span class="kw">let </span>type_: ResponseType = seq.next_element()<span class="question-mark">?</span>.ok_or_else(|| A::Error::custom(
                     <span class="string">&quot;Failed to deserialize the response. Expected a numeric (u) value as the first item of the returned tuple&quot;</span>,
                 ))<span class="question-mark">?</span>;
-                <span class="kw">if</span> <span class="ident">type_</span> <span class="op">==</span> <span class="ident">ResponseType::Success</span> {
-                    <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">T</span> <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>()<span class="question-mark">?</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">A::Error::custom</span>(
+                <span class="kw">if </span>type_ == ResponseType::Success {
+                    <span class="kw">let </span>data: T = seq.next_element()<span class="question-mark">?</span>.ok_or_else(|| A::Error::custom(
                         <span class="string">&quot;Failed to deserialize the response. Expected a vardict (a{sv}) with the returned results&quot;</span>,
                     ))<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>((<span class="ident">type_</span>, <span class="prelude-val">Some</span>(<span class="ident">data</span>)))
-                } <span class="kw">else</span> {
-                    <span class="prelude-val">Ok</span>((<span class="ident">type_</span>, <span class="prelude-val">None</span>))
+                    <span class="prelude-val">Ok</span>((type_, <span class="prelude-val">Some</span>(data)))
+                } <span class="kw">else </span>{
+                    <span class="prelude-val">Ok</span>((type_, <span class="prelude-val">None</span>))
                 }
             }
         }
 
-        <span class="kw">let</span> <span class="ident">visitor</span> <span class="op">=</span> <span class="ident">ResponseVisitor</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span>);
-        <span class="kw">let</span> <span class="ident">response</span>: (<span class="ident">ResponseType</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">=</span> <span class="ident">deserializer</span>.<span class="ident">deserialize_tuple</span>(<span class="number">2</span>, <span class="ident">visitor</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">response</span>.<span class="ident">into</span>())
+        <span class="kw">let </span>visitor = ResponseVisitor::&lt;T&gt;(PhantomData);
+        <span class="kw">let </span>response: (ResponseType, <span class="prelude-ty">Option</span>&lt;T&gt;) = deserializer.deserialize_tuple(<span class="number">2</span>, visitor)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(response.into())
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">Type</span>,
+<span class="kw">impl</span>&lt;T&gt; Serialize <span class="kw">for </span>Response&lt;T&gt;
+<span class="kw">where
+    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Serialize + Type,
 {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">S</span>: <span class="ident">serde::Serializer</span>,
+    <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
+    <span class="kw">where
+        </span>S: serde::Serializer,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">serializer</span>.<span class="ident">serialize_tuple</span>(<span class="number">2</span>)<span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Err</span>(<span class="ident">err</span>) =&gt; {
-                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="kw-2">&amp;</span><span class="ident">ResponseType::from</span>(<span class="kw-2">*</span><span class="ident">err</span>))<span class="question-mark">?</span>;
-                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="kw-2">&amp;</span><span class="ident">BasicResponse::default</span>())<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>map = serializer.serialize_tuple(<span class="number">2</span>)<span class="question-mark">?</span>;
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Err(err) =&gt; {
+                map.serialize_element(<span class="kw-2">&amp;</span>ResponseType::from(<span class="kw-2">*</span>err))<span class="question-mark">?</span>;
+                map.serialize_element(<span class="kw-2">&amp;</span>BasicResponse::default())<span class="question-mark">?</span>;
             }
-            <span class="ident"><span class="self">Self</span>::Ok</span>(<span class="ident">response</span>) =&gt; {
-                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="kw-2">&amp;</span><span class="ident">ResponseType::Success</span>)<span class="question-mark">?</span>;
-                <span class="ident">map</span>.<span class="ident">serialize_element</span>(<span class="ident">response</span>)<span class="question-mark">?</span>;
+            <span class="self">Self</span>::Ok(response) =&gt; {
+                map.serialize_element(<span class="kw-2">&amp;</span>ResponseType::Success)<span class="question-mark">?</span>;
+                map.serialize_element(response)<span class="question-mark">?</span>;
             }
         };
-        <span class="ident">map</span>.<span class="ident">end</span>()
+        map.end()
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>(<span class="ident">ResponseType</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span>,
+<span class="attribute">#[doc(hidden)]
+</span><span class="kw">impl</span>&lt;T&gt; From&lt;(ResponseType, <span class="prelude-ty">Option</span>&lt;T&gt;)&gt; <span class="kw">for </span>Response&lt;T&gt;
+<span class="kw">where
+    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type,
 {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">f</span>: (<span class="ident">ResponseType</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">f</span>.<span class="number">0</span> {
-            <span class="ident">ResponseType::Success</span> =&gt; {
-                <span class="ident">Response::Ok</span>(<span class="ident">f</span>.<span class="number">1</span>.<span class="ident">expect</span>(<span class="string">&quot;Expected a valid response, found nothing.&quot;</span>))
+    <span class="kw">fn </span>from(f: (ResponseType, <span class="prelude-ty">Option</span>&lt;T&gt;)) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>f.<span class="number">0 </span>{
+            ResponseType::Success =&gt; {
+                Response::Ok(f.<span class="number">1</span>.expect(<span class="string">&quot;Expected a valid response, found nothing.&quot;</span>))
             }
-            <span class="ident">ResponseType::Cancelled</span> =&gt; <span class="ident">Response::Err</span>(<span class="ident">ResponseError::Cancelled</span>),
-            <span class="ident">ResponseType::Other</span> =&gt; <span class="ident">Response::Err</span>(<span class="ident">ResponseError::Other</span>),
+            ResponseType::Cancelled =&gt; Response::Err(ResponseError::Cancelled),
+            ResponseType::Other =&gt; Response::Err(ResponseError::Other),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// The most basic response. Used when only the status of the request is what we</span>
-<span class="doccomment">/// receive as a response.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">BasicResponse</span>(<span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">OwnedValue</span><span class="op">&gt;</span>);
+<span class="attribute">#[derive(Default, Serialize, Deserialize, Type)]
+</span><span class="doccomment">/// The most basic response. Used when only the status of the request is what we
+/// receive as a response.
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>BasicResponse(HashMap&lt;String, OwnedValue&gt;);
 
-<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">BasicResponse</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;BasicResponse&quot;</span>).<span class="ident">finish</span>()
+<span class="kw">impl </span>Debug <span class="kw">for </span>BasicResponse {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        f.debug_tuple(<span class="string">&quot;BasicResponse&quot;</span>).finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>)]</span>
-<span class="doccomment">/// An error returned a portal request caused by either the user cancelling the</span>
-<span class="doccomment">/// request or something else.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ResponseError</span> {
-    <span class="doccomment">/// The user canceled the request.</span>
-    <span class="ident">Cancelled</span>,
-    <span class="doccomment">/// Something else happened.</span>
-    <span class="ident">Other</span>,
+<span class="attribute">#[derive(Debug, Copy, PartialEq, Eq, Hash, Clone)]
+</span><span class="doccomment">/// An error returned a portal request caused by either the user cancelling the
+/// request or something else.
+</span><span class="kw">pub enum </span>ResponseError {
+    <span class="doccomment">/// The user canceled the request.
+    </span>Cancelled,
+    <span class="doccomment">/// Something else happened.
+    </span>Other,
 }
 
-<span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">ResponseError</span> {}
+<span class="kw">impl </span>std::error::Error <span class="kw">for </span>ResponseError {}
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">ResponseError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Cancelled</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Cancelled&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Other</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Other&quot;</span>),
+<span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>ResponseError {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Cancelled =&gt; f.write_str(<span class="string">&quot;Cancelled&quot;</span>),
+            <span class="self">Self</span>::Other =&gt; f.write_str(<span class="string">&quot;Other&quot;</span>),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">enum</span> <span class="ident">ResponseType</span> {
-    <span class="doccomment">/// Success, the request is carried out.</span>
-    <span class="ident">Success</span> <span class="op">=</span> <span class="number">0</span>,
-    <span class="doccomment">/// The user cancelled the interaction.</span>
-    <span class="ident">Cancelled</span> <span class="op">=</span> <span class="number">1</span>,
-    <span class="doccomment">/// The user interaction was ended in some other way.</span>
-    <span class="ident">Other</span> <span class="op">=</span> <span class="number">2</span>,
+<span class="attribute">#[derive(Serialize, Deserialize, PartialEq, Eq, Debug, Type)]
+#[doc(hidden)]
+</span><span class="kw">enum </span>ResponseType {
+    <span class="doccomment">/// Success, the request is carried out.
+    </span>Success = <span class="number">0</span>,
+    <span class="doccomment">/// The user cancelled the interaction.
+    </span>Cancelled = <span class="number">1</span>,
+    <span class="doccomment">/// The user interaction was ended in some other way.
+    </span>Other = <span class="number">2</span>,
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ResponseError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ResponseType</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">ResponseError</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">err</span> {
-            <span class="ident">ResponseError::Other</span> =&gt; <span class="ident"><span class="self">Self</span>::Other</span>,
-            <span class="ident">ResponseError::Cancelled</span> =&gt; <span class="ident"><span class="self">Self</span>::Cancelled</span>,
+<span class="attribute">#[doc(hidden)]
+</span><span class="kw">impl </span>From&lt;ResponseError&gt; <span class="kw">for </span>ResponseType {
+    <span class="kw">fn </span>from(err: ResponseError) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>err {
+            ResponseError::Other =&gt; <span class="self">Self</span>::Other,
+            ResponseError::Cancelled =&gt; <span class="self">Self</span>::Cancelled,
         }
     }
 }
 
-<span class="doccomment">/// The Request interface is shared by all portal interfaces.</span>
-<span class="doccomment">/// When a portal method is called, the reply includes a handle (i.e. object</span>
-<span class="doccomment">/// path) for a Request object, which will stay alive for the duration of the</span>
-<span class="doccomment">/// user interaction related to the method call.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The portal indicates that a portal request interaction is over by emitting</span>
-<span class="doccomment">/// the &quot;Response&quot; signal on the Request object.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The application can abort the interaction calling</span>
-<span class="doccomment">/// [`close()`][`Request::close`] on the Request object.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Request`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Request).</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Request&quot;</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The Request interface is shared by all portal interfaces.
+/// When a portal method is called, the reply includes a handle (i.e. object
+/// path) for a Request object, which will stay alive for the duration of the
+/// user interaction related to the method call.
+///
+/// The portal indicates that a portal request interaction is over by emitting
+/// the &quot;Response&quot; signal on the Request object.
+///
+/// The application can abort the interaction calling
+/// [`close()`][`Request::close`] on the Request object.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Request`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Request).
+</span><span class="attribute">#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Request&quot;</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Request&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="ident">P</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">P</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">ObjectPath</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-        <span class="ident">P::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">zbus::Error</span><span class="op">&gt;</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Request&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">pub async fn </span>new&lt;P&gt;(path: P) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt;
+    <span class="kw">where
+        </span>P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        P::Error: Into&lt;zbus::Error&gt;,
     {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Request&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">path</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Request&quot;</span>)<span class="question-mark">?
+            </span>.path(path)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">from_unique_name</span>(<span class="ident">handle_token</span>: <span class="kw-2">&amp;</span><span class="ident">HandleToken</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">unique_name</span> <span class="op">=</span> <span class="ident">connection</span>.<span class="ident">unique_name</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">unique_identifier</span> <span class="op">=</span> <span class="ident">unique_name</span>.<span class="ident">trim_start_matches</span>(<span class="string">&#39;:&#39;</span>).<span class="ident">replace</span>(<span class="string">&#39;.&#39;</span>, <span class="string">&quot;_&quot;</span>);
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">ObjectPath::try_from</span>(<span class="macro">format!</span>(
+    <span class="kw">pub async fn </span>from_unique_name(handle_token: <span class="kw-2">&amp;</span>HandleToken) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>unique_name = connection.unique_name().unwrap();
+        <span class="kw">let </span>unique_identifier = unique_name.trim_start_matches(<span class="string">&#39;:&#39;</span>).replace(<span class="string">&#39;.&#39;</span>, <span class="string">&quot;_&quot;</span>);
+        <span class="kw">let </span>path = ObjectPath::try_from(<span class="macro">format!</span>(
             <span class="string">&quot;/org/freedesktop/portal/desktop/request/{}/{}&quot;</span>,
-            <span class="ident">unique_identifier</span>, <span class="ident">handle_token</span>
+            unique_identifier, handle_token
         ))
-        .<span class="ident">unwrap</span>();
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tracing&quot;</span>)]</span>
-        <span class="macro">tracing::info!</span>(<span class="string">&quot;Creating a org.freedesktop.portal.Request {}&quot;</span>, <span class="ident">path</span>);
-        <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">path</span>).<span class="kw">await</span>
-    }
+        .unwrap();
+        <span class="attribute">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+        </span><span class="macro">tracing::info!</span>(<span class="string">&quot;Creating a org.freedesktop.portal.Request {}&quot;</span>, path);
+        <span class="self">Self</span>::new(path).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// See also [`Response`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Request.Response).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Response&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">receive_response</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">R</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Type</span> <span class="op">+</span> <span class="ident">Debug</span>,
+    <span class="doccomment">/// See also [`Response`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Request.Response).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Response&quot;</span>)]
+    #[allow(dead_code)]
+    </span><span class="kw">pub async fn </span>receive_response&lt;R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;R, Error&gt;
+    <span class="kw">where
+        </span>R: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type + Debug,
     {
-        <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">receive_signal</span>::<span class="op">&lt;</span><span class="ident">Response</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;Response&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">response</span> {
-            <span class="ident">Response::Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
-            <span class="ident">Response::Ok</span>(<span class="ident">r</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">r</span>),
+        <span class="kw">let </span>response = receive_signal::&lt;Response&lt;R&gt;&gt;(<span class="self">self</span>.inner(), <span class="string">&quot;Response&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">match </span>response {
+            Response::Err(e) =&gt; <span class="prelude-val">Err</span>(e.into()),
+            Response::Ok(r) =&gt; <span class="prelude-val">Ok</span>(r),
         }
     }
 
-    <span class="doccomment">/// Closes the portal request to which this object refers and ends all</span>
-    <span class="doccomment">/// related user interaction (dialogs, etc). A Response signal will not</span>
-    <span class="doccomment">/// be emitted in this case.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Close`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Request.Close).</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Close&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;Close&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Closes the portal request to which this object refers and ends all
+    /// related user interaction (dialogs, etc). A Response signal will not
+    /// be emitted in this case.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Close`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Request.Close).
+    </span><span class="attribute">#[allow(dead_code)]
+    #[doc(alias = <span class="string">&quot;Close&quot;</span>)]
+    </span><span class="kw">pub async fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Close&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
+    </span>}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;Request&quot;</span>)
-            .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">path</span>().<span class="ident">as_str</span>())
-            .<span class="ident">finish</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Debug <span class="kw">for </span>Request&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        f.debug_tuple(<span class="string">&quot;Request&quot;</span>)
+            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.inner().path().as_str())
+            .finish()
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

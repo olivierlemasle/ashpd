@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/handle_token.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>handle_token.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/handle_token.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>handle_token.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -99,104 +99,104 @@
 <span id="97">97</span>
 <span id="98">98</span>
 <span id="99">99</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">convert::TryFrom</span>,
-    <span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>, <span class="ident">Display</span>},
+</pre><pre class="rust"><code><span class="kw">use </span>std::{
+    convert::TryFrom,
+    fmt::{<span class="self">self</span>, Debug, Display},
 };
 
-<span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">distributions::Alphanumeric</span>, <span class="ident">thread_rng</span>, <span class="ident">Rng</span>};
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">zbus</span>::{<span class="ident">names::OwnedMemberName</span>, <span class="ident">zvariant::Type</span>};
+<span class="kw">use </span>rand::{distributions::Alphanumeric, thread_rng, Rng};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>zbus::{names::OwnedMemberName, zvariant::Type};
 
-<span class="doccomment">/// A handle token is a DBus Object Path element, specified in the</span>
-<span class="doccomment">/// `RequestProxy` or [`SessionProxy`](crate::desktop::SessionProxy) object path</span>
-<span class="doccomment">/// following this format `/org/freedesktop/portal/desktop/request/SENDER/TOKEN`</span>
-<span class="doccomment">/// where sender is the caller&#39;s unique name and token is the [`HandleToken`].</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// A valid object path element must only contain the ASCII characters</span>
-<span class="doccomment">/// `[A-Z][a-z][0-9]_`</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Type</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HandleToken</span>(<span class="ident">OwnedMemberName</span>);
+<span class="doccomment">/// A handle token is a DBus Object Path element, specified in the
+/// `RequestProxy` or [`SessionProxy`](crate::desktop::SessionProxy) object path
+/// following this format `/org/freedesktop/portal/desktop/request/SENDER/TOKEN`
+/// where sender is the caller&#39;s unique name and token is the [`HandleToken`].
+///
+/// A valid object path element must only contain the ASCII characters
+/// `[A-Z][a-z][0-9]_`
+</span><span class="attribute">#[derive(Serialize, Deserialize, Type)]
+</span><span class="kw">pub struct </span>HandleToken(OwnedMemberName);
 
-<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">HandleToken</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
+<span class="kw">impl </span>Display <span class="kw">for </span>HandleToken {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        f.write_str(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">HandleToken</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;HandleToken&quot;</span>)
-            .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_str</span>())
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>Debug <span class="kw">for </span>HandleToken {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        f.debug_tuple(<span class="string">&quot;HandleToken&quot;</span>)
+            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.as_str())
+            .finish()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">HandleToken</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();
-        <span class="kw">let</span> <span class="ident">token</span>: <span class="ident">String</span> <span class="op">=</span> (<span class="kw-2">&amp;mut</span> <span class="ident">rng</span>)
-            .<span class="ident">sample_iter</span>(<span class="ident">Alphanumeric</span>)
-            .<span class="ident">take</span>(<span class="number">10</span>)
-            .<span class="ident">map</span>(<span class="ident">char::from</span>)
-            .<span class="ident">collect</span>();
-        <span class="ident">HandleToken::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;ashpd_{}&quot;</span>, <span class="ident">token</span>)).<span class="ident">unwrap</span>()
+<span class="kw">impl </span>Default <span class="kw">for </span>HandleToken {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>rng = thread_rng();
+        <span class="kw">let </span>token: String = (<span class="kw-2">&amp;mut </span>rng)
+            .sample_iter(Alphanumeric)
+            .take(<span class="number">10</span>)
+            .map(char::from)
+            .collect();
+        HandleToken::try_from(<span class="macro">format!</span>(<span class="string">&quot;ashpd_{}&quot;</span>, token)).unwrap()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HandleInvalidCharacter</span>(<span class="ident">char</span>);
+<span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub struct </span>HandleInvalidCharacter(char);
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">HandleInvalidCharacter</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_fmt</span>(<span class="macro">format_args!</span>(<span class="string">&quot;Invalid Character {}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>))
+<span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>HandleInvalidCharacter {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        f.write_fmt(<span class="macro">format_args!</span>(<span class="string">&quot;Invalid Character {}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">HandleInvalidCharacter</span> {}
+<span class="kw">impl </span>std::error::Error <span class="kw">for </span>HandleInvalidCharacter {}
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">HandleToken</span> {
-    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">HandleInvalidCharacter</span>;
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-        <span class="kw">for</span> <span class="ident">char</span> <span class="kw">in</span> <span class="ident">value</span>.<span class="ident">chars</span>() {
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">char</span>.<span class="ident">is_ascii_alphanumeric</span>() <span class="op">&amp;&amp;</span> <span class="ident">char</span> <span class="op">!</span><span class="op">=</span> <span class="string">&#39;_&#39;</span> {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HandleInvalidCharacter</span>(<span class="ident">char</span>));
+<span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>HandleToken {
+    <span class="kw">type </span>Error = HandleInvalidCharacter;
+    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="kw">for </span>char <span class="kw">in </span>value.chars() {
+            <span class="kw">if </span>!char.is_ascii_alphanumeric() &amp;&amp; char != <span class="string">&#39;_&#39; </span>{
+                <span class="kw">return </span><span class="prelude-val">Err</span>(HandleInvalidCharacter(char));
             }
         }
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(
-            <span class="ident">OwnedMemberName::try_from</span>(<span class="ident">value</span>).<span class="ident">expect</span>(<span class="string">&quot;Invalid handle token&quot;</span>),
+            OwnedMemberName::try_from(value).expect(<span class="string">&quot;Invalid handle token&quot;</span>),
         ))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">HandleToken</span> {
-    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">HandleInvalidCharacter</span>;
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-        <span class="ident">HandleToken::try_from</span>(<span class="ident">value</span>.<span class="ident">as_str</span>())
+<span class="kw">impl </span>TryFrom&lt;String&gt; <span class="kw">for </span>HandleToken {
+    <span class="kw">type </span>Error = HandleInvalidCharacter;
+    <span class="kw">fn </span>try_from(value: String) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        HandleToken::try_from(value.as_str())
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="ident">std::convert::TryFrom</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>test {
+    <span class="kw">use </span>std::convert::TryFrom;
 
-    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::HandleToken</span>;
+    <span class="kw">use </span><span class="kw">super</span>::HandleToken;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">handle_token</span>() {
-        <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;token&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">true</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>handle_token() {
+        <span class="macro">assert_eq!</span>(HandleToken::try_from(<span class="string">&quot;token&quot;</span>).is_ok(), <span class="bool-val">true</span>);
 
-        <span class="kw">let</span> <span class="ident">token</span> <span class="op">=</span> <span class="ident">HandleToken::try_from</span>(<span class="string">&quot;token2&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">token</span>.<span class="ident">to_string</span>(), <span class="string">&quot;token2&quot;</span>.<span class="ident">to_string</span>());
+        <span class="kw">let </span>token = HandleToken::try_from(<span class="string">&quot;token2&quot;</span>).unwrap();
+        <span class="macro">assert_eq!</span>(token.to_string(), <span class="string">&quot;token2&quot;</span>.to_string());
 
-        <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;/test&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">false</span>);
+        <span class="macro">assert_eq!</span>(HandleToken::try_from(<span class="string">&quot;/test&quot;</span>).is_ok(), <span class="bool-val">false</span>);
 
-        <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;تجربة&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">false</span>);
+        <span class="macro">assert_eq!</span>(HandleToken::try_from(<span class="string">&quot;تجربة&quot;</span>).is_ok(), <span class="bool-val">false</span>);
 
-        <span class="macro">assert_eq!</span>(<span class="ident">HandleToken::try_from</span>(<span class="string">&quot;test_token&quot;</span>).<span class="ident">is_ok</span>(), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(HandleToken::try_from(<span class="string">&quot;test_token&quot;</span>).is_ok(), <span class="bool-val">true</span>);
 
-        <span class="ident">HandleToken::default</span>(); <span class="comment">// ensure we don&#39;t panic</span>
-    }
+        HandleToken::default(); <span class="comment">// ensure we don&#39;t panic
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

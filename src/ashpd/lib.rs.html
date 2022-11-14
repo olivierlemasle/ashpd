@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -48,53 +48,53 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
-</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">deny</span>(<span class="ident">rustdoc::broken_intra_doc_links</span>)]</span>
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span> <span class="comment">// until zbus::DBusProxy adds docs to the generated trait</span>
-<span class="attribute">#![<span class="ident">doc</span>(
-    <span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg&quot;</span>,
-    <span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg&quot;</span>
-)]</span>
-<span class="attribute">#![<span class="ident">doc</span> <span class="op">=</span> <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk3&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gtk4&quot;</span>), <span class="ident">not</span>(<span class="ident">doc</span>)))]</span>
-<span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both GTK 3 &amp; GTK 4 features at once&quot;</span>);
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tokio&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;async-std&quot;</span>), <span class="ident">not</span>(<span class="ident">doc</span>)))]</span>
-<span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both async-std &amp; tokio features at once&quot;</span>);
+</pre><pre class="rust"><code><span class="attribute">#![deny(rustdoc::broken_intra_doc_links)]
+#![allow(missing_docs)] </span><span class="comment">// until zbus::DBusProxy adds docs to the generated trait
+</span><span class="attribute">#![doc(
+    html_logo_url = <span class="string">&quot;https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg&quot;</span>,
+    html_favicon_url = <span class="string">&quot;https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg&quot;
+</span>)]
+#![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
+#[cfg(all(all(feature = <span class="string">&quot;gtk3&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>), not(doc)))]
+</span><span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both GTK 3 &amp; GTK 4 features at once&quot;</span>);
+<span class="attribute">#[cfg(all(all(feature = <span class="string">&quot;tokio&quot;</span>, feature = <span class="string">&quot;async-std&quot;</span>), not(doc)))]
+</span><span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both async-std &amp; tokio features at once&quot;</span>);
 
-<span class="kw">use</span> <span class="ident">once_cell::sync::OnceCell</span>;
+<span class="kw">use </span>once_cell::sync::OnceCell;
 
-<span class="kw">static</span> <span class="ident">SESSION</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">zbus::Connection</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">OnceCell::new</span>();
+<span class="kw">static </span>SESSION: OnceCell&lt;zbus::Connection&gt; = OnceCell::new();
 
-<span class="doccomment">/// Alias for a [`Result`] with the error type `ashpd::Error`.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="doccomment">/// Alias for a [`Result`] with the error type `ashpd::Error`.
+</span><span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, Error&gt;;
 
-<span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a</span>
-<span class="doccomment">/// background or querying the user&#39;s location.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">desktop</span>;
-<span class="doccomment">/// Interact with the documents store or transfer files across apps.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">documents</span>;
-<span class="kw">mod</span> <span class="ident">error</span>;
-<span class="kw">mod</span> <span class="ident">window_identifier</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::window_identifier::WindowIdentifier</span>;
-<span class="doccomment">/// Spawn commands outside the sandbox or monitor if the running application has</span>
-<span class="doccomment">/// received an update &amp; install it.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">flatpak</span>;
-<span class="kw">mod</span> <span class="ident">helpers</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">enumflags2</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zbus</span>::{<span class="self">self</span>, <span class="ident">zvariant</span>};
+<span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a
+/// background or querying the user&#39;s location.
+</span><span class="kw">pub mod </span>desktop;
+<span class="doccomment">/// Interact with the documents store or transfer files across apps.
+</span><span class="kw">pub mod </span>documents;
+<span class="kw">mod </span>error;
+<span class="kw">mod </span>window_identifier;
+<span class="kw">pub use </span><span class="self">self</span>::window_identifier::WindowIdentifier;
+<span class="doccomment">/// Spawn commands outside the sandbox or monitor if the running application has
+/// received an update &amp; install it.
+</span><span class="kw">pub mod </span>flatpak;
+<span class="kw">mod </span>helpers;
+<span class="kw">pub use </span>enumflags2;
+<span class="kw">pub use </span>zbus::{<span class="self">self</span>, zvariant};
 
-<span class="doccomment">/// Check whether the application is running inside a sandbox.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The function checks whether the file `/.flatpak-info` exists, or if the app</span>
-<span class="doccomment">/// is running as a snap, or if the environment variable `GTK_USE_PORTAL` is set</span>
-<span class="doccomment">/// to `1`.</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">is_sandboxed</span>() -&gt; <span class="ident">bool</span> {
-    <span class="ident"><span class="kw">crate</span>::helpers::is_flatpak</span>().<span class="kw">await</span>
-        <span class="op">|</span><span class="op">|</span> <span class="ident"><span class="kw">crate</span>::helpers::is_snap</span>().<span class="kw">await</span>
-        <span class="op">|</span><span class="op">|</span> <span class="ident">std::env::var</span>(<span class="string">&quot;GTK_USE_PORTAL&quot;</span>)
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span> <span class="op">==</span> <span class="string">&quot;1&quot;</span>)
-            .<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>)
+<span class="doccomment">/// Check whether the application is running inside a sandbox.
+///
+/// The function checks whether the file `/.flatpak-info` exists, or if the app
+/// is running as a snap, or if the environment variable `GTK_USE_PORTAL` is set
+/// to `1`.
+</span><span class="kw">pub async fn </span>is_sandboxed() -&gt; bool {
+    <span class="kw">crate</span>::helpers::is_flatpak().<span class="kw">await
+        </span>|| <span class="kw">crate</span>::helpers::is_snap().<span class="kw">await
+        </span>|| std::env::var(<span class="string">&quot;GTK_USE_PORTAL&quot;</span>)
+            .map(|v| v == <span class="string">&quot;1&quot;</span>)
+            .unwrap_or(<span class="bool-val">false</span>)
 }
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::error</span>::{<span class="ident">Error</span>, <span class="ident">PortalError</span>};
+<span class="kw">pub use </span><span class="self">self</span>::error::{Error, PortalError};
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

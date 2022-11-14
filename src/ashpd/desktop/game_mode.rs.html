@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/game_mode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>game_mode.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/game_mode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>game_mode.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -305,310 +305,310 @@
 <span id="303">303</span>
 <span id="304">304</span>
 <span id="305">305</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use ashpd::desktop::game_mode::GameMode;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = GameMode::new().await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.register(246612).await?);</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.query_status(246612).await?);</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.unregister(246612).await?);</span>
-<span class="doccomment">//!     println!(&quot;{:#?}&quot;, proxy.query_status(246612).await?);</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! ```rust,no_run
+//! use ashpd::desktop::game_mode::GameMode;
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = GameMode::new().await?;
+//!
+//!     println!(&quot;{:#?}&quot;, proxy.register(246612).await?);
+//!     println!(&quot;{:#?}&quot;, proxy.query_status(246612).await?);
+//!     println!(&quot;{:#?}&quot;, proxy.unregister(246612).await?);
+//!     println!(&quot;{:#?}&quot;, proxy.query_status(246612).await?);
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt::Debug</span>, <span class="ident">os::unix::io::AsRawFd</span>};
+</span><span class="kw">use </span>std::{fmt::Debug, os::unix::io::AsRawFd};
 
-<span class="kw">use</span> <span class="ident">serde_repr::Deserialize_repr</span>;
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">Fd</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>serde_repr::Deserialize_repr;
+<span class="kw">use </span>zbus::zvariant::{Fd, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">error::PortalError</span>,
-    <span class="ident">helpers</span>::{<span class="ident">call_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>,
+<span class="kw">use super</span>::{DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    error::PortalError,
+    helpers::{call_method, session_connection},
+    Error,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="doccomment">/// The status of the game mode.</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Status</span> {
-    <span class="doccomment">/// GameMode is inactive.</span>
-    <span class="ident">Inactive</span> <span class="op">=</span> <span class="number">0</span>,
-    <span class="doccomment">/// GameMode is active.</span>
-    <span class="ident">Active</span> <span class="op">=</span> <span class="number">1</span>,
-    <span class="doccomment">/// GameMode is active and `pid` is registered.</span>
-    <span class="ident">Registered</span> <span class="op">=</span> <span class="number">2</span>,
-    <span class="doccomment">/// The query failed inside GameMode.</span>
-    <span class="ident">Rejected</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>,
+<span class="attribute">#[derive(Deserialize_repr, PartialEq, Eq, Debug, Type)]
+</span><span class="doccomment">/// The status of the game mode.
+</span><span class="attribute">#[repr(i32)]
+</span><span class="kw">pub enum </span>Status {
+    <span class="doccomment">/// GameMode is inactive.
+    </span>Inactive = <span class="number">0</span>,
+    <span class="doccomment">/// GameMode is active.
+    </span>Active = <span class="number">1</span>,
+    <span class="doccomment">/// GameMode is active and `pid` is registered.
+    </span>Registered = <span class="number">2</span>,
+    <span class="doccomment">/// The query failed inside GameMode.
+    </span>Rejected = -<span class="number">1</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize_repr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
-<span class="doccomment">/// The status of a (un-)register game mode request.</span>
-<span class="kw">enum</span> <span class="ident">RegisterStatus</span> {
-    <span class="doccomment">/// If the game was successfully (un-)registered.</span>
-    <span class="ident">Success</span> <span class="op">=</span> <span class="number">0</span>,
-    <span class="doccomment">/// If the request was rejected by GameMode.</span>
-    <span class="ident">Rejected</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>,
+<span class="attribute">#[derive(Deserialize_repr, PartialEq, Eq, Debug, Type)]
+#[repr(i32)]
+</span><span class="doccomment">/// The status of a (un-)register game mode request.
+</span><span class="kw">enum </span>RegisterStatus {
+    <span class="doccomment">/// If the game was successfully (un-)registered.
+    </span>Success = <span class="number">0</span>,
+    <span class="doccomment">/// If the request was rejected by GameMode.
+    </span>Rejected = -<span class="number">1</span>,
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications access GameMode from within the</span>
-<span class="doccomment">/// sandbox.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// It is analogous to the `com.feralinteractive.GameMode` interface and will</span>
-<span class="doccomment">/// proxy request there, but with additional permission checking and pid</span>
-<span class="doccomment">/// mapping. The latter is necessary in the case that sandbox has pid namespace</span>
-<span class="doccomment">/// isolation enabled. See the man page for pid_namespaces(7) for more details,</span>
-<span class="doccomment">/// but briefly, it means that the sandbox has its own process id namespace</span>
-<span class="doccomment">/// which is separated from the one on the host. Thus there will be two separate</span>
-<span class="doccomment">/// process ids (pids) within two different namespaces that both identify same</span>
-<span class="doccomment">/// process. One id from the pid namespace inside the sandbox and one id from</span>
-<span class="doccomment">/// the host pid namespace. Since GameMode expects pids from the host pid</span>
-<span class="doccomment">/// namespace but programs inside the sandbox can only know pids from the</span>
-<span class="doccomment">/// sandbox namespace, process ids need to be translated from the portal to the</span>
-<span class="doccomment">/// host namespace. The portal will do that transparently for all calls where</span>
-<span class="doccomment">/// this is necessary.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Note: GameMode will monitor active clients, i.e. games and other programs</span>
-<span class="doccomment">/// that have successfully called [`GameMode::register`]. In the event</span>
-<span class="doccomment">/// that a client terminates without a call to the</span>
-<span class="doccomment">/// [`GameMode::unregister`] method, GameMode will automatically</span>
-<span class="doccomment">/// un-register the client. This might happen with a (small) delay.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.GameMode`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.GameMode).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.GameMode&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GameMode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface lets sandboxed applications access GameMode from within the
+/// sandbox.
+///
+/// It is analogous to the `com.feralinteractive.GameMode` interface and will
+/// proxy request there, but with additional permission checking and pid
+/// mapping. The latter is necessary in the case that sandbox has pid namespace
+/// isolation enabled. See the man page for pid_namespaces(7) for more details,
+/// but briefly, it means that the sandbox has its own process id namespace
+/// which is separated from the one on the host. Thus there will be two separate
+/// process ids (pids) within two different namespaces that both identify same
+/// process. One id from the pid namespace inside the sandbox and one id from
+/// the host pid namespace. Since GameMode expects pids from the host pid
+/// namespace but programs inside the sandbox can only know pids from the
+/// sandbox namespace, process ids need to be translated from the portal to the
+/// host namespace. The portal will do that transparently for all calls where
+/// this is necessary.
+///
+/// Note: GameMode will monitor active clients, i.e. games and other programs
+/// that have successfully called [`GameMode::register`]. In the event
+/// that a client terminates without a call to the
+/// [`GameMode::unregister`] method, GameMode will automatically
+/// un-register the client. This might happen with a (small) delay.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.GameMode`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.GameMode).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.GameMode&quot;</span>)]
+</span><span class="kw">pub struct </span>GameMode&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">GameMode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`GameMode`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">GameMode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.GameMode&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; GameMode&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`GameMode`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;GameMode&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.GameMode&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Query the GameMode status for a process.</span>
-    <span class="doccomment">/// If the caller is running inside a sandbox with pid namespace isolation,</span>
-    <span class="doccomment">/// the pid will be translated to the respective host pid.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `pid` - Process id to query the GameMode status of.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`QueryStatus`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatus).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryStatus&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Status</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;QueryStatus&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">pid</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Query the GameMode status for a process.
+    /// If the caller is running inside a sandbox with pid namespace isolation,
+    /// the pid will be translated to the respective host pid.
+    ///
+    /// # Arguments
+    ///
+    /// * `pid` - Process id to query the GameMode status of.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`QueryStatus`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatus).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;QueryStatus&quot;</span>)]
+    </span><span class="kw">pub async fn </span>query_status(<span class="kw-2">&amp;</span><span class="self">self</span>, pid: u32) -&gt; <span class="prelude-ty">Result</span>&lt;Status, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;QueryStatus&quot;</span>, <span class="kw-2">&amp;</span>(pid)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Query the GameMode status for a process.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `target` - Pid file descriptor to query the GameMode status of.</span>
-    <span class="doccomment">/// * `requester` - Pid file descriptor of the process requesting the</span>
-    <span class="doccomment">///   information.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`QueryStatusByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatusByPIDFd).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryStatusByPIDFd&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_status_by_pidfd</span>(
+    <span class="doccomment">/// Query the GameMode status for a process.
+    ///
+    /// # Arguments
+    ///
+    /// * `target` - Pid file descriptor to query the GameMode status of.
+    /// * `requester` - Pid file descriptor of the process requesting the
+    ///   information.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`QueryStatusByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatusByPIDFd).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;QueryStatusByPIDFd&quot;</span>)]
+    </span><span class="kw">pub async fn </span>query_status_by_pidfd(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-        <span class="ident">requester</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Status</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        target: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
+        requester: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Status, Error&gt; {
+        call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;QueryStatusByPIDFd&quot;</span>,
             <span class="kw-2">&amp;</span>(
-                <span class="ident">Fd::from</span>(<span class="ident">target</span>.<span class="ident">as_raw_fd</span>()),
-                <span class="ident">Fd::from</span>(<span class="ident">requester</span>.<span class="ident">as_raw_fd</span>()),
+                Fd::from(target.as_raw_fd()),
+                Fd::from(requester.as_raw_fd()),
             ),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Query the GameMode status for a process.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `target` - Process id to query the GameMode status of.</span>
-    <span class="doccomment">/// * `requester` - Process id of the process requesting the information.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`QueryStatusByPid`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatusByPid).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;QueryStatusByPid&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">query_status_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">u32</span>, <span class="ident">requester</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Status</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;QueryStatusByPid&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">target</span>, <span class="ident">requester</span>)).<span class="kw">await</span>
-    }
+    <span class="doccomment">/// Query the GameMode status for a process.
+    ///
+    /// # Arguments
+    ///
+    /// * `target` - Process id to query the GameMode status of.
+    /// * `requester` - Process id of the process requesting the information.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`QueryStatusByPid`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.QueryStatusByPid).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;QueryStatusByPid&quot;</span>)]
+    </span><span class="kw">pub async fn </span>query_status_by_pid(<span class="kw-2">&amp;</span><span class="self">self</span>, target: u32, requester: u32) -&gt; <span class="prelude-ty">Result</span>&lt;Status, Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;QueryStatusByPid&quot;</span>, <span class="kw-2">&amp;</span>(target, requester)).<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Register a game with GameMode and thus request GameMode to be activated.</span>
-    <span class="doccomment">/// If the caller is running inside a sandbox with pid namespace isolation,</span>
-    <span class="doccomment">/// the pid will be translated to the respective host pid. See the general</span>
-    <span class="doccomment">/// introduction for details. If the GameMode has already been requested</span>
-    <span class="doccomment">/// for pid before, this call will fail.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `pid` - Process id of the game to register.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`RegisterGame`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGame).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RegisterGame&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;RegisterGame&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">pid</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">status</span> {
-            <span class="ident">RegisterStatus::Success</span> =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="ident">RegisterStatus::Rejected</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::Portal</span>(<span class="ident">PortalError::Failed</span>)),
+    <span class="doccomment">/// Register a game with GameMode and thus request GameMode to be activated.
+    /// If the caller is running inside a sandbox with pid namespace isolation,
+    /// the pid will be translated to the respective host pid. See the general
+    /// introduction for details. If the GameMode has already been requested
+    /// for pid before, this call will fail.
+    ///
+    /// # Arguments
+    ///
+    /// * `pid` - Process id of the game to register.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`RegisterGame`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGame).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;RegisterGame&quot;</span>)]
+    </span><span class="kw">pub async fn </span>register(<span class="kw-2">&amp;</span><span class="self">self</span>, pid: u32) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>status = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;RegisterGame&quot;</span>, <span class="kw-2">&amp;</span>(pid)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">match </span>status {
+            RegisterStatus::Success =&gt; <span class="prelude-val">Ok</span>(()),
+            RegisterStatus::Rejected =&gt; <span class="prelude-val">Err</span>(Error::Portal(PortalError::Failed)),
         }
     }
 
-    <span class="doccomment">/// Register a game with GameMode.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `target` - Process file descriptor of the game to register.</span>
-    <span class="doccomment">/// * `requester` - Process file descriptor of the process requesting the</span>
-    <span class="doccomment">///   registration.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`RegisterGameByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGameByPIDFd).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RegisterGameByPIDFd&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">register_by_pidfd</span>(
+    <span class="doccomment">/// Register a game with GameMode.
+    ///
+    /// # Arguments
+    ///
+    /// * `target` - Process file descriptor of the game to register.
+    /// * `requester` - Process file descriptor of the process requesting the
+    ///   registration.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`RegisterGameByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGameByPIDFd).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;RegisterGameByPIDFd&quot;</span>)]
+    </span><span class="kw">pub async fn </span>register_by_pidfd(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-        <span class="ident">requester</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        target: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
+        requester: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>status = call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;RegisterGameByPIDFd&quot;</span>,
             <span class="kw-2">&amp;</span>(
-                <span class="ident">Fd::from</span>(<span class="ident">target</span>.<span class="ident">as_raw_fd</span>()),
-                <span class="ident">Fd::from</span>(<span class="ident">requester</span>.<span class="ident">as_raw_fd</span>()),
+                Fd::from(target.as_raw_fd()),
+                Fd::from(requester.as_raw_fd()),
             ),
         )
         .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">status</span> {
-            <span class="ident">RegisterStatus::Success</span> =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="ident">RegisterStatus::Rejected</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::Portal</span>(<span class="ident">PortalError::Failed</span>)),
+        <span class="kw">match </span>status {
+            RegisterStatus::Success =&gt; <span class="prelude-val">Ok</span>(()),
+            RegisterStatus::Rejected =&gt; <span class="prelude-val">Err</span>(Error::Portal(PortalError::Failed)),
         }
     }
 
-    <span class="doccomment">/// Register a game with GameMode.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `target` - Process id of the game to register.</span>
-    <span class="doccomment">/// * `requester` - Process id of the process requesting the registration.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`RegisterGameByPid`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGameByPid).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;RegisterGameByPid&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">register_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">u32</span>, <span class="ident">requester</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;RegisterGameByPid&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">target</span>, <span class="ident">requester</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">status</span> {
-            <span class="ident">RegisterStatus::Success</span> =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="ident">RegisterStatus::Rejected</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::Portal</span>(<span class="ident">PortalError::Failed</span>)),
+    <span class="doccomment">/// Register a game with GameMode.
+    ///
+    /// # Arguments
+    ///
+    /// * `target` - Process id of the game to register.
+    /// * `requester` - Process id of the process requesting the registration.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`RegisterGameByPid`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.RegisterGameByPid).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;RegisterGameByPid&quot;</span>)]
+    </span><span class="kw">pub async fn </span>register_by_pid(<span class="kw-2">&amp;</span><span class="self">self</span>, target: u32, requester: u32) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>status = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;RegisterGameByPid&quot;</span>, <span class="kw-2">&amp;</span>(target, requester)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">match </span>status {
+            RegisterStatus::Success =&gt; <span class="prelude-val">Ok</span>(()),
+            RegisterStatus::Rejected =&gt; <span class="prelude-val">Err</span>(Error::Portal(PortalError::Failed)),
         }
     }
 
-    <span class="doccomment">/// Un-register a game from GameMode.</span>
-    <span class="doccomment">/// if the call is successful and there are no other games or clients</span>
-    <span class="doccomment">/// registered, GameMode will be deactivated. If the caller is running</span>
-    <span class="doccomment">/// inside a sandbox with pid namespace isolation, the pid will be</span>
-    <span class="doccomment">/// translated to the respective host pid.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `pid` - Process id of the game to un-register.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`UnregisterGame`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGame).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UnregisterGame&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unregister</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pid</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;UnregisterGame&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">pid</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">status</span> {
-            <span class="ident">RegisterStatus::Success</span> =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="ident">RegisterStatus::Rejected</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::Portal</span>(<span class="ident">PortalError::Failed</span>)),
+    <span class="doccomment">/// Un-register a game from GameMode.
+    /// if the call is successful and there are no other games or clients
+    /// registered, GameMode will be deactivated. If the caller is running
+    /// inside a sandbox with pid namespace isolation, the pid will be
+    /// translated to the respective host pid.
+    ///
+    /// # Arguments
+    ///
+    /// * `pid` - Process id of the game to un-register.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`UnregisterGame`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGame).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;UnregisterGame&quot;</span>)]
+    </span><span class="kw">pub async fn </span>unregister(<span class="kw-2">&amp;</span><span class="self">self</span>, pid: u32) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>status = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;UnregisterGame&quot;</span>, <span class="kw-2">&amp;</span>(pid)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">match </span>status {
+            RegisterStatus::Success =&gt; <span class="prelude-val">Ok</span>(()),
+            RegisterStatus::Rejected =&gt; <span class="prelude-val">Err</span>(Error::Portal(PortalError::Failed)),
         }
     }
 
-    <span class="doccomment">/// Un-register a game from GameMode.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `target` - Pid file descriptor of the game to un-register.</span>
-    <span class="doccomment">/// * `requester` - Pid file descriptor of the process requesting the</span>
-    <span class="doccomment">///   un-registration.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`UnregisterGameByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGameByPIDFd).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UnregisterGameByPIDFd&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unregister_by_pidfd</span>(
+    <span class="doccomment">/// Un-register a game from GameMode.
+    ///
+    /// # Arguments
+    ///
+    /// * `target` - Pid file descriptor of the game to un-register.
+    /// * `requester` - Pid file descriptor of the process requesting the
+    ///   un-registration.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`UnregisterGameByPIDFd`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGameByPIDFd).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;UnregisterGameByPIDFd&quot;</span>)]
+    </span><span class="kw">pub async fn </span>unregister_by_pidfd(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-        <span class="ident">requester</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
+        target: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
+        requester: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>status = call_method(
+            <span class="self">self</span>.inner(),
             <span class="string">&quot;UnregisterGameByPIDFd&quot;</span>,
             <span class="kw-2">&amp;</span>(
-                <span class="ident">Fd::from</span>(<span class="ident">target</span>.<span class="ident">as_raw_fd</span>()),
-                <span class="ident">Fd::from</span>(<span class="ident">requester</span>.<span class="ident">as_raw_fd</span>()),
+                Fd::from(target.as_raw_fd()),
+                Fd::from(requester.as_raw_fd()),
             ),
         )
         .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">status</span> {
-            <span class="ident">RegisterStatus::Success</span> =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="ident">RegisterStatus::Rejected</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::Portal</span>(<span class="ident">PortalError::Failed</span>)),
+        <span class="kw">match </span>status {
+            RegisterStatus::Success =&gt; <span class="prelude-val">Ok</span>(()),
+            RegisterStatus::Rejected =&gt; <span class="prelude-val">Err</span>(Error::Portal(PortalError::Failed)),
         }
     }
 
-    <span class="doccomment">/// Un-register a game from GameMode.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `target` - Process id of the game to un-register.</span>
-    <span class="doccomment">/// * `requester` - Process id of the process requesting the</span>
-    <span class="doccomment">///   un-registration.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`UnregisterGameByPid`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGameByPid).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;UnregisterGameByPid&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unregister_by_pid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="ident">u32</span>, <span class="ident">requester</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">call_method</span>(<span class="self">self</span>.<span class="ident">inner</span>(), <span class="string">&quot;UnregisterGameByPid&quot;</span>, <span class="kw-2">&amp;</span>(<span class="ident">target</span>, <span class="ident">requester</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">status</span> {
-            <span class="ident">RegisterStatus::Success</span> =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="ident">RegisterStatus::Rejected</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::Portal</span>(<span class="ident">PortalError::Failed</span>)),
+    <span class="doccomment">/// Un-register a game from GameMode.
+    ///
+    /// # Arguments
+    ///
+    /// * `target` - Process id of the game to un-register.
+    /// * `requester` - Process id of the process requesting the
+    ///   un-registration.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`UnregisterGameByPid`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-GameMode.UnregisterGameByPid).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;UnregisterGameByPid&quot;</span>)]
+    </span><span class="kw">pub async fn </span>unregister_by_pid(<span class="kw-2">&amp;</span><span class="self">self</span>, target: u32, requester: u32) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>status = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;UnregisterGameByPid&quot;</span>, <span class="kw-2">&amp;</span>(target, requester)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">match </span>status {
+            RegisterStatus::Success =&gt; <span class="prelude-val">Ok</span>(()),
+            RegisterStatus::Rejected =&gt; <span class="prelude-val">Err</span>(Error::Portal(PortalError::Failed)),
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

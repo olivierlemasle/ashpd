@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/print.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>print.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/print.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>print.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -705,710 +705,710 @@
 <span id="703">703</span>
 <span id="704">704</span>
 <span id="705">705</span>
-</pre><pre class="rust"><code><span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Print a file</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust,no_run</span>
-<span class="doccomment">//! use std::fs::File;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! use ashpd::{desktop::print::PrintProxy, WindowIdentifier};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! async fn run() -&gt; ashpd::Result&lt;()&gt; {</span>
-<span class="doccomment">//!     let proxy = PrintProxy::new().await?;</span>
-<span class="doccomment">//!     let identifier = WindowIdentifier::default();</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     let file =</span>
-<span class="doccomment">//!         File::open(&quot;/home/bilelmoussaoui/gitlog.pdf&quot;).expect(&quot;file to print was not found&quot;);</span>
-<span class="doccomment">//!     let pre_print = proxy</span>
-<span class="doccomment">//!         .prepare_print(</span>
-<span class="doccomment">//!             &amp;identifier,</span>
-<span class="doccomment">//!             &quot;prepare print&quot;,</span>
-<span class="doccomment">//!             Default::default(),</span>
-<span class="doccomment">//!             Default::default(),</span>
-<span class="doccomment">//!             true,</span>
-<span class="doccomment">//!         )</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!     proxy</span>
-<span class="doccomment">//!         .print(&amp;identifier, &quot;test&quot;, &amp;file, Some(pre_print.token), true)</span>
-<span class="doccomment">//!         .await?;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!     Ok(())</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! ```</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Examples
+//!
+//! Print a file
+//!
+//! ```rust,no_run
+//! use std::fs::File;
+//!
+//! use ashpd::{desktop::print::PrintProxy, WindowIdentifier};
+//!
+//! async fn run() -&gt; ashpd::Result&lt;()&gt; {
+//!     let proxy = PrintProxy::new().await?;
+//!     let identifier = WindowIdentifier::default();
+//!
+//!     let file =
+//!         File::open(&quot;/home/bilelmoussaoui/gitlog.pdf&quot;).expect(&quot;file to print was not found&quot;);
+//!     let pre_print = proxy
+//!         .prepare_print(
+//!             &amp;identifier,
+//!             &quot;prepare print&quot;,
+//!             Default::default(),
+//!             Default::default(),
+//!             true,
+//!         )
+//!         .await?;
+//!     proxy
+//!         .print(&amp;identifier, &quot;test&quot;, &amp;file, Some(pre_print.token), true)
+//!         .await?;
+//!
+//!     Ok(())
+//! }
+//! ```
 
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">fmt</span>, <span class="ident">os::unix::prelude::AsRawFd</span>, <span class="ident">str::FromStr</span>};
+</span><span class="kw">use </span>std::{fmt, os::unix::prelude::AsRawFd, str::FromStr};
 
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
-<span class="kw">use</span> <span class="ident">zbus::zvariant</span>::{<span class="ident">DeserializeDict</span>, <span class="ident">Fd</span>, <span class="ident">SerializeDict</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>zbus::zvariant::{DeserializeDict, Fd, SerializeDict, Type};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">HandleToken</span>, <span class="ident">DESTINATION</span>, <span class="ident">PATH</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">helpers</span>::{<span class="ident">call_basic_response_method</span>, <span class="ident">call_request_method</span>, <span class="ident">session_connection</span>},
-    <span class="ident">Error</span>, <span class="ident">WindowIdentifier</span>,
+<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
+<span class="kw">use crate</span>::{
+    helpers::{call_basic_response_method, call_request_method, session_connection},
+    Error, WindowIdentifier,
 };
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;snake_case&quot;</span>)]</span>
-<span class="doccomment">/// The page orientation.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Orientation</span> {
-    <span class="doccomment">/// Landscape.</span>
-    <span class="ident">Landscape</span>,
-    <span class="doccomment">/// Portrait.</span>
-    <span class="ident">Portrait</span>,
-    <span class="doccomment">/// Reverse landscape.</span>
-    <span class="ident">ReverseLandscape</span>,
-    <span class="doccomment">/// Reverse portrait.</span>
-    <span class="ident">ReversePortrait</span>,
+<span class="attribute">#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Type)]
+#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+#[serde(rename_all = <span class="string">&quot;snake_case&quot;</span>)]
+</span><span class="doccomment">/// The page orientation.
+</span><span class="kw">pub enum </span>Orientation {
+    <span class="doccomment">/// Landscape.
+    </span>Landscape,
+    <span class="doccomment">/// Portrait.
+    </span>Portrait,
+    <span class="doccomment">/// Reverse landscape.
+    </span>ReverseLandscape,
+    <span class="doccomment">/// Reverse portrait.
+    </span>ReversePortrait,
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Landscape</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Landscape&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Portrait</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Portrait&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::ReverseLandscape</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Reverse Landscape&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::ReversePortrait</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Reverse Portrait&quot;</span>),
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Orientation {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Landscape =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Landscape&quot;</span>),
+            <span class="self">Self</span>::Portrait =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Portrait&quot;</span>),
+            <span class="self">Self</span>::ReverseLandscape =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Reverse Landscape&quot;</span>),
+            <span class="self">Self</span>::ReversePortrait =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Reverse Portrait&quot;</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Landscape</span> =&gt; <span class="string">&quot;Landscape&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Portrait</span> =&gt; <span class="string">&quot;Portrait&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::ReverseLandscape</span> =&gt; <span class="string">&quot;Reverse Landscape&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::ReversePortrait</span> =&gt; <span class="string">&quot;Reverse Portrait&quot;</span>,
+<span class="kw">impl </span>AsRef&lt;str&gt; <span class="kw">for </span>Orientation {
+    <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Landscape =&gt; <span class="string">&quot;Landscape&quot;</span>,
+            <span class="self">Self</span>::Portrait =&gt; <span class="string">&quot;Portrait&quot;</span>,
+            <span class="self">Self</span>::ReverseLandscape =&gt; <span class="string">&quot;Reverse Landscape&quot;</span>,
+            <span class="self">Self</span>::ReversePortrait =&gt; <span class="string">&quot;Reverse Portrait&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Orientation</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">o</span>: <span class="ident">Orientation</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">o</span> {
-            <span class="ident">Orientation::Landscape</span> =&gt; <span class="string">&quot;Landscape&quot;</span>,
-            <span class="ident">Orientation::Portrait</span> =&gt; <span class="string">&quot;Portrait&quot;</span>,
-            <span class="ident">Orientation::ReverseLandscape</span> =&gt; <span class="string">&quot;Reverse Landscape&quot;</span>,
-            <span class="ident">Orientation::ReversePortrait</span> =&gt; <span class="string">&quot;Reverse Portrait&quot;</span>,
+<span class="kw">impl </span>From&lt;Orientation&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="kw">fn </span>from(o: Orientation) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>o {
+            Orientation::Landscape =&gt; <span class="string">&quot;Landscape&quot;</span>,
+            Orientation::Portrait =&gt; <span class="string">&quot;Portrait&quot;</span>,
+            Orientation::ReverseLandscape =&gt; <span class="string">&quot;Reverse Landscape&quot;</span>,
+            Orientation::ReversePortrait =&gt; <span class="string">&quot;Reverse Portrait&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Orientation</span> {
-    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl </span>FromStr <span class="kw">for </span>Orientation {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= Error;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">s</span> {
-            <span class="string">&quot;Landscape&quot;</span> <span class="op">|</span> <span class="string">&quot;landscape&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::Landscape</span>),
-            <span class="string">&quot;Portrait&quot;</span> <span class="op">|</span> <span class="string">&quot;portrait&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::Portrait</span>),
-            <span class="string">&quot;ReverseLandscape&quot;</span> <span class="op">|</span> <span class="string">&quot;reverse_landscape&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::ReverseLandscape</span>),
-            <span class="string">&quot;ReversePortrait&quot;</span> <span class="op">|</span> <span class="string">&quot;reverse_portrait&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Orientation::ReversePortrait</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+        <span class="kw">match </span>s {
+            <span class="string">&quot;Landscape&quot; </span>| <span class="string">&quot;landscape&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Orientation::Landscape),
+            <span class="string">&quot;Portrait&quot; </span>| <span class="string">&quot;portrait&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Orientation::Portrait),
+            <span class="string">&quot;ReverseLandscape&quot; </span>| <span class="string">&quot;reverse_landscape&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Orientation::ReverseLandscape),
+            <span class="string">&quot;ReversePortrait&quot; </span>| <span class="string">&quot;reverse_portrait&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Orientation::ReversePortrait),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::ParseError(
                 <span class="string">&quot;Failed to parse orientation, invalid value&quot;</span>,
             )),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Type</span>)]</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;s&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;lowercase&quot;</span>)]</span>
-<span class="doccomment">/// The print quality.</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Quality</span> {
-    <span class="doccomment">/// Draft quality.</span>
-    <span class="ident">Draft</span>,
-    <span class="doccomment">/// Low quality.</span>
-    <span class="ident">Low</span>,
-    <span class="doccomment">/// Normal quality.</span>
-    <span class="ident">Normal</span>,
-    <span class="doccomment">/// High quality.</span>
-    <span class="ident">High</span>,
+<span class="attribute">#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Type)]
+#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+#[serde(rename_all = <span class="string">&quot;lowercase&quot;</span>)]
+</span><span class="doccomment">/// The print quality.
+</span><span class="kw">pub enum </span>Quality {
+    <span class="doccomment">/// Draft quality.
+    </span>Draft,
+    <span class="doccomment">/// Low quality.
+    </span>Low,
+    <span class="doccomment">/// Normal quality.
+    </span>Normal,
+    <span class="doccomment">/// High quality.
+    </span>High,
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Quality</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Draft</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Draft&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Low&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Normal&quot;</span>),
-            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;High&quot;</span>),
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Quality {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Draft =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Draft&quot;</span>),
+            <span class="self">Self</span>::Low =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Low&quot;</span>),
+            <span class="self">Self</span>::Normal =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Normal&quot;</span>),
+            <span class="self">Self</span>::High =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;High&quot;</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Quality</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Draft</span> =&gt; <span class="string">&quot;Draft&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
+<span class="kw">impl </span>AsRef&lt;str&gt; <span class="kw">for </span>Quality {
+    <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Draft =&gt; <span class="string">&quot;Draft&quot;</span>,
+            <span class="self">Self</span>::Low =&gt; <span class="string">&quot;Low&quot;</span>,
+            <span class="self">Self</span>::Normal =&gt; <span class="string">&quot;Normal&quot;</span>,
+            <span class="self">Self</span>::High =&gt; <span class="string">&quot;High&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Quality</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">q</span>: <span class="ident">Quality</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">q</span> {
-            <span class="ident">Quality::Draft</span> =&gt; <span class="string">&quot;Draft&quot;</span>,
-            <span class="ident">Quality::Low</span> =&gt; <span class="string">&quot;Low&quot;</span>,
-            <span class="ident">Quality::Normal</span> =&gt; <span class="string">&quot;Normal&quot;</span>,
-            <span class="ident">Quality::High</span> =&gt; <span class="string">&quot;High&quot;</span>,
+<span class="kw">impl </span>From&lt;Quality&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="kw">fn </span>from(q: Quality) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>q {
+            Quality::Draft =&gt; <span class="string">&quot;Draft&quot;</span>,
+            Quality::Low =&gt; <span class="string">&quot;Low&quot;</span>,
+            Quality::Normal =&gt; <span class="string">&quot;Normal&quot;</span>,
+            Quality::High =&gt; <span class="string">&quot;High&quot;</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Quality</span> {
-    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl </span>FromStr <span class="kw">for </span>Quality {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= Error;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">s</span> {
-            <span class="string">&quot;Draft&quot;</span> <span class="op">|</span> <span class="string">&quot;draft&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::Draft</span>),
-            <span class="string">&quot;Low&quot;</span> <span class="op">|</span> <span class="string">&quot;low&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::Low</span>),
-            <span class="string">&quot;Normal&quot;</span> <span class="op">|</span> <span class="string">&quot;normal&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::Normal</span>),
-            <span class="string">&quot;High&quot;</span> <span class="op">|</span> <span class="string">&quot;high&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Quality::High</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::ParseError</span>(<span class="string">&quot;Failed to parse quality, invalid value&quot;</span>)),
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+        <span class="kw">match </span>s {
+            <span class="string">&quot;Draft&quot; </span>| <span class="string">&quot;draft&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Quality::Draft),
+            <span class="string">&quot;Low&quot; </span>| <span class="string">&quot;low&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Quality::Low),
+            <span class="string">&quot;Normal&quot; </span>| <span class="string">&quot;normal&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Quality::Normal),
+            <span class="string">&quot;High&quot; </span>| <span class="string">&quot;high&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Quality::High),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::ParseError(<span class="string">&quot;Failed to parse quality, invalid value&quot;</span>)),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Print settings to set in the print dialog.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Settings</span> {
-    <span class="doccomment">/// One of landscape, portrait, reverse_landscape or reverse_portrait.</span>
-    <span class="kw">pub</span> <span class="ident">orientation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Orientation</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A paper name according to [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;paper-format&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">paper_format</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Paper width, in millimeters.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;paper-width&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">paper_width</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Paper height, in millimeters.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;paper-height&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">paper_height</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The number of copies to print.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;n-copies&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">n_copies</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The default paper source.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;default-source&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">default_source</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Print quality.</span>
-    <span class="kw">pub</span> <span class="ident">quality</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Quality</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The resolution, sets both resolution-x &amp; resolution-y</span>
-    <span class="kw">pub</span> <span class="ident">resolution</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether to use color.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;use-color&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">use_color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Duplex printing mode, one of simplex, horizontal or vertical.</span>
-    <span class="kw">pub</span> <span class="ident">duplex</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether to collate copies.</span>
-    <span class="kw">pub</span> <span class="ident">collate</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Whether to reverse the order of printed pages.</span>
-    <span class="kw">pub</span> <span class="ident">reverse</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A media type according to [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;media-type&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">media_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The dithering to use, one of fine, none, coarse, lineart, grayscale or</span>
-    <span class="doccomment">/// error-diffusion.</span>
-    <span class="kw">pub</span> <span class="ident">dither</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The scale in percent</span>
-    <span class="kw">pub</span> <span class="ident">scale</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// What pages to print, one of all, selection, current or ranges.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;print-pages&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">print_pages</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// A list of page ranges, formatted like this: 0-2,4,9-11.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;page-ranges&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">page_ranges</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// What pages to print, one of all, even or odd.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;page-set&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">page_set</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The finishings.</span>
-    <span class="kw">pub</span> <span class="ident">finishings</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The number of pages per sheet.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;number-up&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">number_up</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// One of lrtb, lrbt, rltb, rlbt, tblr, tbrl, btlr, btrl.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;number-up-layout&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">number_up_layout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;output-bin&quot;</span>)]</span>
-    <span class="doccomment">/// The output bin.</span>
-    <span class="kw">pub</span> <span class="ident">output_bin</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The horizontal resolution in dpi.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;resolution-x&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">resolution_x</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The vertical resolution in dpi.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;resolution-y&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">resolution_y</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The resolution in lpi (lines per inch).</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;printer-lpi&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">print_lpi</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Basename to use for print-to-file.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;output-basename&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">output_basename</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Format to use for print-to-file, one of PDF, PS, SVG</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;output-file-format&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">output_file_format</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The uri used for print-to file.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;output-uri&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">output_uri</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">url::Url</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, DeserializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Print settings to set in the print dialog.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>Settings {
+    <span class="doccomment">/// One of landscape, portrait, reverse_landscape or reverse_portrait.
+    </span><span class="kw">pub </span>orientation: <span class="prelude-ty">Option</span>&lt;Orientation&gt;,
+    <span class="doccomment">/// A paper name according to [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;paper-format&quot;</span>)]
+    </span><span class="kw">pub </span>paper_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Paper width, in millimeters.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;paper-width&quot;</span>)]
+    </span><span class="kw">pub </span>paper_width: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Paper height, in millimeters.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;paper-height&quot;</span>)]
+    </span><span class="kw">pub </span>paper_height: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The number of copies to print.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;n-copies&quot;</span>)]
+    </span><span class="kw">pub </span>n_copies: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The default paper source.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;default-source&quot;</span>)]
+    </span><span class="kw">pub </span>default_source: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Print quality.
+    </span><span class="kw">pub </span>quality: <span class="prelude-ty">Option</span>&lt;Quality&gt;,
+    <span class="doccomment">/// The resolution, sets both resolution-x &amp; resolution-y
+    </span><span class="kw">pub </span>resolution: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Whether to use color.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;use-color&quot;</span>)]
+    </span><span class="kw">pub </span>use_color: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="doccomment">/// Duplex printing mode, one of simplex, horizontal or vertical.
+    </span><span class="kw">pub </span>duplex: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Whether to collate copies.
+    </span><span class="kw">pub </span>collate: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Whether to reverse the order of printed pages.
+    </span><span class="kw">pub </span>reverse: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// A media type according to [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;media-type&quot;</span>)]
+    </span><span class="kw">pub </span>media_type: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The dithering to use, one of fine, none, coarse, lineart, grayscale or
+    /// error-diffusion.
+    </span><span class="kw">pub </span>dither: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The scale in percent
+    </span><span class="kw">pub </span>scale: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// What pages to print, one of all, selection, current or ranges.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;print-pages&quot;</span>)]
+    </span><span class="kw">pub </span>print_pages: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// A list of page ranges, formatted like this: 0-2,4,9-11.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;page-ranges&quot;</span>)]
+    </span><span class="kw">pub </span>page_ranges: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// What pages to print, one of all, even or odd.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;page-set&quot;</span>)]
+    </span><span class="kw">pub </span>page_set: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The finishings.
+    </span><span class="kw">pub </span>finishings: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The number of pages per sheet.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;number-up&quot;</span>)]
+    </span><span class="kw">pub </span>number_up: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// One of lrtb, lrbt, rltb, rlbt, tblr, tbrl, btlr, btrl.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;number-up-layout&quot;</span>)]
+    </span><span class="kw">pub </span>number_up_layout: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;output-bin&quot;</span>)]
+    </span><span class="doccomment">/// The output bin.
+    </span><span class="kw">pub </span>output_bin: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The horizontal resolution in dpi.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;resolution-x&quot;</span>)]
+    </span><span class="kw">pub </span>resolution_x: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The vertical resolution in dpi.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;resolution-y&quot;</span>)]
+    </span><span class="kw">pub </span>resolution_y: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The resolution in lpi (lines per inch).
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;printer-lpi&quot;</span>)]
+    </span><span class="kw">pub </span>print_lpi: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Basename to use for print-to-file.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;output-basename&quot;</span>)]
+    </span><span class="kw">pub </span>output_basename: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Format to use for print-to-file, one of PDF, PS, SVG
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;output-file-format&quot;</span>)]
+    </span><span class="kw">pub </span>output_file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The uri used for print-to file.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;output-uri&quot;</span>)]
+    </span><span class="kw">pub </span>output_uri: <span class="prelude-ty">Option</span>&lt;url::Url&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Settings</span> {
-    <span class="doccomment">/// Sets the orientation.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">orientation</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">orientation</span>);
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>Settings {
+    <span class="doccomment">/// Sets the orientation.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>orientation(<span class="kw-2">mut </span><span class="self">self</span>, orientation: Orientation) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.orientation = <span class="prelude-val">Some</span>(orientation);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the paper name.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_format</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paper_format</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">paper_format</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paper_format</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the paper name.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>paper_format(<span class="kw-2">mut </span><span class="self">self</span>, paper_format: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.paper_format = <span class="prelude-val">Some</span>(paper_format.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the paper width.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_width</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paper_width</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">paper_width</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paper_width</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the paper width.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>paper_width(<span class="kw-2">mut </span><span class="self">self</span>, paper_width: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.paper_width = <span class="prelude-val">Some</span>(paper_width.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the paper height.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_height</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paper_height</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">paper_height</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paper_height</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the paper height.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>paper_height(<span class="kw-2">mut </span><span class="self">self</span>, paper_height: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.paper_height = <span class="prelude-val">Some</span>(paper_height.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the number of copies to print.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">n_copies</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">n_copies</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">n_copies</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">n_copies</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the number of copies to print.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>n_copies(<span class="kw-2">mut </span><span class="self">self</span>, n_copies: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.n_copies = <span class="prelude-val">Some</span>(n_copies.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the default paper source.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_source</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">default_source</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">default_source</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">default_source</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the default paper source.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>default_source(<span class="kw-2">mut </span><span class="self">self</span>, default_source: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.default_source = <span class="prelude-val">Some</span>(default_source.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the print quality.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quality</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">quality</span>: <span class="ident">Quality</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">quality</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">quality</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the print quality.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>quality(<span class="kw-2">mut </span><span class="self">self</span>, quality: Quality) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.quality = <span class="prelude-val">Some</span>(quality);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the resolution, both resolution-x &amp; resolution-y.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolution</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resolution</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">resolution</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resolution</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the resolution, both resolution-x &amp; resolution-y.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>resolution(<span class="kw-2">mut </span><span class="self">self</span>, resolution: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.resolution = <span class="prelude-val">Some</span>(resolution.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets whether to use color.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_color</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">use_color</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">use_color</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">use_color</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets whether to use color.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>use_color(<span class="kw-2">mut </span><span class="self">self</span>, use_color: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.use_color = <span class="prelude-val">Some</span>(use_color);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the duplex printing mode.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duplex</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">duplex</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">duplex</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">duplex</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the duplex printing mode.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>duplex(<span class="kw-2">mut </span><span class="self">self</span>, duplex: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.duplex = <span class="prelude-val">Some</span>(duplex.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to collate copies.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collate</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">collate</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">collate</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">collate</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to collate copies.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>collate(<span class="kw-2">mut </span><span class="self">self</span>, collate: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.collate = <span class="prelude-val">Some</span>(collate.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets whether to reverse the order of the printed pages.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reverse</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reverse</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">reverse</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">reverse</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets whether to reverse the order of the printed pages.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>reverse(<span class="kw-2">mut </span><span class="self">self</span>, reverse: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.reverse = <span class="prelude-val">Some</span>(reverse.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the media type.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">media_type</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">media_type</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">media_type</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">media_type</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the media type.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>media_type(<span class="kw-2">mut </span><span class="self">self</span>, media_type: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.media_type = <span class="prelude-val">Some</span>(media_type.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the dithering to use.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dither</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dither</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">dither</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dither</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the dithering to use.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>dither(<span class="kw-2">mut </span><span class="self">self</span>, dither: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.dither = <span class="prelude-val">Some</span>(dither.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the page scale in percent.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">scale</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">scale</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the page scale in percent.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>scale(<span class="kw-2">mut </span><span class="self">self</span>, scale: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.scale = <span class="prelude-val">Some</span>(scale.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets what pages to print, one of all, selection, current or ranges.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_pages</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">print_pages</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">print_pages</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">print_pages</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets what pages to print, one of all, selection, current or ranges.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>print_pages(<span class="kw-2">mut </span><span class="self">self</span>, print_pages: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.print_pages = <span class="prelude-val">Some</span>(print_pages.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets a list of page ranges, formatted like this: 0-2,4,9-11.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_ranges</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">page_ranges</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">page_ranges</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">page_ranges</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets a list of page ranges, formatted like this: 0-2,4,9-11.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>page_ranges(<span class="kw-2">mut </span><span class="self">self</span>, page_ranges: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.page_ranges = <span class="prelude-val">Some</span>(page_ranges.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets what pages to print, one of all, even or odd.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">page_set</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">page_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">page_set</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets what pages to print, one of all, even or odd.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>page_set(<span class="kw-2">mut </span><span class="self">self</span>, page_set: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.page_set = <span class="prelude-val">Some</span>(page_set.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the finishings.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finishings</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">finishings</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">finishings</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">finishings</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the finishings.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>finishings(<span class="kw-2">mut </span><span class="self">self</span>, finishings: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.finishings = <span class="prelude-val">Some</span>(finishings.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the number of pages per sheet.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">number_up</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number_up</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">number_up</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">number_up</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the number of pages per sheet.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>number_up(<span class="kw-2">mut </span><span class="self">self</span>, number_up: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.number_up = <span class="prelude-val">Some</span>(number_up.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the number up layout, one of lrtb, lrbt, rltb, rlbt, tblr, tbrl,</span>
-    <span class="doccomment">/// btlr, btrl.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">number_up_layout</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number_up_layout</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">number_up_layout</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">number_up_layout</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the number up layout, one of lrtb, lrbt, rltb, rlbt, tblr, tbrl,
+    /// btlr, btrl.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>number_up_layout(<span class="kw-2">mut </span><span class="self">self</span>, number_up_layout: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.number_up_layout = <span class="prelude-val">Some</span>(number_up_layout.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the output bin</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_bin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_bin</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">output_bin</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_bin</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the output bin
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>output_bin(<span class="kw-2">mut </span><span class="self">self</span>, output_bin: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.output_bin = <span class="prelude-val">Some</span>(output_bin.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the horizontal resolution in dpi.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolution_x</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resolution_x</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">resolution_x</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resolution_x</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the horizontal resolution in dpi.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>resolution_x(<span class="kw-2">mut </span><span class="self">self</span>, resolution_x: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.resolution_x = <span class="prelude-val">Some</span>(resolution_x.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the vertical resolution in dpi.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolution_y</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resolution_y</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">resolution_y</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resolution_y</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the vertical resolution in dpi.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>resolution_y(<span class="kw-2">mut </span><span class="self">self</span>, resolution_y: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.resolution_y = <span class="prelude-val">Some</span>(resolution_y.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the resolution in lines per inch.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_lpi</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">print_lpi</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">print_lpi</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">print_lpi</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the resolution in lines per inch.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>print_lpi(<span class="kw-2">mut </span><span class="self">self</span>, print_lpi: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.print_lpi = <span class="prelude-val">Some</span>(print_lpi.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the print-to-file base name.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_basename</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_basename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">output_basename</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_basename</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the print-to-file base name.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>output_basename(<span class="kw-2">mut </span><span class="self">self</span>, output_basename: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.output_basename = <span class="prelude-val">Some</span>(output_basename.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the print-to-file format, one of PS, PDF, SVG.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_file_format</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_file_format</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">output_file_format</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_file_format</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the print-to-file format, one of PS, PDF, SVG.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>output_file_format(<span class="kw-2">mut </span><span class="self">self</span>, output_file_format: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.output_file_format = <span class="prelude-val">Some</span>(output_file_format.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the print-to-file output uri.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_uri</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_uri</span>: <span class="kw-2">&amp;</span><span class="ident">url::Url</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">output_uri</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_uri</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the print-to-file output uri.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>output_uri(<span class="kw-2">mut </span><span class="self">self</span>, output_uri: <span class="kw-2">&amp;</span>url::Url) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.output_uri = <span class="prelude-val">Some</span>(output_uri.to_owned());
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Setup the printed pages.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PageSetup</span> {
-    <span class="doccomment">/// the PPD name. It&#39;s the name to select a given driver.</span>
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;PPDName&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">ppdname</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The name of the page setup.</span>
-    <span class="kw">pub</span> <span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The user-visible name of the page setup.</span>
-    <span class="kw">pub</span> <span class="ident">display_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Paper width in millimeters.</span>
-    <span class="kw">pub</span> <span class="ident">width</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Paper height in millimeters.</span>
-    <span class="kw">pub</span> <span class="ident">height</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Top margin in millimeters.</span>
-    <span class="kw">pub</span> <span class="ident">margin_top</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Bottom margin in millimeters.</span>
-    <span class="kw">pub</span> <span class="ident">margin_bottom</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Right margin in millimeters.</span>
-    <span class="kw">pub</span> <span class="ident">margin_right</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Left margin in millimeters.</span>
-    <span class="kw">pub</span> <span class="ident">margin_left</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The page orientation.</span>
-    <span class="kw">pub</span> <span class="ident">orientation</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Orientation</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, DeserializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Setup the printed pages.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>PageSetup {
+    <span class="doccomment">/// the PPD name. It&#39;s the name to select a given driver.
+    </span><span class="attribute">#[zvariant(rename = <span class="string">&quot;PPDName&quot;</span>)]
+    </span><span class="kw">pub </span>ppdname: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The name of the page setup.
+    </span><span class="kw">pub </span>name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The user-visible name of the page setup.
+    </span><span class="kw">pub </span>display_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Paper width in millimeters.
+    </span><span class="kw">pub </span>width: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="doccomment">/// Paper height in millimeters.
+    </span><span class="kw">pub </span>height: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="doccomment">/// Top margin in millimeters.
+    </span><span class="kw">pub </span>margin_top: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="doccomment">/// Bottom margin in millimeters.
+    </span><span class="kw">pub </span>margin_bottom: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="doccomment">/// Right margin in millimeters.
+    </span><span class="kw">pub </span>margin_right: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="doccomment">/// Left margin in millimeters.
+    </span><span class="kw">pub </span>margin_left: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="doccomment">/// The page orientation.
+    </span><span class="kw">pub </span>orientation: <span class="prelude-ty">Option</span>&lt;Orientation&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">PageSetup</span> {
-    <span class="doccomment">/// Sets the ppdname.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ppdname</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ppdname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">ppdname</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ppdname</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>PageSetup {
+    <span class="doccomment">/// Sets the ppdname.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>ppdname(<span class="kw-2">mut </span><span class="self">self</span>, ppdname: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.ppdname = <span class="prelude-val">Some</span>(ppdname.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the name of the page setup.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the name of the page setup.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>name(<span class="kw-2">mut </span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.name = <span class="prelude-val">Some</span>(name.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the user visible name of the page setup.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">display_name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">display_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">display_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">display_name</span>.<span class="ident">to_owned</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the user visible name of the page setup.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>display_name(<span class="kw-2">mut </span><span class="self">self</span>, display_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.display_name = <span class="prelude-val">Some</span>(display_name.to_owned());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the orientation.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">orientation</span>: <span class="ident">Orientation</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">orientation</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">orientation</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the orientation.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>orientation(<span class="kw-2">mut </span><span class="self">self</span>, orientation: Orientation) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.orientation = <span class="prelude-val">Some</span>(orientation);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the page width.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">width</span>: <span class="ident">f64</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">width</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">width</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the page width.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>width(<span class="kw-2">mut </span><span class="self">self</span>, width: f64) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.width = <span class="prelude-val">Some</span>(width);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the page height.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">height</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">height</span>: <span class="ident">f64</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">height</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">height</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the page height.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>height(<span class="kw-2">mut </span><span class="self">self</span>, height: f64) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.height = <span class="prelude-val">Some</span>(height);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the page top margin.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_top</span>: <span class="ident">f64</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_top</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_top</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the page top margin.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>margin_top(<span class="kw-2">mut </span><span class="self">self</span>, margin_top: f64) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_top = <span class="prelude-val">Some</span>(margin_top);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the page bottom margin.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_bottom</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_bottom</span>: <span class="ident">f64</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_bottom</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_bottom</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the page bottom margin.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>margin_bottom(<span class="kw-2">mut </span><span class="self">self</span>, margin_bottom: f64) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_bottom = <span class="prelude-val">Some</span>(margin_bottom);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the page right margin.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_right</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_right</span>: <span class="ident">f64</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_right</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_right</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the page right margin.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>margin_right(<span class="kw-2">mut </span><span class="self">self</span>, margin_right: f64) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_right = <span class="prelude-val">Some</span>(margin_right);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the page margin left.</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_left</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_left</span>: <span class="ident">f64</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_left</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_left</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the page margin left.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>margin_left(<span class="kw-2">mut </span><span class="self">self</span>, margin_left: f64) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_left = <span class="prelude-val">Some</span>(margin_left);
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`PrintProxy::prepare_print`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">PreparePrintOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Whether to make the dialog modal.</span>
-    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`PrintProxy::prepare_print`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>PreparePrintOptions {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.
+    </span>handle_token: HandleToken,
+    <span class="doccomment">/// Whether to make the dialog modal.
+    </span>modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">PreparePrintOptions</span> {
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>PreparePrintOptions {
+    <span class="doccomment">/// Sets whether the dialog should be a modal.
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.modal = <span class="prelude-val">Some</span>(modal);
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="doccomment">/// Specified options for a [`PrintProxy::print`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">struct</span> <span class="ident">PrintOptions</span> {
-    <span class="doccomment">/// A string that will be used as the last element of the handle.</span>
-    <span class="ident">handle_token</span>: <span class="ident">HandleToken</span>,
-    <span class="doccomment">/// Whether to make the dialog modal.</span>
-    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Token that was returned by a previous [`PrintProxy::prepare_print`]</span>
-    <span class="doccomment">/// call.</span>
-    <span class="ident">token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
+</span><span class="doccomment">/// Specified options for a [`PrintProxy::print`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">struct </span>PrintOptions {
+    <span class="doccomment">/// A string that will be used as the last element of the handle.
+    </span>handle_token: HandleToken,
+    <span class="doccomment">/// Whether to make the dialog modal.
+    </span>modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="doccomment">/// Token that was returned by a previous [`PrintProxy::prepare_print`]
+    /// call.
+    </span>token: <span class="prelude-ty">Option</span>&lt;u32&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">PrintOptions</span> {
-    <span class="doccomment">/// A token retrieved from [`PrintProxy::prepare_print`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">token</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">token</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">token</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">token</span>);
-        <span class="self">self</span>
-    }
+<span class="kw">impl </span>PrintOptions {
+    <span class="doccomment">/// A token retrieved from [`PrintProxy::prepare_print`].
+    </span><span class="kw">pub fn </span>token(<span class="kw-2">mut </span><span class="self">self</span>, token: u32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.token = <span class="prelude-val">Some</span>(token);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets whether the dialog should be a modal.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets whether the dialog should be a modal.
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.modal = <span class="prelude-val">Some</span>(modal);
+        <span class="self">self
+    </span>}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">DeserializeDict</span>, <span class="ident">Type</span>, <span class="ident">Debug</span>)]</span>
-<span class="doccomment">/// A response to a [`PrintProxy::prepare_print`] request.</span>
-<span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">signature</span> <span class="op">=</span> <span class="string">&quot;dict&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PreparePrint</span> {
-    <span class="doccomment">/// The printing settings.</span>
-    <span class="kw">pub</span> <span class="ident">settings</span>: <span class="ident">Settings</span>,
-    <span class="attribute">#[<span class="ident">zvariant</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;page-setup&quot;</span>)]</span>
-    <span class="doccomment">/// The printed pages setup.</span>
-    <span class="kw">pub</span> <span class="ident">page_setup</span>: <span class="ident">PageSetup</span>,
-    <span class="doccomment">/// A token to pass to the print request.</span>
-    <span class="kw">pub</span> <span class="ident">token</span>: <span class="ident">u32</span>,
+<span class="attribute">#[derive(DeserializeDict, Type, Debug)]
+</span><span class="doccomment">/// A response to a [`PrintProxy::prepare_print`] request.
+</span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="kw">pub struct </span>PreparePrint {
+    <span class="doccomment">/// The printing settings.
+    </span><span class="kw">pub </span>settings: Settings,
+    <span class="attribute">#[zvariant(rename = <span class="string">&quot;page-setup&quot;</span>)]
+    </span><span class="doccomment">/// The printed pages setup.
+    </span><span class="kw">pub </span>page_setup: PageSetup,
+    <span class="doccomment">/// A token to pass to the print request.
+    </span><span class="kw">pub </span>token: u32,
 }
 
-<span class="doccomment">/// The interface lets sandboxed applications print.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Wrapper of the DBus interface: [`org.freedesktop.portal.Print`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Print).</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Print&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PrintProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// The interface lets sandboxed applications print.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Print`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Print).
+</span><span class="attribute">#[derive(Debug)]
+#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Print&quot;</span>)]
+</span><span class="kw">pub struct </span>PrintProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">PrintProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create a new instance of [`PrintProxy`].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PrintProxy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">session_connection</span>().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">proxy</span> <span class="op">=</span> <span class="ident">zbus::ProxyBuilder::new_bare</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
-            .<span class="ident">interface</span>(<span class="string">&quot;org.freedesktop.portal.Print&quot;</span>)<span class="question-mark">?</span>
-            .<span class="ident">path</span>(<span class="ident">PATH</span>)<span class="question-mark">?</span>
-            .<span class="ident">destination</span>(<span class="ident">DESTINATION</span>)<span class="question-mark">?</span>
-            .<span class="ident">build</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; PrintProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create a new instance of [`PrintProxy`].
+    </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;PrintProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
+        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+            .interface(<span class="string">&quot;org.freedesktop.portal.Print&quot;</span>)<span class="question-mark">?
+            </span>.path(PATH)<span class="question-mark">?
+            </span>.destination(DESTINATION)<span class="question-mark">?
+            </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">proxy</span>))
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Get a reference to the underlying Proxy.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">zbus::Proxy</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-    }
+    <span class="doccomment">/// Get a reference to the underlying Proxy.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
 
-    <span class="doccomment">/// Presents a print dialog to the user and returns print settings and page</span>
-    <span class="doccomment">/// setup.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - Identifier for the application window.</span>
-    <span class="doccomment">/// * `title` - Title for the print dialog.</span>
-    <span class="doccomment">/// * `settings` - [`Settings`].</span>
-    <span class="doccomment">/// * `page_setup` - [`PageSetup`].</span>
-    <span class="doccomment">/// * `modal` - Whether the dialog should be a modal.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`PreparePrint`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Print.PreparePrint).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;PreparePrint&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_prepare_print&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">prepare_print</span>(
+    <span class="doccomment">/// Presents a print dialog to the user and returns print settings and page
+    /// setup.
+    ///
+    /// # Arguments
+    ///
+    /// * `identifier` - Identifier for the application window.
+    /// * `title` - Title for the print dialog.
+    /// * `settings` - [`Settings`].
+    /// * `page_setup` - [`PageSetup`].
+    /// * `modal` - Whether the dialog should be a modal.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`PreparePrint`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Print.PreparePrint).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;PreparePrint&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_prepare_print&quot;</span>)]
+    </span><span class="kw">pub async fn </span>prepare_print(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">settings</span>: <span class="ident">Settings</span>,
-        <span class="ident">page_setup</span>: <span class="ident">PageSetup</span>,
-        <span class="ident">modal</span>: <span class="ident">bool</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PreparePrint</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">PreparePrintOptions::default</span>().<span class="ident">modal</span>(<span class="ident">modal</span>);
-        <span class="ident">call_request_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+        title: <span class="kw-2">&amp;</span>str,
+        settings: Settings,
+        page_setup: PageSetup,
+        modal: bool,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;PreparePrint, Error&gt; {
+        <span class="kw">let </span>options = PreparePrintOptions::default().modal(modal);
+        call_request_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;PreparePrint&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="ident">settings</span>, <span class="ident">page_setup</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, settings, page_setup, <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 
-    <span class="doccomment">/// Asks to print a file.</span>
-    <span class="doccomment">/// The file must be passed in the form of a file descriptor open for</span>
-    <span class="doccomment">/// reading. This ensures that sandboxed applications only print files</span>
-    <span class="doccomment">/// that they have access to.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Arguments</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * `identifier` - The application window identifier.</span>
-    <span class="doccomment">/// * `title` - The title for the print dialog.</span>
-    <span class="doccomment">/// * `fd` - File descriptor for reading the content to print.</span>
-    <span class="doccomment">/// * `token` - A token returned by a call to</span>
-    <span class="doccomment">///   [`prepare_print()`][`PrintProxy::prepare_print`].</span>
-    <span class="doccomment">/// * `modal` - Whether the dialog should be a modal.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Specifications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See also [`Print`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Print.Print).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;Print&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xdp_portal_print_file&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">print</span>(
+    <span class="doccomment">/// Asks to print a file.
+    /// The file must be passed in the form of a file descriptor open for
+    /// reading. This ensures that sandboxed applications only print files
+    /// that they have access to.
+    ///
+    /// # Arguments
+    ///
+    /// * `identifier` - The application window identifier.
+    /// * `title` - The title for the print dialog.
+    /// * `fd` - File descriptor for reading the content to print.
+    /// * `token` - A token returned by a call to
+    ///   [`prepare_print()`][`PrintProxy::prepare_print`].
+    /// * `modal` - Whether the dialog should be a modal.
+    ///
+    /// # Specifications
+    ///
+    /// See also [`Print`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Print.Print).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;Print&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;xdp_portal_print_file&quot;</span>)]
+    </span><span class="kw">pub async fn </span>print(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">identifier</span>: <span class="kw-2">&amp;</span><span class="ident">WindowIdentifier</span>,
-        <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">fd</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">AsRawFd</span>,
-        <span class="ident">token</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-        <span class="ident">modal</span>: <span class="ident">bool</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">PrintOptions::default</span>()
-            .<span class="ident">token</span>(<span class="ident">token</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>))
-            .<span class="ident">modal</span>(<span class="ident">modal</span>);
-        <span class="ident">call_basic_response_method</span>(
-            <span class="self">self</span>.<span class="ident">inner</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">options</span>.<span class="ident">handle_token</span>,
+        identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
+        title: <span class="kw-2">&amp;</span>str,
+        fd: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
+        token: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+        modal: bool,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">let </span>options = PrintOptions::default()
+            .token(token.unwrap_or(<span class="number">0</span>))
+            .modal(modal);
+        call_basic_response_method(
+            <span class="self">self</span>.inner(),
+            <span class="kw-2">&amp;</span>options.handle_token,
             <span class="string">&quot;Print&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">identifier</span>, <span class="ident">title</span>, <span class="ident">Fd::from</span>(<span class="ident">fd</span>.<span class="ident">as_raw_fd</span>()), <span class="kw-2">&amp;</span><span class="ident">options</span>),
+            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, Fd::from(fd.as_raw_fd()), <span class="kw-2">&amp;</span>options),
         )
-        .<span class="kw">await</span>
-    }
+        .<span class="kw">await
+    </span>}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

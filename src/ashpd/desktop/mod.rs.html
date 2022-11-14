@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/desktop/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../ashpd/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../ashpd/index.html">
                         <img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -50,55 +50,55 @@
 <span id="48">48</span>
 <span id="49">49</span>
 <span id="50">50</span>
-</pre><pre class="rust"><code><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">DESTINATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">PATH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>;
+</pre><pre class="rust"><code><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;org.freedesktop.portal.Desktop&quot;</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span>str = <span class="string">&quot;/org/freedesktop/portal/desktop&quot;</span>;
 
-<span class="kw">mod</span> <span class="ident">handle_token</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">request</span>;
-<span class="kw">mod</span> <span class="ident">session</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident"><span class="self">self</span>::handle_token::HandleToken</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{<span class="ident">request::ResponseError</span>, <span class="ident">session::Session</span>};
-<span class="kw">mod</span> <span class="ident">icon</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">icon::Icon</span>;
+<span class="kw">mod </span>handle_token;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>request;
+<span class="kw">mod </span>session;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::handle_token::HandleToken;
+<span class="kw">pub use </span><span class="self">self</span>::{request::ResponseError, session::Session};
+<span class="kw">mod </span>icon;
+<span class="kw">pub use </span>icon::Icon;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">account</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">background</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">camera</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">device</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">dynamic_launcher</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">email</span>;
-<span class="doccomment">/// Open/save file(s) chooser.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">file_chooser</span>;
-<span class="doccomment">/// Enable/disable/query the status of Game Mode.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">game_mode</span>;
-<span class="doccomment">/// Inhibit the session from being restarted or the user from logging out.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">inhibit</span>;
-<span class="doccomment">/// Query the user&#39;s GPS location.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">location</span>;
-<span class="doccomment">/// Monitor memory level.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">memory_monitor</span>;
-<span class="doccomment">/// Check the status of the network on a user&#39;s machine.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">network_monitor</span>;
-<span class="doccomment">/// Send/withdraw notifications.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">notification</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">open_uri</span>;
-<span class="doccomment">/// Power profile monitoring.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">power_profile_monitor</span>;
-<span class="doccomment">/// Print a document.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">print</span>;
-<span class="doccomment">/// Proxy information.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">proxy_resolver</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">realtime</span>;
-<span class="doccomment">/// Start a remote desktop session and interact with it.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">remote_desktop</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">screencast</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">screenshot</span>;
-<span class="doccomment">/// Retrieve a per-application secret used to encrypt confidential data inside</span>
-<span class="doccomment">/// the sandbox.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">secret</span>;
-<span class="doccomment">/// Read &amp; listen to system settings changes.</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">settings</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">trash</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">wallpaper</span>;
+<span class="kw">pub mod </span>account;
+<span class="kw">pub mod </span>background;
+<span class="kw">pub mod </span>camera;
+<span class="kw">pub mod </span>device;
+<span class="kw">pub mod </span>dynamic_launcher;
+<span class="kw">pub mod </span>email;
+<span class="doccomment">/// Open/save file(s) chooser.
+</span><span class="kw">pub mod </span>file_chooser;
+<span class="doccomment">/// Enable/disable/query the status of Game Mode.
+</span><span class="kw">pub mod </span>game_mode;
+<span class="doccomment">/// Inhibit the session from being restarted or the user from logging out.
+</span><span class="kw">pub mod </span>inhibit;
+<span class="doccomment">/// Query the user&#39;s GPS location.
+</span><span class="kw">pub mod </span>location;
+<span class="doccomment">/// Monitor memory level.
+</span><span class="kw">pub mod </span>memory_monitor;
+<span class="doccomment">/// Check the status of the network on a user&#39;s machine.
+</span><span class="kw">pub mod </span>network_monitor;
+<span class="doccomment">/// Send/withdraw notifications.
+</span><span class="kw">pub mod </span>notification;
+<span class="kw">pub mod </span>open_uri;
+<span class="doccomment">/// Power profile monitoring.
+</span><span class="kw">pub mod </span>power_profile_monitor;
+<span class="doccomment">/// Print a document.
+</span><span class="kw">pub mod </span>print;
+<span class="doccomment">/// Proxy information.
+</span><span class="kw">pub mod </span>proxy_resolver;
+<span class="kw">pub mod </span>realtime;
+<span class="doccomment">/// Start a remote desktop session and interact with it.
+</span><span class="kw">pub mod </span>remote_desktop;
+<span class="kw">pub mod </span>screencast;
+<span class="kw">pub mod </span>screenshot;
+<span class="doccomment">/// Retrieve a per-application secret used to encrypt confidential data inside
+/// the sandbox.
+</span><span class="kw">pub mod </span>secret;
+<span class="doccomment">/// Read &amp; listen to system settings changes.
+</span><span class="kw">pub mod </span>settings;
+<span class="kw">pub mod </span>trash;
+<span class="kw">pub mod </span>wallpaper;
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>
