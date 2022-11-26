@@ -137,14 +137,6 @@
 <span id="135">135</span>
 <span id="136">136</span>
 <span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Access to the current logged user information such as the id, name
 //! or their avatar uri.
 //!
@@ -264,25 +256,17 @@
 <span class="kw">impl </span>UserInformationRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a user-visible reason for the request.
-    </span><span class="kw">pub fn </span>reason(<span class="kw-2">mut </span><span class="self">self</span>, reason: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_reason(reason);
+    </span><span class="kw">pub fn </span>reason&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, reason: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.reason = reason.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_reason(<span class="kw-2">&amp;mut </span><span class="self">self</span>, reason: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.reason = <span class="prelude-val">Some</span>(reason.to_owned());
-    }
 
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="doccomment">/// Build the [`UserInformationResponse`].
     </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;UserInformationResponse, Error&gt; {

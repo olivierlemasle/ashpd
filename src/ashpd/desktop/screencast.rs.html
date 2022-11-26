@@ -588,34 +588,36 @@
 <span class="kw">impl </span>SelectSourcesOptions {
     <span class="doccomment">/// Sets whether to allow selecting multiple sources.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>multiple(<span class="kw-2">mut </span><span class="self">self</span>, multiple: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.multiple = <span class="prelude-val">Some</span>(multiple);
+    </span><span class="kw">pub fn </span>multiple(<span class="kw-2">mut </span><span class="self">self</span>, multiple: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.multiple = multiple.into();
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets how the cursor will be drawn on the screen cast stream.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>cursor_mode(<span class="kw-2">mut </span><span class="self">self</span>, cursor_mode: CursorMode) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.cursor_mode = <span class="prelude-val">Some</span>(cursor_mode);
+    </span><span class="kw">pub fn </span>cursor_mode(<span class="kw-2">mut </span><span class="self">self</span>, cursor_mode: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;CursorMode&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.cursor_mode = cursor_mode.into();
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets the types of content to record.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>types(<span class="kw-2">mut </span><span class="self">self</span>, types: BitFlags&lt;SourceType&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.types = <span class="prelude-val">Some</span>(types);
+    </span><span class="kw">pub fn </span>types(<span class="kw-2">mut </span><span class="self">self</span>, types: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;BitFlags&lt;SourceType&gt;&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.types = types.into();
         <span class="self">self
     </span>}
 
     <span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>persist_mode(<span class="kw-2">mut </span><span class="self">self</span>, persist_mode: PersistMode) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.persist_mode = <span class="prelude-val">Some</span>(persist_mode);
+    </span><span class="kw">pub fn </span>persist_mode(<span class="kw-2">mut </span><span class="self">self</span>, persist_mode: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;PersistMode&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.persist_mode = persist_mode.into();
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>set_restore_token(<span class="kw-2">&amp;mut </span><span class="self">self</span>, token: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.restore_token = <span class="prelude-val">Some</span>(token.to_owned());
-    }
+    <span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>restore_token&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, token: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.restore_token = token.into().map(ToOwned::to_owned);
+        <span class="self">self
+    </span>}
 }
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
@@ -814,14 +816,12 @@
         restore_token: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
         persist_mode: PersistMode,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>options = SelectSourcesOptions::default()
+        <span class="kw">let </span>options = SelectSourcesOptions::default()
             .cursor_mode(cursor_mode)
             .multiple(multiple)
             .types(types)
-            .persist_mode(persist_mode);
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(token) = restore_token {
-            options.set_restore_token(token);
-        }
+            .persist_mode(persist_mode)
+            .restore_token(restore_token);
         call_basic_response_method(
             <span class="self">self</span>.inner(),
             <span class="kw-2">&amp;</span>options.handle_token,

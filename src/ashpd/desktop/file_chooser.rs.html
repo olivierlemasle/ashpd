@@ -594,68 +594,6 @@
 <span id="592">592</span>
 <span id="593">593</span>
 <span id="594">594</span>
-<span id="595">595</span>
-<span id="596">596</span>
-<span id="597">597</span>
-<span id="598">598</span>
-<span id="599">599</span>
-<span id="600">600</span>
-<span id="601">601</span>
-<span id="602">602</span>
-<span id="603">603</span>
-<span id="604">604</span>
-<span id="605">605</span>
-<span id="606">606</span>
-<span id="607">607</span>
-<span id="608">608</span>
-<span id="609">609</span>
-<span id="610">610</span>
-<span id="611">611</span>
-<span id="612">612</span>
-<span id="613">613</span>
-<span id="614">614</span>
-<span id="615">615</span>
-<span id="616">616</span>
-<span id="617">617</span>
-<span id="618">618</span>
-<span id="619">619</span>
-<span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
-<span id="635">635</span>
-<span id="636">636</span>
-<span id="637">637</span>
-<span id="638">638</span>
-<span id="639">639</span>
-<span id="640">640</span>
-<span id="641">641</span>
-<span id="642">642</span>
-<span id="643">643</span>
-<span id="644">644</span>
-<span id="645">645</span>
-<span id="646">646</span>
-<span id="647">647</span>
-<span id="648">648</span>
-<span id="649">649</span>
-<span id="650">650</span>
-<span id="651">651</span>
-<span id="652">652</span>
-<span id="653">653</span>
-<span id="654">654</span>
-<span id="655">655</span>
-<span id="656">656</span>
 </pre><pre class="rust"><code><span class="doccomment">//! The interface lets sandboxed applications ask the user for access to files
 //! outside the sandbox. The portal backend will present the user with a file
 //! chooser dialog.
@@ -975,69 +913,45 @@
 <span class="kw">impl </span>OpenFileRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="doccomment">/// Sets a title for the file chooser dialog.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_title(title);
+    </span><span class="kw">pub fn </span>title&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.title = title.into().map(ToOwned::to_owned).unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_title(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.title = title.to_owned();
-    }
 
     <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_accept_label(accept_label);
+    </span><span class="kw">pub fn </span>accept_label&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.accept_label = accept_label.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_accept_label(<span class="kw-2">&amp;mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.accept_label = <span class="prelude-val">Some</span>(accept_label.to_owned());
-    }
 
     <span class="doccomment">/// Sets whether the dialog should be a modal.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_modal(modal);
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.modal = modal.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_modal(<span class="kw-2">&amp;mut </span><span class="self">self</span>, modal: bool) {
-        <span class="self">self</span>.options.modal = <span class="prelude-val">Some</span>(modal);
-    }
 
     <span class="doccomment">/// Sets whether to allow multiple files selection.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>multiple(<span class="kw-2">mut </span><span class="self">self</span>, multiple: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_multiple(multiple);
+    </span><span class="kw">pub fn </span>multiple(<span class="kw-2">mut </span><span class="self">self</span>, multiple: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.multiple = multiple.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_multiple(<span class="kw-2">&amp;mut </span><span class="self">self</span>, multiple: bool) {
-        <span class="self">self</span>.options.multiple = <span class="prelude-val">Some</span>(multiple);
-    }
 
     <span class="doccomment">/// Sets whether to select directories or not.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>directory(<span class="kw-2">mut </span><span class="self">self</span>, directory: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_directory(directory);
+    </span><span class="kw">pub fn </span>directory(<span class="kw-2">mut </span><span class="self">self</span>, directory: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.directory = directory.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_directory(<span class="kw-2">&amp;mut </span><span class="self">self</span>, directory: bool) {
-        <span class="self">self</span>.options.directory = <span class="prelude-val">Some</span>(directory);
-    }
 
     <span class="doccomment">/// Adds a files filter.
     </span><span class="attribute">#[must_use]
@@ -1046,14 +960,16 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>set_filters(<span class="kw-2">&amp;mut </span><span class="self">self</span>, filters: <span class="kw-2">&amp;</span>[FileFilter]) {
-        <span class="self">self</span>.options.filters = filters.to_vec();
-    }
+    <span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>filters(<span class="kw-2">mut </span><span class="self">self</span>, filters: <span class="kw">impl </span>IntoIterator&lt;Item = FileFilter&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.filters = filters.into_iter().collect();
+        <span class="self">self
+    </span>}
 
     <span class="doccomment">/// Specifies the default filter.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>current_filter(<span class="kw-2">mut </span><span class="self">self</span>, current_filter: FileFilter) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.options.current_filter = <span class="prelude-val">Some</span>(current_filter);
+    </span><span class="kw">pub fn </span>current_filter(<span class="kw-2">mut </span><span class="self">self</span>, current_filter: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;FileFilter&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.current_filter = current_filter.into();
         <span class="self">self
     </span>}
 
@@ -1064,9 +980,11 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>set_choices(<span class="kw-2">&amp;mut </span><span class="self">self</span>, choices: <span class="kw-2">&amp;</span>[Choice]) {
-        <span class="self">self</span>.options.choices = choices.to_vec();
-    }
+    <span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>choices(<span class="kw-2">mut </span><span class="self">self</span>, choices: <span class="kw">impl </span>IntoIterator&lt;Item = Choice&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.choices = choices.into_iter().collect();
+        <span class="self">self
+    </span>}
 
     <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1087,47 +1005,31 @@
 <span class="kw">impl </span>SaveFilesRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="doccomment">/// Sets a title for the file chooser dialog.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_title(title);
+    </span><span class="kw">pub fn </span>title&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.title = title.into().map(ToOwned::to_owned).unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_title(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.title = title.to_owned();
-    }
 
     <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_accept_label(accept_label);
+    </span><span class="kw">pub fn </span>accept_label&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.accept_label = accept_label.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_accept_label(<span class="kw-2">&amp;mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.accept_label = <span class="prelude-val">Some</span>(accept_label.to_owned());
-    }
 
     <span class="doccomment">/// Sets whether the dialog should be a modal.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_modal(modal);
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.modal = modal.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_modal(<span class="kw-2">&amp;mut </span><span class="self">self</span>, modal: bool) {
-        <span class="self">self</span>.options.modal = <span class="prelude-val">Some</span>(modal);
-    }
 
     <span class="doccomment">/// Adds a choice.
     </span><span class="attribute">#[must_use]
@@ -1136,42 +1038,41 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>set_choices(<span class="kw-2">&amp;mut </span><span class="self">self</span>, choices: <span class="kw-2">&amp;</span>[Choice]) {
-        <span class="self">self</span>.options.choices = choices.to_vec();
-    }
+    <span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>choices(<span class="kw-2">mut </span><span class="self">self</span>, choices: <span class="kw">impl </span>IntoIterator&lt;Item = Choice&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.choices = choices.into_iter().collect();
+        <span class="self">self
+    </span>}
 
     <span class="doccomment">/// Specifies the current folder path.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>current_folder(<span class="kw-2">mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_current_folder(current_folder);
+    </span><span class="kw">pub fn </span>current_folder&lt;P: AsRef&lt;Path&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.current_folder = current_folder.into().map(|c| {
+            CString::new(c.as_ref().as_os_str().as_bytes())
+                .expect(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>)
+                .into_bytes_with_nul()
+        });
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_current_folder(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) {
-        <span class="kw">let </span>cstr = CString::new(current_folder.as_ref().as_os_str().as_bytes())
-            .expect(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.options.current_folder = <span class="prelude-val">Some</span>(cstr.into_bytes_with_nul());
-    }
 
     <span class="doccomment">/// Sets a list of files to save.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>files(<span class="kw-2">mut </span><span class="self">self</span>, files: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;Path&gt;]) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_files(files);
-        <span class="self">self
-    </span>}
-
-    <span class="kw">pub fn </span>set_files(<span class="kw-2">&amp;mut </span><span class="self">self</span>, files: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;Path&gt;]) {
-        <span class="self">self</span>.options.files = <span class="prelude-val">Some</span>(
+    </span><span class="kw">pub fn </span>files&lt;P: IntoIterator&lt;Item = <span class="kw">impl </span>AsRef&lt;Path&gt;&gt;&gt;(
+        <span class="kw-2">mut </span><span class="self">self</span>,
+        files: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.files = files.into().map(|files| {
             files
-                .iter()
+                .into_iter()
                 .map(|s| {
                     <span class="kw">let </span>cstr = CString::new(s.as_ref().as_os_str().as_bytes())
                         .expect(<span class="string">&quot;`files` should not be null terminated&quot;</span>);
                     cstr.into_bytes_with_nul()
                 })
-                .collect(),
-        );
-    }
+                .collect()
+        });
+        <span class="self">self
+    </span>}
 
     <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1192,85 +1093,60 @@
 <span class="kw">impl </span>SaveFileRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="doccomment">/// Sets a title for the file chooser dialog.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_title(title);
+    </span><span class="kw">pub fn </span>title&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.title = title.into().map(ToOwned::to_owned).unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_title(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.title = title.to_owned();
-    }
 
     <span class="doccomment">/// Sets a user-visible string to the &quot;accept&quot; button.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_accept_label(accept_label);
+    </span><span class="kw">pub fn </span>accept_label&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.accept_label = accept_label.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_accept_label(<span class="kw-2">&amp;mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.accept_label = <span class="prelude-val">Some</span>(accept_label.to_owned());
-    }
 
     <span class="doccomment">/// Sets whether the dialog should be a modal.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_modal(modal);
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.modal = modal.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_modal(<span class="kw-2">&amp;mut </span><span class="self">self</span>, modal: bool) {
-        <span class="self">self</span>.options.modal = <span class="prelude-val">Some</span>(modal);
-    }
 
     <span class="doccomment">/// Sets the current file name.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>current_name(<span class="kw-2">mut </span><span class="self">self</span>, current_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_current_name(current_name);
+    </span><span class="kw">pub fn </span>current_name&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, current_name: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.current_name = current_name.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_current_name(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_name: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.current_name = <span class="prelude-val">Some</span>(current_name.to_owned());
-    }
 
     <span class="doccomment">/// Sets the current folder.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>current_folder(<span class="kw-2">mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_current_folder(current_folder);
+    </span><span class="kw">pub fn </span>current_folder&lt;P: AsRef&lt;Path&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.current_folder = current_folder.into().map(|c| {
+            CString::new(c.as_ref().as_os_str().as_bytes())
+                .expect(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>)
+                .into_bytes_with_nul()
+        });
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_current_folder(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_folder: <span class="kw">impl </span>AsRef&lt;Path&gt;) {
-        <span class="kw">let </span>cstr = CString::new(current_folder.as_ref().as_os_str().as_bytes())
-            .expect(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.options.current_folder = <span class="prelude-val">Some</span>(cstr.into_bytes_with_nul());
-    }
 
     <span class="doccomment">/// Sets the absolute path of the file.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>current_file(<span class="kw-2">mut </span><span class="self">self</span>, current_file: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_current_file(current_file);
+    </span><span class="kw">pub fn </span>current_file&lt;P: AsRef&lt;Path&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, current_file: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.current_file = current_file.into().map(|c| {
+            CString::new(c.as_ref().as_os_str().as_bytes())
+                .expect(<span class="string">&quot;`current_folder` should not be null terminated&quot;</span>)
+                .into_bytes_with_nul()
+        });
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_current_file(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_file: <span class="kw">impl </span>AsRef&lt;Path&gt;) {
-        <span class="kw">let </span>cstr = CString::new(current_file.as_ref().as_os_str().as_bytes())
-            .expect(<span class="string">&quot;`current_file` should not be null terminated&quot;</span>);
-        <span class="self">self</span>.options.current_file = <span class="prelude-val">Some</span>(cstr.into_bytes_with_nul());
-    }
 
     <span class="doccomment">/// Adds a files filter.
     </span><span class="attribute">#[must_use]
@@ -1279,20 +1155,18 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>set_filters(<span class="kw-2">&amp;mut </span><span class="self">self</span>, filters: <span class="kw-2">&amp;</span>[FileFilter]) {
-        <span class="self">self</span>.options.filters = filters.to_vec();
-    }
-
-    <span class="doccomment">/// Sets the default filter.
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>current_filter(<span class="kw-2">mut </span><span class="self">self</span>, current_filter: FileFilter) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_current_filter(current_filter);
+    <span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>filters(<span class="kw-2">mut </span><span class="self">self</span>, filters: <span class="kw">impl </span>IntoIterator&lt;Item = FileFilter&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.filters = filters.into_iter().collect();
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>set_current_filter(<span class="kw-2">&amp;mut </span><span class="self">self</span>, current_filter: FileFilter) {
-        <span class="self">self</span>.options.current_filter = <span class="prelude-val">Some</span>(current_filter);
-    }
+    <span class="doccomment">/// Sets the default filter.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>current_filter(<span class="kw-2">mut </span><span class="self">self</span>, current_filter: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;FileFilter&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.current_filter = current_filter.into();
+        <span class="self">self
+    </span>}
 
     <span class="doccomment">/// Adds a choice.
     </span><span class="attribute">#[must_use]
@@ -1301,9 +1175,11 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>set_choices(<span class="kw-2">&amp;mut </span><span class="self">self</span>, choices: <span class="kw-2">&amp;</span>[Choice]) {
-        <span class="self">self</span>.options.choices = choices.to_vec();
-    }
+    <span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>choices(<span class="kw-2">mut </span><span class="self">self</span>, choices: <span class="kw">impl </span>IntoIterator&lt;Item = Choice&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.choices = choices.into_iter().collect();
+        <span class="self">self
+    </span>}
 
     <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;

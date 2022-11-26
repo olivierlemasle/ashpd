@@ -207,22 +207,6 @@
 <span id="205">205</span>
 <span id="206">206</span>
 <span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Open a URI or a directory.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.OpenURI`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.OpenURI).
@@ -377,36 +361,24 @@
 <span class="kw">impl </span>OpenFileRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Whether the file should be writeable or not.
-    </span><span class="kw">pub fn </span>writeable(<span class="kw-2">mut </span><span class="self">self</span>, writeable: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_writeable(writeable);
+    </span><span class="kw">pub fn </span>writeable(<span class="kw-2">mut </span><span class="self">self</span>, writeable: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.writeable = writeable.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_writeable(<span class="kw-2">&amp;mut </span><span class="self">self</span>, writeable: bool) {
-        <span class="self">self</span>.options.writeable = <span class="prelude-val">Some</span>(writeable);
-    }
 
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Whether to always ask the user which application to use or not.
-    </span><span class="kw">pub fn </span>ask(<span class="kw-2">mut </span><span class="self">self</span>, ask: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.options.ask = <span class="prelude-val">Some</span>(ask);
+    </span><span class="kw">pub fn </span>ask(<span class="kw-2">mut </span><span class="self">self</span>, ask: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.ask = ask.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_ask(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ask: bool) {
-        <span class="self">self</span>.options.ask = <span class="prelude-val">Some</span>(ask);
-    }
 
     <span class="kw">pub async fn </span>build_file(<span class="self">self</span>, file: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">let </span>proxy = OpenURIProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -430,14 +402,10 @@
 <span class="kw">impl </span>OpenDirectoryRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="kw">pub async fn </span>build(<span class="self">self</span>, directory: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">let </span>proxy = OpenURIProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;

@@ -814,8 +814,8 @@
 
 <span class="kw">impl </span>SelectDevicesOptions {
     <span class="doccomment">/// Sets the device types to request remote controlling of.
-    </span><span class="kw">pub fn </span>types(<span class="kw-2">mut </span><span class="self">self</span>, types: BitFlags&lt;DeviceType&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.types = <span class="prelude-val">Some</span>(types);
+    </span><span class="kw">pub fn </span>types(<span class="kw-2">mut </span><span class="self">self</span>, types: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;BitFlags&lt;DeviceType&gt;&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.types = types.into();
         <span class="self">self
     </span>}
 }

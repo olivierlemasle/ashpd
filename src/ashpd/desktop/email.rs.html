@@ -195,15 +195,6 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Compose an email.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Email`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Email).
@@ -315,76 +306,67 @@
 <span class="kw">impl </span>EmailRequest {
     <span class="doccomment">/// Sets a window identifier.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.identifier = identifier;
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets the email address to send the email to.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>address(<span class="kw-2">mut </span><span class="self">self</span>, address: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_address(address);
+    </span><span class="kw">pub fn </span>address&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, address: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.address = address.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_address(<span class="kw-2">&amp;mut </span><span class="self">self</span>, address: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.address = <span class="prelude-val">Some</span>(address.to_owned());
-    }
 
     <span class="doccomment">/// Sets a list of email addresses to send the email to.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>addresses(<span class="kw-2">mut </span><span class="self">self</span>, addresses: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_addresses(addresses);
+    </span><span class="kw">pub fn </span>addresses&lt;P: IntoIterator&lt;Item = I&gt;, I: AsRef&lt;str&gt; + Type + Serialize&gt;(
+        <span class="kw-2">mut </span><span class="self">self</span>,
+        addresses: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.addresses = addresses
+            .into()
+            .map(|a| a.into_iter().map(|s| s.as_ref().to_owned()).collect());
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_addresses(<span class="kw-2">&amp;mut </span><span class="self">self</span>, addresses: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) {
-        <span class="self">self</span>.options.addresses = <span class="prelude-val">Some</span>(addresses.iter().map(|s| s.as_ref().to_owned()).collect());
-    }
 
     <span class="doccomment">/// Sets a list of email addresses to BCC.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>bcc(<span class="kw-2">mut </span><span class="self">self</span>, bcc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_bcc(bcc);
+    </span><span class="kw">pub fn </span>bcc&lt;P: IntoIterator&lt;Item = I&gt;, I: AsRef&lt;str&gt; + Type + Serialize&gt;(
+        <span class="kw-2">mut </span><span class="self">self</span>,
+        bcc: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.bcc = bcc
+            .into()
+            .map(|a| a.into_iter().map(|s| s.as_ref().to_owned()).collect());
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_bcc(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bcc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) {
-        <span class="self">self</span>.options.bcc = <span class="prelude-val">Some</span>(bcc.iter().map(|s| s.as_ref().to_owned()).collect());
-    }
 
     <span class="doccomment">/// Sets a list of email addresses to CC.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>cc(<span class="kw-2">mut </span><span class="self">self</span>, cc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_cc(cc);
+    </span><span class="kw">pub fn </span>cc&lt;P: IntoIterator&lt;Item = I&gt;, I: AsRef&lt;str&gt; + Type + Serialize&gt;(
+        <span class="kw-2">mut </span><span class="self">self</span>,
+        cc: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.cc = cc
+            .into()
+            .map(|a| a.into_iter().map(|s| s.as_ref().to_owned()).collect());
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_cc(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cc: <span class="kw-2">&amp;</span>[<span class="kw">impl </span>AsRef&lt;str&gt; + Type + Serialize]) {
-        <span class="self">self</span>.options.cc = <span class="prelude-val">Some</span>(cc.iter().map(|s| s.as_ref().to_owned()).collect());
-    }
 
     <span class="doccomment">/// Sets the email subject.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>subject(<span class="kw-2">mut </span><span class="self">self</span>, subject: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_subject(subject);
+    </span><span class="kw">pub fn </span>subject&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, subject: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.subject = subject.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_subject(<span class="kw-2">&amp;mut </span><span class="self">self</span>, subject: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.subject = <span class="prelude-val">Some</span>(subject.to_owned());
-    }
 
     <span class="doccomment">/// Sets the email body.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>body(<span class="kw-2">mut </span><span class="self">self</span>, body: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_body(body);
+    </span><span class="kw">pub fn </span>body&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, body: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.body = body.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_body(<span class="kw-2">&amp;mut </span><span class="self">self</span>, body: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.body = <span class="prelude-val">Some</span>(body.to_owned());
-    }
 
     <span class="doccomment">/// Attaches a file to the email.
     </span><span class="attribute">#[must_use]

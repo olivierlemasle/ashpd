@@ -356,6 +356,9 @@
 <span id="354">354</span>
 <span id="355">355</span>
 <span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -376,12 +379,12 @@
 //!             notification_id,
 //!             Notification::new(&quot;Contrast&quot;)
 //!                 .default_action(&quot;open&quot;)
-//!                 .default_action_target(Value::U32(100).into())
+//!                 .default_action_target(100)
 //!                 .body(&quot;color copied to clipboard&quot;)
 //!                 .priority(Priority::High)
 //!                 .icon(Icon::from_names(&amp;[&quot;dialog-question-symbolic&quot;]))
-//!                 .button(Button::new(&quot;Copy&quot;, &quot;copy&quot;).target(Value::U32(32).into()))
-//!                 .button(Button::new(&quot;Delete&quot;, &quot;delete&quot;).target(Value::U32(40).into())),
+//!                 .button(Button::new(&quot;Copy&quot;, &quot;copy&quot;).target(32))
+//!                 .button(Button::new(&quot;Delete&quot;, &quot;delete&quot;).target(40)),
 //!         )
 //!         .await?;
 //!
@@ -518,36 +521,39 @@
 
     <span class="doccomment">/// Sets the notification body.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>body(<span class="kw-2">mut </span><span class="self">self</span>, body: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.body = <span class="prelude-val">Some</span>(body.to_owned());
+    </span><span class="kw">pub fn </span>body&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, body: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.body = body.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets an icon to the notification.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>icon(<span class="kw-2">mut </span><span class="self">self</span>, icon: Icon) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.icon = <span class="prelude-val">Some</span>(icon);
+    </span><span class="kw">pub fn </span>icon(<span class="kw-2">mut </span><span class="self">self</span>, icon: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;Icon&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.icon = icon.into();
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets the notification priority.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>priority(<span class="kw-2">mut </span><span class="self">self</span>, priority: Priority) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.priority = <span class="prelude-val">Some</span>(priority);
+    </span><span class="kw">pub fn </span>priority(<span class="kw-2">mut </span><span class="self">self</span>, priority: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;Priority&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.priority = priority.into();
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets the default action when the user clicks on the notification.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>default_action(<span class="kw-2">mut </span><span class="self">self</span>, default_action: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.default_action = <span class="prelude-val">Some</span>(default_action.to_owned());
+    </span><span class="kw">pub fn </span>default_action&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, default_action: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.default_action = default_action.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets a value to be sent in the `action_invoked` signal.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>default_action_target(<span class="kw-2">mut </span><span class="self">self</span>, default_action_target: OwnedValue) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.default_action_target = <span class="prelude-val">Some</span>(default_action_target);
+    </span><span class="kw">pub fn </span>default_action_target&lt;T: Into&lt;OwnedValue&gt;&gt;(
+        <span class="kw-2">mut </span><span class="self">self</span>,
+        default_action_target: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;T&gt;&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.default_action_target = default_action_target.into().map(|t| t.into());
         <span class="self">self
     </span>}
 
@@ -595,8 +601,8 @@
 
     <span class="doccomment">/// The value to send with the action name when the button is clicked.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>target(<span class="kw-2">mut </span><span class="self">self</span>, target: OwnedValue) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.target = <span class="prelude-val">Some</span>(target);
+    </span><span class="kw">pub fn </span>target&lt;T: Into&lt;OwnedValue&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, target: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;T&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.target = target.into().map(|t| t.into());
         <span class="self">self
     </span>}
 }

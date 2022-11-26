@@ -395,8 +395,8 @@
 }
 
 <span class="kw">impl </span>PrepareInstallOptions {
-    <span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.modal = <span class="prelude-val">Some</span>(modal);
+    <span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.modal = modal.into();
         <span class="self">self
     </span>}
 
@@ -405,18 +405,18 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>target(<span class="kw-2">mut </span><span class="self">self</span>, target: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.target = <span class="prelude-val">Some</span>(target.to_owned());
+    <span class="kw">pub fn </span>target&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, target: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.target = target.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>editable_name(<span class="kw-2">mut </span><span class="self">self</span>, editable_name: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.editable_name = <span class="prelude-val">Some</span>(editable_name);
+    <span class="kw">pub fn </span>editable_name(<span class="kw-2">mut </span><span class="self">self</span>, editable_name: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.editable_name = editable_name.into();
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>editable_icon(<span class="kw-2">mut </span><span class="self">self</span>, editable_icon: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.editable_icon = <span class="prelude-val">Some</span>(editable_icon);
+    <span class="kw">pub fn </span>editable_icon(<span class="kw-2">mut </span><span class="self">self</span>, editable_icon: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.editable_icon = editable_icon.into();
         <span class="self">self
     </span>}
 }

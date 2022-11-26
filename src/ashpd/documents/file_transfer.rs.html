@@ -257,16 +257,16 @@
 <span class="kw">impl </span>TransferOptions {
     <span class="doccomment">/// Sets whether the chosen application can write to the files or not.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>writeable(<span class="kw-2">mut </span><span class="self">self</span>, writeable: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.writeable = <span class="prelude-val">Some</span>(writeable);
+    </span><span class="kw">pub fn </span>writeable(<span class="kw-2">mut </span><span class="self">self</span>, writeable: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.writeable = writeable.into();
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Whether to stop the transfer automatically after the first
     /// [`retrieve_files()`][`FileTransfer::retrieve_files`] call.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>auto_stop(<span class="kw-2">mut </span><span class="self">self</span>, auto_stop: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.auto_stop = <span class="prelude-val">Some</span>(auto_stop);
+    </span><span class="kw">pub fn </span>auto_stop(<span class="kw-2">mut </span><span class="self">self</span>, auto_stop: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.auto_stop = auto_stop.into();
         <span class="self">self
     </span>}
 }

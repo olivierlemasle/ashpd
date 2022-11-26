@@ -175,20 +175,6 @@
 <span id="173">173</span>
 <span id="174">174</span>
 <span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Request to run in the background or started automatically when the user
 //! logs in.
 //!
@@ -220,7 +206,8 @@
 //! If no `command` is provided, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop
 //! file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction) will be used.
 
-</span><span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
+</span><span class="kw">use </span>serde::Serialize;
+<span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
 <span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
 <span class="kw">use crate</span>::{
@@ -315,60 +302,45 @@
 <span class="kw">impl </span>BackgroundRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets whether to auto start the application or not.
-    </span><span class="kw">pub fn </span>auto_start(<span class="kw-2">mut </span><span class="self">self</span>, auto_start: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_auto_start(auto_start);
+    </span><span class="kw">pub fn </span>auto_start(<span class="kw-2">mut </span><span class="self">self</span>, auto_start: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.autostart = auto_start.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_auto_start(<span class="kw-2">&amp;mut </span><span class="self">self</span>, auto_start: bool) {
-        <span class="self">self</span>.options.autostart = <span class="prelude-val">Some</span>(auto_start);
-    }
 
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets whether the application is dbus activatable.
-    </span><span class="kw">pub fn </span>dbus_activatable(<span class="kw-2">mut </span><span class="self">self</span>, dbus_activatable: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_dbus_activatable(dbus_activatable);
+    </span><span class="kw">pub fn </span>dbus_activatable(<span class="kw-2">mut </span><span class="self">self</span>, dbus_activatable: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.dbus_activatable = dbus_activatable.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_dbus_activatable(<span class="kw-2">&amp;mut </span><span class="self">self</span>, dbus_activatable: bool) {
-        <span class="self">self</span>.options.dbus_activatable = <span class="prelude-val">Some</span>(dbus_activatable);
-    }
 
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Specifies the command line to execute.
     /// If this is not specified, the [`Exec`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#exec-variables) line from the [desktop
     /// file](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#introduction)
-    </span><span class="kw">pub fn </span>command(<span class="kw-2">mut </span><span class="self">self</span>, command: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_command(command);
+    </span><span class="kw">pub fn </span>command&lt;P: IntoIterator&lt;Item = I&gt;, I: AsRef&lt;str&gt; + Type + Serialize&gt;(
+        <span class="kw-2">mut </span><span class="self">self</span>,
+        command: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;P&gt;&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.command = command
+            .into()
+            .map(|a| a.into_iter().map(|s| s.as_ref().to_owned()).collect());
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_command(<span class="kw-2">&amp;mut </span><span class="self">self</span>, command: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) {
-        <span class="self">self</span>.options.command = <span class="prelude-val">Some</span>(command.iter().map(|s| s.to_owned().to_owned()).collect());
-    }
 
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a user-visible reason for the request.
-    </span><span class="kw">pub fn </span>reason(<span class="kw-2">mut </span><span class="self">self</span>, reason: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_reason(reason);
+    </span><span class="kw">pub fn </span>reason&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, reason: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.reason = reason.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_reason(<span class="kw-2">&amp;mut </span><span class="self">self</span>, reason: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.options.reason = <span class="prelude-val">Some</span>(reason.to_owned());
-    }
 
     <span class="doccomment">/// Build the [`BackgroundResponse`].
     </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BackgroundResponse, Error&gt; {

@@ -231,18 +231,6 @@
 <span id="229">229</span>
 <span id="230">230</span>
 <span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Set a wallpaper on lockscreen, background or both.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Wallpaper`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Wallpaper).
@@ -423,38 +411,26 @@
 <span class="kw">impl </span>WallpaperRequest {
     <span class="attribute">#[must_use]
     </span><span class="doccomment">/// Sets a window identifier.
-    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: WindowIdentifier) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_identifier(identifier);
+    </span><span class="kw">pub fn </span>identifier(<span class="kw-2">mut </span><span class="self">self</span>, identifier: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;WindowIdentifier&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.identifier = identifier.into().unwrap_or_default();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_identifier(<span class="kw-2">&amp;mut </span><span class="self">self</span>, identifier: WindowIdentifier) {
-        <span class="self">self</span>.identifier = identifier;
-    }
 
     <span class="doccomment">/// Whether to show a preview of the picture.
     /// **Note** the portal may decide to show a preview even if this option is
     /// not set.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>show_preview(<span class="kw-2">mut </span><span class="self">self</span>, show_preview: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_show_preview(show_preview);
+    </span><span class="kw">pub fn </span>show_preview(<span class="kw-2">mut </span><span class="self">self</span>, show_preview: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.show_preview = show_preview.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_show_preview(<span class="kw-2">&amp;mut </span><span class="self">self</span>, show_preview: bool) {
-        <span class="self">self</span>.options.show_preview = <span class="prelude-val">Some</span>(show_preview);
-    }
 
     <span class="doccomment">/// Sets where to set the wallpaper on.
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>set_on(<span class="kw-2">mut </span><span class="self">self</span>, set_on: SetOn) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.set_set_on(set_on);
+    </span><span class="kw">pub fn </span>set_on(<span class="kw-2">mut </span><span class="self">self</span>, set_on: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;SetOn&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.options.set_on = set_on.into();
         <span class="self">self
     </span>}
-
-    <span class="kw">pub fn </span>set_set_on(<span class="kw-2">&amp;mut </span><span class="self">self</span>, set_on: SetOn) {
-        <span class="self">self</span>.options.set_on = <span class="prelude-val">Some</span>(set_on);
-    }
 
     <span class="doccomment">/// Build using a URI.
     </span><span class="kw">pub async fn </span>build_uri(<span class="self">self</span>, uri: <span class="kw-2">&amp;</span>url::Url) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
