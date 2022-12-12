@@ -281,11 +281,6 @@
 <span id="279">279</span>
 <span id="280">280</span>
 <span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -338,22 +333,17 @@
 };
 
 <span class="attribute">#[bitflags]
-#[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
+#[derive(Default, Serialize_repr, Deserialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
 #[repr(u32)]
 #[doc(alias = <span class="string">&quot;XdpLauncherType&quot;</span>)]
 </span><span class="kw">pub enum </span>LauncherType {
     <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LAUNCHER_APPLICATION&quot;</span>)]
+    #[default]
     </span><span class="doccomment">/// A launcher that represents an application
     </span>Application,
     <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_LAUNCHER_WEBAPP&quot;</span>)]
     </span><span class="doccomment">/// A launcher that represents a web application
     </span>WebApplication,
-}
-
-<span class="kw">impl </span>Default <span class="kw">for </span>LauncherType {
-    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::Application
-    }
 }
 
 <span class="attribute">#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Type)]

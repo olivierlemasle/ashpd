@@ -442,11 +442,6 @@
 <span id="440">440</span>
 <span id="441">441</span>
 <span id="442">442</span>
-<span id="443">443</span>
-<span id="444">444</span>
-<span id="445">445</span>
-<span id="446">446</span>
-<span id="447">447</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Start a screencast session and get the PipeWire remote of it.
 //!
 //! # Examples
@@ -538,11 +533,12 @@
     </span>Metadata,
 }
 
-<span class="attribute">#[derive(Serialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
+<span class="attribute">#[derive(Default, Serialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
 #[doc(alias = <span class="string">&quot;XdpPersistMode&quot;</span>)]
 #[repr(u32)]
 </span><span class="kw">pub enum </span>PersistMode {
     <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_PERSIST_MODE_NONE&quot;</span>)]
+    #[default]
     </span><span class="doccomment">/// Do not persist.
     </span>DoNot = <span class="number">0</span>,
     <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_PERSIST_MODE_TRANSIENT&quot;</span>)]
@@ -551,12 +547,6 @@
     <span class="attribute">#[doc(alias = <span class="string">&quot;XDP_PERSIST_MODE_PERSISTENT&quot;</span>)]
     </span><span class="doccomment">/// Persist until explicitly revoked.
     </span>ExplicitlyRevoked = <span class="number">2</span>,
-}
-
-<span class="kw">impl </span>Default <span class="kw">for </span>PersistMode {
-    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::DoNot
-    }
 }
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
