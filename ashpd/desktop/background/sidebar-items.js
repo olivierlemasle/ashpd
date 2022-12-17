@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["BackgroundRequest","A builder-pattern type to construct [`BackgroundResponse`]."],["BackgroundResponse","The response of a [`BackgroundRequest`] request."]]};
+window.SIDEBAR_ITEMS = {"struct":[["BackgroundProxy",""],["BackgroundRequest","A builder-pattern type to construct [`BackgroundResponse`]."],["BackgroundResponse","The response of a [`BackgroundRequest`] request."]]};
