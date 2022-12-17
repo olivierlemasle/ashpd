@@ -1,3 +1,3 @@
 (function() {var implementors = {
-"ashpd":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.65.0/core/convert/trait.TryFrom.html\" title=\"trait core::convert::TryFrom\">TryFrom</a>&lt;OwnedValue&gt; for <a class=\"enum\" href=\"ashpd/desktop/enum.Icon.html\" title=\"enum ashpd::desktop::Icon\">Icon</a>"]]
+"ashpd":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.66.0/core/convert/trait.TryFrom.html\" title=\"trait core::convert::TryFrom\">TryFrom</a>&lt;OwnedValue&gt; for <a class=\"enum\" href=\"ashpd/desktop/enum.Icon.html\" title=\"enum ashpd::desktop::Icon\">Icon</a>"]]
 };if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
