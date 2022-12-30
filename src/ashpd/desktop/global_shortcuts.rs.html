@@ -304,6 +304,15 @@
 <span id="303">303</span>
 <span id="304">304</span>
 <span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Register global shortcuts
 
 </span><span class="kw">use </span>std::{collections::HashMap, fmt::Debug, time::Duration};
@@ -325,11 +334,13 @@
 </span><span class="kw">struct </span>NewShortcutInfo {
     <span class="doccomment">/// User-readable text describing what the shortcut does.
     </span>description: String,
-    <span class="doccomment">/// The preferred shortcut trigger, defined as described by the &quot;shortcuts&quot; XDG specification. Optional.
+    <span class="doccomment">/// The preferred shortcut trigger, defined as described by the &quot;shortcuts&quot;
+    /// XDG specification. Optional.
     </span>preferred_trigger: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
-<span class="doccomment">/// Shortcut descriptor used to bind new shortcuts in [`GlobalShortcuts::bind_shortcuts`]
+<span class="doccomment">/// Shortcut descriptor used to bind new shortcuts in
+/// [`GlobalShortcuts::bind_shortcuts`]
 </span><span class="attribute">#[derive(Clone, Serialize, Type, Debug)]
 </span><span class="kw">pub struct </span>NewShortcut(String, NewShortcutInfo);
 
@@ -345,9 +356,11 @@
         )
     }
 
-    <span class="doccomment">/// Sets the preferred shortcut trigger, defined as described by the &quot;shortcuts&quot; XDG specification.
-    </span><span class="kw">pub fn </span>preferred_trigger(<span class="kw-2">mut </span><span class="self">self</span>, preferred_trigger: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.<span class="number">1</span>.preferred_trigger = preferred_trigger.into();
+    <span class="doccomment">/// Sets the preferred shortcut trigger, defined as described by the
+    /// &quot;shortcuts&quot; XDG specification.
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>preferred_trigger&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, preferred_trigger: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.<span class="number">1</span>.preferred_trigger = preferred_trigger.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
 }
@@ -357,13 +370,15 @@
 </span><span class="kw">struct </span>ShortcutInfo {
     <span class="doccomment">/// User-readable text describing what the shortcut does.
     </span>description: String,
-    <span class="doccomment">/// User-readable text describing how to trigger the shortcut for the client to render.
+    <span class="doccomment">/// User-readable text describing how to trigger the shortcut for the client
+    /// to render.
     </span>trigger_description: String,
 }
 
 <span class="doccomment">/// Struct that contains information about existing binded shortcut.
 ///
-/// If you need to create a new shortcuts, take a look at [`NewShortcut`] instead.
+/// If you need to create a new shortcuts, take a look at [`NewShortcut`]
+/// instead.
 </span><span class="attribute">#[derive(Clone, Deserialize, Type, Debug)]
 </span><span class="kw">pub struct </span>Shortcut(String, ShortcutInfo);
 
@@ -378,7 +393,8 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1</span>.description
     }
 
-    <span class="doccomment">/// User-readable text describing how to trigger the shortcut for the client to render.
+    <span class="doccomment">/// User-readable text describing how to trigger the shortcut for the client
+    /// to render.
     </span><span class="kw">pub fn </span>trigger_description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1</span>.trigger_description
     }
@@ -475,7 +491,8 @@
     }
 }
 
-<span class="doccomment">/// Indicates that the information associated with some of the shortcuts has changed.
+<span class="doccomment">/// Indicates that the information associated with some of the shortcuts has
+/// changed.
 </span><span class="attribute">#[derive(Debug, Deserialize, Type)]
 </span><span class="kw">pub struct </span>ShortcutsChanged(OwnedObjectPath, Vec&lt;Shortcut&gt;);
 
@@ -599,7 +616,8 @@
         receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;Deactivated&quot;</span>).<span class="kw">await
     </span>}
 
-    <span class="doccomment">/// Signal emitted when information associated with some of the shortcuts has changed.
+    <span class="doccomment">/// Signal emitted when information associated with some of the shortcuts
+    /// has changed.
     ///
     /// # Specifications
     ///
