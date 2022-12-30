@@ -195,6 +195,10 @@
 <span id="194">194</span>
 <span id="195">195</span>
 <span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
 </pre><pre class="rust"><code><span class="doccomment">//! ```rust,no_run
 //! use ashpd::desktop::settings::Settings;
 //!
@@ -221,7 +225,7 @@
 </span><span class="kw">use </span>std::{collections::HashMap, convert::TryFrom, fmt::Debug};
 
 <span class="kw">use </span>serde::{de::DeserializeOwned, Deserialize, Serialize};
-<span class="kw">use </span>zbus::zvariant::{OwnedValue, Type};
+<span class="kw">use </span>zbus::zvariant::{OwnedValue, Type, Value};
 
 <span class="kw">use super</span>::{DESTINATION, PATH};
 <span class="kw">use crate</span>::{
@@ -335,7 +339,7 @@
     ///
     /// # Returns
     ///
-    /// The value `key` is to to as a `zvariant::OwnedValue`.
+    /// The value for `key` as a `zvariant::OwnedValue`.
     ///
     /// # Specifications
     ///
@@ -347,7 +351,11 @@
         Error: From&lt;&lt;T <span class="kw">as </span>TryFrom&lt;OwnedValue&gt;&gt;::Error&gt;,
     {
         <span class="kw">let </span>value = call_method::&lt;OwnedValue, <span class="kw">_</span>&gt;(<span class="self">self</span>.inner(), <span class="string">&quot;Read&quot;</span>, <span class="kw-2">&amp;</span>(namespace, key)).<span class="kw">await</span><span class="question-mark">?</span>;
-        T::try_from(value).map_err(From::from)
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(v) = value.downcast_ref::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;() {
+            T::try_from(v.to_owned()).map_err(From::from)
+        } <span class="kw">else </span>{
+            T::try_from(value).map_err(From::from)
+        }
     }
 
     <span class="doccomment">/// Reads the value of namespace: `org.freedesktop.appearance` and
