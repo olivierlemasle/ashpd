@@ -533,7 +533,6 @@
 <span id="532">532</span>
 <span id="533">533</span>
 <span id="534">534</span>
-<span id="535">535</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -545,8 +544,8 @@
 //!     println!(&quot;{:#?}&quot;, proxy.mount_point().await?);
 //!
 //!     for (doc_id, host_path) in proxy.list(&quot;org.mozilla.firefox&quot;).await? {
-//!         if doc_id == &quot;f2ee988d&quot; {
-//!             let info = proxy.info(&amp;doc_id.into()).await?;
+//!         if doc_id == &quot;f2ee988d&quot;.into() {
+//!             let info = proxy.info(doc_id).await?;
 //!             println!(&quot;{:#?}&quot;, info);
 //!         }
 //!     }
@@ -585,12 +584,11 @@
 <span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{Fd, OwnedValue, Type};
 
+<span class="kw">pub use </span><span class="kw">crate</span>::app_id::DocumentID;
 <span class="kw">use crate</span>::{
     helpers::{call_method, path_from_null_terminated, session_connection},
     AppID, Error,
 };
-
-<span class="kw">pub use </span><span class="kw">crate</span>::app_id::DocumentID;
 
 <span class="attribute">#[bitflags]
 #[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
