@@ -534,9 +534,6 @@
 <span id="533">533</span>
 <span id="534">534</span>
 <span id="535">535</span>
-<span id="536">536</span>
-<span id="537">537</span>
-<span id="538">538</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -549,7 +546,7 @@
 //!
 //!     for (doc_id, host_path) in proxy.list(&quot;org.mozilla.firefox&quot;).await? {
 //!         if doc_id == &quot;f2ee988d&quot; {
-//!             let info = proxy.info(&amp;doc_id).await?;
+//!             let info = proxy.info(&amp;doc_id.into()).await?;
 //!             println!(&quot;{:#?}&quot;, info);
 //!         }
 //!     }
@@ -590,8 +587,10 @@
 
 <span class="kw">use crate</span>::{
     helpers::{call_method, path_from_null_terminated, session_connection},
-    Error,
+    AppID, Error,
 };
+
+<span class="kw">pub use </span><span class="kw">crate</span>::app_id::DocumentID;
 
 <span class="attribute">#[bitflags]
 #[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
@@ -608,14 +607,9 @@
     </span>ExportDirectory,
 }
 
-<span class="kw">pub type </span>DocumentID&lt;<span class="lifetime">&#39;a</span>&gt; = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str;
-<span class="kw">pub type </span>OwnedDocumentID = String;
-<span class="kw">pub type </span>ApplicationID&lt;<span class="lifetime">&#39;a</span>&gt; = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str;
-<span class="kw">pub type </span>OwnedApplicationID = String;
-
 <span class="doccomment">/// A [`HashMap`] mapping application IDs to the permissions for that
 /// application
-</span><span class="kw">pub type </span>Permissions = HashMap&lt;OwnedApplicationID, Vec&lt;Permission&gt;&gt;;
+</span><span class="kw">pub type </span>Permissions = HashMap&lt;AppID, Vec&lt;Permission&gt;&gt;;
 
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Eq, Type)]
 #[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
@@ -745,7 +739,7 @@
         o_path_fd: <span class="kw-2">&amp;</span>(<span class="kw">impl </span>AsRawFd + fmt::Debug),
         reuse_existing: bool,
         persistent: bool,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedDocumentID, Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;DocumentID, Error&gt; {
         call_method(
             <span class="self">self</span>.inner(),
             <span class="string">&quot;Add&quot;</span>,
@@ -777,14 +771,14 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         o_path_fds: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd],
         flags: BitFlags&lt;DocumentFlags&gt;,
-        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;OwnedDocumentID&gt;, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;DocumentID&gt;, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
         <span class="kw">let </span>o_path: Vec&lt;Fd&gt; = o_path_fds.iter().map(|f| Fd::from(f.as_raw_fd())).collect();
         call_method(
             <span class="self">self</span>.inner(),
             <span class="string">&quot;AddFull&quot;</span>,
-            <span class="kw-2">&amp;</span>(o_path, flags, app_id, permissions),
+            <span class="kw-2">&amp;</span>(o_path, flags, app_id.into(), permissions),
         )
         .<span class="kw">await
     </span>}
@@ -814,7 +808,7 @@
         filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
         reuse_existing: bool,
         persistent: bool,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedDocumentID, Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;DocumentID, Error&gt; {
         <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
             .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
         call_method(
@@ -855,9 +849,9 @@
         o_path_fd: <span class="kw-2">&amp;</span>(<span class="kw">impl </span>AsRawFd + fmt::Debug),
         filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
         flags: BitFlags&lt;DocumentFlags&gt;,
-        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(OwnedDocumentID, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(DocumentID, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
         <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
             .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
         call_method(
@@ -867,7 +861,7 @@
                 Fd::from(o_path_fd.as_raw_fd()),
                 cstr.as_bytes_with_nul(),
                 flags,
-                app_id,
+                app_id.into(),
                 permissions,
             ),
         )
@@ -888,8 +882,8 @@
     ///
     /// See also [`Delete`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Delete).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;Delete&quot;</span>)]
-    </span><span class="kw">pub async fn </span>delete(<span class="kw-2">&amp;</span><span class="self">self</span>, doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Delete&quot;</span>, <span class="kw-2">&amp;</span>(doc_id)).<span class="kw">await
+    </span><span class="kw">pub async fn </span>delete(<span class="kw-2">&amp;</span><span class="self">self</span>, doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Delete&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Returns the path at which the document store fuse filesystem is mounted.
@@ -923,14 +917,14 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;GrantPermissions&quot;</span>)]
     </span><span class="kw">pub async fn </span>grant_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;,
-        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
+        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         call_method(
             <span class="self">self</span>.inner(),
             <span class="string">&quot;GrantPermissions&quot;</span>,
-            <span class="kw-2">&amp;</span>(doc_id, app_id, permissions),
+            <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
         )
         .<span class="kw">await
     </span>}
@@ -953,9 +947,12 @@
     ///
     /// See also [`Info`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Info).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;Info&quot;</span>)]
-    </span><span class="kw">pub async fn </span>info(<span class="kw-2">&amp;</span><span class="self">self</span>, doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(PathBuf, Permissions), Error&gt; {
+    </span><span class="kw">pub async fn </span>info(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(PathBuf, Permissions), Error&gt; {
         <span class="kw">let </span>(bytes, permissions): (Vec&lt;u8&gt;, Permissions) =
-            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(doc_id)).<span class="kw">await</span><span class="question-mark">?</span>;
+            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>((path_from_null_terminated(bytes), permissions))
     }
 
@@ -979,14 +976,14 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;List&quot;</span>)]
     </span><span class="kw">pub async fn </span>list(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;OwnedDocumentID, PathBuf&gt;, Error&gt; {
+        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;DocumentID, PathBuf&gt;, Error&gt; {
         <span class="kw">let </span>response: HashMap&lt;String, Vec&lt;u8&gt;&gt; =
-            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id)).<span class="kw">await</span><span class="question-mark">?</span>;
+            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
 
-        <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;String, PathBuf&gt; = HashMap::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;DocumentID, PathBuf&gt; = HashMap::new();
         <span class="kw">for </span>(key, bytes) <span class="kw">in </span>response {
-            new_response.insert(key, path_from_null_terminated(bytes));
+            new_response.insert(DocumentID::from(key), path_from_null_terminated(bytes));
         }
 
         <span class="prelude-val">Ok</span>(new_response)
@@ -1009,10 +1006,7 @@
     ///
     /// See also [`Lookup`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Lookup).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;Lookup&quot;</span>)]
-    </span><span class="kw">pub async fn </span>lookup(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;OwnedDocumentID&gt;, Error&gt; {
+    </span><span class="kw">pub async fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, filename: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;DocumentID&gt;, Error&gt; {
         <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
             .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
         <span class="kw">let </span>doc_id: String =
@@ -1020,7 +1014,7 @@
         <span class="kw">if </span>doc_id.is_empty() {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
         } <span class="kw">else </span>{
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(doc_id))
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(doc_id.into()))
         }
     }
 
@@ -1043,14 +1037,14 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;RevokePermissions&quot;</span>)]
     </span><span class="kw">pub async fn </span>revoke_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        doc_id: DocumentID&lt;<span class="lifetime">&#39;_</span>&gt;,
-        app_id: ApplicationID&lt;<span class="lifetime">&#39;_</span>&gt;,
+        doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
+        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         call_method(
             <span class="self">self</span>.inner(),
             <span class="string">&quot;RevokePermissions&quot;</span>,
-            <span class="kw-2">&amp;</span>(doc_id, app_id, permissions),
+            <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
         )
         .<span class="kw">await
     </span>}
