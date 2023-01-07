@@ -27,7 +27,7 @@ added.</p>
 </div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.retrieve_files" class="method has-srclink"><a class="srclink rightside" href="../../src/ashpd/documents/file_transfer.rs.html#141-147">source</a><h4 class="code-header">pub async fn <a href="#method.retrieve_files" class="fnname">retrieve_files</a>(&amp;self, key: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.66.0/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.66.0/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.66.0/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.66.0/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, <a class="enum" href="../enum.Error.html" title="enum ashpd::Error">Error</a>&gt;</h4></section></summary><div class="docblock"><p>Retrieves files that were previously added to the session with
 <a href="struct.FileTransfer.html#method.add_files" title="FileTransfer::add_files"><code>add_files()</code></a>. The files will be
 exported in the document portal as-needed for the caller, and they
-will be writable if the owner of the session allowed it.</p>
+will be writeable if the owner of the session allowed it.</p>
 <h5 id="arguments-1"><a href="#arguments-1">Arguments</a></h5>
 <ul>
 <li><code>key</code> - A key returned by
