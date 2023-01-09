@@ -124,18 +124,6 @@
 <span id="123">123</span>
 <span id="124">124</span>
 <span id="125">125</span>
-<span id="126">126</span>
-<span id="127">127</span>
-<span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
-<span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Access to the current logged user information such as the id, name
 //! or their avatar uri.
 //!
@@ -150,7 +138,8 @@
 //!     let response = UserInformationRequest::default()
 //!         .reason(&quot;App would like to access user information&quot;)
 //!         .build()
-//!         .await?;
+//!         .await?
+//!         .response()?;
 //!
 //!     println!(&quot;Name: {}&quot;, response.name());
 //!     println!(&quot;ID: {}&quot;, response.id());
@@ -161,11 +150,8 @@
 
 </span><span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_request_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use </span><span class="kw">super</span>::HandleToken;
+<span class="kw">use crate</span>::{desktop::request::Request, proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
@@ -177,13 +163,13 @@
 <span class="attribute">#[derive(Debug, DeserializeDict, Type)]
 </span><span class="doccomment">/// The response of a [`UserInformationRequest`] request.
 </span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
-</span><span class="kw">pub struct </span>UserInformationResponse {
+</span><span class="kw">pub struct </span>UserInformation {
     id: String,
     name: String,
     image: url::Url,
 }
 
-<span class="kw">impl </span>UserInformationResponse {
+<span class="kw">impl </span>UserInformation {
     <span class="doccomment">/// User identifier.
     </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.id
@@ -200,7 +186,7 @@
     }
 
     <span class="doccomment">/// Creates a new builder-pattern struct instance to construct
-    /// [`UserInformationResponse`].
+    /// [`UserInformation`].
     ///
     /// This method returns an instance of [`UserInformationRequest`].
     </span><span class="kw">pub fn </span>builder() -&gt; UserInformationRequest {
@@ -208,43 +194,33 @@
     }
 }
 
-<span class="kw">struct </span>AccountProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+<span class="kw">struct </span>AccountProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AccountProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;AccountProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Account&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="kw">pub async fn </span>user_information(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         options: UserInformationOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;UserInformationResponse, Error&gt; {
-        call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;GetUserInformation&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;UserInformation&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;GetUserInformation&quot;</span>,
+                (<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 }
 
 <span class="attribute">#[doc(alias = <span class="string">&quot;xdp_portal_get_user_information&quot;</span>)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Account&quot;</span>)]
 #[derive(Debug, Default)]
-</span><span class="doccomment">/// A [builder-pattern] type to construct [`UserInformationResponse`].
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`UserInformation`].
 ///
 /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="kw">pub struct </span>UserInformationRequest {
@@ -267,8 +243,8 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Build the [`UserInformationResponse`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;UserInformationResponse, Error&gt; {
+    <span class="doccomment">/// Build the [`UserInformation`].
+    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;UserInformation&gt;, Error&gt; {
         <span class="kw">let </span>proxy = AccountProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.user_information(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}

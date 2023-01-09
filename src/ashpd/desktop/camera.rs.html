@@ -266,24 +266,6 @@
 <span id="265">265</span>
 <span id="266">266</span>
 <span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Check if a camera is available, request access to it and open a PipeWire
 //! remote stream.
 //!
@@ -310,11 +292,8 @@
 
 <span class="kw">use </span>zbus::zvariant::{OwnedFd, SerializeDict, Type, Value};
 
-<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_basic_response_method, call_method, session_connection},
-    Error,
-};
+<span class="kw">use super</span>::{HandleToken, Request};
+<span class="kw">use crate</span>::{proxy::Proxy, Error};
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
@@ -328,25 +307,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.Camera`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Camera).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Camera&quot;</span>)]
-</span><span class="kw">pub struct </span>Camera&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>Camera&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Camera&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`Camera`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;Camera&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Camera&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Camera&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Requests an access to the camera.
     ///
@@ -355,15 +323,11 @@
     /// See also [`AccessCamera`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Camera.AccessCamera).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;AccessCamera&quot;</span>)]
     #[doc(alias = <span class="string">&quot;xdp_portal_access_camera&quot;</span>)]
-    </span><span class="kw">pub async fn </span>request_access(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    </span><span class="kw">pub async fn </span>request_access(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>options = CameraAccessOptions::default();
-        call_basic_response_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;AccessCamera&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.empty_request(<span class="kw-2">&amp;</span>options.handle_token, <span class="string">&quot;AccessCamera&quot;</span>, <span class="kw-2">&amp;</span>options)
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Open a file descriptor to the PipeWire remote where the camera nodes are
@@ -382,7 +346,10 @@
         <span class="comment">// `options` parameter doesn&#39;t seems to be used yet
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/camera.c#L178
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        <span class="kw">let </span>fd: OwnedFd = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>(options)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>fd = <span class="self">self
+            </span>.<span class="number">0
+            </span>.call::&lt;OwnedFd&gt;(<span class="string">&quot;OpenPipeWireRemote&quot;</span>, <span class="kw-2">&amp;</span>options)
+            .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(fd.into_raw_fd())
     }
 
@@ -394,11 +361,8 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;IsCameraPresent&quot;</span>)]
     #[doc(alias = <span class="string">&quot;xdp_portal_is_camera_present&quot;</span>)]
     </span><span class="kw">pub async fn </span>is_present(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;bool, Error&gt; {
-        <span class="self">self</span>.inner()
-            .get_property::&lt;bool&gt;(<span class="string">&quot;IsCameraPresent&quot;</span>)
-            .<span class="kw">await
-            </span>.map_err(From::from)
-    }
+        <span class="self">self</span>.<span class="number">0</span>.property(<span class="string">&quot;IsCameraPresent&quot;</span>).<span class="kw">await
+    </span>}
 }
 
 <span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]

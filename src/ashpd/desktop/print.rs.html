@@ -694,19 +694,6 @@
 <span id="693">693</span>
 <span id="694">694</span>
 <span id="695">695</span>
-<span id="696">696</span>
-<span id="697">697</span>
-<span id="698">698</span>
-<span id="699">699</span>
-<span id="700">700</span>
-<span id="701">701</span>
-<span id="702">702</span>
-<span id="703">703</span>
-<span id="704">704</span>
-<span id="705">705</span>
-<span id="706">706</span>
-<span id="707">707</span>
-<span id="708">708</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! Print a file
@@ -730,7 +717,8 @@
 //!             Default::default(),
 //!             true,
 //!         )
-//!         .await?;
+//!         .await?
+//!         .response()?;
 //!     proxy
 //!         .print(&amp;identifier, &quot;test&quot;, &amp;file, Some(pre_print.token), true)
 //!         .await?;
@@ -744,11 +732,8 @@
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, Fd, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_basic_response_method, call_request_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{HandleToken, Request};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Type)]
 #[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
@@ -1322,25 +1307,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.Print`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Print).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Print&quot;</span>)]
-</span><span class="kw">pub struct </span>PrintProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>PrintProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; PrintProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`PrintProxy`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;PrintProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Print&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Print&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Presents a print dialog to the user and returns print settings and page
     /// setup.
@@ -1365,15 +1339,15 @@
         settings: Settings,
         page_setup: PageSetup,
         modal: bool,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;PreparePrint, Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;PreparePrint&gt;, Error&gt; {
         <span class="kw">let </span>options = PreparePrintOptions::default().modal(modal);
-        call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;PreparePrint&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, settings, page_setup, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;PreparePrint&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, settings, page_setup, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Asks to print a file.
@@ -1402,17 +1376,17 @@
         fd: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
         token: <span class="prelude-ty">Option</span>&lt;u32&gt;,
         modal: bool,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>options = PrintOptions::default()
             .token(token.unwrap_or(<span class="number">0</span>))
             .modal(modal);
-        call_basic_response_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;Print&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, Fd::from(fd.as_raw_fd()), <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.empty_request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;Print&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, Fd::from(fd.as_raw_fd()), <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 }
 </code></pre></div>

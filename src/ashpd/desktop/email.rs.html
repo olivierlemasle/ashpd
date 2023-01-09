@@ -180,20 +180,6 @@
 <span id="179">179</span>
 <span id="180">180</span>
 <span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Compose an email.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Email`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Email).
@@ -225,11 +211,8 @@
 <span class="kw">use </span>serde::Serialize;
 <span class="kw">use </span>zbus::zvariant::{Fd, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_basic_response_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{HandleToken, Request};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
@@ -246,25 +229,14 @@
 
 <span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)]
-</span><span class="kw">struct </span>EmailProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">struct </span>EmailProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; EmailProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`EmailProxy`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;EmailProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Email&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Email&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Presents a window that lets the user compose an email.
     ///
@@ -284,14 +256,14 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         options: EmailOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_basic_response_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;ComposeEmail&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.empty_request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;ComposeEmail&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 }
 
@@ -384,7 +356,7 @@
         };
     }
 
-    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = EmailProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.compose(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}

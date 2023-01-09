@@ -261,25 +261,6 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
-<span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -300,7 +281,8 @@
 //!             Icon::from_names(&amp;[&quot;dialog-symbolic&quot;]),
 //!             PrepareInstallOptions::default(),
 //!         )
-//!         .await?;
+//!         .await?
+//!         .response()?;
 //!
 //!     // Name and Icon will be overwritten from what we provided above
 //!     // Exec will be overridden to call `flatpak run our-app` if the application is sandboxed
@@ -325,11 +307,8 @@
 <span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{<span class="self">self</span>, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, Icon, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_method, call_request_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{HandleToken, Icon, Request};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[bitflags]
 #[derive(Default, Serialize_repr, Deserialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
@@ -416,25 +395,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.DynamicLauncher`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.DynamicLauncher).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.DynamicLauncher&quot;</span>)]
-</span><span class="kw">pub struct </span>DynamicLauncherProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>DynamicLauncherProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; DynamicLauncherProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`DynamicLauncherProxy`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;DynamicLauncherProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.DynamicLauncher&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.DynamicLauncher&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// # Specifications
     ///
@@ -448,16 +416,15 @@
         name: <span class="kw-2">&amp;</span>str,
         icon: Icon,
         options: PrepareInstallOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(String, String), Error&gt; {
-        <span class="kw">let </span>response = call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;PrepareInstall&quot;</span>,
-            <span class="kw-2">&amp;</span>(parent_window, name, icon, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(response)
-    }
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;(String, String)&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;PrepareInstall&quot;</span>,
+                <span class="kw-2">&amp;</span>(parent_window, name, icon, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// # Specifications
     ///
@@ -467,11 +434,10 @@
     </span><span class="kw">pub async fn </span>request_install_token(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str, icon: Icon) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
         <span class="comment">// No supported options for now
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        <span class="kw">let </span>token =
-            call_method::&lt;String, <span class="kw">_</span>&gt;(<span class="self">self</span>.inner(), <span class="string">&quot;RequestInstallToken&quot;</span>, <span class="kw-2">&amp;</span>(name, icon, options))
-                .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(token)
-    }
+        <span class="self">self</span>.<span class="number">0
+            </span>.call::&lt;String&gt;(<span class="string">&quot;RequestInstallToken&quot;</span>, <span class="kw-2">&amp;</span>(name, icon, options))
+            .<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// # Specifications
     ///
@@ -486,14 +452,10 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="comment">// No supported options for now
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;Install&quot;</span>,
-            <span class="kw-2">&amp;</span>(token, desktop_file_id, desktop_entry, options),
-        )
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
-    }
+        <span class="self">self</span>.<span class="number">0
+            </span>.call::&lt;()&gt;(<span class="string">&quot;Install&quot;</span>, <span class="kw-2">&amp;</span>(token, desktop_file_id, desktop_entry, options))
+            .<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// # Specifications
     ///
@@ -503,9 +465,10 @@
     </span><span class="kw">pub async fn </span>uninstall(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="comment">// No supported options for now
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Uninstall&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id, options)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
-    }
+        <span class="self">self</span>.<span class="number">0
+            </span>.call::&lt;()&gt;(<span class="string">&quot;Uninstall&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id, options))
+            .<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// # Specifications
     ///
@@ -513,7 +476,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetDesktopEntry&quot;</span>)]
     #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_get_desktop_entry&quot;</span>)]
     </span><span class="kw">pub async fn </span>desktop_entry(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetDesktopEntry&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id)).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;GetDesktopEntry&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id)).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// # Specifications
@@ -522,7 +485,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetIcon&quot;</span>)]
     #[doc(alias = <span class="string">&quot;xdp_portal_dynamic_launcher_get_icon&quot;</span>)]
     </span><span class="kw">pub async fn </span>icon(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;LauncherIcon, Error&gt; {
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetIcon&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id)).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;GetIcon&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id)).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// # Specifications
@@ -533,7 +496,7 @@
     </span><span class="kw">pub async fn </span>launch(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop_file_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="comment">// TODO: handle activation_token
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Launch&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id, <span class="kw-2">&amp;</span>options)).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Launch&quot;</span>, <span class="kw-2">&amp;</span>(desktop_file_id, <span class="kw-2">&amp;</span>options)).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// # Specifications
@@ -541,11 +504,10 @@
     /// See also [`SupportedLauncherTypes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-DynamicLauncher.SupportedLauncherTypes).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;SupportedLauncherTypes&quot;</span>)]
     </span><span class="kw">pub async fn </span>supported_launcher_types(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BitFlags&lt;LauncherType&gt;, Error&gt; {
-        <span class="self">self</span>.inner()
-            .get_property::&lt;BitFlags&lt;LauncherType&gt;&gt;(<span class="string">&quot;SupportedLauncherTypes&quot;</span>)
+        <span class="self">self</span>.<span class="number">0
+            </span>.property::&lt;BitFlags&lt;LauncherType&gt;&gt;(<span class="string">&quot;SupportedLauncherTypes&quot;</span>)
             .<span class="kw">await
-            </span>.map_err(From::from)
-    }
+    </span>}
 }
 
 <span class="attribute">#[cfg(test)]

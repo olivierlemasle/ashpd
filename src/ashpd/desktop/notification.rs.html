@@ -344,20 +344,6 @@
 <span id="343">343</span>
 <span id="344">344</span>
 <span id="345">345</span>
-<span id="346">346</span>
-<span id="347">347</span>
-<span id="348">348</span>
-<span id="349">349</span>
-<span id="350">350</span>
-<span id="351">351</span>
-<span id="352">352</span>
-<span id="353">353</span>
-<span id="354">354</span>
-<span id="355">355</span>
-<span id="356">356</span>
-<span id="357">357</span>
-<span id="358">358</span>
-<span id="359">359</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -409,11 +395,8 @@
 <span class="kw">use </span>serde::{<span class="self">self</span>, Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{OwnedValue, SerializeDict, Type, Value};
 
-<span class="kw">use super</span>::{Icon, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_method, receive_signal, session_connection},
-    Error,
-};
+<span class="kw">use </span><span class="kw">super</span>::Icon;
+<span class="kw">use crate</span>::{proxy::Proxy, Error};
 
 <span class="attribute">#[derive(Debug, Clone, Serialize, PartialEq, Eq, Type)]
 #[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
@@ -647,25 +630,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.Notification`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Notification).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>)]
-</span><span class="kw">pub struct </span>NotificationProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>NotificationProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; NotificationProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`NotificationProxy`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;NotificationProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Notification&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Signal emitted when a particular action is invoked.
     ///
@@ -675,7 +647,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;ActionInvoked&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::notification-action-invoked&quot;</span>)]
     </span><span class="kw">pub async fn </span>receive_action_invoked(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Action, Error&gt; {
-        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;ActionInvoked&quot;</span>).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;ActionInvoked&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Sends a notification.
@@ -699,7 +671,7 @@
         id: <span class="kw-2">&amp;</span>str,
         notification: Notification,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;AddNotification&quot;</span>, <span class="kw-2">&amp;</span>(id, notification)).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;AddNotification&quot;</span>, <span class="kw-2">&amp;</span>(id, notification)).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Withdraws a notification.
@@ -714,7 +686,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;RemoveNotification&quot;</span>)]
     #[doc(alias = <span class="string">&quot;xdp_portal_remove_notification&quot;</span>)]
     </span><span class="kw">pub async fn </span>remove_notification(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;RemoveNotification&quot;</span>, <span class="kw-2">&amp;</span>(id)).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;RemoveNotification&quot;</span>, <span class="kw-2">&amp;</span>(id)).<span class="kw">await
     </span>}
 }
 </code></pre></div>

@@ -190,17 +190,6 @@
 <span id="189">189</span>
 <span id="190">190</span>
 <span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Request to run in the background or started automatically when the user
 //! logs in.
 //!
@@ -220,7 +209,8 @@
 //!         .command(&amp;[&quot;geary&quot;])
 //!         .dbus_activatable(false)
 //!         .build()
-//!         .await?;
+//!         .await?
+//!         .response()?;
 //!
 //!     println!(&quot;{}&quot;, response.auto_start());
 //!     println!(&quot;{}&quot;, response.run_in_background());
@@ -235,11 +225,8 @@
 </span><span class="kw">use </span>serde::Serialize;
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_method, call_request_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{HandleToken, Request};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
@@ -256,14 +243,14 @@
 <span class="attribute">#[derive(DeserializeDict, Type, Debug)]
 </span><span class="doccomment">/// The response of a [`BackgroundRequest`] request.
 </span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
-</span><span class="kw">pub struct </span>BackgroundResponse {
+</span><span class="kw">pub struct </span>Background {
     background: bool,
     autostart: bool,
 }
 
-<span class="kw">impl </span>BackgroundResponse {
+<span class="kw">impl </span>Background {
     <span class="doccomment">/// Creates a new builder-pattern struct instance to construct
-    /// [`BackgroundResponse`].
+    /// [`Background`].
     ///
     /// This method returns an instance of [`BackgroundRequest`].
     </span><span class="kw">pub fn </span>builder() -&gt; BackgroundRequest {
@@ -288,23 +275,14 @@
 }
 
 <span class="attribute">#[doc(alias = <span class="string">&quot;org.freedesktop.portal.Background&quot;</span>)]
-</span><span class="kw">pub struct </span>BackgroundProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>BackgroundProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; BackgroundProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;BackgroundProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Background&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Background&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
     <span class="doccomment">///  Sets the status of the application running in background.
     ///
     /// # Arguments
@@ -317,33 +295,33 @@
     /// See also [`SetStatus`](https://flatpak.github.io/xdg-desktop-portal/#gdbus-method-org-freedesktop-portal-Background.SetStatus).
 
     </span><span class="kw">pub async fn </span>set_status(<span class="kw-2">&amp;</span><span class="self">self</span>, message: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;SetStatus&quot;</span>,
-            <span class="kw-2">&amp;</span>(SetStatusOptions {
-                message: message.to_owned(),
-            }),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;SetStatus&quot;</span>,
+                <span class="kw-2">&amp;</span>(SetStatusOptions {
+                    message: message.to_owned(),
+                }),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="kw">async fn </span>request_background(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         options: BackgroundOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;BackgroundResponse, Error&gt; {
-        call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;RequestBackground&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Background&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;RequestBackground&quot;</span>,
+                (<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 }
 
 <span class="attribute">#[doc(alias = <span class="string">&quot;xdp_portal_request_background&quot;</span>)]
-</span><span class="doccomment">/// A [builder-pattern] type to construct [`BackgroundResponse`].
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`Background`].
 ///
 /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="attribute">#[derive(Debug, Default)]
@@ -395,8 +373,8 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Build the [`BackgroundResponse`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BackgroundResponse, Error&gt; {
+    <span class="doccomment">/// Build the [`Background`].
+    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Background&gt;, Error&gt; {
         <span class="kw">let </span>proxy = BackgroundProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .request_background(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options)

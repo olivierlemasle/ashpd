@@ -619,35 +619,6 @@
 <span id="618">618</span>
 <span id="619">619</span>
 <span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
-<span id="635">635</span>
-<span id="636">636</span>
-<span id="637">637</span>
-<span id="638">638</span>
-<span id="639">639</span>
-<span id="640">640</span>
-<span id="641">641</span>
-<span id="642">642</span>
-<span id="643">643</span>
-<span id="644">644</span>
-<span id="645">645</span>
-<span id="646">646</span>
-<span id="647">647</span>
-<span id="648">648</span>
-<span id="649">649</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -663,8 +634,11 @@
 //!         .select_devices(&amp;session, DeviceType::Keyboard | DeviceType::Pointer)
 //!         .await?;
 //!
-//!     let (devices, _) = proxy.start(&amp;session, &amp;WindowIdentifier::default()).await?;
-//!     println!(&quot;{:#?}&quot;, devices);
+//!     let response = proxy
+//!         .start(&amp;session, &amp;WindowIdentifier::default())
+//!         .await?
+//!         .response()?;
+//!     println!(&quot;{:#?}&quot;, response.devices());
 //!
 //!     // 13 for Enter key code
 //!     proxy
@@ -710,9 +684,12 @@
 //!         )
 //!         .await?;
 //!
-//!     let (devices, streams) = remote_desktop.start(&amp;session, &amp;identifier).await?;
-//!     println!(&quot;{:#?}&quot;, devices);
-//!     println!(&quot;{:#?}&quot;, streams);
+//!     let response = remote_desktop
+//!         .start(&amp;session, &amp;identifier)
+//!         .await?
+//!         .response()?;
+//!     println!(&quot;{:#?}&quot;, response.devices());
+//!     println!(&quot;{:#?}&quot;, response.streams());
 //!
 //!     // 13 for Enter key code
 //!     remote_desktop
@@ -732,11 +709,8 @@
 <span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type, Value};
 
-<span class="kw">use super</span>::{screencast::Stream, HandleToken, Session, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_basic_response_method, call_method, call_request_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{screencast::Stream, HandleToken, Request, Session};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(Serialize_repr, Deserialize_repr, Copy, Clone, PartialEq, Eq, Debug, Type)]
 #[doc(alias = <span class="string">&quot;XdpKeyState&quot;</span>)]
@@ -830,11 +804,21 @@
 <span class="attribute">#[derive(DeserializeDict, Type, Debug, Default)]
 </span><span class="doccomment">/// A response to a [`RemoteDesktop::select_devices`] request.
 </span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
-</span><span class="kw">struct </span>SelectedDevices {
+</span><span class="kw">pub struct </span>SelectedDevices {
+    devices: BitFlags&lt;DeviceType&gt;,
+    streams: <span class="prelude-ty">Option</span>&lt;Vec&lt;Stream&gt;&gt;,
+}
+
+<span class="kw">impl </span>SelectedDevices {
     <span class="doccomment">/// The selected devices.
-    </span>devices: BitFlags&lt;DeviceType&gt;,
+    </span><span class="kw">pub fn </span>devices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BitFlags&lt;DeviceType&gt; {
+        <span class="self">self</span>.devices
+    }
+
     <span class="doccomment">/// The selected streams if a ScreenCast portal is used on the same session
-    </span>streams: <span class="prelude-ty">Option</span>&lt;Vec&lt;Stream&gt;&gt;,
+    </span><span class="kw">pub fn </span>streams(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[Stream]&gt; {
+        <span class="self">self</span>.streams.as_deref()
+    }
 }
 
 <span class="doccomment">/// The interface lets sandboxed applications create remote desktop sessions.
@@ -842,25 +826,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.RemoteDesktop`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.RemoteDesktop).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.RemoteDesktop&quot;</span>)]
-</span><span class="kw">pub struct </span>RemoteDesktop&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>RemoteDesktop&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; RemoteDesktop&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`RemoteDesktop`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;RemoteDesktop&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.RemoteDesktop&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.RemoteDesktop&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Create a remote desktop session.
     /// A remote desktop session is used to allow remote controlling a desktop
@@ -873,17 +846,13 @@
     #[doc(alias = <span class="string">&quot;xdp_portal_create_remote_desktop_session&quot;</span>)]
     </span><span class="kw">pub async fn </span>create_session(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Session&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
         <span class="kw">let </span>options = CreateRemoteOptions::default();
-        <span class="kw">let </span>(session, proxy) = <span class="macro">futures_util::try_join!</span>(
-            call_request_method::&lt;CreateSession, <span class="kw">_</span>&gt;(
-                <span class="self">self</span>.inner(),
-                <span class="kw-2">&amp;</span>options.handle_token,
-                <span class="string">&quot;CreateSession&quot;</span>,
-                <span class="kw-2">&amp;</span>options
-            )
-            .into_future(),
+        <span class="kw">let </span>(request, proxy) = <span class="macro">futures_util::try_join!</span>(
+            <span class="self">self</span>.<span class="number">0
+                </span>.request::&lt;CreateSession&gt;(<span class="kw-2">&amp;</span>options.handle_token, <span class="string">&quot;CreateSession&quot;</span>, <span class="kw-2">&amp;</span>options)
+                .into_future(),
             Session::from_unique_name(<span class="kw-2">&amp;</span>options.session_handle_token).into_future()
         )<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(proxy.inner().path().as_str(), <span class="kw-2">&amp;</span>session.session_handle);
+        <span class="macro">assert_eq!</span>(proxy.path().as_str(), <span class="kw-2">&amp;</span>request.response()<span class="question-mark">?</span>.session_handle);
         <span class="prelude-val">Ok</span>(proxy)
     }
 
@@ -903,15 +872,11 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         session: <span class="kw-2">&amp;</span>Session&lt;<span class="lifetime">&#39;_</span>&gt;,
         types: BitFlags&lt;DeviceType&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>options = SelectDevicesOptions::default().types(types);
-        call_basic_response_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;SelectDevices&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.empty_request(<span class="kw-2">&amp;</span>options.handle_token, <span class="string">&quot;SelectDevices&quot;</span>, <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>options))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">///  Start the remote desktop session.
@@ -934,17 +899,16 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         session: <span class="kw-2">&amp;</span>Session&lt;<span class="lifetime">&#39;_</span>&gt;,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(BitFlags&lt;DeviceType&gt;, Vec&lt;Stream&gt;), Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedDevices&gt;, Error&gt; {
         <span class="kw">let </span>options = StartRemoteOptions::default();
-        <span class="kw">let </span>response: SelectedDevices = call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;Start&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>((response.devices, response.streams.unwrap_or_default()))
-    }
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;Start&quot;</span>,
+                <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// Notify keyboard code.
     ///
@@ -971,12 +935,9 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyKeyboardKeycode&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, keycode, state),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyKeyboardKeycode&quot;</span>, <span class="kw-2">&amp;</span>(session, options, keycode, state))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify keyboard symbol.
@@ -1004,12 +965,9 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyKeyboardKeysym&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, keysym, state),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyKeyboardKeysym&quot;</span>, <span class="kw-2">&amp;</span>(session, options, keysym, state))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify about a new touch up event.
@@ -1031,7 +989,9 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;NotifyTouchUp&quot;</span>, <span class="kw-2">&amp;</span>(session, options, slot)).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyTouchUp&quot;</span>, <span class="kw-2">&amp;</span>(session, options, slot))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify about a new touch down event.
@@ -1065,12 +1025,9 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyTouchDown&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, stream, slot, x, y),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyTouchDown&quot;</span>, <span class="kw-2">&amp;</span>(session, options, stream, slot, x, y))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify about a new touch motion event.
@@ -1104,12 +1061,9 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyTouchMotion&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, stream, slot, x, y),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyTouchMotion&quot;</span>, <span class="kw-2">&amp;</span>(session, options, stream, slot, x, y))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify about a new absolute pointer motion event.
@@ -1138,12 +1092,12 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyPointerMotionAbsolute&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, stream, x, y),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;NotifyPointerMotionAbsolute&quot;</span>,
+                <span class="kw-2">&amp;</span>(session, options, stream, x, y),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify about a new relative pointer motion event.
@@ -1170,12 +1124,9 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyPointerMotion&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, dx, dy),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyPointerMotion&quot;</span>, <span class="kw-2">&amp;</span>(session, options, dx, dy))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify pointer button.
@@ -1205,12 +1156,9 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyPointerButton&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, button, state),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyPointerButton&quot;</span>, <span class="kw-2">&amp;</span>(session, options, button, state))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify pointer axis discrete.
@@ -1237,12 +1185,12 @@
         <span class="comment">// The `notify` methods don&#39;t take any options for now
         // see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L723
         </span><span class="kw">let </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyPointerAxisDiscrete&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, axis, steps),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;NotifyPointerAxisDiscrete&quot;</span>,
+                <span class="kw-2">&amp;</span>(session, options, axis, steps),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Notify pointer axis.
@@ -1276,12 +1224,9 @@
         <span class="comment">// see https://github.com/flatpak/xdg-desktop-portal/blob/master/src/remote-desktop.c#L911
         </span><span class="kw">let </span><span class="kw-2">mut </span>options: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = HashMap::new();
         options.insert(<span class="string">&quot;finish&quot;</span>, Value::Bool(finish));
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;NotifyPointerAxis&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, options, dx, dy),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;NotifyPointerAxis&quot;</span>, <span class="kw-2">&amp;</span>(session, options, dx, dy))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Available source types.
@@ -1291,11 +1236,8 @@
     /// See also [`AvailableDeviceTypes`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-RemoteDesktop.AvailableDeviceTypes).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;AvailableDeviceTypes&quot;</span>)]
     </span><span class="kw">pub async fn </span>available_device_types(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BitFlags&lt;DeviceType&gt;, Error&gt; {
-        <span class="self">self</span>.inner()
-            .get_property::&lt;BitFlags&lt;DeviceType&gt;&gt;(<span class="string">&quot;AvailableDeviceTypes&quot;</span>)
-            .<span class="kw">await
-            </span>.map_err(From::from)
-    }
+        <span class="self">self</span>.<span class="number">0</span>.property(<span class="string">&quot;AvailableDeviceTypes&quot;</span>).<span class="kw">await
+    </span>}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ashpd" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

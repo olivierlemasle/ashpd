@@ -48,8 +48,6 @@
 <span id="47">47</span>
 <span id="48">48</span>
 <span id="49">49</span>
-<span id="50">50</span>
-<span id="51">51</span>
 </pre><pre class="rust"><code><span class="attribute">#![deny(rustdoc::broken_intra_doc_links)]
 #![allow(missing_docs)] </span><span class="comment">// until zbus::DBusProxy adds docs to the generated trait
 </span><span class="attribute">#![doc(
@@ -61,10 +59,6 @@
 </span><span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both GTK 3 &amp; GTK 4 features at once&quot;</span>);
 <span class="attribute">#[cfg(all(all(feature = <span class="string">&quot;tokio&quot;</span>, feature = <span class="string">&quot;async-std&quot;</span>), not(doc)))]
 </span><span class="macro">compile_error!</span>(<span class="string">&quot;You can&#39;t enable both async-std &amp; tokio features at once&quot;</span>);
-
-<span class="kw">use </span>once_cell::sync::OnceCell;
-
-<span class="kw">static </span>SESSION: OnceCell&lt;zbus::Connection&gt; = OnceCell::new();
 
 <span class="doccomment">/// Alias for a [`Result`] with the error type `ashpd::Error`.
 </span><span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, Error&gt;;
@@ -79,6 +73,8 @@
 <span class="kw">pub use </span><span class="self">self</span>::window_identifier::WindowIdentifier;
 <span class="kw">mod </span>app_id;
 <span class="kw">pub use </span><span class="self">self</span>::app_id::AppID;
+
+<span class="kw">mod </span>proxy;
 
 <span class="doccomment">/// Spawn commands outside the sandbox or monitor if the running application has
 /// received an update &amp; install it.

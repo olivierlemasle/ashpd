@@ -167,19 +167,6 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! How to monitor if there&#39;s a new update and install it.
@@ -205,11 +192,7 @@
 </span><span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, ObjectPath, SerializeDict, Type};
 
-<span class="kw">use </span><span class="kw">super</span>::DESTINATION;
-<span class="kw">use crate</span>::{
-    helpers::{call_method, receive_signal, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
 </span><span class="doccomment">/// Specified options for a [`UpdateMonitor::update`] request.
@@ -291,7 +274,7 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.Flatpak.UpdateMonitor`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Flatpak.UpdateMonitor).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Flatpak.UpdateMonitor&quot;</span>)]
-</span><span class="kw">pub struct </span>UpdateMonitor&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>UpdateMonitor&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; UpdateMonitor&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`UpdateMonitor`].
@@ -299,20 +282,11 @@
     /// **Note** A [`UpdateMonitor`] is not supposed to be created
     /// manually.
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>new(path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;UpdateMonitor&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Flatpak.UpdateMonitor&quot;</span>)<span class="question-mark">?
-            </span>.path(path)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy =
+            Proxy::new_flatpak_with_path(<span class="string">&quot;org.freedesktop.portal.Flatpak.UpdateMonitor&quot;</span>, path)
+                .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// A signal received when there&#39;s progress during the application update.
     ///
@@ -322,7 +296,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;Progress&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::update-progress&quot;</span>)]
     </span><span class="kw">pub async fn </span>receive_progress(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;UpdateProgress, Error&gt; {
-        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;Progress&quot;</span>).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;Progress&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// A signal received when there&#39;s an application update.
@@ -333,7 +307,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;UpdateAvailable&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::update-available&quot;</span>)]
     </span><span class="kw">pub async fn </span>receive_update_available(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;UpdateInfo, Error&gt; {
-        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;UpdateAvailable&quot;</span>).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;UpdateAvailable&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Asks to install an update of the calling app.
@@ -348,7 +322,7 @@
     #[doc(alias = <span class="string">&quot;xdp_portal_update_install&quot;</span>)]
     </span><span class="kw">pub async fn </span>update(<span class="kw-2">&amp;</span><span class="self">self</span>, identifier: <span class="kw-2">&amp;</span>WindowIdentifier) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">let </span>options = UpdateOptions::default();
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Update&quot;</span>, <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, options)).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Update&quot;</span>, <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, options)).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Ends the update monitoring and cancels any ongoing installation.
@@ -358,7 +332,7 @@
     /// See also [`Close`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Flatpak-UpdateMonitor.Close).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;Close&quot;</span>)]
     </span><span class="kw">pub async fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Close&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Close&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
     </span>}
 }
 </code></pre></div>

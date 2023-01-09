@@ -511,28 +511,6 @@
 <span id="510">510</span>
 <span id="511">511</span>
 <span id="512">512</span>
-<span id="513">513</span>
-<span id="514">514</span>
-<span id="515">515</span>
-<span id="516">516</span>
-<span id="517">517</span>
-<span id="518">518</span>
-<span id="519">519</span>
-<span id="520">520</span>
-<span id="521">521</span>
-<span id="522">522</span>
-<span id="523">523</span>
-<span id="524">524</span>
-<span id="525">525</span>
-<span id="526">526</span>
-<span id="527">527</span>
-<span id="528">528</span>
-<span id="529">529</span>
-<span id="530">530</span>
-<span id="531">531</span>
-<span id="532">532</span>
-<span id="533">533</span>
-<span id="534">534</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -567,10 +545,7 @@
 //! }
 //! ```
 
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span>str = <span class="string">&quot;/org/freedesktop/portal/documents&quot;</span>;
-
-<span class="kw">use </span>std::{
+</span><span class="kw">use </span>std::{
     collections::HashMap,
     ffi::CString,
     fmt,
@@ -585,10 +560,7 @@
 <span class="kw">use </span>zbus::zvariant::{Fd, OwnedValue, Type};
 
 <span class="kw">pub use </span><span class="kw">crate</span>::app_id::DocumentID;
-<span class="kw">use crate</span>::{
-    helpers::{call_method, path_from_null_terminated, session_connection},
-    AppID, Error,
-};
+<span class="kw">use crate</span>::{helpers::path_from_null_terminated, proxy::Proxy, AppID, Error};
 
 <span class="attribute">#[bitflags]
 #[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
@@ -692,25 +664,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.Documents`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Documents).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)]
-</span><span class="kw">pub struct </span>Documents&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>Documents&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Documents&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`Documents`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;Documents&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_documents(<span class="string">&quot;org.freedesktop.portal.Documents&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Adds a file to the document store.
     /// The file is passed in the form of an open file descriptor
@@ -738,12 +699,12 @@
         reuse_existing: bool,
         persistent: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;DocumentID, Error&gt; {
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;Add&quot;</span>,
-            <span class="kw-2">&amp;</span>(Fd::from(o_path_fd.as_raw_fd()), reuse_existing, persistent),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;Add&quot;</span>,
+                <span class="kw-2">&amp;</span>(Fd::from(o_path_fd.as_raw_fd()), reuse_existing, persistent),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Adds multiple files to the document store.
@@ -773,12 +734,9 @@
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;DocumentID&gt;, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
         <span class="kw">let </span>o_path: Vec&lt;Fd&gt; = o_path_fds.iter().map(|f| Fd::from(f.as_raw_fd())).collect();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;AddFull&quot;</span>,
-            <span class="kw-2">&amp;</span>(o_path, flags, app_id.into(), permissions),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;AddFull&quot;</span>, <span class="kw-2">&amp;</span>(o_path, flags, app_id.into(), permissions))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Creates an entry in the document store for writing a new file.
@@ -809,17 +767,17 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;DocumentID, Error&gt; {
         <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
             .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;AddNamed&quot;</span>,
-            <span class="kw-2">&amp;</span>(
-                Fd::from(o_path_parent_fd.as_raw_fd()),
-                cstr.as_bytes_with_nul(),
-                reuse_existing,
-                persistent,
-            ),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;AddNamed&quot;</span>,
+                <span class="kw-2">&amp;</span>(
+                    Fd::from(o_path_parent_fd.as_raw_fd()),
+                    cstr.as_bytes_with_nul(),
+                    reuse_existing,
+                    persistent,
+                ),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Adds multiple files to the document store.
@@ -852,18 +810,18 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(DocumentID, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
         <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
             .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;AddNamedFull&quot;</span>,
-            <span class="kw-2">&amp;</span>(
-                Fd::from(o_path_fd.as_raw_fd()),
-                cstr.as_bytes_with_nul(),
-                flags,
-                app_id.into(),
-                permissions,
-            ),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;AddNamedFull&quot;</span>,
+                <span class="kw-2">&amp;</span>(
+                    Fd::from(o_path_fd.as_raw_fd()),
+                    cstr.as_bytes_with_nul(),
+                    flags,
+                    app_id.into(),
+                    permissions,
+                ),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Removes an entry from the document store. The file itself is not
@@ -881,7 +839,7 @@
     /// See also [`Delete`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Delete).
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;Delete&quot;</span>)]
     </span><span class="kw">pub async fn </span>delete(<span class="kw-2">&amp;</span><span class="self">self</span>, doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Delete&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Delete&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Returns the path at which the document store fuse filesystem is mounted.
@@ -893,7 +851,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;GetMountPoint&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_mount_point&quot;</span>)]
     </span><span class="kw">pub async fn </span>mount_point(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;PathBuf, Error&gt; {
-        <span class="kw">let </span>bytes: Vec&lt;u8&gt; = call_method(<span class="self">self</span>.inner(), <span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>bytes: Vec&lt;u8&gt; = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(path_from_null_terminated(bytes))
     }
 
@@ -919,12 +877,12 @@
         app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;GrantPermissions&quot;</span>,
-            <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;GrantPermissions&quot;</span>,
+                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Gets the filesystem path and application permissions for a document
@@ -950,7 +908,7 @@
         doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(PathBuf, Permissions), Error&gt; {
         <span class="kw">let </span>(bytes, permissions): (Vec&lt;u8&gt;, Permissions) =
-            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
+            <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>((path_from_null_terminated(bytes), permissions))
     }
 
@@ -976,8 +934,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;DocumentID, PathBuf&gt;, Error&gt; {
-        <span class="kw">let </span>response: HashMap&lt;String, Vec&lt;u8&gt;&gt; =
-            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>response: HashMap&lt;String, Vec&lt;u8&gt;&gt; = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;DocumentID, PathBuf&gt; = HashMap::new();
         <span class="kw">for </span>(key, bytes) <span class="kw">in </span>response {
@@ -1007,8 +964,7 @@
     </span><span class="kw">pub async fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, filename: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;DocumentID&gt;, Error&gt; {
         <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
             .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
-        <span class="kw">let </span>doc_id: String =
-            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(cstr.as_bytes_with_nul())).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>doc_id: String = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(cstr.as_bytes_with_nul())).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">if </span>doc_id.is_empty() {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
         } <span class="kw">else </span>{
@@ -1039,12 +995,12 @@
         app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;RevokePermissions&quot;</span>,
-            <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;RevokePermissions&quot;</span>,
+                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
+            )
+            .<span class="kw">await
     </span>}
 }
 

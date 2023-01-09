@@ -279,23 +279,6 @@
 <span id="278">278</span>
 <span id="279">279</span>
 <span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
-<span id="289">289</span>
-<span id="290">290</span>
-<span id="291">291</span>
-<span id="292">292</span>
-<span id="293">293</span>
-<span id="294">294</span>
-<span id="295">295</span>
-<span id="296">296</span>
-<span id="297">297</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -334,11 +317,8 @@
 <span class="kw">use </span>serde_repr::Serialize_repr;
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, OwnedObjectPath, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, Session, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_basic_response_method, call_method, receive_signal, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{HandleToken, Request, Session};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(Serialize_repr, PartialEq, Eq, Clone, Copy, Debug, Type)]
 #[doc(alias = <span class="string">&quot;XdpLocationAccuracy&quot;</span>)]
@@ -494,25 +474,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.Location`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Location).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Location&quot;</span>)]
-</span><span class="kw">pub struct </span>LocationProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>LocationProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; LocationProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`LocationProxy`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;LocationProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Location&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Location&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Signal emitted when the user location is updated.
     ///
@@ -522,7 +491,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;LocationUpdated&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::location-updated&quot;</span>)]
     </span><span class="kw">pub async fn </span>receive_location_updated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Location, Error&gt; {
-        receive_signal(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="string">&quot;LocationUpdated&quot;</span>).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;LocationUpdated&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Create a location session.
@@ -552,15 +521,12 @@
             ..Default::default()
         };
         <span class="kw">let </span>(path, proxy) = <span class="macro">futures_util::try_join!</span>(
-            call_method::&lt;OwnedObjectPath, CreateSessionOptions&gt;(
-                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
-                <span class="string">&quot;CreateSession&quot;</span>,
-                <span class="kw-2">&amp;</span>(options)
-            )
-            .into_future(),
+            <span class="self">self</span>.<span class="number">0
+                </span>.call::&lt;OwnedObjectPath&gt;(<span class="string">&quot;CreateSession&quot;</span>, <span class="kw-2">&amp;</span>(options))
+                .into_future(),
             Session::from_unique_name(<span class="kw-2">&amp;</span>options.session_handle_token).into_future(),
         )<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(proxy.inner().path(), <span class="kw-2">&amp;</span>path.into_inner());
+        <span class="macro">assert_eq!</span>(proxy.path(), <span class="kw-2">&amp;</span>path.into_inner());
         <span class="prelude-val">Ok</span>(proxy)
     }
 
@@ -582,15 +548,15 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         session: <span class="kw-2">&amp;</span>Session&lt;<span class="lifetime">&#39;_</span>&gt;,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>options = SessionStartOptions::default();
-        call_basic_response_method(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>,
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;Start&quot;</span>,
-            <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.empty_request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;Start&quot;</span>,
+                <span class="kw-2">&amp;</span>(session, <span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 }
 </code></pre></div>

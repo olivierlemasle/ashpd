@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["ColorRequest","A builder-pattern type to construct [`ColorResponse`]."],["ColorResponse","The response of a [`ColorRequest`] request."],["ScreenshotRequest","A builder-pattern type to construct a screenshot [`Url`]."]]};
+window.SIDEBAR_ITEMS = {"struct":[["Color","The response of a [`ColorRequest`] request."],["ColorRequest","A builder-pattern type to construct [`Color`]."],["Screenshot",""],["ScreenshotRequest","A builder-pattern type to construct a screenshot [`Screenshot`]."]]};

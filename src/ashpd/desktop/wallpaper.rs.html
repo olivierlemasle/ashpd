@@ -217,19 +217,6 @@
 <span id="216">216</span>
 <span id="217">217</span>
 <span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Set a wallpaper on lockscreen, background or both.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Wallpaper`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Wallpaper).
@@ -276,11 +263,8 @@
 <span class="kw">use </span>serde::{<span class="self">self</span>, Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{Fd, SerializeDict, Type};
 
-<span class="kw">use crate</span>::{
-    desktop::{HandleToken, DESTINATION, PATH},
-    helpers::{call_basic_response_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use </span><span class="kw">super</span>::Request;
+<span class="kw">use crate</span>::{desktop::HandleToken, proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash, Type)]
 #[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
@@ -347,37 +331,27 @@
     </span>set_on: <span class="prelude-ty">Option</span>&lt;SetOn&gt;,
 }
 
-<span class="kw">struct </span>WallpaperProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+<span class="kw">struct </span>WallpaperProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; WallpaperProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;WallpaperProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Wallpaper&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Wallpaper&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="kw">pub async fn </span>set_wallpaper_file(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         file: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd,
         options: WallpaperOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_basic_response_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;SetWallpaperFile&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, Fd::from(file.as_raw_fd()), <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.empty_request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;SetWallpaperFile&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, Fd::from(file.as_raw_fd()), <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="kw">pub async fn </span>set_wallpaper_uri(
@@ -385,14 +359,14 @@
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         uri: <span class="kw-2">&amp;</span>url::Url,
         options: WallpaperOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_basic_response_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;SetWallpaperURI&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, uri, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.empty_request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;SetWallpaperURI&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, uri, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 }
 
@@ -432,7 +406,7 @@
     </span>}
 
     <span class="doccomment">/// Build using a URI.
-    </span><span class="kw">pub async fn </span>build_uri(<span class="self">self</span>, uri: <span class="kw-2">&amp;</span>url::Url) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    </span><span class="kw">pub async fn </span>build_uri(<span class="self">self</span>, uri: <span class="kw-2">&amp;</span>url::Url) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = WallpaperProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .set_wallpaper_uri(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, uri, <span class="self">self</span>.options)
@@ -440,7 +414,7 @@
     </span>}
 
     <span class="doccomment">/// Build using a file.
-    </span><span class="kw">pub async fn </span>build_file(<span class="self">self</span>, file: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    </span><span class="kw">pub async fn </span>build_file(<span class="self">self</span>, file: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = WallpaperProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .set_wallpaper_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, file, <span class="self">self</span>.options)

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["UserInformationRequest","A builder-pattern type to construct [`UserInformationResponse`]."],["UserInformationResponse","The response of a [`UserInformationRequest`] request."]]};
+window.SIDEBAR_ITEMS = {"struct":[["UserInformation","The response of a [`UserInformationRequest`] request."],["UserInformationRequest","A builder-pattern type to construct [`UserInformation`]."]]};

@@ -275,19 +275,6 @@
 <span id="274">274</span>
 <span id="275">275</span>
 <span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
-<span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
-<span id="289">289</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Take a screenshot or pick a color.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Screenshot`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Screenshot).
@@ -300,12 +287,13 @@
 //! use ashpd::desktop::screenshot::ScreenshotRequest;
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
-//!     let uri = ScreenshotRequest::default()
+//!     let response = ScreenshotRequest::default()
 //!         .interactive(true)
 //!         .modal(true)
 //!         .build()
-//!         .await?;
-//!     println!(&quot;URI: {}&quot;, uri);
+//!         .await?
+//!         .response()?;
+//!     println!(&quot;URI: {}&quot;, response.uri());
 //!     Ok(())
 //! }
 //! ```
@@ -313,10 +301,10 @@
 //! ## Picking a color
 //!
 //! ```rust,no_run
-//! use ashpd::desktop::screenshot::ColorResponse;
+//! use ashpd::desktop::screenshot::Color;
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
-//!     let color = ColorResponse::builder().build().await?;
+//!     let color = Color::builder().build().await?.response()?;
 //!     println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());
 //!
 //!     Ok(())
@@ -324,14 +312,10 @@
 //! ```
 </span><span class="kw">use </span>std::fmt::Debug;
 
-<span class="kw">use </span>url::Url;
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_request_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{HandleToken, Request};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(SerializeDict, Type, Debug, Default)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
@@ -343,11 +327,17 @@
 
 <span class="attribute">#[derive(DeserializeDict, Type)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
-</span><span class="kw">struct </span>ScreenshotResponse {
+</span><span class="kw">pub struct </span>Screenshot {
     uri: url::Url,
 }
 
-<span class="kw">impl </span>Debug <span class="kw">for </span>ScreenshotResponse {
+<span class="kw">impl </span>Screenshot {
+    <span class="kw">pub fn </span>uri(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>url::Url {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.uri
+    }
+}
+
+<span class="kw">impl </span>Debug <span class="kw">for </span>Screenshot {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
         f.write_str(<span class="self">self</span>.uri.as_str())
     }
@@ -364,11 +354,11 @@
 ///
 /// **Note** the values are normalized.
 </span><span class="attribute">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
-</span><span class="kw">pub struct </span>ColorResponse {
+</span><span class="kw">pub struct </span>Color {
     color: [f64; <span class="number">3</span>],
 }
 
-<span class="kw">impl </span>ColorResponse {
+<span class="kw">impl </span>Color {
     <span class="doccomment">/// Red.
     </span><span class="kw">pub fn </span>red(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.color[<span class="number">0</span>]
@@ -385,7 +375,7 @@
     }
 
     <span class="doccomment">/// Creates a new builder-pattern struct instance to construct
-    /// [`ColorResponse`].
+    /// [`Color`].
     ///
     /// This method returns an instance of [`ColorRequest`].
     </span><span class="kw">pub fn </span>builder() -&gt; ColorRequest {
@@ -394,15 +384,15 @@
 }
 
 <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-</span><span class="kw">impl </span>From&lt;ColorResponse&gt; <span class="kw">for </span>gtk3::gdk::RGBA {
-    <span class="kw">fn </span>from(color: ColorResponse) -&gt; <span class="self">Self </span>{
+</span><span class="kw">impl </span>From&lt;Color&gt; <span class="kw">for </span>gtk3::gdk::RGBA {
+    <span class="kw">fn </span>from(color: Color) -&gt; <span class="self">Self </span>{
         gtk3::gdk::RGBA::new(color.red(), color.green(), color.blue(), <span class="number">1.0</span>)
     }
 }
 
 <span class="attribute">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
-</span><span class="kw">impl </span>From&lt;ColorResponse&gt; <span class="kw">for </span>gtk4::gdk::RGBA {
-    <span class="kw">fn </span>from(color: ColorResponse) -&gt; <span class="self">Self </span>{
+</span><span class="kw">impl </span>From&lt;Color&gt; <span class="kw">for </span>gtk4::gdk::RGBA {
+    <span class="kw">fn </span>from(color: Color) -&gt; <span class="self">Self </span>{
         gtk4::gdk::RGBA::builder()
             .red(color.red() <span class="kw">as </span>f32)
             .green(color.green() <span class="kw">as </span>f32)
@@ -411,9 +401,9 @@
     }
 }
 
-<span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>ColorResponse {
+<span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>Color {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        f.debug_struct(<span class="string">&quot;ColorResponse&quot;</span>)
+        f.debug_struct(<span class="string">&quot;Color&quot;</span>)
             .field(<span class="string">&quot;red&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.red())
             .field(<span class="string">&quot;green&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.green())
             .field(<span class="string">&quot;blue&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.blue())
@@ -421,7 +411,7 @@
     }
 }
 
-<span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>ColorResponse {
+<span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>Color {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
         f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
             <span class="string">&quot;({}, {}, {})&quot;</span>,
@@ -434,25 +424,14 @@
 
 <span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Screenshot&quot;</span>)]
-</span><span class="kw">struct </span>ScreenshotProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">struct </span>ScreenshotProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ScreenshotProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`ScreenshotProxy`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;ScreenshotProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Screenshot&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.Screenshot&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Obtains the color of a single pixel.
     ///
@@ -469,14 +448,10 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         options: ColorOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;ColorResponse, Error&gt; {
-        call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;PickColor&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Color&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(<span class="kw-2">&amp;</span>options.handle_token, <span class="string">&quot;PickColor&quot;</span>, <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Takes a screenshot.
@@ -501,21 +476,20 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         options: ScreenshotOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;url::Url, Error&gt; {
-        <span class="kw">let </span>response: ScreenshotResponse = call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;Screenshot&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(response.uri)
-    }
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Screenshot&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;Screenshot&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
+    </span>}
 }
 
 <span class="attribute">#[derive(Debug, Default)]
 #[doc(alias = <span class="string">&quot;xdp_portal_pick_color&quot;</span>)]
-</span><span class="doccomment">/// A [builder-pattern] type to construct [`ColorResponse`].
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`Color`].
 ///
 /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="kw">pub struct </span>ColorRequest {
@@ -531,8 +505,8 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Build the [`ColorResponse`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ColorResponse, Error&gt; {
+    <span class="doccomment">/// Build the [`Color`].
+    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Color&gt;, Error&gt; {
         <span class="kw">let </span>proxy = ScreenshotProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.pick_color(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}
@@ -540,7 +514,7 @@
 
 <span class="attribute">#[derive(Debug, Default)]
 #[doc(alias = <span class="string">&quot;xdp_portal_take_screenshot&quot;</span>)]
-</span><span class="doccomment">/// A [builder-pattern] type to construct a screenshot [`Url`].
+</span><span class="doccomment">/// A [builder-pattern] type to construct a screenshot [`Screenshot`].
 ///
 /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="kw">pub struct </span>ScreenshotRequest {
@@ -571,8 +545,8 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Build the [`Url`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Url, Error&gt; {
+    <span class="doccomment">/// Build the [`Screenshot`].
+    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Screenshot&gt;, Error&gt; {
         <span class="kw">let </span>proxy = ScreenshotProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.screenshot(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}

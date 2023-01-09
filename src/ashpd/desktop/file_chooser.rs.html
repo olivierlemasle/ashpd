@@ -582,17 +582,6 @@
 <span id="581">581</span>
 <span id="582">582</span>
 <span id="583">583</span>
-<span id="584">584</span>
-<span id="585">585</span>
-<span id="586">586</span>
-<span id="587">587</span>
-<span id="588">588</span>
-<span id="589">589</span>
-<span id="590">590</span>
-<span id="591">591</span>
-<span id="592">592</span>
-<span id="593">593</span>
-<span id="594">594</span>
 </pre><pre class="rust"><code><span class="doccomment">//! The interface lets sandboxed applications ask the user for access to files
 //! outside the sandbox. The portal backend will present the user with a file
 //! chooser dialog.
@@ -621,7 +610,8 @@
 //!         .choice(Choice::boolean(&quot;re-encode&quot;, &quot;Re-encode&quot;, false))
 //!         .filter(FileFilter::new(&quot;SVG Image&quot;).mimetype(&quot;image/svg+xml&quot;))
 //!         .build()
-//!         .await?;
+//!         .await?
+//!         .response()?;
 //!
 //!     println!(&quot;{:#?}&quot;, files);
 //!
@@ -642,7 +632,8 @@
 //!         .modal(true)
 //!         .filter(FileFilter::new(&quot;JPEG Image&quot;).glob(&quot;*.jpg&quot;))
 //!         .build()
-//!         .await?;
+//!         .await?
+//!         .response()?;
 //!
 //!     println!(&quot;{:#?}&quot;, files);
 //!
@@ -663,7 +654,8 @@
 //!         .current_folder(&quot;/home/bilelmoussaoui/Pictures&quot;)
 //!         .files(&amp;[&quot;test.jpg&quot;, &quot;awesome.png&quot;])
 //!         .build()
-//!         .await?;
+//!         .await?
+//!         .response()?;
 //!
 //!     println!(&quot;{:#?}&quot;, files);
 //!
@@ -677,11 +669,8 @@
 <span class="kw">use </span>serde_repr::Serialize_repr;
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
-<span class="kw">use super</span>::{HandleToken, DESTINATION, PATH};
-<span class="kw">use crate</span>::{
-    helpers::{call_request_method, session_connection},
-    Error, WindowIdentifier,
-};
+<span class="kw">use super</span>::{HandleToken, Request};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, WindowIdentifier};
 
 <span class="attribute">#[derive(Clone, Serialize, Type, Debug)]
 </span><span class="doccomment">/// A file filter, to limit the available file choices to a mimetype or a glob
@@ -835,39 +824,28 @@
 }
 
 <span class="attribute">#[doc(alias = <span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>)]
-</span><span class="kw">struct </span>FileChooserProxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">struct </span>FileChooserProxy&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FileChooserProxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`FileChooserProxy`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;FileChooserProxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_desktop(<span class="string">&quot;org.freedesktop.portal.FileChooser&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="kw">pub async fn </span>open_file(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         title: <span class="kw-2">&amp;</span>str,
         options: OpenFileOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
-        call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;OpenFile&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;OpenFile&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="kw">pub async fn </span>save_file(
@@ -875,14 +853,14 @@
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         title: <span class="kw-2">&amp;</span>str,
         options: SaveFileOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
-        call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;SaveFile&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;SaveFile&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="kw">pub async fn </span>save_files(
@@ -890,14 +868,14 @@
         identifier: <span class="kw-2">&amp;</span>WindowIdentifier,
         title: <span class="kw-2">&amp;</span>str,
         options: SaveFilesOptions,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
-        call_request_method(
-            <span class="self">self</span>.inner(),
-            <span class="kw-2">&amp;</span>options.handle_token,
-            <span class="string">&quot;SaveFiles&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
-        )
-        .<span class="kw">await
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
+        <span class="self">self</span>.<span class="number">0
+            </span>.request(
+                <span class="kw-2">&amp;</span>options.handle_token,
+                <span class="string">&quot;SaveFiles&quot;</span>,
+                <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>identifier, title, <span class="kw-2">&amp;</span>options),
+            )
+            .<span class="kw">await
     </span>}
 }
 
@@ -985,7 +963,7 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .open_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)
@@ -1073,7 +1051,7 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .save_files(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)
@@ -1180,7 +1158,7 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SelectedFiles, Error&gt; {
+    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .save_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)

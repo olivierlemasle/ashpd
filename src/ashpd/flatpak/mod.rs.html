@@ -389,27 +389,6 @@
 <span id="388">388</span>
 <span id="389">389</span>
 <span id="390">390</span>
-<span id="391">391</span>
-<span id="392">392</span>
-<span id="393">393</span>
-<span id="394">394</span>
-<span id="395">395</span>
-<span id="396">396</span>
-<span id="397">397</span>
-<span id="398">398</span>
-<span id="399">399</span>
-<span id="400">400</span>
-<span id="401">401</span>
-<span id="402">402</span>
-<span id="403">403</span>
-<span id="404">404</span>
-<span id="405">405</span>
-<span id="406">406</span>
-<span id="407">407</span>
-<span id="408">408</span>
-<span id="409">409</span>
-<span id="410">410</span>
-<span id="411">411</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! Spawn a process outside of the sandbox, only works in a Flatpak.
@@ -437,10 +416,7 @@
 //! }
 //! ```
 
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span>str = <span class="string">&quot;/org/freedesktop/portal/Flatpak&quot;</span>;
-
-<span class="kw">use </span>std::{
+</span><span class="kw">use </span>std::{
     collections::HashMap,
     ffi::CString,
     fmt::Debug,
@@ -456,10 +432,7 @@
 <span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{Fd, OwnedObjectPath, SerializeDict, Type};
 
-<span class="kw">use crate</span>::{
-    helpers::{call_method, receive_signal, session_connection},
-    Error,
-};
+<span class="kw">use crate</span>::{proxy::Proxy, Error};
 
 <span class="attribute">#[bitflags]
 #[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
@@ -664,25 +637,14 @@
 /// Wrapper of the DBus interface: [`org.freedesktop.portal.Flatpak`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Flatpak).
 </span><span class="attribute">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>)]
-</span><span class="kw">pub struct </span>Flatpak&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>Flatpak&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Flatpak&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new instance of [`Flatpak`].
     </span><span class="kw">pub async fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;Flatpak&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
-        <span class="kw">let </span>connection = session_connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
-            .interface(<span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>)<span class="question-mark">?
-            </span>.path(PATH)<span class="question-mark">?
-            </span>.destination(DESTINATION)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>proxy = Proxy::new_flatpak(<span class="string">&quot;org.freedesktop.portal.Flatpak&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
-
-    <span class="doccomment">/// Get a reference to the underlying Proxy.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Proxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
 
     <span class="doccomment">/// Creates an update monitor object that will emit signals
     /// when an update for the caller becomes available, and can be used to
@@ -695,8 +657,10 @@
     #[doc(alias = <span class="string">&quot;xdp_portal_update_monitor_start&quot;</span>)]
     </span><span class="kw">pub async fn </span>create_update_monitor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;UpdateMonitor&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt; {
         <span class="kw">let </span>options = CreateMonitorOptions::default();
-        <span class="kw">let </span>path: OwnedObjectPath =
-            call_method(<span class="self">self</span>.inner(), <span class="string">&quot;CreateUpdateMonitor&quot;</span>, <span class="kw-2">&amp;</span>(options)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>path = <span class="self">self
+            </span>.<span class="number">0
+            </span>.call::&lt;OwnedObjectPath&gt;(<span class="string">&quot;CreateUpdateMonitor&quot;</span>, <span class="kw-2">&amp;</span>(options))
+            .<span class="kw">await</span><span class="question-mark">?</span>;
 
         UpdateMonitor::new(path.into_inner()).<span class="kw">await
     </span>}
@@ -704,7 +668,7 @@
     <span class="doccomment">/// Emitted when a process starts by [`spawn()`][`Flatpak::spawn`].
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;SpawnStarted&quot;</span>)]
     </span><span class="kw">pub async fn </span>receive_spawn_started(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(u32, u32), Error&gt; {
-        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;SpawnStarted&quot;</span>).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;SpawnStarted&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Emitted when a process started by [`spawn()`][`Flatpak::spawn`]
@@ -716,7 +680,7 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;SpawnExited&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::spawn-exited&quot;</span>)]
     </span><span class="kw">pub async fn </span>receive_spawn_existed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(u32, u32), Error&gt; {
-        receive_signal(<span class="self">self</span>.inner(), <span class="string">&quot;SpawnExited&quot;</span>).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;SpawnExited&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// This methods let you start a new instance of your application,
@@ -760,21 +724,21 @@
                     .expect(<span class="string">&quot;The `argv` should not contain a trailing 0 bytes&quot;</span>)
             })
             .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;Spawn&quot;</span>,
-            <span class="kw-2">&amp;</span>(
-                cwd_path.as_bytes_with_nul(),
-                argv.iter()
-                    .map(|c| c.as_bytes_with_nul())
-                    .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-                fds,
-                envs,
-                flags,
-                options,
-            ),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(
+                <span class="string">&quot;Spawn&quot;</span>,
+                <span class="kw-2">&amp;</span>(
+                    cwd_path.as_bytes_with_nul(),
+                    argv.iter()
+                        .map(|c| c.as_bytes_with_nul())
+                        .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
+                    fds,
+                    envs,
+                    flags,
+                    options,
+                ),
+            )
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// This methods let you send a Unix signal to a process that was started
@@ -797,12 +761,9 @@
         signal: u32,
         to_process_group: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        call_method(
-            <span class="self">self</span>.inner(),
-            <span class="string">&quot;SpawnSignal&quot;</span>,
-            <span class="kw-2">&amp;</span>(pid, signal, to_process_group),
-        )
-        .<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.call(<span class="string">&quot;SpawnSignal&quot;</span>, <span class="kw-2">&amp;</span>(pid, signal, to_process_group))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Flags marking what optional features are available.
@@ -811,11 +772,8 @@
     ///
     /// See also [`supports`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-property-org-freedesktop-portal-Flatpak.supports).
     </span><span class="kw">pub async fn </span>supports(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BitFlags&lt;SupportsFlags&gt;, Error&gt; {
-        <span class="self">self</span>.inner()
-            .get_property::&lt;BitFlags&lt;SupportsFlags&gt;&gt;(<span class="string">&quot;supports&quot;</span>)
-            .<span class="kw">await
-            </span>.map_err(From::from)
-    }
+        <span class="self">self</span>.<span class="number">0</span>.property::&lt;BitFlags&lt;SupportsFlags&gt;&gt;(<span class="string">&quot;supports&quot;</span>).<span class="kw">await
+    </span>}
 }
 
 <span class="doccomment">/// Monitor if there&#39;s an update it and install it.
