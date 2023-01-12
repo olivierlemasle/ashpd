@@ -730,12 +730,12 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         o_path_fds: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd],
         flags: BitFlags&lt;DocumentFlags&gt;,
-        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
+        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;DocumentID&gt;, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
         <span class="kw">let </span>o_path: Vec&lt;Fd&gt; = o_path_fds.iter().map(|f| Fd::from(f.as_raw_fd())).collect();
         <span class="self">self</span>.<span class="number">0
-            </span>.call(<span class="string">&quot;AddFull&quot;</span>, <span class="kw-2">&amp;</span>(o_path, flags, app_id.into(), permissions))
+            </span>.call(<span class="string">&quot;AddFull&quot;</span>, <span class="kw-2">&amp;</span>(o_path, flags, app_id.try_into()<span class="question-mark">?</span>, permissions))
             .<span class="kw">await
     </span>}
 
@@ -805,7 +805,7 @@
         o_path_fd: <span class="kw-2">&amp;</span>(<span class="kw">impl </span>AsRawFd + fmt::Debug),
         filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
         flags: BitFlags&lt;DocumentFlags&gt;,
-        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
+        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(DocumentID, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
         <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
@@ -817,7 +817,7 @@
                     Fd::from(o_path_fd.as_raw_fd()),
                     cstr.as_bytes_with_nul(),
                     flags,
-                    app_id.into(),
+                    app_id.try_into()<span class="question-mark">?</span>,
                     permissions,
                 ),
             )
@@ -874,13 +874,13 @@
     </span><span class="kw">pub async fn </span>grant_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
-        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
+        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.<span class="number">0
             </span>.call(
                 <span class="string">&quot;GrantPermissions&quot;</span>,
-                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
+                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.try_into()<span class="question-mark">?</span>, permissions),
             )
             .<span class="kw">await
     </span>}
@@ -932,9 +932,9 @@
     </span><span class="attribute">#[doc(alias = <span class="string">&quot;List&quot;</span>)]
     </span><span class="kw">pub async fn </span>list(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
+        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;DocumentID, PathBuf&gt;, Error&gt; {
-        <span class="kw">let </span>response: HashMap&lt;String, Vec&lt;u8&gt;&gt; = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>response: HashMap&lt;String, Vec&lt;u8&gt;&gt; = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.try_into()<span class="question-mark">?</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;DocumentID, PathBuf&gt; = HashMap::new();
         <span class="kw">for </span>(key, bytes) <span class="kw">in </span>response {
@@ -992,13 +992,13 @@
     </span><span class="kw">pub async fn </span>revoke_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
-        app_id: <span class="kw">impl </span>Into&lt;AppID&gt;,
+        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.<span class="number">0
             </span>.call(
                 <span class="string">&quot;RevokePermissions&quot;</span>,
-                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.into(), permissions),
+                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.try_into()<span class="question-mark">?</span>, permissions),
             )
             .<span class="kw">await
     </span>}

@@ -109,6 +109,11 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
 </pre><pre class="rust"><code><span class="kw">use </span>zbus::DBusError;
 
 <span class="kw">use </span><span class="kw">crate</span>::desktop::request::ResponseError;
@@ -158,6 +163,10 @@
     <span class="doccomment">/// A pipewire error
     </span><span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
     </span>Pipewire(pw::Error),
+    <span class="doccomment">/// Invalid AppId
+    ///
+    /// See &lt;https://developer.gnome.org/documentation/tutorials/application-id.html#rules-for-application-ids&gt;
+    </span>InvalidAppID,
 }
 
 <span class="kw">impl </span>std::error::Error <span class="kw">for </span>Error {}
@@ -173,6 +182,7 @@
             <span class="attribute">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
             </span><span class="self">Self</span>::Pipewire(e) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Pipewire: {e}&quot;</span>)),
             <span class="self">Self</span>::ParseError(e) =&gt; f.write_str(e),
+            <span class="self">Self</span>::InvalidAppID =&gt; f.write_str(<span class="string">&quot;Invalid app id&quot;</span>),
         }
     }
 }
