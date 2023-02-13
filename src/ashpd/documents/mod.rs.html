@@ -499,18 +499,6 @@
 <a href="#498" id="498">498</a>
 <a href="#499" id="499">499</a>
 <a href="#500" id="500">500</a>
-<a href="#501" id="501">501</a>
-<a href="#502" id="502">502</a>
-<a href="#503" id="503">503</a>
-<a href="#504" id="504">504</a>
-<a href="#505" id="505">505</a>
-<a href="#506" id="506">506</a>
-<a href="#507" id="507">507</a>
-<a href="#508" id="508">508</a>
-<a href="#509" id="509">509</a>
-<a href="#510" id="510">510</a>
-<a href="#511" id="511">511</a>
-<a href="#512" id="512">512</a>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -545,14 +533,7 @@
 //! }
 //! ```
 
-</span><span class="kw">use </span>std::{
-    collections::HashMap,
-    ffi::CString,
-    fmt,
-    os::unix::{ffi::OsStrExt, prelude::AsRawFd},
-    path::{Path, PathBuf},
-    str::FromStr,
-};
+</span><span class="kw">use </span>std::{collections::HashMap, fmt, os::unix::prelude::AsRawFd, path::Path, str::FromStr};
 
 <span class="kw">use </span>enumflags2::{bitflags, BitFlags};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
@@ -560,7 +541,7 @@
 <span class="kw">use </span>zbus::zvariant::{Fd, OwnedValue, Type};
 
 <span class="kw">pub use </span><span class="kw">crate</span>::app_id::DocumentID;
-<span class="kw">use crate</span>::{helpers::path_from_null_terminated, proxy::Proxy, AppID, Error};
+<span class="kw">use crate</span>::{proxy::Proxy, AppID, Error, FilePath};
 
 <span class="attr">#[bitflags]
 #[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
@@ -765,14 +746,13 @@
         reuse_existing: bool,
         persistent: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;DocumentID, Error&gt; {
-        <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
-            .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
+        <span class="kw">let </span>filename = FilePath::new(filename)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="number">0
             </span>.call(
                 <span class="string">&quot;AddNamed&quot;</span>,
                 <span class="kw-2">&amp;</span>(
                     Fd::from(o_path_parent_fd.as_raw_fd()),
-                    cstr.as_bytes_with_nul(),
+                    filename,
                     reuse_existing,
                     persistent,
                 ),
@@ -808,14 +788,13 @@
         app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(DocumentID, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
-        <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
-            .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
+        <span class="kw">let </span>filename = FilePath::new(filename)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="number">0
             </span>.call(
                 <span class="string">&quot;AddNamedFull&quot;</span>,
                 <span class="kw-2">&amp;</span>(
                     Fd::from(o_path_fd.as_raw_fd()),
-                    cstr.as_bytes_with_nul(),
+                    filename,
                     flags,
                     app_id.try_into()<span class="question-mark">?</span>,
                     permissions,
@@ -850,10 +829,9 @@
     /// See also [`GetMountPoint`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.GetMountPoint).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;GetMountPoint&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_mount_point&quot;</span>)]
-    </span><span class="kw">pub async fn </span>mount_point(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;PathBuf, Error&gt; {
-        <span class="kw">let </span>bytes: Vec&lt;u8&gt; = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(path_from_null_terminated(bytes))
-    }
+    </span><span class="kw">pub async fn </span>mount_point(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;FilePath, Error&gt; {
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;GetMountPoint&quot;</span>, <span class="kw-2">&amp;</span>()).<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// Grants access permissions for a file in the document store to an
     /// application.
@@ -906,11 +884,9 @@
     </span><span class="kw">pub async fn </span>info(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(PathBuf, Permissions), Error&gt; {
-        <span class="kw">let </span>(bytes, permissions): (Vec&lt;u8&gt;, Permissions) =
-            <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>((path_from_null_terminated(bytes), permissions))
-    }
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(FilePath, Permissions), Error&gt; {
+        <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Info&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into())).<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// Lists documents in the document store for an application (or for all
     /// applications).
@@ -933,12 +909,13 @@
     </span><span class="kw">pub async fn </span>list(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;DocumentID, PathBuf&gt;, Error&gt; {
-        <span class="kw">let </span>response: HashMap&lt;String, Vec&lt;u8&gt;&gt; = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.try_into()<span class="question-mark">?</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;DocumentID, FilePath&gt;, Error&gt; {
+        <span class="kw">let </span>response: HashMap&lt;String, FilePath&gt; =
+            <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.try_into()<span class="question-mark">?</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
 
-        <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;DocumentID, PathBuf&gt; = HashMap::new();
-        <span class="kw">for </span>(key, bytes) <span class="kw">in </span>response {
-            new_response.insert(DocumentID::from(key), path_from_null_terminated(bytes));
+        <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;DocumentID, FilePath&gt; = HashMap::new();
+        <span class="kw">for </span>(key, file_name) <span class="kw">in </span>response {
+            new_response.insert(DocumentID::from(key), file_name);
         }
 
         <span class="prelude-val">Ok</span>(new_response)
@@ -962,9 +939,8 @@
     /// See also [`Lookup`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-method-org-freedesktop-portal-Documents.Lookup).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;Lookup&quot;</span>)]
     </span><span class="kw">pub async fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, filename: <span class="kw">impl </span>AsRef&lt;Path&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;DocumentID&gt;, Error&gt; {
-        <span class="kw">let </span>cstr = CString::new(filename.as_ref().as_os_str().as_bytes())
-            .expect(<span class="string">&quot;`filename` should not be null terminated&quot;</span>);
-        <span class="kw">let </span>doc_id: String = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(cstr.as_bytes_with_nul())).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>filename = FilePath::new(filename)<span class="question-mark">?</span>;
+        <span class="kw">let </span>doc_id: String = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;Lookup&quot;</span>, <span class="kw-2">&amp;</span>(filename)).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">if </span>doc_id.is_empty() {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
         } <span class="kw">else </span>{

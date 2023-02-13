@@ -369,26 +369,6 @@
 <a href="#368" id="368">368</a>
 <a href="#369" id="369">369</a>
 <a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
-<a href="#376" id="376">376</a>
-<a href="#377" id="377">377</a>
-<a href="#378" id="378">378</a>
-<a href="#379" id="379">379</a>
-<a href="#380" id="380">380</a>
-<a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! Spawn a process outside of the sandbox, only works in a Flatpak.
@@ -418,12 +398,8 @@
 
 </span><span class="kw">use </span>std::{
     collections::HashMap,
-    ffi::CString,
     fmt::Debug,
-    os::unix::{
-        ffi::OsStrExt,
-        prelude::{AsRawFd, RawFd},
-    },
+    os::unix::prelude::{AsRawFd, RawFd},
     path::Path,
 };
 
@@ -432,7 +408,7 @@
 <span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{Fd, OwnedObjectPath, SerializeDict, Type};
 
-<span class="kw">use crate</span>::{proxy::Proxy, Error};
+<span class="kw">use crate</span>::{proxy::Proxy, Error, FilePath};
 
 <span class="attr">#[bitflags]
 #[derive(Serialize_repr, Deserialize_repr, PartialEq, Eq, Copy, Clone, Debug, Type)]
@@ -715,29 +691,13 @@
         flags: BitFlags&lt;SpawnFlags&gt;,
         options: SpawnOptions,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
-        <span class="kw">let </span>cwd_path = CString::new(cwd_path.as_ref().as_os_str().as_bytes())
-            .expect(<span class="string">&quot;The `cwd_path` should not contain a trailing 0 bytes&quot;</span>);
+        <span class="kw">let </span>cwd_path = FilePath::new(cwd_path)<span class="question-mark">?</span>;
         <span class="kw">let </span>argv = argv
             .iter()
-            .map(|s| {
-                CString::new(s.as_ref().as_os_str().as_bytes())
-                    .expect(<span class="string">&quot;The `argv` should not contain a trailing 0 bytes&quot;</span>)
-            })
-            .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+            .map(FilePath::new)
+            .collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;FilePath&gt;, <span class="kw">_</span>&gt;&gt;()<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="number">0
-            </span>.call(
-                <span class="string">&quot;Spawn&quot;</span>,
-                <span class="kw-2">&amp;</span>(
-                    cwd_path.as_bytes_with_nul(),
-                    argv.iter()
-                        .map(|c| c.as_bytes_with_nul())
-                        .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-                    fds,
-                    envs,
-                    flags,
-                    options,
-                ),
-            )
+            </span>.call(<span class="string">&quot;Spawn&quot;</span>, <span class="kw-2">&amp;</span>(cwd_path, argv, fds, envs, flags, options))
             .<span class="kw">await
     </span>}
 

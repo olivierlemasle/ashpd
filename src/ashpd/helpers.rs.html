@@ -81,36 +81,10 @@
 <a href="#80" id="80">80</a>
 <a href="#81" id="81">81</a>
 <a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a>
-<a href="#90" id="90">90</a>
-<a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
-<a href="#93" id="93">93</a>
-<a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a>
-</pre><pre class="rust"><code><span class="kw">use </span>std::{
-    ffi::OsStr,
-    os::unix::prelude::OsStrExt,
-    path::{Path, PathBuf},
-};
-
-<span class="attr">#[cfg(feature = <span class="string">&quot;async-std&quot;</span>)]
+</pre><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">&quot;async-std&quot;</span>)]
 </span><span class="kw">use </span>async_std::{fs::File, prelude::<span class="kw-2">*</span>};
 <span class="attr">#[cfg(feature = <span class="string">&quot;tokio&quot;</span>)]
 </span><span class="kw">use </span>tokio::{fs::File, io::AsyncReadExt};
-
-<span class="comment">// Some portals returns paths which are bytes and not a typical string
-// as those might be null terminated. This might make sense to provide in form
-// of a helper in zvariant
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>path_from_null_terminated(bytes: Vec&lt;u8&gt;) -&gt; PathBuf {
-    Path::new(OsStr::from_bytes(bytes.split_last().unwrap().<span class="number">1</span>)).to_path_buf()
-}
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>is_flatpak() -&gt; bool {
     <span class="attr">#[cfg(feature = <span class="string">&quot;async-std&quot;</span>)]

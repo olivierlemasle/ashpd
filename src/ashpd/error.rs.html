@@ -114,6 +114,9 @@
 <a href="#113" id="113">113</a>
 <a href="#114" id="114">114</a>
 <a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
 </pre><pre class="rust"><code><span class="kw">use </span>zbus::DBusError;
 
 <span class="kw">use </span><span class="kw">crate</span>::desktop::request::ResponseError;
@@ -167,6 +170,8 @@
     ///
     /// See &lt;https://developer.gnome.org/documentation/tutorials/application-id.html#rules-for-application-ids&gt;
     </span>InvalidAppID,
+    <span class="doccomment">/// An error indicating that an interior nul byte was found
+    </span>NulTerminated(usize),
 }
 
 <span class="kw">impl </span>std::error::Error <span class="kw">for </span>Error {}
@@ -183,6 +188,7 @@
             </span><span class="self">Self</span>::Pipewire(e) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;Pipewire: {e}&quot;</span>)),
             <span class="self">Self</span>::ParseError(e) =&gt; f.write_str(e),
             <span class="self">Self</span>::InvalidAppID =&gt; f.write_str(<span class="string">&quot;Invalid app id&quot;</span>),
+            <span class="self">Self</span>::NulTerminated(u) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Nul byte found in provided data at position {u}&quot;</span>),
         }
     }
 }
