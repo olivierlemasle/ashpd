@@ -217,6 +217,7 @@
 <a href="#216" id="216">216</a>
 <a href="#217" id="217">217</a>
 <a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Set a wallpaper on lockscreen, background or both.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Wallpaper`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Wallpaper).
@@ -268,6 +269,7 @@
 
 <span class="attr">#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash, Type)]
 #[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+#[serde(rename_all = <span class="string">&quot;lowercase&quot;</span>)]
 </span><span class="doccomment">/// Where to set the wallpaper on.
 </span><span class="kw">pub enum </span>SetOn {
     <span class="doccomment">/// Set the wallpaper only on the lock-screen.
@@ -429,7 +431,7 @@
     </span><span class="kw">fn </span>serialize_deserialize() {
         <span class="kw">let </span>set_on = SetOn::Both;
         <span class="kw">let </span>string = serde_json::to_string(<span class="kw-2">&amp;</span>set_on).unwrap();
-        <span class="macro">assert_eq!</span>(string, <span class="string">&quot;\&quot;Both\&quot;&quot;</span>);
+        <span class="macro">assert_eq!</span>(string, <span class="string">&quot;\&quot;both\&quot;&quot;</span>);
 
         <span class="kw">let </span>decoded = serde_json::from_str(<span class="kw-2">&amp;</span>string).unwrap();
         <span class="macro">assert_eq!</span>(set_on, decoded);
