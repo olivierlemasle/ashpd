@@ -275,6 +275,10 @@
 <a href="#274" id="274">274</a>
 <a href="#275" id="275">275</a>
 <a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Take a screenshot or pick a color.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Screenshot`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Screenshot).
@@ -284,13 +288,13 @@
 //! ## Taking a screenshot
 //!
 //! ```rust,no_run
-//! use ashpd::desktop::screenshot::ScreenshotRequest;
+//! use ashpd::desktop::screenshot::Screenshot;
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
-//!     let response = ScreenshotRequest::default()
+//!     let response = Screenshot::request()
 //!         .interactive(true)
 //!         .modal(true)
-//!         .build()
+//!         .send()
 //!         .await?
 //!         .response()?;
 //!     println!(&quot;URI: {}&quot;, response.uri());
@@ -304,7 +308,7 @@
 //! use ashpd::desktop::screenshot::Color;
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
-//!     let color = Color::builder().build().await?.response()?;
+//!     let color = Color::request().send().await?.response()?;
 //!     println!(&quot;({}, {}, {})&quot;, color.red(), color.green(), color.blue());
 //!
 //!     Ok(())
@@ -332,6 +336,10 @@
 }
 
 <span class="kw">impl </span>Screenshot {
+    <span class="kw">pub fn </span>request() -&gt; ScreenshotRequest {
+        ScreenshotRequest::default()
+    }
+
     <span class="kw">pub fn </span>uri(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>url::Url {
         <span class="kw-2">&amp;</span><span class="self">self</span>.uri
     }
@@ -378,7 +386,7 @@
     /// [`Color`].
     ///
     /// This method returns an instance of [`ColorRequest`].
-    </span><span class="kw">pub fn </span>builder() -&gt; ColorRequest {
+    </span><span class="kw">pub fn </span>request() -&gt; ColorRequest {
         ColorRequest::default()
     }
 }
@@ -506,7 +514,7 @@
     </span>}
 
     <span class="doccomment">/// Build the [`Color`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Color&gt;, Error&gt; {
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Color&gt;, Error&gt; {
         <span class="kw">let </span>proxy = ScreenshotProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.pick_color(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}
@@ -546,7 +554,7 @@
     </span>}
 
     <span class="doccomment">/// Build the [`Screenshot`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Screenshot&gt;, Error&gt; {
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Screenshot&gt;, Error&gt; {
         <span class="kw">let </span>proxy = ScreenshotProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.screenshot(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}

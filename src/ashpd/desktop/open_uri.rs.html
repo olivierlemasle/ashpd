@@ -210,7 +210,7 @@
 //!     let file = File::open(&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;).unwrap();
 //!     OpenFileRequest::default()
 //!         .ask(true)
-//!         .build_file(&amp;file)
+//!         .send_file(&amp;file)
 //!         .await?;
 //!     Ok(())
 //! }
@@ -225,7 +225,7 @@
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
 //!     let uri =
 //!         url::Url::parse(&quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;).unwrap();
-//!     OpenFileRequest::default().ask(true).build_uri(&amp;uri).await?;
+//!     OpenFileRequest::default().ask(true).send_uri(&amp;uri).await?;
 //!     Ok(())
 //! }
 //! ```
@@ -239,7 +239,7 @@
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
 //!     let directory = File::open(&quot;/home/bilelmoussaoui/Downloads&quot;).unwrap();
-//!     OpenDirectoryRequest::default().build(&amp;directory).await?;
+//!     OpenDirectoryRequest::default().send(&amp;directory).await?;
 //!     Ok(())
 //! }
 //! ```
@@ -353,12 +353,12 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub async fn </span>build_file(<span class="self">self</span>, file: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+    <span class="kw">pub async fn </span>send_file(<span class="self">self</span>, file: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = OpenURIProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.open_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, file, <span class="self">self</span>.options).<span class="kw">await
     </span>}
 
-    <span class="kw">pub async fn </span>build_uri(<span class="self">self</span>, uri: <span class="kw-2">&amp;</span>Url) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+    <span class="kw">pub async fn </span>send_uri(<span class="self">self</span>, uri: <span class="kw-2">&amp;</span>Url) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = OpenURIProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.open_uri(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, uri, <span class="self">self</span>.options).<span class="kw">await
     </span>}
@@ -380,7 +380,7 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub async fn </span>build(<span class="self">self</span>, directory: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+    <span class="kw">pub async fn </span>send(<span class="self">self</span>, directory: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = OpenURIProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .open_directory(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, directory, <span class="self">self</span>.options)

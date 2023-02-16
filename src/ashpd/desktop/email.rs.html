@@ -200,7 +200,7 @@
 //!         .subject(&quot;email subject&quot;)
 //!         .body(&quot;the pre-filled email body&quot;)
 //!         .attach(&amp;file)
-//!         .build()
+//!         .send()
 //!         .await;
 //!     Ok(())
 //! }
@@ -356,7 +356,7 @@
         };
     }
 
-    <span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+    <span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = EmailProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.compose(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}

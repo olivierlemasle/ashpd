@@ -3,12 +3,12 @@
 or their avatar uri.</p>
 <p>Wrapper of the DBus interface: <a href="https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Account"><code>org.freedesktop.portal.Account</code></a>.</p>
 <h4 id="examples"><a href="#examples">Examples</a></h4>
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ashpd::desktop::account::UserInformationRequest;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ashpd::desktop::account::UserInformation;
 
 <span class="kw">async fn </span>run() -&gt; ashpd::Result&lt;()&gt; {
-    <span class="kw">let </span>response = UserInformationRequest::default()
+    <span class="kw">let </span>response = UserInformation::request()
         .reason(<span class="string">&quot;App would like to access user information&quot;</span>)
-        .build()
+        .send()
         .<span class="kw">await</span><span class="question-mark">?
         </span>.response()<span class="question-mark">?</span>;
 

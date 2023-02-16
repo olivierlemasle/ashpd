@@ -132,12 +132,12 @@
 //! ### Examples
 //!
 //! ```rust, no_run
-//! use ashpd::desktop::account::UserInformationRequest;
+//! use ashpd::desktop::account::UserInformation;
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
-//!     let response = UserInformationRequest::default()
+//!     let response = UserInformation::request()
 //!         .reason(&quot;App would like to access user information&quot;)
-//!         .build()
+//!         .send()
 //!         .await?
 //!         .response()?;
 //!
@@ -189,7 +189,7 @@
     /// [`UserInformation`].
     ///
     /// This method returns an instance of [`UserInformationRequest`].
-    </span><span class="kw">pub fn </span>builder() -&gt; UserInformationRequest {
+    </span><span class="kw">pub fn </span>request() -&gt; UserInformationRequest {
         UserInformationRequest::default()
     }
 }
@@ -244,7 +244,7 @@
     </span>}
 
     <span class="doccomment">/// Build the [`UserInformation`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;UserInformation&gt;, Error&gt; {
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;UserInformation&gt;, Error&gt; {
         <span class="kw">let </span>proxy = AccountProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.user_information(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}

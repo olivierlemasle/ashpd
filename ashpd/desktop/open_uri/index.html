@@ -10,7 +10,7 @@
     <span class="kw">let </span>file = File::open(<span class="string">&quot;/home/bilelmoussaoui/adwaita-day.jpg&quot;</span>).unwrap();
     OpenFileRequest::default()
         .ask(<span class="bool-val">true</span>)
-        .build_file(<span class="kw-2">&amp;</span>file)
+        .send_file(<span class="kw-2">&amp;</span>file)
         .<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }</code></pre></div>
@@ -20,7 +20,7 @@
 <span class="kw">async fn </span>run() -&gt; ashpd::Result&lt;()&gt; {
     <span class="kw">let </span>uri =
         url::Url::parse(<span class="string">&quot;file:///home/bilelmoussaoui/Downloads/adwaita-night.jpg&quot;</span>).unwrap();
-    OpenFileRequest::default().ask(<span class="bool-val">true</span>).build_uri(<span class="kw-2">&amp;</span>uri).<span class="kw">await</span><span class="question-mark">?</span>;
+    OpenFileRequest::default().ask(<span class="bool-val">true</span>).send_uri(<span class="kw-2">&amp;</span>uri).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }</code></pre></div>
 <h3 id="open-a-directory"><a href="#open-a-directory">Open a directory</a></h3>
@@ -30,7 +30,7 @@
 
 <span class="kw">async fn </span>run() -&gt; ashpd::Result&lt;()&gt; {
     <span class="kw">let </span>directory = File::open(<span class="string">&quot;/home/bilelmoussaoui/Downloads&quot;</span>).unwrap();
-    OpenDirectoryRequest::default().build(<span class="kw-2">&amp;</span>directory).<span class="kw">await</span><span class="question-mark">?</span>;
+    OpenDirectoryRequest::default().send(<span class="kw-2">&amp;</span>directory).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }</code></pre></div>
 </div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.OpenDirectoryRequest.html" title="ashpd::desktop::open_uri::OpenDirectoryRequest struct">OpenDirectoryRequest</a></div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.OpenFileRequest.html" title="ashpd::desktop::open_uri::OpenFileRequest struct">OpenFileRequest</a></div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="ashpd" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>

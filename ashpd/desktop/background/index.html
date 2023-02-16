@@ -4,15 +4,15 @@ logs in.</p>
 <p><strong>Note</strong> This portal only works for sandboxed applications.</p>
 <p>Wrapper of the DBus interface: <a href="https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Background"><code>org.freedesktop.portal.Background</code></a>.</p>
 <h4 id="examples"><a href="#examples">Examples</a></h4>
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ashpd::desktop::background::BackgroundRequest;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ashpd::desktop::background::Background;
 
 <span class="kw">async fn </span>run() -&gt; ashpd::Result&lt;()&gt; {
-    <span class="kw">let </span>response = BackgroundRequest::default()
+    <span class="kw">let </span>response = Background::request()
         .reason(<span class="string">&quot;Automatically fetch your latest mails&quot;</span>)
         .auto_start(<span class="bool-val">true</span>)
         .command(<span class="kw-2">&amp;</span>[<span class="string">&quot;geary&quot;</span>])
         .dbus_activatable(<span class="bool-val">false</span>)
-        .build()
+        .send()
         .<span class="kw">await</span><span class="question-mark">?
         </span>.response()<span class="question-mark">?</span>;
 

@@ -200,15 +200,15 @@
 //! ### Examples
 //!
 //! ```rust,no_run
-//! use ashpd::desktop::background::BackgroundRequest;
+//! use ashpd::desktop::background::Background;
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
-//!     let response = BackgroundRequest::default()
+//!     let response = Background::request()
 //!         .reason(&quot;Automatically fetch your latest mails&quot;)
 //!         .auto_start(true)
 //!         .command(&amp;[&quot;geary&quot;])
 //!         .dbus_activatable(false)
-//!         .build()
+//!         .send()
 //!         .await?
 //!         .response()?;
 //!
@@ -253,7 +253,7 @@
     /// [`Background`].
     ///
     /// This method returns an instance of [`BackgroundRequest`].
-    </span><span class="kw">pub fn </span>builder() -&gt; BackgroundRequest {
+    </span><span class="kw">pub fn </span>request() -&gt; BackgroundRequest {
         BackgroundRequest::default()
     }
 
@@ -374,7 +374,7 @@
     </span>}
 
     <span class="doccomment">/// Build the [`Background`].
-    </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Background&gt;, Error&gt; {
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;Background&gt;, Error&gt; {
         <span class="kw">let </span>proxy = BackgroundProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .request_background(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options)
