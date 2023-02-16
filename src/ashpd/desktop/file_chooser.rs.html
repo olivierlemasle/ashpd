@@ -582,6 +582,38 @@
 <a href="#581" id="581">581</a>
 <a href="#582" id="582">582</a>
 <a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
+<a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
+<a href="#594" id="594">594</a>
+<a href="#595" id="595">595</a>
+<a href="#596" id="596">596</a>
+<a href="#597" id="597">597</a>
+<a href="#598" id="598">598</a>
+<a href="#599" id="599">599</a>
+<a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
 </pre><pre class="rust"><code><span class="doccomment">//! The interface lets sandboxed applications ask the user for access to files
 //! outside the sandbox. The portal backend will present the user with a file
 //! chooser dialog.
@@ -672,16 +704,28 @@
 <span class="kw">use super</span>::{HandleToken, Request};
 <span class="kw">use crate</span>::{proxy::Proxy, Error, FilePath, WindowIdentifier};
 
-<span class="attr">#[derive(Clone, Serialize, Type, Debug)]
+<span class="attr">#[derive(Clone, Serialize, Type, Debug, PartialEq)]
 </span><span class="doccomment">/// A file filter, to limit the available file choices to a mimetype or a glob
 /// pattern.
 </span><span class="kw">pub struct </span>FileFilter(String, Vec&lt;(FilterType, String)&gt;);
 
-<span class="attr">#[derive(Clone, Serialize_repr, Debug, Type)]
+<span class="attr">#[derive(Clone, Serialize_repr, Debug, Type, PartialEq)]
 #[repr(u32)]
 </span><span class="kw">enum </span>FilterType {
     GlobPattern = <span class="number">0</span>,
     MimeType = <span class="number">1</span>,
+}
+
+<span class="kw">impl </span>FilterType {
+    <span class="doccomment">/// Whether it is a mime type filter.
+    </span><span class="kw">fn </span>is_mimetype(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="macro">matches!</span>(<span class="self">self</span>, FilterType::MimeType)
+    }
+
+    <span class="doccomment">/// Whether it is a glib pattern type filter.
+    </span><span class="kw">fn </span>is_pattern(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="macro">matches!</span>(<span class="self">self</span>, FilterType::GlobPattern)
+    }
 }
 
 <span class="kw">impl </span>FileFilter {
@@ -707,6 +751,26 @@
         <span class="self">self</span>.<span class="number">1</span>.push((FilterType::GlobPattern, pattern.to_owned()));
         <span class="self">self
     </span>}
+}
+
+<span class="kw">impl </span>FileFilter {
+    <span class="kw">pub fn </span>label(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+    </span>}
+
+    <span class="kw">pub fn </span>mimetype_filters(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.<span class="number">1
+            </span>.iter()
+            .filter_map(|(type_, string)| type_.is_mimetype().then_some(string.as_str()))
+            .collect()
+    }
+
+    <span class="kw">pub fn </span>pattern_filters(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.<span class="number">1
+            </span>.iter()
+            .filter_map(|(type_, string)| type_.is_pattern().then_some(string.as_str()))
+            .collect()
+    }
 }
 
 <span class="attr">#[derive(Clone, Serialize, Deserialize, Type, Debug)]
