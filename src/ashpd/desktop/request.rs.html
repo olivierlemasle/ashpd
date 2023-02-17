@@ -262,6 +262,25 @@
 <a href="#261" id="261">261</a>
 <a href="#262" id="262">262</a>
 <a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{
     collections::HashMap,
     fmt::{<span class="self">self</span>, Debug},
@@ -282,10 +301,10 @@
 
 <span class="kw">use crate</span>::{desktop::HandleToken, proxy::Proxy, Error};
 
-<span class="doccomment">/// A typical response returned by the [`Request::receive_response`] signal
+<span class="doccomment">/// A typical response returned by the [`Request::response`].
 /// of a [`Request`].
 </span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>Response&lt;T&gt;
+</span><span class="kw">pub enum </span>Response&lt;T&gt;
 <span class="kw">where
     </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type,
 {
@@ -293,6 +312,24 @@
     </span><span class="prelude-val">Ok</span>(T),
     <span class="doccomment">/// The user cancelled the request or something else happened.
     </span><span class="prelude-val">Err</span>(ResponseError),
+}
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;backend&quot;</span>)]
+</span><span class="kw">impl</span>&lt;T&gt; Response&lt;T&gt;
+<span class="kw">where
+    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type,
+{
+    <span class="kw">pub fn </span>ok(inner: T) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::Ok(inner)
+    }
+
+    <span class="kw">pub fn </span>cancelled() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::Err(ResponseError::Cancelled)
+    }
+
+    <span class="kw">pub fn </span>other() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::Err(ResponseError::Other)
+    }
 }
 
 <span class="kw">impl</span>&lt;T&gt; Type <span class="kw">for </span>Response&lt;T&gt;
@@ -353,7 +390,7 @@
 
 <span class="kw">impl</span>&lt;T&gt; Serialize <span class="kw">for </span>Response&lt;T&gt;
 <span class="kw">where
-    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Serialize + Type + Default,
+    </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Serialize + Type,
 {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
     <span class="kw">where
@@ -363,7 +400,7 @@
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Err(err) =&gt; {
                 map.serialize_element(<span class="kw-2">&amp;</span>ResponseType::from(<span class="kw-2">*</span>err))<span class="question-mark">?</span>;
-                map.serialize_element(<span class="kw-2">&amp;</span>T::default())<span class="question-mark">?</span>;
+                map.serialize_element(<span class="kw-2">&amp;</span>HashMap::&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;::new())<span class="question-mark">?</span>;
             }
             <span class="self">Self</span>::Ok(response) =&gt; {
                 map.serialize_element(<span class="kw-2">&amp;</span>ResponseType::Success)<span class="question-mark">?</span>;
@@ -458,7 +495,7 @@
 <span class="kw">where
     </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type + Debug,
 {
-    <span class="kw">pub async fn </span>new&lt;P&gt;(path: P) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;T&gt;, Error&gt;
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>new&lt;P&gt;(path: P) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;T&gt;, Error&gt;
     <span class="kw">where
         </span>P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
         P::Error: Into&lt;zbus::Error&gt;,
@@ -469,7 +506,7 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy, stream, Default::default(), PhantomData))
     }
 
-    <span class="kw">pub async fn </span>from_unique_name(handle_token: <span class="kw-2">&amp;</span>HandleToken) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;T&gt;, Error&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>from_unique_name(handle_token: <span class="kw-2">&amp;</span>HandleToken) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;T&gt;, Error&gt; {
         <span class="kw">let </span>path =
             Proxy::unique_name(<span class="string">&quot;/org/freedesktop/portal/desktop/request&quot;</span>, handle_token).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
@@ -492,7 +529,8 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">pub fn </span>response(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt; {
+    <span class="doccomment">/// The corresponding response if the request was successful.
+    </span><span class="kw">pub fn </span>response(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt; {
         <span class="comment">// It should be safe to unwrap here as we are sure we have received a response
         // by the time the user calls response
         </span><span class="self">self</span>.<span class="number">2</span>.lock().unwrap().take().unwrap()

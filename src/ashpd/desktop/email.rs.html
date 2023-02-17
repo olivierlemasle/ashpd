@@ -180,6 +180,11 @@
 <a href="#179" id="179">179</a>
 <a href="#180" id="180">180</a>
 <a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Compose an email.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Email`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Email).
@@ -269,6 +274,9 @@
 
 <span class="attr">#[derive(Debug, Default)]
 #[doc(alias = <span class="string">&quot;xdp_portal_compose_email&quot;</span>)]
+</span><span class="doccomment">/// A [builder-pattern] type to compose an email.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="kw">pub struct </span>EmailRequest {
     identifier: WindowIdentifier,
     options: EmailOptions,
@@ -346,7 +354,8 @@
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>add_attachment(<span class="kw-2">&amp;mut </span><span class="self">self</span>, attachment: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) {
+    <span class="doccomment">/// A different variant of [`Self::attach`].
+    </span><span class="kw">pub fn </span>add_attachment(<span class="kw-2">&amp;mut </span><span class="self">self</span>, attachment: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) {
         <span class="kw">let </span>attachment = Fd::from(attachment.as_raw_fd());
         <span class="kw">match </span><span class="self">self</span>.options.attachment_fds {
             <span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>attachments) =&gt; attachments.push(attachment),
@@ -356,7 +365,8 @@
         };
     }
 
-    <span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
+    <span class="doccomment">/// Send the request.
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="kw">let </span>proxy = EmailProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy.compose(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="self">self</span>.options).<span class="kw">await
     </span>}

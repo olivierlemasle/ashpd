@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Realtime",""]]};
+window.SIDEBAR_ITEMS = {"struct":[["Realtime","Interface for setting a thread to realtime from within the sandbox."]]};

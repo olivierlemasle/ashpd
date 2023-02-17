@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["OpenDirectoryRequest",""],["OpenFileRequest",""]]};
+window.SIDEBAR_ITEMS = {"struct":[["OpenDirectoryRequest","A builder-pattern type to open a directory."],["OpenFileRequest","A builder-pattern type to open a file."]]};

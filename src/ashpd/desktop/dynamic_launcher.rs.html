@@ -261,6 +261,22 @@
 <a href="#260" id="260">260</a>
 <a href="#261" id="261">261</a>
 <a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -278,7 +294,7 @@
 //!         .prepare_install(
 //!             &amp;WindowIdentifier::default(),
 //!             &quot;My App&quot;,
-//!             Icon::from_names(&amp;[&quot;dialog-symbolic&quot;]),
+//!             Icon::with_names(&amp;[&quot;dialog-symbolic&quot;]),
 //!             PrepareInstallOptions::default(),
 //!         )
 //!         .await?
@@ -314,6 +330,7 @@
 #[derive(Default, Serialize_repr, Deserialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
 #[repr(u32)]
 #[doc(alias = <span class="string">&quot;XdpLauncherType&quot;</span>)]
+</span><span class="doccomment">/// The type of the launcher.
 </span><span class="kw">pub enum </span>LauncherType {
     <span class="attr">#[doc(alias = <span class="string">&quot;XDP_LAUNCHER_APPLICATION&quot;</span>)]
     #[default]
@@ -327,32 +344,41 @@
 <span class="attr">#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Type)]
 #[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
 #[serde(rename_all = <span class="string">&quot;lowercase&quot;</span>)]
+</span><span class="doccomment">/// The icon format.
 </span><span class="kw">pub enum </span>IconType {
-    Png,
-    Jpeg,
-    Svg,
+    <span class="doccomment">/// PNG.
+    </span>Png,
+    <span class="doccomment">/// JPEG.
+    </span>Jpeg,
+    <span class="doccomment">/// SVG.
+    </span>Svg,
 }
 
 <span class="attr">#[derive(Deserialize, Type)]
 #[zvariant(signature = <span class="string">&quot;(vsu)&quot;</span>)]
+</span><span class="doccomment">/// The icon of the launcher.
 </span><span class="kw">pub struct </span>LauncherIcon(Icon, IconType, u32);
 
 <span class="kw">impl </span>LauncherIcon {
-    <span class="kw">pub fn </span>icon(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Icon {
+    <span class="doccomment">/// The actual icon.
+    </span><span class="kw">pub fn </span>icon(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Icon {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
     </span>}
 
-    <span class="kw">pub fn </span>type_(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; IconType {
+    <span class="doccomment">/// The icon type.
+    </span><span class="kw">pub fn </span>type_(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; IconType {
         <span class="self">self</span>.<span class="number">1
     </span>}
 
-    <span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
+    <span class="doccomment">/// The icon size.
+    </span><span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
         <span class="self">self</span>.<span class="number">2
     </span>}
 }
 
 <span class="attr">#[derive(Debug, Default, SerializeDict, Type)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="doccomment">/// Options to pass to [`DynamicLauncherProxy::prepare_install`]
 </span><span class="kw">pub struct </span>PrepareInstallOptions {
     handle_token: HandleToken,
     modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
@@ -363,27 +389,33 @@
 }
 
 <span class="kw">impl </span>PrepareInstallOptions {
-    <span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Sets whether the dialog should be a modal.
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.modal = modal.into();
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>launcher_type(<span class="kw-2">mut </span><span class="self">self</span>, launcher_type: LauncherType) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Sets the launcher type.
+    </span><span class="kw">pub fn </span>launcher_type(<span class="kw-2">mut </span><span class="self">self</span>, launcher_type: LauncherType) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.launcher_type = launcher_type;
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>target&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, target: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// The URL for a [`LauncherType::WebApplication`] otherwise it is not
+    /// needed.
+    </span><span class="kw">pub fn </span>target&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, target: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.target = target.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>editable_name(<span class="kw-2">mut </span><span class="self">self</span>, editable_name: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Sets whether the name should be editable.
+    </span><span class="kw">pub fn </span>editable_name(<span class="kw-2">mut </span><span class="self">self</span>, editable_name: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.editable_name = editable_name.into();
         <span class="self">self
     </span>}
 
-    <span class="kw">pub fn </span>editable_icon(<span class="kw-2">mut </span><span class="self">self</span>, editable_icon: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Sets whether the icon should be editable.
+    </span><span class="kw">pub fn </span>editable_icon(<span class="kw-2">mut </span><span class="self">self</span>, editable_icon: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.editable_icon = editable_icon.into();
         <span class="self">self
     </span>}

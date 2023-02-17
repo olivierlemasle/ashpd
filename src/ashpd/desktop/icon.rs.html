@@ -167,6 +167,11 @@
 <a href="#166" id="166">166</a>
 <a href="#167" id="167">167</a>
 <a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
 </pre><pre class="rust"><code><span class="kw">use </span>serde::{
     de,
     ser::{Serialize, SerializeTuple},
@@ -178,20 +183,25 @@
 
 <span class="attr">#[derive(Debug, PartialEq, Eq, Type)]
 #[zvariant(signature = <span class="string">&quot;(sv)&quot;</span>)]
+</span><span class="doccomment">/// A representation of an icon.
+///
+/// Used by both the Notification &amp; Dynamic launcher portals.
 </span><span class="kw">pub enum </span>Icon {
-    Uri(url::Url),
-    Names(Vec&lt;String&gt;),
-    Bytes(Vec&lt;u8&gt;),
+    <span class="doccomment">/// An icon URI.
+    </span>Uri(url::Url),
+    <span class="doccomment">/// A list of icon names.
+    </span>Names(Vec&lt;String&gt;),
+    <span class="doccomment">/// Icon bytes.
+    </span>Bytes(Vec&lt;u8&gt;),
 }
 
 <span class="kw">impl </span>Icon {
-    <span class="kw">pub fn </span>from_names(names: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::Names(
-            names
-                .iter()
-                .map(|name| name.to_owned().to_owned())
-                .collect(),
-        )
+    <span class="doccomment">/// Create an icon from a list of names.
+    </span><span class="kw">pub fn </span>with_names&lt;N&gt;(names: <span class="kw">impl </span>IntoIterator&lt;Item = N&gt;) -&gt; <span class="self">Self
+    </span><span class="kw">where
+        </span>N: ToString,
+    {
+        <span class="self">Self</span>::Names(names.into_iter().map(|name| name.to_string()).collect())
     }
 }
 
@@ -318,7 +328,7 @@
     </span><span class="kw">fn </span>serialize_deserialize() {
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
 
-        <span class="kw">let </span>icon = Icon::from_names(<span class="kw-2">&amp;</span>[<span class="string">&quot;dialog-symbolic&quot;</span>]);
+        <span class="kw">let </span>icon = Icon::with_names(<span class="kw-2">&amp;</span>[<span class="string">&quot;dialog-symbolic&quot;</span>]);
 
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>icon).unwrap();
         <span class="kw">let </span>decoded: Icon = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();

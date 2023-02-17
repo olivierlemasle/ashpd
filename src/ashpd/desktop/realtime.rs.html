@@ -58,13 +58,24 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Set threads to realtime.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Realtime`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Realtime).
 
 </span><span class="kw">use crate</span>::{proxy::Proxy, Error};
 
-<span class="attr">#[derive(Debug)]
+<span class="doccomment">/// Interface for setting a thread to realtime from within the sandbox.
+///
+/// Wrapper of the DBus interface: [`org.freedesktop.portal.Realtime`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Realtime).
+</span><span class="attr">#[derive(Debug)]
 #[doc(alias = <span class="string">&quot;org.freedesktop.portal.Realtime&quot;</span>)]
 </span><span class="kw">pub struct </span>Realtime&lt;<span class="lifetime">&#39;a</span>&gt;(Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
 
@@ -76,6 +87,7 @@
     }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;MakeThreadRealtimeWithPID&quot;</span>)]
+    #[allow(missing_docs)]
     </span><span class="kw">pub async fn </span>max_thread_realtime_with_pid(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         process: u64,
@@ -88,6 +100,7 @@
     </span>}
 
     <span class="attr">#[doc(alias = <span class="string">&quot;MakeThreadHighPriorityWithPID&quot;</span>)]
+    #[allow(missing_docs)]
     </span><span class="kw">pub async fn </span>max_thread_high_priority_with_pid(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         process: u64,
@@ -103,16 +116,19 @@
     </span>}
 
     <span class="attr">#[doc(alias = <span class="string">&quot;MaxRealtimePriority&quot;</span>)]
+    #[allow(missing_docs)]
     </span><span class="kw">pub async fn </span>max_realtime_priority(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;i64, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.property(<span class="string">&quot;MaxRealtimePriority&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="attr">#[doc(alias = <span class="string">&quot;MinNiceLevel&quot;</span>)]
+    #[allow(missing_docs)]
     </span><span class="kw">pub async fn </span>min_nice_level(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.property(<span class="string">&quot;MinNiceLevel&quot;</span>).<span class="kw">await
     </span>}
 
     <span class="attr">#[doc(alias = <span class="string">&quot;RTTimeUSecMax&quot;</span>)]
+    #[allow(missing_docs)]
     </span><span class="kw">pub async fn </span>rt_time_usec_max(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.property(<span class="string">&quot;RTTimeUSecMax&quot;</span>).<span class="kw">await
     </span>}

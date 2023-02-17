@@ -426,6 +426,11 @@
 <a href="#425" id="425">425</a>
 <a href="#426" id="426">426</a>
 <a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Start a screencast session and get the PipeWire remote of it.
 //!
 //! # Examples
@@ -519,6 +524,7 @@
 <span class="attr">#[derive(Default, Serialize_repr, PartialEq, Eq, Debug, Copy, Clone, Type)]
 #[doc(alias = <span class="string">&quot;XdpPersistMode&quot;</span>)]
 #[repr(u32)]
+</span><span class="doccomment">/// Persistence mode for a screencast session.
 </span><span class="kw">pub enum </span>PersistMode {
     <span class="attr">#[doc(alias = <span class="string">&quot;XDP_PERSIST_MODE_NONE&quot;</span>)]
     #[default]
@@ -620,11 +626,13 @@
 }
 
 <span class="kw">impl </span>Streams {
-    <span class="kw">pub fn </span>restore_token(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+    <span class="doccomment">/// The session restore token.
+    </span><span class="kw">pub fn </span>restore_token(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.restore_token.as_deref()
     }
 
-    <span class="kw">pub fn </span>streams(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[Stream] {
+    <span class="doccomment">/// The list of streams.
+    </span><span class="kw">pub fn </span>streams(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[Stream] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.streams
     }
 }
@@ -667,11 +675,13 @@
         <span class="self">self</span>.<span class="number">1</span>.size
     }
 
-    <span class="kw">pub fn </span>source_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SourceType&gt; {
+    <span class="doccomment">/// The source type of the stream.
+    </span><span class="kw">pub fn </span>source_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SourceType&gt; {
         <span class="self">self</span>.<span class="number">1</span>.source_type
     }
 
-    <span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+    <span class="doccomment">/// The stream identifier.
+    </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.<span class="number">1</span>.id.as_deref()
     }
 }

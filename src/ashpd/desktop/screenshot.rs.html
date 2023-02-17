@@ -279,6 +279,12 @@
 <a href="#278" id="278">278</a>
 <a href="#279" id="279">279</a>
 <a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Take a screenshot or pick a color.
 //!
 //! Wrapper of the DBus interface: [`org.freedesktop.portal.Screenshot`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-org.freedesktop.portal.Screenshot).
@@ -331,16 +337,22 @@
 
 <span class="attr">#[derive(DeserializeDict, Type)]
 #[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
+</span><span class="doccomment">/// The response of a [`ScreenshotRequest`] request.
 </span><span class="kw">pub struct </span>Screenshot {
     uri: url::Url,
 }
 
 <span class="kw">impl </span>Screenshot {
-    <span class="kw">pub fn </span>request() -&gt; ScreenshotRequest {
+    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct
+    /// [`Screenshot`].
+    ///
+    /// This method returns an instance of [`ScreenshotRequest`].
+    </span><span class="kw">pub fn </span>request() -&gt; ScreenshotRequest {
         ScreenshotRequest::default()
     }
 
-    <span class="kw">pub fn </span>uri(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>url::Url {
+    <span class="doccomment">/// The screenshot URI.
+    </span><span class="kw">pub fn </span>uri(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>url::Url {
         <span class="kw-2">&amp;</span><span class="self">self</span>.uri
     }
 }

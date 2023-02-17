@@ -629,6 +629,27 @@
 <a href="#628" id="628">628</a>
 <a href="#629" id="629">629</a>
 <a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
+<a href="#640" id="640">640</a>
+<a href="#641" id="641">641</a>
+<a href="#642" id="642">642</a>
+<a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
 </pre><pre class="rust"><code><span class="doccomment">//! The interface lets sandboxed applications ask the user for access to files
 //! outside the sandbox. The portal backend will present the user with a file
 //! chooser dialog.
@@ -713,18 +734,18 @@
 </span><span class="kw">use </span>std::path::Path;
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
-<span class="kw">use </span>serde_repr::Serialize_repr;
+<span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, SerializeDict, Type};
 
 <span class="kw">use super</span>::{HandleToken, Request};
 <span class="kw">use crate</span>::{proxy::Proxy, Error, FilePath, WindowIdentifier};
 
-<span class="attr">#[derive(Clone, Serialize, Type, Debug, PartialEq)]
+<span class="attr">#[derive(Clone, Serialize, Deserialize, Type, Debug, PartialEq)]
 </span><span class="doccomment">/// A file filter, to limit the available file choices to a mimetype or a glob
 /// pattern.
 </span><span class="kw">pub struct </span>FileFilter(String, Vec&lt;(FilterType, String)&gt;);
 
-<span class="attr">#[derive(Clone, Serialize_repr, Debug, Type, PartialEq)]
+<span class="attr">#[derive(Clone, Serialize_repr, Deserialize_repr, Debug, Type, PartialEq)]
 #[repr(u32)]
 </span><span class="kw">enum </span>FilterType {
     GlobPattern = <span class="number">0</span>,
@@ -769,18 +790,21 @@
 }
 
 <span class="kw">impl </span>FileFilter {
-    <span class="kw">pub fn </span>label(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    <span class="doccomment">/// The label of the filter.
+    </span><span class="kw">pub fn </span>label(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
     </span>}
 
-    <span class="kw">pub fn </span>mimetype_filters(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
+    <span class="doccomment">/// List of mimetypes filters.
+    </span><span class="kw">pub fn </span>mimetype_filters(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.<span class="number">1
             </span>.iter()
             .filter_map(|(type_, string)| type_.is_mimetype().then_some(string.as_str()))
             .collect()
     }
 
-    <span class="kw">pub fn </span>pattern_filters(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
+    <span class="doccomment">/// List of glob patterns filters.
+    </span><span class="kw">pub fn </span>pattern_filters(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.<span class="number">1
             </span>.iter()
             .filter_map(|(type_, string)| type_.is_pattern().then_some(string.as_str()))
@@ -837,7 +861,8 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1
     </span>}
 
-    <span class="kw">pub fn </span>pairs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str)&gt; {
+    <span class="doccomment">/// Pairs of choices.
+    </span><span class="kw">pub fn </span>pairs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str)&gt; {
         <span class="self">self</span>.<span class="number">2
             </span>.iter()
             .map(|(x, y)| (x.as_str(), y.as_str()))
@@ -982,6 +1007,9 @@
 
 <span class="attr">#[derive(Debug, Default)]
 #[doc(alias = <span class="string">&quot;xdp_portal_open_file&quot;</span>)]
+</span><span class="doccomment">/// A [builder-pattern] type to open a file.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="kw">pub struct </span>OpenFileRequest {
     identifier: WindowIdentifier,
     title: String,
@@ -1039,6 +1067,7 @@
     </span>}
 
     <span class="attr">#[must_use]
+    </span><span class="doccomment">/// Adds a list of files filters.
     </span><span class="kw">pub fn </span>filters(<span class="kw-2">mut </span><span class="self">self</span>, filters: <span class="kw">impl </span>IntoIterator&lt;Item = FileFilter&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.options.filters = filters.into_iter().collect();
         <span class="self">self
@@ -1059,12 +1088,14 @@
     </span>}
 
     <span class="attr">#[must_use]
+    </span><span class="doccomment">/// Adds a list of choices.
     </span><span class="kw">pub fn </span>choices(<span class="kw-2">mut </span><span class="self">self</span>, choices: <span class="kw">impl </span>IntoIterator&lt;Item = Choice&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.options.choices = choices.into_iter().collect();
         <span class="self">self
     </span>}
 
-    <span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
+    <span class="doccomment">/// Send the request.
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .open_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)
@@ -1074,6 +1105,9 @@
 
 <span class="attr">#[derive(Debug, Default)]
 #[doc(alias = <span class="string">&quot;xdp_portal_save_files&quot;</span>)]
+</span><span class="doccomment">/// A [builder-pattern] type to save multiple files.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="kw">pub struct </span>SaveFilesRequest {
     identifier: WindowIdentifier,
     title: String,
@@ -1117,6 +1151,7 @@
     </span>}
 
     <span class="attr">#[must_use]
+    </span><span class="doccomment">/// Adds a list of choices.
     </span><span class="kw">pub fn </span>choices(<span class="kw-2">mut </span><span class="self">self</span>, choices: <span class="kw">impl </span>IntoIterator&lt;Item = Choice&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.options.choices = choices.into_iter().collect();
         <span class="self">self
@@ -1146,7 +1181,8 @@
         <span class="prelude-val">Ok</span>(<span class="self">self</span>)
     }
 
-    <span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
+    <span class="doccomment">/// Send the request.
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .save_files(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)
@@ -1156,6 +1192,9 @@
 
 <span class="attr">#[derive(Debug, Default)]
 #[doc(alias = <span class="string">&quot;xdp_portal_save_file&quot;</span>)]
+</span><span class="doccomment">/// A [builder-pattern] type to save a file.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 </span><span class="kw">pub struct </span>SaveFileRequest {
     identifier: WindowIdentifier,
     title: String,
@@ -1227,6 +1266,7 @@
     </span>}
 
     <span class="attr">#[must_use]
+    </span><span class="doccomment">/// Adds a list of files filters.
     </span><span class="kw">pub fn </span>filters(<span class="kw-2">mut </span><span class="self">self</span>, filters: <span class="kw">impl </span>IntoIterator&lt;Item = FileFilter&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.options.filters = filters.into_iter().collect();
         <span class="self">self
@@ -1247,12 +1287,14 @@
     </span>}
 
     <span class="attr">#[must_use]
+    </span><span class="doccomment">/// Adds a list of choices.
     </span><span class="kw">pub fn </span>choices(<span class="kw-2">mut </span><span class="self">self</span>, choices: <span class="kw">impl </span>IntoIterator&lt;Item = Choice&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.options.choices = choices.into_iter().collect();
         <span class="self">self
     </span>}
 
-    <span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
+    <span class="doccomment">/// Send the request.
+    </span><span class="kw">pub async fn </span>send(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;SelectedFiles&gt;, Error&gt; {
         <span class="kw">let </span>proxy = FileChooserProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;
         proxy
             .save_file(<span class="kw-2">&amp;</span><span class="self">self</span>.identifier, <span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="self">self</span>.options)

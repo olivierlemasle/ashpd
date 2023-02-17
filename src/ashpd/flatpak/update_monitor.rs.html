@@ -206,26 +206,26 @@
 </span><span class="attr">#[zvariant(signature = <span class="string">&quot;dict&quot;</span>)]
 </span><span class="kw">pub struct </span>UpdateInfo {
     <span class="attr">#[zvariant(rename = <span class="string">&quot;running-commit&quot;</span>)]
-    </span><span class="doccomment">/// The currently running OSTree commit.
     </span>running_commit: String,
     <span class="attr">#[zvariant(rename = <span class="string">&quot;local-commit&quot;</span>)]
-    </span><span class="doccomment">/// The locally installed OSTree commit.
     </span>local_commit: String,
     <span class="attr">#[zvariant(rename = <span class="string">&quot;remote-commit&quot;</span>)]
-    </span><span class="doccomment">/// The available commit to install.
     </span>remote_commit: String,
 }
 
 <span class="kw">impl </span>UpdateInfo {
-    <span class="kw">pub fn </span>running_commit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    <span class="doccomment">/// The currently running OSTree commit.
+    </span><span class="kw">pub fn </span>running_commit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.running_commit
     }
 
-    <span class="kw">pub fn </span>local_commit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    <span class="doccomment">/// The locally installed OSTree commit.
+    </span><span class="kw">pub fn </span>local_commit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.local_commit
     }
 
-    <span class="kw">pub fn </span>remote_commit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    <span class="doccomment">/// The available commit to install.
+    </span><span class="kw">pub fn </span>remote_commit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.remote_commit
     }
 }
