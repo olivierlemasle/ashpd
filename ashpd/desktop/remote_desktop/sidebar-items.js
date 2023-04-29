@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Axis","The available axis."],["DeviceType","A bit flag for the available devices."],["KeyState","The keyboard key state."]],"struct":[["RemoteDesktop","The interface lets sandboxed applications create remote desktop sessions."],["SelectedDevices","A response to a [`RemoteDesktop::select_devices`] request."]]};
+window.SIDEBAR_ITEMS = {"enum":["Axis","DeviceType","KeyState"],"struct":["RemoteDesktop","SelectedDevices"]};

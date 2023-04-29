@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["PowerProfileMonitor","The interface provides information about the user-selected system-wide power profile, to sandboxed applications."]]};
+window.SIDEBAR_ITEMS = {"struct":["PowerProfileMonitor"]};

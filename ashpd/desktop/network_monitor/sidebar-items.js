@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Connectivity","Host’s network activity"]],"struct":[["NetworkMonitor","The interface provides network status information to sandboxed applications."],["NetworkStatus","The network status, composed of the availability, metered & connectivity"]]};
+window.SIDEBAR_ITEMS = {"enum":["Connectivity"],"struct":["NetworkMonitor","NetworkStatus"]};

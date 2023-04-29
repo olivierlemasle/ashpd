@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["InhibitFlags","The actions to inhibit that can end the user’s session"],["SessionState","The current state of the user’s session."]],"struct":[["InhibitProxy","The interface lets sandboxed applications inhibit the user session from ending, suspending, idling or getting switched away."],["InhibitState","A response received when the `state_changed` signal is received."]]};
+window.SIDEBAR_ITEMS = {"enum":["InhibitFlags","SessionState"],"struct":["InhibitProxy","InhibitState"]};

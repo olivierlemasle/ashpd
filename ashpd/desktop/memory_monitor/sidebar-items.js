@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["MemoryMonitor","The interface provides information about low system memory to sandboxed applications."]]};
+window.SIDEBAR_ITEMS = {"struct":["MemoryMonitor"]};

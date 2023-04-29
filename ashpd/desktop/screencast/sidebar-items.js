@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["CursorMode","A bit flag for the possible cursor modes."],["PersistMode","Persistence mode for a screencast session."],["SourceType","A bit flag for the available sources to record."]],"struct":[["Screencast","The interface lets sandboxed applications create screen cast sessions."],["Stream","A PipeWire stream."],["Streams","A response to a [`Screencast::start`] request."]]};
+window.SIDEBAR_ITEMS = {"enum":["CursorMode","PersistMode","SourceType"],"struct":["Screencast","Stream","Streams"]};

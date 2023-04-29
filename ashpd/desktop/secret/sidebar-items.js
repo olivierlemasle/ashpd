@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["retrieve","A handy wrapper around [`Secret::retrieve`]."]],"struct":[["Secret","The interface lets sandboxed applications retrieve a per-application secret."]]};
+window.SIDEBAR_ITEMS = {"fn":["retrieve"],"struct":["Secret"]};

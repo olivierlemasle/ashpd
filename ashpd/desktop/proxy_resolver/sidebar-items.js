@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["ProxyResolver","The interface provides network proxy information to sandboxed applications."]]};
+window.SIDEBAR_ITEMS = {"struct":["ProxyResolver"]};

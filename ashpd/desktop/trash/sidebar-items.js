@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["trash_file","A handy wrapper around [`TrashProxy::trash_file`]."]],"struct":[["TrashProxy","The interface lets sandboxed applications send files to the trashcan."]]};
+window.SIDEBAR_ITEMS = {"fn":["trash_file"],"struct":["TrashProxy"]};

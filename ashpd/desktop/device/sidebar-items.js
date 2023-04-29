@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Device","The possible device to request access to."]],"struct":[["DeviceProxy","The interface lets services ask if an application should get access to devices such as microphones, speakers or cameras. Not a portal in the strict sense, since the API is not directly accessible to applications inside the sandbox."]]};
+window.SIDEBAR_ITEMS = {"enum":["Device"],"struct":["DeviceProxy"]};

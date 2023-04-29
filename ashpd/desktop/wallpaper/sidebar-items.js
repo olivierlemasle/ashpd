@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["SetOn","Where to set the wallpaper on."]],"struct":[["WallpaperRequest","A builder-pattern type to set the wallpaper."]]};
+window.SIDEBAR_ITEMS = {"enum":["SetOn"],"struct":["WallpaperRequest"]};

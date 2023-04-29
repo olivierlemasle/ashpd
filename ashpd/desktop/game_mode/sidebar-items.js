@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Status","The status of the game mode."]],"struct":[["GameMode","The interface lets sandboxed applications access GameMode from within the sandbox."]]};
+window.SIDEBAR_ITEMS = {"enum":["Status"],"struct":["GameMode"]};

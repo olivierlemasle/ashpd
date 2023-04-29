@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["EmailRequest","A builder-pattern type to compose an email."]]};
+window.SIDEBAR_ITEMS = {"struct":["EmailRequest"]};
