@@ -181,6 +181,8 @@
 <a href="#180" id="180">180</a>
 <a href="#181" id="181">181</a>
 <a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{fmt, sync::Arc};
 
 <span class="kw">use </span>futures_util::lock::Mutex;
@@ -357,6 +359,8 @@
                     <span class="kw">return</span>;
                 }
                 wayland_win.unexport_handle();
+                <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+                </span><span class="macro">tracing::debug!</span>(<span class="string">&quot;Unexporting handle: {_handle}&quot;</span>);
                 <span class="kw">let _ </span>= wayland_win.steal_data::&lt;(<span class="prelude-ty">Option</span>&lt;String&gt;, u8)&gt;(WINDOW_HANDLE_KEY);
             },
             <span class="kw">_ </span>=&gt; (),
