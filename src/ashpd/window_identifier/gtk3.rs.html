@@ -360,7 +360,7 @@
                 }
                 wayland_win.unexport_handle();
                 <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
-                </span><span class="macro">tracing::debug!</span>(<span class="string">&quot;Unexporting handle: {_handle}&quot;</span>);
+                </span><span class="macro">tracing::debug!</span>(<span class="string">&quot;Unexporting handle: {_handle:?}&quot;</span>);
                 <span class="kw">let _ </span>= wayland_win.steal_data::&lt;(<span class="prelude-ty">Option</span>&lt;String&gt;, u8)&gt;(WINDOW_HANDLE_KEY);
             },
             <span class="kw">_ </span>=&gt; (),
