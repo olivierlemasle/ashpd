@@ -497,8 +497,6 @@
 <a href="#496" id="496">496</a>
 <a href="#497" id="497">497</a>
 <a href="#498" id="498">498</a>
-<a href="#499" id="499">499</a>
-<a href="#500" id="500">500</a>
 </pre><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -509,7 +507,7 @@
 //!
 //!     println!(&quot;{:#?}&quot;, proxy.mount_point().await?);
 //!
-//!     for (doc_id, host_path) in proxy.list(&quot;org.mozilla.firefox&quot;).await? {
+//!     for (doc_id, host_path) in proxy.list(Some(&quot;org.mozilla.firefox&quot;.try_into()?)).await? {
 //!         if doc_id == &quot;f2ee988d&quot;.into() {
 //!             let info = proxy.info(doc_id).await?;
 //!             println!(&quot;{:#?}&quot;, info);
@@ -519,12 +517,14 @@
 //!     proxy
 //!         .grant_permissions(
 //!             &quot;f2ee988d&quot;,
-//!             &quot;org.mozilla.firefox&quot;,
+//!             &quot;org.mozilla.firefox&quot;.try_into().unwrap(),
 //!             &amp;[Permission::GrantPermissions],
 //!         )
 //!         .await?;
 //!     proxy
-//!         .revoke_permissions(&quot;f2ee988d&quot;, &quot;org.mozilla.firefox&quot;, &amp;[Permission::Write])
+//!         .revoke_permissions(&quot;f2ee988d&quot;,
+//!              &quot;org.mozilla.firefox&quot;.try_into()?,
+//!              &amp;[Permission::Write])
 //!         .await?;
 //!
 //!     proxy.delete(&quot;f2ee988d&quot;).await?;
@@ -696,7 +696,7 @@
     ///
     /// * `o_path_fds` - Open file descriptors for the files to export.
     /// * `flags` - A [`DocumentFlags`].
-    /// * `app_id` - An application ID, or empty string.
+    /// * `app_id` - An application ID, or `None`.
     /// * `permissions` - The permissions to grant.
     ///
     /// # Returns
@@ -711,12 +711,13 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         o_path_fds: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd],
         flags: BitFlags&lt;DocumentFlags&gt;,
-        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
+        app_id: <span class="prelude-ty">Option</span>&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;DocumentID&gt;, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
         <span class="kw">let </span>o_path: Vec&lt;Fd&gt; = o_path_fds.iter().map(|f| Fd::from(f.as_raw_fd())).collect();
+        <span class="kw">let </span>app_id = app_id.as_deref().unwrap_or(<span class="string">&quot;&quot;</span>);
         <span class="self">self</span>.<span class="number">0
-            </span>.call(<span class="string">&quot;AddFull&quot;</span>, <span class="kw-2">&amp;</span>(o_path, flags, app_id.try_into()<span class="question-mark">?</span>, permissions))
+            </span>.call(<span class="string">&quot;AddFull&quot;</span>, <span class="kw-2">&amp;</span>(o_path, flags, app_id, permissions))
             .<span class="kw">await
     </span>}
 
@@ -769,7 +770,7 @@
     /// * `o_path_fd` - Open file descriptor for the parent directory.
     /// * `filename` - The basename for the file.
     /// * `flags` - A [`DocumentFlags`].
-    /// * `app_id` - An application ID, or empty string.
+    /// * `app_id` - An application ID, or `None`.
     /// * `permissions` - The permissions to grant.
     ///
     /// # Returns
@@ -785,9 +786,10 @@
         o_path_fd: <span class="kw-2">&amp;</span>(<span class="kw">impl </span>AsRawFd + fmt::Debug),
         filename: <span class="kw">impl </span>AsRef&lt;Path&gt;,
         flags: BitFlags&lt;DocumentFlags&gt;,
-        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
+        app_id: <span class="prelude-ty">Option</span>&lt;AppID&gt;,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(DocumentID, HashMap&lt;String, OwnedValue&gt;), Error&gt; {
+        <span class="kw">let </span>app_id = app_id.as_deref().unwrap_or(<span class="string">&quot;&quot;</span>);
         <span class="kw">let </span>filename = FilePath::new(filename)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="number">0
             </span>.call(
@@ -796,7 +798,7 @@
                     Fd::from(o_path_fd.as_raw_fd()),
                     filename,
                     flags,
-                    app_id.try_into()<span class="question-mark">?</span>,
+                    app_id,
                     permissions,
                 ),
             )
@@ -852,14 +854,11 @@
     </span><span class="kw">pub async fn </span>grant_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
-        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
+        app_id: AppID,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.<span class="number">0
-            </span>.call(
-                <span class="string">&quot;GrantPermissions&quot;</span>,
-                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.try_into()<span class="question-mark">?</span>, permissions),
-            )
+            </span>.call(<span class="string">&quot;GrantPermissions&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into(), app_id, permissions))
             .<span class="kw">await
     </span>}
 
@@ -895,7 +894,7 @@
     ///
     /// # Arguments
     ///
-    /// * `app-id` - The application ID, or &#39;&#39; to list all documents.
+    /// * `app-id` - The application ID, or `None` to list all documents.
     ///
     /// # Returns
     ///
@@ -908,10 +907,10 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;List&quot;</span>)]
     </span><span class="kw">pub async fn </span>list(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
+        app_id: <span class="prelude-ty">Option</span>&lt;AppID&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;DocumentID, FilePath&gt;, Error&gt; {
-        <span class="kw">let </span>response: HashMap&lt;String, FilePath&gt; =
-            <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id.try_into()<span class="question-mark">?</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>app_id = app_id.as_deref().unwrap_or(<span class="string">&quot;&quot;</span>);
+        <span class="kw">let </span>response: HashMap&lt;String, FilePath&gt; = <span class="self">self</span>.<span class="number">0</span>.call(<span class="string">&quot;List&quot;</span>, <span class="kw-2">&amp;</span>(app_id)).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let </span><span class="kw-2">mut </span>new_response: HashMap&lt;DocumentID, FilePath&gt; = HashMap::new();
         <span class="kw">for </span>(key, file_name) <span class="kw">in </span>response {
@@ -968,14 +967,11 @@
     </span><span class="kw">pub async fn </span>revoke_permissions(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         doc_id: <span class="kw">impl </span>Into&lt;DocumentID&gt;,
-        app_id: <span class="kw">impl </span>TryInto&lt;AppID, Error = Error&gt;,
+        app_id: AppID,
         permissions: <span class="kw-2">&amp;</span>[Permission],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.<span class="number">0
-            </span>.call(
-                <span class="string">&quot;RevokePermissions&quot;</span>,
-                <span class="kw-2">&amp;</span>(doc_id.into(), app_id.try_into()<span class="question-mark">?</span>, permissions),
-            )
+            </span>.call(<span class="string">&quot;RevokePermissions&quot;</span>, <span class="kw-2">&amp;</span>(doc_id.into(), app_id, permissions))
             .<span class="kw">await
     </span>}
 }
