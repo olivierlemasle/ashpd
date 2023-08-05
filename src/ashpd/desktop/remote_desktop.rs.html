@@ -645,6 +645,8 @@
 <a href="#645" id="645">645</a>
 <a href="#646" id="646">646</a>
 <a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -728,8 +730,10 @@
 //! [select_sources]: crate::desktop::screencast::Screencast::select_sources
 //! [create_session]: crate::desktop::remote_desktop::RemoteDesktop::create_session
 
-</span><span class="kw">use </span>std::collections::HashMap;
-<span class="kw">use </span>std::os::unix::prelude::{IntoRawFd, RawFd};
+</span><span class="kw">use </span>std::{
+    collections::HashMap,
+    os::unix::prelude::{IntoRawFd, RawFd},
+};
 
 <span class="kw">use </span>enumflags2::{bitflags, BitFlags};
 <span class="kw">use </span>futures_util::TryFutureExt;

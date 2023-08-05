@@ -342,58 +342,9 @@
 <a href="#342" id="342">342</a>
 <a href="#343" id="343">343</a>
 <a href="#344" id="344">344</a>
-<a href="#345" id="345">345</a>
-<a href="#346" id="346">346</a>
-<a href="#347" id="347">347</a>
-<a href="#348" id="348">348</a>
-<a href="#349" id="349">349</a>
-<a href="#350" id="350">350</a>
-<a href="#351" id="351">351</a>
-<a href="#352" id="352">352</a>
-<a href="#353" id="353">353</a>
-<a href="#354" id="354">354</a>
-<a href="#355" id="355">355</a>
-<a href="#356" id="356">356</a>
-<a href="#357" id="357">357</a>
-<a href="#358" id="358">358</a>
-<a href="#359" id="359">359</a>
-<a href="#360" id="360">360</a>
-<a href="#361" id="361">361</a>
-<a href="#362" id="362">362</a>
-<a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-<a href="#365" id="365">365</a>
-<a href="#366" id="366">366</a>
-<a href="#367" id="367">367</a>
-<a href="#368" id="368">368</a>
-<a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
-<a href="#376" id="376">376</a>
-<a href="#377" id="377">377</a>
-<a href="#378" id="378">378</a>
-<a href="#379" id="379">379</a>
-<a href="#380" id="380">380</a>
-<a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
-<a href="#391" id="391">391</a>
-<a href="#392" id="392">392</a>
-<a href="#393" id="393">393</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt, str::FromStr};
 
-<span class="attr">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, any(feature = <span class="string">&quot;gtk3&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>)))]
+<span class="attr">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>))]
 </span><span class="kw">use </span>raw_window_handle::{
     HasRawDisplayHandle, HasRawWindowHandle, RawDisplayHandle, RawWindowHandle,
 };
@@ -462,24 +413,6 @@
 /// The constructor should return a valid identifier under both X11 and Wayland
 /// and fallback to the [`Default`] implementation otherwise.
 ///
-/// ## With GTK 3
-///
-/// The feature `gtk3` must be enabled. You can get a
-/// [`WindowIdentifier`] from a [`IsA&lt;gdk3::Window&gt;`](https://gtk-rs.org/gtk3-rs/stable/latest/docs/gdk/struct.Window.html) using
-/// `WindowIdentifier::from_window`
-///
-/// ```rust, ignore
-/// let widget = gtk4::Button::new();
-/// let ctx = glib::MainContext::default();
-/// ctx.spawn_async(async move {
-///     let identifier = WindowIdentifier::from_window(&amp;widget.window().unwrap()).await;
-///
-///     /// Open some portals
-/// });
-/// ```
-/// The constructor should return a valid identifier under both X11 and Wayland
-/// and fallback to the [`Default`] implementation otherwise.
-///
 /// ## Other Toolkits
 ///
 /// If you have access to `RawWindowHandle` you can convert it to a
@@ -506,10 +439,6 @@
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
     #[doc(hidden)]
     </span>Gtk4(Gtk4WindowIdentifier),
-    <span class="doccomment">/// GTK 3 Window Identifier
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-    #[doc(hidden)]
-    </span>Gtk3(Gtk3WindowIdentifier),
     <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
     #[doc(hidden)]
     </span>Wayland(WaylandWindowIdentifier),
@@ -537,8 +466,6 @@
         <span class="kw">match </span><span class="self">self </span>{
             <span class="attr">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
             </span><span class="self">Self</span>::Gtk4(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{identifier}&quot;</span>)),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-            </span><span class="self">Self</span>::Gtk3(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{identifier}&quot;</span>)),
             <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
             </span><span class="self">Self</span>::Wayland(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{identifier}&quot;</span>)),
             <span class="self">Self</span>::X11(identifier) =&gt; f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{identifier}&quot;</span>)),
@@ -567,21 +494,6 @@
     </span><span class="kw">pub async fn </span>from_native(native: <span class="kw-2">&amp;</span><span class="kw">impl </span>::gtk4::glib::IsA&lt;::gtk4::Native&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">match </span>Gtk4WindowIdentifier::new(native).<span class="kw">await </span>{
             <span class="prelude-val">Some</span>(identifier) =&gt; <span class="self">Self</span>::Gtk4(identifier),
-            <span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::default(),
-        }
-    }
-
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;xdp_parent_new_gtk&quot;</span>)]
-    </span><span class="doccomment">/// Creates a [`WindowIdentifier`] from a [`gdk::Window`](https://developer.gnome.org/gdk3/stable/gdk3-Windows.html).
-    ///
-    /// The constructor returns a valid handle under both Wayland &amp; x11.
-    ///
-    /// **Note** the function has to be async as the Wayland handle retrieval
-    /// API is async as well.
-    </span><span class="kw">pub async fn </span>from_window(win: <span class="kw-2">&amp;</span><span class="kw">impl </span>::gtk3::glib::IsA&lt;::gtk3::gdk::Window&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">match </span>Gtk3WindowIdentifier::new(win).<span class="kw">await </span>{
-            <span class="prelude-val">Some</span>(identifier) =&gt; <span class="self">Self</span>::Gtk3(identifier),
             <span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::default(),
         }
     }
@@ -645,7 +557,7 @@
     }
 }
 
-<span class="attr">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, any(feature = <span class="string">&quot;gtk3&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>)))]
+<span class="attr">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>))]
 </span><span class="kw">unsafe impl </span>HasRawDisplayHandle <span class="kw">for </span>WindowIdentifier {
     <span class="doccomment">/// Convert a [`WindowIdentifier`] to
     /// [`RawDisplayHandle`](raw_window_handle::RawDisplayHandle`).
@@ -654,19 +566,17 @@
     ///
     /// If you attempt to convert a [`WindowIdentifier`] created from a
     /// [`RawDisplayHandle`](raw_window_handle::RawDisplayHandle`) instead of
-    /// the gtk3 / gtk4 constructors.
+    /// the gtk4 constructors.
     </span><span class="kw">fn </span>raw_display_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawDisplayHandle {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="attr">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
             </span><span class="self">Self</span>::Gtk4(identifier) =&gt; identifier.as_raw_display_handle(),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-            </span><span class="self">Self</span>::Gtk3(identifier) =&gt; identifier.as_raw_display_handle(),
             <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
         }
     }
 }
 
-<span class="attr">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, any(feature = <span class="string">&quot;gtk3&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>)))]
+<span class="attr">#[cfg(all(feature = <span class="string">&quot;raw_handle&quot;</span>, feature = <span class="string">&quot;gtk4&quot;</span>))]
 </span><span class="kw">unsafe impl </span>HasRawWindowHandle <span class="kw">for </span>WindowIdentifier {
     <span class="doccomment">/// Convert a [`WindowIdentifier`] to
     /// [`RawWindowHandle`](raw_window_handle::RawWindowHandle`).
@@ -675,13 +585,11 @@
     ///
     /// If you attempt to convert a [`WindowIdentifier`] created from a
     /// [`RawWindowHandle`](raw_window_handle::RawWindowHandle`) instead of
-    /// the gtk3 / gtk4 constructors.
+    /// the gtk4 constructors.
     </span><span class="kw">fn </span>raw_window_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawWindowHandle {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="attr">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
             </span><span class="self">Self</span>::Gtk4(identifier) =&gt; identifier.as_raw_window_handle(),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-            </span><span class="self">Self</span>::Gtk3(identifier) =&gt; identifier.as_raw_window_handle(),
             <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
         }
     }
@@ -744,12 +652,6 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;gtk4&quot;</span>)]
 </span><span class="kw">pub use </span><span class="self">self</span>::gtk4::Gtk4WindowIdentifier;
 <span class="kw">use </span><span class="kw">crate</span>::PortalError;
-
-<span class="attr">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-</span><span class="kw">mod </span>gtk3;
-
-<span class="attr">#[cfg(feature = <span class="string">&quot;gtk3&quot;</span>)]
-</span><span class="kw">pub use </span><span class="self">self</span>::gtk3::Gtk3WindowIdentifier;
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
 </span><span class="kw">mod </span>wayland;
