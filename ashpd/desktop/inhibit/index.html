@@ -3,12 +3,12 @@
 <p>How to inhibit logout/user switch</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::{thread, time};
-<span class="kw">use </span>futures_util::StreamExt;
 
 <span class="kw">use </span>ashpd::{
     desktop::inhibit::{InhibitFlags, InhibitProxy, SessionState},
     WindowIdentifier,
 };
+<span class="kw">use </span>futures_util::StreamExt;
 
 <span class="kw">async fn </span>run() -&gt; ashpd::Result&lt;()&gt; {
     <span class="kw">let </span>proxy = InhibitProxy::new().<span class="kw">await</span><span class="question-mark">?</span>;

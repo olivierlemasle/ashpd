@@ -224,14 +224,12 @@
 <a href="#224" id="224">224</a>
 <a href="#225" id="225">225</a>
 <a href="#226" id="226">226</a>
-<a href="#227" id="227">227</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::Debug, future::ready, ops::Deref};
 
 <span class="kw">use </span>futures_util::{Stream, StreamExt};
 <span class="kw">use </span>once_cell::sync::OnceCell;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{ObjectPath, OwnedValue, Type};
-
 <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
 </span><span class="kw">use </span>zbus::Message;
 
@@ -326,7 +324,7 @@
     <span class="kw">pub async fn </span>request&lt;T&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         handle_token: <span class="kw-2">&amp;</span>HandleToken,
-        method_name: <span class="kw-2">&amp;</span>str,
+        method_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
         body: <span class="kw">impl </span>Serialize + Type + Debug,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;T&gt;, Error&gt;
     <span class="kw">where
@@ -344,7 +342,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>empty_request(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         handle_token: <span class="kw-2">&amp;</span>HandleToken,
-        method_name: <span class="kw-2">&amp;</span>str,
+        method_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
         body: <span class="kw">impl </span>Serialize + Type + Debug,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;()&gt;, Error&gt; {
         <span class="self">self</span>.request(handle_token, method_name, body).<span class="kw">await
@@ -352,7 +350,7 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>call&lt;R&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        method_name: <span class="kw-2">&amp;</span>str,
+        method_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
         body: <span class="kw">impl </span>Serialize + Type + Debug,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;R, Error&gt;
     <span class="kw">where
@@ -373,7 +371,7 @@
         <span class="prelude-val">Ok</span>(reply)
     }
 
-    <span class="kw">pub async fn </span>property&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, property_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
+    <span class="kw">pub async fn </span>property&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, property_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
     <span class="kw">where
         </span>T: TryFrom&lt;OwnedValue&gt;,
         zbus::Error: From&lt;&lt;T <span class="kw">as </span>TryFrom&lt;OwnedValue&gt;&gt;::Error&gt;,
