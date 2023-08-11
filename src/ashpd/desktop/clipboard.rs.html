@@ -141,6 +141,10 @@
 <a href="#141" id="141">141</a>
 <a href="#142" id="142">142</a>
 <a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Interact with the clipboard.
 //!
 //! The portal is mostly meant to be used along with
@@ -148,6 +152,7 @@
 
 </span><span class="kw">use </span>std::collections::HashMap;
 
+<span class="kw">use </span>futures_util::{Stream, StreamExt};
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, OwnedFd, OwnedObjectPath, SerializeDict, Type, Value};
 
 <span class="kw">use </span><span class="kw">super</span>::Session;
@@ -260,28 +265,31 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;SelectionOwnerChanged&quot;</span>)]
     </span><span class="kw">pub async fn </span>receive_selection_owner_changed(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Session, SelectionOwnerChanged)&gt; {
-        <span class="kw">let </span>(object_path, options) = <span class="self">self
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = (Session, SelectionOwnerChanged)&gt;&gt; {
+        <span class="prelude-val">Ok</span>(<span class="self">self
             </span>.<span class="number">0
             </span>.signal::&lt;(OwnedObjectPath, SelectionOwnerChanged)&gt;(<span class="string">&quot;SelectionOwnerChanged&quot;</span>)
-            .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>session = Session::new(object_path).<span class="kw">await</span><span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>((session, options))
+            .<span class="kw">await</span><span class="question-mark">?
+            </span>.filter_map(|(p, o)| <span class="kw">async move </span>{ Session::new(p).<span class="kw">await</span>.map(|s| (s, o)).ok() }))
     }
 
     <span class="doccomment">/// # Specifications
     ///
     /// See also [`SelectionTransfer`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Clipboard.SelectionTransfer).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;SelectionTransfer&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_selection_transfer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(Session, String, u32)&gt; {
-        <span class="kw">let </span>(object_path, mime_type, serial) = <span class="self">self
+    </span><span class="kw">pub async fn </span>receive_selection_transfer(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = (Session, String, u32)&gt;&gt; {
+        <span class="prelude-val">Ok</span>(<span class="self">self
             </span>.<span class="number">0
             </span>.signal::&lt;(OwnedObjectPath, String, u32)&gt;(<span class="string">&quot;SelectionTransfer&quot;</span>)
-            .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>session = Session::new(object_path).<span class="kw">await</span><span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>((session, mime_type, serial))
+            .<span class="kw">await</span><span class="question-mark">?
+            </span>.filter_map(|(p, mime_type, serial)| <span class="kw">async move </span>{
+                Session::new(p)
+                    .<span class="kw">await
+                    </span>.map(|session| (session, mime_type, serial))
+                    .ok()
+            }))
     }
 }
 </code></pre></div></section></main></body></html>

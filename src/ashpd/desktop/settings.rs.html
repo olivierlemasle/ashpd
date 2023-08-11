@@ -183,8 +183,22 @@
 <a href="#183" id="183">183</a>
 <a href="#184" id="184">184</a>
 <a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ```rust,no_run
 //! use ashpd::desktop::settings::Settings;
+//! use futures_util::StreamExt;
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
 //!     let proxy = Settings::new().await?;
@@ -197,7 +211,12 @@
 //!     let settings = proxy.read_all(&amp;[&quot;org.gnome.desktop.interface&quot;]).await?;
 //!     println!(&quot;{:#?}&quot;, settings);
 //!
-//!     let setting = proxy.receive_setting_changed().await?;
+//!     let setting = proxy
+//!         .receive_setting_changed()
+//!         .await?
+//!         .next()
+//!         .await
+//!         .expect(&quot;Stream exhausted&quot;);
 //!     println!(&quot;{}&quot;, setting.namespace());
 //!     println!(&quot;{}&quot;, setting.key());
 //!     println!(&quot;{:#?}&quot;, setting.value());
@@ -208,7 +227,8 @@
 
 </span><span class="kw">use </span>std::{collections::HashMap, convert::TryFrom, fmt::Debug};
 
-<span class="kw">use </span>serde::{de::DeserializeOwned, Deserialize, Serialize};
+<span class="kw">use </span>futures_util::Stream;
+<span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{OwnedValue, Type, Value};
 
 <span class="kw">use crate</span>::{proxy::Proxy, Error};
@@ -257,6 +277,37 @@
     <span class="doccomment">/// Prefers light appearance
     </span>PreferLight,
 }
+
+<span class="kw">impl </span>TryFrom&lt;OwnedValue&gt; <span class="kw">for </span>ColorScheme {
+    <span class="kw">type </span>Error = Error;
+
+    <span class="kw">fn </span>try_from(value: OwnedValue) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        TryFrom::&lt;Value&gt;::try_from(value.into())
+    }
+}
+
+<span class="kw">impl </span>TryFrom&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; <span class="kw">for </span>ColorScheme {
+    <span class="kw">type </span>Error = Error;
+
+    <span class="kw">fn </span>try_from(value: Value) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="prelude-val">Ok</span>(<span class="kw">match </span>u32::try_from(value)<span class="question-mark">? </span>{
+            <span class="number">1 </span>=&gt; ColorScheme::PreferDark,
+            <span class="number">2 </span>=&gt; ColorScheme::PreferLight,
+            <span class="kw">_ </span>=&gt; ColorScheme::NoPreference,
+        })
+    }
+}
+
+<span class="kw">impl </span>TryFrom&lt;Setting&gt; <span class="kw">for </span>ColorScheme {
+    <span class="kw">type </span>Error = Error;
+
+    <span class="kw">fn </span>try_from(value: Setting) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="self">Self</span>::try_from(value.<span class="number">2</span>)
+    }
+}
+
+<span class="kw">const </span>APPEARANCE_NAMESPACE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;org.freedesktop.appearance&quot;</span>;
+<span class="kw">const </span>COLOR_SCHEME_KEY: <span class="kw-2">&amp;</span>str = <span class="string">&quot;color-scheme&quot;</span>;
 
 <span class="doccomment">/// The interface provides read-only access to a small number of host settings
 /// required for toolkits similar to XSettings. It is not for general purpose
@@ -316,47 +367,22 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;Read&quot;</span>)]
     </span><span class="kw">pub async fn </span>read&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, namespace: <span class="kw-2">&amp;</span>str, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
     <span class="kw">where
-        </span>T: TryFrom&lt;OwnedValue&gt; + DeserializeOwned + Type,
+        </span>T: TryFrom&lt;OwnedValue&gt;,
         Error: From&lt;&lt;T <span class="kw">as </span>TryFrom&lt;OwnedValue&gt;&gt;::Error&gt;,
     {
         <span class="kw">let </span>value = <span class="self">self</span>.<span class="number">0</span>.call::&lt;OwnedValue&gt;(<span class="string">&quot;Read&quot;</span>, <span class="kw-2">&amp;</span>(namespace, key)).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(v) = value.downcast_ref::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;() {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(v) = value.downcast_ref::&lt;Value&gt;() {
             T::try_from(v.to_owned()).map_err(From::from)
         } <span class="kw">else </span>{
             T::try_from(value).map_err(From::from)
         }
     }
 
-    <span class="doccomment">/// Reads the value of namespace: `org.freedesktop.appearance` and
-    /// `color-scheme` key.
+    <span class="doccomment">/// Retrieves the system&#39;s preferred color scheme
     </span><span class="kw">pub async fn </span>color_scheme(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ColorScheme, Error&gt; {
-        <span class="kw">let </span>scheme = <span class="kw">match </span><span class="self">self
-            </span>.read::&lt;u32&gt;(<span class="string">&quot;org.freedesktop.appearance&quot;</span>, <span class="string">&quot;color-scheme&quot;</span>)
-            .<span class="kw">await</span><span class="question-mark">?
-        </span>{
-            <span class="number">1 </span>=&gt; ColorScheme::PreferDark,
-            <span class="number">2 </span>=&gt; ColorScheme::PreferLight,
-            <span class="kw">_ </span>=&gt; ColorScheme::NoPreference,
-        };
-        <span class="prelude-val">Ok</span>(scheme)
-    }
-
-    <span class="doccomment">/// Listen to changes of the namespace `org.freedesktop.appearance` for
-    /// `color-scheme` key.
-    </span><span class="kw">pub async fn </span>receive_color_scheme_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ColorScheme, Error&gt; {
-        <span class="kw">loop </span>{
-            <span class="kw">let </span>setting = <span class="self">self</span>.receive_setting_changed().<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="kw">if </span>setting.namespace() == <span class="string">&quot;org.freedesktop.appearance&quot;
-                </span>&amp;&amp; setting.key() == <span class="string">&quot;color-scheme&quot;
-            </span>{
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw">match </span>u32::try_from(setting.value()) {
-                    <span class="prelude-val">Ok</span>(<span class="number">1</span>) =&gt; ColorScheme::PreferDark,
-                    <span class="prelude-val">Ok</span>(<span class="number">2</span>) =&gt; ColorScheme::PreferLight,
-                    <span class="kw">_ </span>=&gt; ColorScheme::NoPreference,
-                });
-            }
-        }
-    }
+        <span class="self">self</span>.read::&lt;ColorScheme&gt;(APPEARANCE_NAMESPACE, COLOR_SCHEME_KEY)
+            .<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// Signal emitted when a setting changes.
     ///
@@ -364,7 +390,7 @@
     ///
     /// See also [`SettingChanged`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Settings.SettingChanged).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;SettingChanged&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_setting_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Setting, Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_setting_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = Setting&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;SettingChanged&quot;</span>).<span class="kw">await
     </span>}
 }

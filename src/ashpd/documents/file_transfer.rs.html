@@ -191,6 +191,7 @@
 <a href="#191" id="191">191</a>
 <a href="#192" id="192">192</a>
 <a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -217,6 +218,7 @@
 
 </span><span class="kw">use </span>std::{collections::HashMap, os::unix::prelude::AsRawFd};
 
+<span class="kw">use </span>futures_util::Stream;
 <span class="kw">use </span>zbus::zvariant::{Fd, SerializeDict, Type, Value};
 
 <span class="kw">use crate</span>::{proxy::Proxy, Error};
@@ -380,7 +382,7 @@
     ///
     /// See also [`TransferClosed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-FileTransfer.TransferClosed).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;TransferClosed&quot;</span>)]
-    </span><span class="kw">pub async fn </span>transfer_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
+    </span><span class="kw">pub async fn </span>transfer_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = String&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;TransferClosed&quot;</span>).<span class="kw">await
     </span>}
 }

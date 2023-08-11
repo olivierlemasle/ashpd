@@ -302,11 +302,13 @@
 <a href="#302" id="302">302</a>
 <a href="#303" id="303">303</a>
 <a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Register global shortcuts
 
 </span><span class="kw">use </span>std::{collections::HashMap, fmt::Debug, time::Duration};
 
-<span class="kw">use </span>futures_util::TryFutureExt;
+<span class="kw">use </span>futures_util::{Stream, TryFutureExt};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{
     DeserializeDict, ObjectPath, OwnedObjectPath, OwnedValue, SerializeDict, Type,
@@ -581,7 +583,7 @@
     ///
     /// See also [`Activated`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-GlobalShortcuts.Activated).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;Activated&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_activated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Activated, Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_activated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = Activated&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;Activated&quot;</span>).<span class="kw">await
     </span>}
 
@@ -591,7 +593,7 @@
     ///
     /// See also [`Deactivated`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-GlobalShortcuts.Deactivated).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;Deactivated&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_deactivated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Deactivated, Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_deactivated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = Deactivated&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;Deactivated&quot;</span>).<span class="kw">await
     </span>}
 
@@ -602,7 +604,9 @@
     ///
     /// See also [`ShortcutsChanged`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-GlobalShortcuts.ShortcutsChanged).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;ShortcutsChanged&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_shortcuts_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ShortcutsChanged, Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_shortcuts_changed(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = ShortcutsChanged&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;ShortcutsChanged&quot;</span>).<span class="kw">await
     </span>}
 }

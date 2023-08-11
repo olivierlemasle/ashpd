@@ -277,7 +277,6 @@
 <a href="#277" id="277">277</a>
 <a href="#278" id="278">278</a>
 <a href="#279" id="279">279</a>
-<a href="#280" id="280">280</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
@@ -285,33 +284,32 @@
 //!     desktop::location::{Accuracy, LocationProxy},
 //!     WindowIdentifier,
 //! };
-//! use futures_util::TryFutureExt;
+//! use futures_util::{FutureExt, StreamExt};
 //!
 //! async fn run() -&gt; ashpd::Result&lt;()&gt; {
 //!     let proxy = LocationProxy::new().await?;
 //!     let identifier = WindowIdentifier::default();
-//!
 //!     let session = proxy
 //!         .create_session(None, None, Some(Accuracy::Street))
 //!         .await?;
-//!
-//!     let (_, location) = futures_util::try_join!(
-//!         proxy.start(&amp;session, &amp;identifier).into_future(),
-//!         proxy.receive_location_updated().into_future()
-//!     )?;
-//!
+//!     let mut stream = proxy.receive_location_updated().await?;
+//!     let (_, location) = futures_util::join!(
+//!         proxy
+//!             .start(&amp;session, &amp;identifier)
+//!             .map(|e| e.expect(&quot;Couldn&#39;t start session&quot;)),
+//!         stream.next().map(|e| e.expect(&quot;Stream is exhausted&quot;))
+//!     );
 //!     println!(&quot;{}&quot;, location.accuracy());
 //!     println!(&quot;{}&quot;, location.longitude());
 //!     println!(&quot;{}&quot;, location.latitude());
 //!     session.close().await?;
-//!
 //!     Ok(())
 //! }
 //! ```
 
 </span><span class="kw">use </span>std::fmt::Debug;
 
-<span class="kw">use </span>futures_util::TryFutureExt;
+<span class="kw">use </span>futures_util::{Stream, TryFutureExt};
 <span class="kw">use </span>serde::Deserialize;
 <span class="kw">use </span>serde_repr::Serialize_repr;
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, OwnedObjectPath, SerializeDict, Type};
@@ -489,7 +487,7 @@
     /// See also [`LocationUpdated`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Location.LocationUpdated).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;LocationUpdated&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::location-updated&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_location_updated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Location, Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_location_updated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = Location&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;LocationUpdated&quot;</span>).<span class="kw">await
     </span>}
 

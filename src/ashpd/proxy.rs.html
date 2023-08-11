@@ -190,12 +190,25 @@
 <a href="#190" id="190">190</a>
 <a href="#191" id="191">191</a>
 <a href="#192" id="192">192</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::Debug, ops::Deref};
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::Debug, future::ready, ops::Deref};
 
-<span class="kw">use </span>futures_util::StreamExt;
+<span class="kw">use </span>futures_util::{Stream, StreamExt};
 <span class="kw">use </span>once_cell::sync::OnceCell;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{ObjectPath, OwnedValue, Type};
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+</span><span class="kw">use </span>zbus::Message;
 
 <span class="kw">use crate</span>::{
     desktop::{HandleToken, Request},
@@ -346,32 +359,39 @@
             </span>.map_err(From::from)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>signal&lt;R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;R, Error&gt;
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>signal&lt;I&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = I&gt;, Error&gt;
     <span class="kw">where
-        </span>R: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type + Debug,
+        </span>I: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type + Debug,
     {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
-        </span><span class="macro">tracing::info!</span>(
-            <span class="string">&quot;Listening to signal &#39;{}&#39; on &#39;{}&#39;&quot;</span>,
-            signal_name,
-            <span class="self">self</span>.interface()
-        );
-        <span class="kw">let </span><span class="kw-2">mut </span>stream = <span class="self">self
-            </span>.<span class="number">0
-            </span>.receive_signal(signal_name)
-            .<span class="kw">await
-            </span>.map_err::&lt;PortalError, <span class="kw">_</span>&gt;(From::from)<span class="question-mark">?</span>;
-        <span class="kw">let </span>message = stream.next().<span class="kw">await</span>.ok_or(Error::NoResponse)<span class="question-mark">?</span>;
-        <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
-        </span><span class="macro">tracing::info!</span>(
-            <span class="string">&quot;Received signal &#39;{}&#39; on &#39;{}&#39;&quot;</span>,
-            signal_name,
-            <span class="self">self</span>.interface()
-        );
-        <span class="kw">let </span>content = message.body::&lt;R&gt;()<span class="question-mark">?</span>;
-        <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
-        </span><span class="macro">tracing::debug!</span>(<span class="string">&quot;With body {:#?}&quot;</span>, content);
-        <span class="prelude-val">Ok</span>(content)
+        <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="number">0</span>.receive_signal(name).<span class="kw">await</span><span class="question-mark">?</span>.filter_map({
+            <span class="attr">#[cfg(not(feature = <span class="string">&quot;tracing&quot;</span>))]
+            </span>{
+                <span class="kw">move </span>|msg| ready(msg.body().ok())
+            }
+            <span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+            </span>{
+                <span class="kw">let </span>ifc = <span class="self">self</span>.interface().to_owned();
+                <span class="kw">move </span>|msg| ready(trace_body(name, <span class="kw-2">&amp;</span>ifc, msg))
+            }
+        }))
+    }
+}
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;tracing&quot;</span>)]
+</span><span class="kw">fn </span>trace_body&lt;I&gt;(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, ifc: <span class="kw-2">&amp;</span>str, msg: <span class="kw">impl </span>AsRef&lt;Message&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;I&gt;
+<span class="kw">where
+    </span>I: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type + Debug,
+{
+    <span class="macro">tracing::info!</span>(<span class="string">&quot;Received signal &#39;{name}&#39; on &#39;{ifc}&#39;&quot;</span>);
+    <span class="kw">match </span>msg.as_ref().body() {
+        <span class="prelude-val">Ok</span>(body) =&gt; {
+            <span class="macro">tracing::debug!</span>(<span class="string">&quot;With body {body:#?}&quot;</span>);
+            <span class="prelude-val">Some</span>(body)
+        }
+        <span class="prelude-val">Err</span>(e) =&gt; {
+            <span class="macro">tracing::warn!</span>(<span class="string">&quot;Error obtaining body: {e:#?}&quot;</span>);
+            <span class="prelude-val">None
+        </span>}
     }
 }
 

@@ -169,6 +169,7 @@
 <a href="#169" id="169">169</a>
 <a href="#170" id="170">170</a>
 <a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! **Note** This portal doesn&#39;t work for sandboxed applications.
 //! # Examples
 //!
@@ -190,6 +191,7 @@
 
 </span><span class="kw">use </span>std::fmt;
 
+<span class="kw">use </span>futures_util::Stream;
 <span class="kw">use </span>serde_repr::Deserialize_repr;
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, Type};
 
@@ -336,7 +338,7 @@
     /// # Specifications
     ///
     /// See also [`changed`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-NetworkMonitor.changed).
-    </span><span class="kw">pub async fn </span>receive_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = ()&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;changed&quot;</span>).<span class="kw">await
     </span>}
 }

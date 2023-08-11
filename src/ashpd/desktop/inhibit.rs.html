@@ -243,12 +243,14 @@
 <a href="#243" id="243">243</a>
 <a href="#244" id="244">244</a>
 <a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! How to inhibit logout/user switch
 //!
 //! ```rust,no_run
 //! use std::{thread, time};
+//! use futures_util::StreamExt;
 //!
 //! use ashpd::{
 //!     desktop::inhibit::{InhibitFlags, InhibitProxy, SessionState},
@@ -261,7 +263,7 @@
 //!
 //!     let session = proxy.create_monitor(&amp;identifier).await?;
 //!
-//!     let state = proxy.receive_state_changed().await?;
+//!     let state = proxy.receive_state_changed().await?.next().await.unwrap();
 //!     match state.session_state() {
 //!         SessionState::Running =&gt; (),
 //!         SessionState::QueryEnd =&gt; {
@@ -284,7 +286,7 @@
 //! ```
 
 </span><span class="kw">use </span>enumflags2::{bitflags, BitFlags};
-<span class="kw">use </span>futures_util::TryFutureExt;
+<span class="kw">use </span>futures_util::{Stream, TryFutureExt};
 <span class="kw">use </span>serde::Deserialize;
 <span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 <span class="kw">use </span>zbus::zvariant::{DeserializeDict, OwnedObjectPath, SerializeDict, Type};
@@ -465,7 +467,7 @@
     /// See also [`StateChanged`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Inhibit.StateChanged).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;StateChanged&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::session-state-changed&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_state_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;InhibitState, Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_state_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = InhibitState&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;StateChanged&quot;</span>).<span class="kw">await
     </span>}
 

@@ -343,10 +343,18 @@
 <a href="#343" id="343">343</a>
 <a href="#344" id="344">344</a>
 <a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! ```rust,no_run
 //! use std::{thread, time};
+//! use futures_util::StreamExt;
 //!
 //! use ashpd::desktop::{
 //!     notification::{Action, Button, Notification, NotificationProxy, Priority},
@@ -372,7 +380,12 @@
 //!         )
 //!         .await?;
 //!
-//!     let action = proxy.receive_action_invoked().await?;
+//!     let action = proxy
+//!         .receive_action_invoked()
+//!         .await?
+//!         .next()
+//!         .await
+//!         .expect(&quot;Stream exhausted&quot;);
 //!     match action.name() {
 //!         &quot;copy&quot; =&gt; (),   // Copy something to clipboard
 //!         &quot;delete&quot; =&gt; (), // Delete the file
@@ -391,6 +404,7 @@
 
 </span><span class="kw">use </span>std::{fmt, str::FromStr};
 
+<span class="kw">use </span>futures_util::Stream;
 <span class="kw">use </span>serde::{<span class="self">self</span>, Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{OwnedValue, SerializeDict, Type, Value};
 
@@ -645,7 +659,7 @@
     /// See also [`ActionInvoked`](https://flatpak.github.io/xdg-desktop-portal/index.html#gdbus-signal-org-freedesktop-portal-Notification.ActionInvoked).
     </span><span class="attr">#[doc(alias = <span class="string">&quot;ActionInvoked&quot;</span>)]
     #[doc(alias = <span class="string">&quot;XdpPortal::notification-action-invoked&quot;</span>)]
-    </span><span class="kw">pub async fn </span>receive_action_invoked(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Action, Error&gt; {
+    </span><span class="kw">pub async fn </span>receive_action_invoked(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = Action&gt;, Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.signal(<span class="string">&quot;ActionInvoked&quot;</span>).<span class="kw">await
     </span>}
 
