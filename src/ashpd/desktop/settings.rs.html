@@ -196,6 +196,21 @@
 <a href="#196" id="196">196</a>
 <a href="#197" id="197">197</a>
 <a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a>
+<a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ```rust,no_run
 //! use ashpd::desktop::settings::Settings;
 //! use futures_util::StreamExt;
@@ -225,9 +240,10 @@
 //! }
 //! ```
 
-</span><span class="kw">use </span>std::{collections::HashMap, convert::TryFrom, fmt::Debug};
+</span><span class="kw">use </span>std::future::ready;
+<span class="kw">use </span>std::{collections::HashMap, convert::TryFrom, fmt::Debug};
 
-<span class="kw">use </span>futures_util::Stream;
+<span class="kw">use </span>futures_util::{Stream, StreamExt};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::{OwnedValue, Type, Value};
 
@@ -383,6 +399,20 @@
         <span class="self">self</span>.read::&lt;ColorScheme&gt;(APPEARANCE_NAMESPACE, COLOR_SCHEME_KEY)
             .<span class="kw">await
     </span>}
+
+    <span class="doccomment">/// Listen to changes of the system&#39;s preferred color scheme
+    </span><span class="kw">pub async fn </span>receive_color_scheme_changed(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = ColorScheme&gt;, Error&gt; {
+        <span class="prelude-val">Ok</span>(<span class="self">self
+            </span>.<span class="number">0
+            </span>.signal_with_args::&lt;Setting&gt;(
+                <span class="string">&quot;SettingChanged&quot;</span>,
+                <span class="kw-2">&amp;</span>[(<span class="number">0</span>, APPEARANCE_NAMESPACE), (<span class="number">1</span>, COLOR_SCHEME_KEY)],
+            )
+            .<span class="kw">await</span><span class="question-mark">?
+            </span>.filter_map(|x| ready(ColorScheme::try_from(x).ok())))
+    }
 
     <span class="doccomment">/// Signal emitted when a setting changes.
     ///
