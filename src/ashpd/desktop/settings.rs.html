@@ -464,19 +464,19 @@
     /// use futures_util::StreamExt;
     ///
     /// async fn run() -&gt; ashpd::Result&lt;()&gt; {
-    /// let settings = Settings::new().await?;
-    /// while let Some(setting) = settings
-    ///     .receive_setting_changed_with_args(&amp;[
-    ///         (0, &quot;org.freedesktop.appearance&quot;),
-    ///         (1, &quot;color-scheme&quot;),
-    ///     ])
-    ///     .await?
-    ///     .next().await
-    /// {
-    ///     assert_eq!(setting.namespace(), &quot;org.freedesktop.appearance&quot;);
-    ///     assert_eq!(setting.key(), &quot;color-scheme&quot;);
-    ///     assert!(ColorScheme::try_from(setting.value().to_owned()).is_ok());
-    /// }
+    ///     let settings = Settings::new().await?;
+    ///     while let Some(setting) = settings
+    ///         .receive_setting_changed_with_args(&amp;[
+    ///             (0, &quot;org.freedesktop.appearance&quot;),
+    ///             (1, &quot;color-scheme&quot;),
+    ///         ])
+    ///         .await?
+    ///         .next().await
+    ///     {
+    ///         assert_eq!(setting.namespace(), &quot;org.freedesktop.appearance&quot;);
+    ///         assert_eq!(setting.key(), &quot;color-scheme&quot;);
+    ///         assert!(ColorScheme::try_from(setting.value().to_owned()).is_ok());
+    ///     }
     ///     Ok(())
     /// }
 
