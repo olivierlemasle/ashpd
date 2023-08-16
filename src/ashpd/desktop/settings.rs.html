@@ -239,10 +239,6 @@
 <a href="#239" id="239">239</a>
 <a href="#240" id="240">240</a>
 <a href="#241" id="241">241</a>
-<a href="#242" id="242">242</a>
-<a href="#243" id="243">243</a>
-<a href="#244" id="244">244</a>
-<a href="#245" id="245">245</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ```rust,no_run
 //! use ashpd::desktop::settings::Settings;
 //! use futures_util::StreamExt;
@@ -436,11 +432,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = ColorScheme&gt;, Error&gt; {
         <span class="prelude-val">Ok</span>(<span class="self">self
-            </span>.<span class="number">0
-            </span>.signal_with_args::&lt;Setting&gt;(
-                <span class="string">&quot;SettingChanged&quot;</span>,
-                <span class="kw-2">&amp;</span>[(<span class="number">0</span>, APPEARANCE_NAMESPACE), (<span class="number">1</span>, COLOR_SCHEME_KEY)],
-            )
+            </span>.receive_setting_changed_with_args(APPEARANCE_NAMESPACE, COLOR_SCHEME_KEY)
             .<span class="kw">await</span><span class="question-mark">?
             </span>.filter_map(|x| ready(ColorScheme::try_from(x).ok())))
     }
@@ -460,32 +452,32 @@
     ///
     /// # Example
     /// ```rust,no_run
-    /// use ashpd::desktop::settings::{Settings, ColorScheme};
+    /// use ashpd::desktop::settings::{ColorScheme, Settings};
     /// use futures_util::StreamExt;
     ///
-    /// async fn run() -&gt; ashpd::Result&lt;()&gt; {
-    ///     let settings = Settings::new().await?;
-    ///     while let Some(setting) = settings
-    ///         .receive_setting_changed_with_args(&amp;[
-    ///             (0, &quot;org.freedesktop.appearance&quot;),
-    ///             (1, &quot;color-scheme&quot;),
-    ///         ])
-    ///         .await?
-    ///         .next().await
-    ///     {
-    ///         assert_eq!(setting.namespace(), &quot;org.freedesktop.appearance&quot;);
-    ///         assert_eq!(setting.key(), &quot;color-scheme&quot;);
-    ///         assert!(ColorScheme::try_from(setting.value().to_owned()).is_ok());
-    ///     }
-    ///     Ok(())
+    /// # async fn run() -&gt; ashpd::Result&lt;()&gt; {
+    /// let settings = Settings::new().await?;
+    /// while let Some(setting) = settings
+    ///     .receive_setting_changed_with_args(&quot;org.freedesktop.appearance&quot;, &quot;color-scheme&quot;)
+    ///     .await?
+    ///     .next()
+    ///     .await
+    /// {
+    ///     assert_eq!(setting.namespace(), &quot;org.freedesktop.appearance&quot;);
+    ///     assert_eq!(setting.key(), &quot;color-scheme&quot;);
+    ///     assert!(ColorScheme::try_from(setting.value().to_owned()).is_ok());
     /// }
-
+    /// #    Ok(())
+    /// # }
     /// ```
     </span><span class="kw">pub async fn </span>receive_setting_changed_with_args(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        args: <span class="kw-2">&amp;</span>[(u8, <span class="kw-2">&amp;</span>str)],
+        namespace: <span class="kw-2">&amp;</span>str,
+        key: <span class="kw-2">&amp;</span>str,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = Setting&gt;, Error&gt; {
-        <span class="self">self</span>.<span class="number">0</span>.signal_with_args(<span class="string">&quot;SettingChanged&quot;</span>, args).<span class="kw">await
+        <span class="self">self</span>.<span class="number">0
+            </span>.signal_with_args(<span class="string">&quot;SettingChanged&quot;</span>, <span class="kw-2">&amp;</span>[(<span class="number">0</span>, namespace), (<span class="number">1</span>, key)])
+            .<span class="kw">await
     </span>}
 }
 </code></pre></div></section></main></body></html>
