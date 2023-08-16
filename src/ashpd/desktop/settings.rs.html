@@ -471,7 +471,7 @@
             </span>.<span class="number">0
             </span>.signal_with_args::&lt;Setting&gt;(<span class="string">&quot;SettingChanged&quot;</span>, <span class="kw-2">&amp;</span>[(<span class="number">0</span>, namespace), (<span class="number">1</span>, key)])
             .<span class="kw">await</span><span class="question-mark">?
-            </span>.filter_map(|x| ready(T::try_from(x.value().to_owned()).ok())))
+            </span>.filter_map(|x| ready(T::try_from(x.<span class="number">2</span>).ok())))
     }
 }
 </code></pre></div></section></main></body></html>
