@@ -236,6 +236,8 @@
 <a href="#236" id="236">236</a>
 <a href="#237" id="237">237</a>
 <a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ```rust,no_run
 //! use ashpd::desktop::settings::Settings;
 //! use futures_util::StreamExt;
@@ -420,9 +422,11 @@
     </span><span class="kw">pub async fn </span>receive_color_scheme_changed(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = ColorScheme&gt;, Error&gt; {
-        <span class="self">self</span>.receive_setting_changed_with_args(APPEARANCE_NAMESPACE, COLOR_SCHEME_KEY)
-            .<span class="kw">await
-    </span>}
+        <span class="prelude-val">Ok</span>(<span class="self">self
+            </span>.receive_setting_changed_with_args(APPEARANCE_NAMESPACE, COLOR_SCHEME_KEY)
+            .<span class="kw">await</span><span class="question-mark">?
+            </span>.filter_map(|t| ready(t.ok())))
+    }
 
     <span class="doccomment">/// Signal emitted when a setting changes.
     ///
@@ -444,7 +448,7 @@
     ///
     /// # async fn run() -&gt; ashpd::Result&lt;()&gt; {
     /// let settings = Settings::new().await?;
-    /// while let Some(scheme) = settings
+    /// while let Some(Ok(scheme)) = settings
     ///     .receive_setting_changed_with_args::&lt;ColorScheme&gt;(
     ///         &quot;org.freedesktop.appearance&quot;,
     ///         &quot;color-scheme&quot;,
@@ -462,7 +466,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         namespace: <span class="kw-2">&amp;</span>str,
         key: <span class="kw-2">&amp;</span>str,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = T&gt;, Error&gt;
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Stream&lt;Item = <span class="prelude-ty">Result</span>&lt;T, Error&gt;&gt;, Error&gt;
     <span class="kw">where
         </span>T: TryFrom&lt;OwnedValue&gt;,
         Error: From&lt;&lt;T <span class="kw">as </span>TryFrom&lt;OwnedValue&gt;&gt;::Error&gt;,
@@ -471,7 +475,7 @@
             </span>.<span class="number">0
             </span>.signal_with_args::&lt;Setting&gt;(<span class="string">&quot;SettingChanged&quot;</span>, <span class="kw-2">&amp;</span>[(<span class="number">0</span>, namespace), (<span class="number">1</span>, key)])
             .<span class="kw">await</span><span class="question-mark">?
-            </span>.filter_map(|x| ready(T::try_from(x.<span class="number">2</span>).ok())))
+            </span>.map(|x| T::try_from(x.<span class="number">2</span>).map_err(From::from)))
     }
 }
 </code></pre></div></section></main></body></html>
