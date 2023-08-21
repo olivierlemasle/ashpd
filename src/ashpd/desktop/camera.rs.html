@@ -269,6 +269,11 @@
 <a href="#269" id="269">269</a>
 <a href="#270" id="270">270</a>
 <a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Check if a camera is available, request access to it and open a PipeWire
 //! remote stream.
 //!
@@ -290,7 +295,10 @@
 
 </span><span class="kw">use </span>std::{
     collections::HashMap,
-    os::unix::prelude::{IntoRawFd, RawFd},
+    os::{
+        fd::FromRawFd,
+        unix::prelude::{IntoRawFd, RawFd},
+    },
 };
 
 <span class="kw">use </span>zbus::zvariant::{OwnedFd, SerializeDict, Type, Value};
@@ -400,7 +408,7 @@
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;pipewire&quot;</span>)]
 </span><span class="kw">fn </span>pipewire_streams_inner&lt;F: Fn(Stream) + Clone + <span class="lifetime">&#39;static</span>, G: FnOnce() + Clone + <span class="lifetime">&#39;static</span>&gt;(
-    fd: RawFd,
+    fd: std::os::fd::OwnedFd,
     callback: F,
     done_callback: G,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), pw::Error&gt; {
@@ -468,6 +476,8 @@
     <span class="kw">if </span>fd == -<span class="number">1 </span>{
         <span class="kw">return </span><span class="prelude-val">Err</span>(pw::Error::CreationFailed);
     }
+
+    <span class="kw">let </span>fd = <span class="kw">unsafe </span>{ std::os::fd::OwnedFd::from_raw_fd(fd) };
 
     <span class="kw">let </span>(sender, receiver) = futures_channel::oneshot::channel();
     <span class="kw">let </span>(streams_sender, <span class="kw-2">mut </span>streams_receiver) = futures_channel::mpsc::unbounded();
