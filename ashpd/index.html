@@ -7,10 +7,10 @@ It provides an alternative to the C library <a href="https://github.com/flatpak/
 <h3 id="examples"><a href="#examples">Examples</a></h3>
 <p>Ask the compositor to pick a color</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ashpd::desktop::screenshot::Color;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ashpd::desktop::Color;
 
 <span class="kw">async fn </span>run() -&gt; ashpd::Result&lt;()&gt; {
-    <span class="kw">let </span>color = Color::request().send().<span class="kw">await</span><span class="question-mark">?</span>.response()<span class="question-mark">?</span>;
+    <span class="kw">let </span>color = Color::pick().send().<span class="kw">await</span><span class="question-mark">?</span>.response()<span class="question-mark">?</span>;
     <span class="macro">println!</span>(<span class="string">&quot;({}, {}, {})&quot;</span>, color.red(), color.green(), color.blue());
     <span class="prelude-val">Ok</span>(())
 }</code></pre></div>
