@@ -693,6 +693,23 @@
 <a href="#693" id="693">693</a>
 <a href="#694" id="694">694</a>
 <a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Examples
 //!
 //! Print a file
@@ -714,6 +731,7 @@
 //!             &quot;prepare print&quot;,
 //!             Default::default(),
 //!             Default::default(),
+//!             None,
 //!             true,
 //!         )
 //!         .await?
@@ -1251,12 +1269,22 @@
     </span>handle_token: HandleToken,
     <span class="doccomment">/// Whether to make the dialog modal.
     </span>modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.
+    </span>accept_label: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
 <span class="kw">impl </span>PreparePrintOptions {
     <span class="doccomment">/// Sets whether the dialog should be a modal.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.modal = modal.into();
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Label for the accept button. Mnemonic underlines are allowed.
+    </span><span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>accept_label&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.accept_label = accept_label.into().map(ToOwned::to_owned);
         <span class="self">self
     </span>}
 }
@@ -1315,7 +1343,8 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
     }
 
-    <span class="doccomment">/// Presents a print dialog to the user and returns print settings and page
+    <span class="comment">// TODO accept_label: Added in version 2 of the interface.
+    </span><span class="doccomment">/// Presents a print dialog to the user and returns print settings and page
     /// setup.
     ///
     /// # Arguments
@@ -1325,6 +1354,8 @@
     /// * `settings` - [`Settings`].
     /// * `page_setup` - [`PageSetup`].
     /// * `modal` - Whether the dialog should be a modal.
+    /// * `accept_label` - Label for the accept button. Mnemonic underlines are
+    ///   allowed.
     ///
     /// # Specifications
     ///
@@ -1337,9 +1368,12 @@
         title: <span class="kw-2">&amp;</span>str,
         settings: Settings,
         page_setup: PageSetup,
+        accept_label: <span class="kw">impl </span>Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;,
         modal: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Request&lt;PreparePrint&gt;, Error&gt; {
-        <span class="kw">let </span>options = PreparePrintOptions::default().modal(modal);
+        <span class="kw">let </span>options = PreparePrintOptions::default()
+            .modal(modal)
+            .accept_label(accept_label);
         <span class="self">self</span>.<span class="number">0
             </span>.request(
                 <span class="kw-2">&amp;</span>options.handle_token,
