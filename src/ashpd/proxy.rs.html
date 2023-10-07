@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ashpd" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (35e416303 2023-09-01)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ashpd/index.html"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ashpd" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (960754090 2023-10-06)" data-channel="nightly" data-search-js="search-5f5ec5419eadd0c9.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo-symbolic.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ashpd/index.html"><img src="https://raw.githubusercontent.com/bilelmoussaoui/ashpd/master/ashpd-demo/data/icons/com.belmoussaoui.ashpd.demo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -224,6 +224,50 @@
 <a href="#224" id="224">224</a>
 <a href="#225" id="225">225</a>
 <a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::Debug, future::ready, ops::Deref};
 
 <span class="kw">use </span>futures_util::{Stream, StreamExt};
@@ -250,7 +294,10 @@
 <span class="kw">static </span>SESSION: OnceCell&lt;zbus::Connection&gt; = OnceCell::new();
 
 <span class="attr">#[derive(Debug)]
-</span><span class="kw">pub struct </span>Proxy&lt;<span class="lifetime">&#39;a</span>&gt;(zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>Proxy&lt;<span class="lifetime">&#39;a</span>&gt; {
+    inner: zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;,
+    version: u32,
+}
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Proxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>connection() -&gt; zbus::Result&lt;zbus::Connection&gt; {
@@ -284,13 +331,15 @@
         P::Error: Into&lt;zbus::Error&gt;,
     {
         <span class="kw">let </span>connection = <span class="self">Self</span>::connection().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
+        <span class="kw">let </span>inner: zbus::Proxy = zbus::ProxyBuilder::new_bare(<span class="kw-2">&amp;</span>connection)
             .interface(interface)<span class="question-mark">?
             </span>.path(path)<span class="question-mark">?
             </span>.destination(destination)<span class="question-mark">?
             </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(proxy))
+        <span class="kw">let </span>version = inner.get_property::&lt;u32&gt;(<span class="string">&quot;version&quot;</span>).<span class="kw">await</span>.unwrap_or(<span class="number">1</span>);
+
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{ inner, version })
     }
 
     <span class="kw">pub async fn </span>new_desktop_with_path&lt;P&gt;(interface: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, path: P) -&gt; <span class="prelude-ty">Result</span>&lt;Proxy&lt;<span class="lifetime">&#39;a</span>&gt;, Error&gt;
@@ -348,6 +397,11 @@
         <span class="self">self</span>.request(handle_token, method_name, body).<span class="kw">await
     </span>}
 
+    <span class="doccomment">/// Returns the version of the interface
+    </span><span class="kw">pub fn </span>version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
+        <span class="self">self</span>.version
+    }
+
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>call&lt;R&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         method_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
@@ -371,15 +425,49 @@
         <span class="prelude-val">Ok</span>(reply)
     }
 
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>call_versioned&lt;R&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        method_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        body: <span class="kw">impl </span>Serialize + Type + Debug,
+        req_version: u32,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;R, Error&gt;
+    <span class="kw">where
+        </span>R: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type,
+    {
+        <span class="kw">let </span>version = <span class="self">self</span>.version();
+        <span class="kw">if </span>version &gt;= req_version {
+            <span class="self">self</span>.call::&lt;R&gt;(method_name, body).<span class="kw">await
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>(Error::RequiresVersion(req_version, version))
+        }
+    }
+
     <span class="kw">pub async fn </span>property&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, property_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
     <span class="kw">where
         </span>T: TryFrom&lt;OwnedValue&gt;,
         zbus::Error: From&lt;&lt;T <span class="kw">as </span>TryFrom&lt;OwnedValue&gt;&gt;::Error&gt;,
     {
-        <span class="self">self</span>.<span class="number">0
-            </span>.get_property::&lt;T&gt;(property_name)
+        <span class="self">self</span>.inner
+            .get_property::&lt;T&gt;(property_name)
             .<span class="kw">await
             </span>.map_err(From::from)
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>property_versioned&lt;T&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        property_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        req_version: u32,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt;
+    <span class="kw">where
+        </span>T: TryFrom&lt;OwnedValue&gt;,
+        zbus::Error: From&lt;&lt;T <span class="kw">as </span>TryFrom&lt;OwnedValue&gt;&gt;::Error&gt;,
+    {
+        <span class="kw">let </span>version = <span class="self">self</span>.version();
+        <span class="kw">if </span>version &gt;= req_version {
+            <span class="self">self</span>.property::&lt;T&gt;(property_name).<span class="kw">await
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>(Error::RequiresVersion(req_version, version))
+        }
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>signal_with_args&lt;I&gt;(
@@ -391,8 +479,8 @@
         </span>I: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type + Debug,
     {
         <span class="prelude-val">Ok</span>(<span class="self">self
-            </span>.<span class="number">0
-            </span>.receive_signal_with_args(name, args)
+            </span>.inner
+            .receive_signal_with_args(name, args)
             .<span class="kw">await</span><span class="question-mark">?
             </span>.filter_map({
                 <span class="attr">#[cfg(not(feature = <span class="string">&quot;tracing&quot;</span>))]
@@ -411,7 +499,7 @@
     <span class="kw">where
         </span>I: <span class="kw">for</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; + Type + Debug,
     {
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="number">0</span>.receive_signal(name).<span class="kw">await</span><span class="question-mark">?</span>.filter_map({
+        <span class="prelude-val">Ok</span>(<span class="self">self</span>.inner.receive_signal(name).<span class="kw">await</span><span class="question-mark">?</span>.filter_map({
             <span class="attr">#[cfg(not(feature = <span class="string">&quot;tracing&quot;</span>))]
             </span>{
                 <span class="kw">move </span>|msg| ready(msg.body().ok())
@@ -447,7 +535,7 @@
     <span class="kw">type </span>Target = zbus::Proxy&lt;<span class="lifetime">&#39;a</span>&gt;;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
+        <span class="kw-2">&amp;</span><span class="self">self</span>.inner
+    }
 }
 </code></pre></div></section></main></body></html>
