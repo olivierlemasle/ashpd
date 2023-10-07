@@ -49,6 +49,16 @@
 <a href="#49" id="49">49</a>
 <a href="#50" id="50">50</a>
 <a href="#51" id="51">51</a>
+<a href="#52" id="52">52</a>
+<a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
 </pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(docsrs, feature(doc_cfg))]
 #![deny(rustdoc::broken_intra_doc_links)]
 #![deny(missing_docs)]
@@ -63,6 +73,8 @@
 <span class="doccomment">/// Alias for a [`Result`] with the error type `ashpd::Error`.
 </span><span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, Error&gt;;
 
+<span class="kw">static </span>IS_SANDBOXED: OnceCell&lt;bool&gt; = OnceCell::new();
+
 <span class="doccomment">/// Interact with the user&#39;s desktop such as taking a screenshot, setting a
 /// background or querying the user&#39;s location.
 </span><span class="kw">pub mod </span>desktop;
@@ -70,6 +82,7 @@
 </span><span class="kw">pub mod </span>documents;
 <span class="kw">mod </span>error;
 <span class="kw">mod </span>window_identifier;
+
 <span class="kw">pub use </span><span class="self">self</span>::window_identifier::WindowIdentifier;
 <span class="kw">mod </span>app_id;
 <span class="kw">pub use </span><span class="self">self</span>::app_id::AppID;
@@ -83,6 +96,7 @@
 </span><span class="kw">pub mod </span>flatpak;
 <span class="kw">mod </span>helpers;
 <span class="kw">pub use </span>enumflags2;
+<span class="kw">use </span>once_cell::sync::OnceCell;
 <span class="kw">pub use </span>url;
 <span class="kw">pub use </span>zbus::{<span class="self">self</span>, zvariant};
 
@@ -90,13 +104,19 @@
 ///
 /// The function checks whether the file `/.flatpak-info` exists, or if the app
 /// is running as a snap, or if the environment variable `GTK_USE_PORTAL` is set
-/// to `1`.
+/// to `1`. As the return value of this function will not change during the
+/// runtime of a program; it is cached for future calls.
 </span><span class="kw">pub async fn </span>is_sandboxed() -&gt; bool {
-    <span class="kw">crate</span>::helpers::is_flatpak().<span class="kw">await
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(cached_value) = IS_SANDBOXED.get() {
+        <span class="kw">return </span><span class="kw-2">*</span>cached_value;
+    }
+    <span class="kw">let </span>new_value = <span class="kw">crate</span>::helpers::is_flatpak().<span class="kw">await
         </span>|| <span class="kw">crate</span>::helpers::is_snap().<span class="kw">await
         </span>|| std::env::var(<span class="string">&quot;GTK_USE_PORTAL&quot;</span>)
             .map(|v| v == <span class="string">&quot;1&quot;</span>)
-            .unwrap_or(<span class="bool-val">false</span>)
+            .unwrap_or(<span class="bool-val">false</span>);
+    IS_SANDBOXED.set(new_value).unwrap(); <span class="comment">// Safe to unwrap here
+    </span>new_value
 }
 
 <span class="kw">pub use </span><span class="self">self</span>::error::{Error, PortalError};
